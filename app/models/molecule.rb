@@ -79,7 +79,7 @@ class Molecule < ApplicationRecord
   }
 
   def self.find_or_create_dummy
-    molecule = Molecule.find_or_create_by(inchikey: 'DUMMY')
+    Molecule.find_or_create_by(inchikey: 'DUMMY')
   end
 
   def self.find_or_create_by_molfile(molfile, **babel_info)

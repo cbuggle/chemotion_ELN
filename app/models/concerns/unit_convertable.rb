@@ -21,7 +21,7 @@ module UnitConvertable
           secure_purity = purity || 1.0
           mol_weight.zero? ? 0 : (amount_g * secure_purity) / (molarity_value * mol_weight)
         elsif has_density
-          amount_g / (density * 1000)
+          amount_g / (density * 1000) rescue 0
         else
           0
         end
@@ -78,7 +78,7 @@ module UnitConvertable
 
   def amount_mmol(type = 'target')
     value = self["#{type}_amount_value"] || 0.0
-    unit = self["#{type}_amount_unit"]
+    unit = self["#{type}_amount_unit"] || 'mmol'
     return value * 1000 if unit == 'mol'
 
     val_g = self.convert_to_gram(value, unit)

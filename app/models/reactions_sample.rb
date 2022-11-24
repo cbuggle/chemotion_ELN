@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: reactions_samples
@@ -67,7 +69,14 @@ class ReactionsProductSample < ReactionsSample
   include Tagging
 
   def formatted_yield
-    eq = self.equivalent
-    eq && !eq.nan? ? "#{(eq * 100).round.to_s} %" : "0 %"
+    eq = equivalent
+    eq && !eq.nan? ? "#{(eq * 100).round} %" : '0 %'
   end
+end
+
+class ReactionsIntermediateSample < ReactionsSample
+  scope :visible, -> { joins(:sample).merge(Sample.visible) }
+
+  include Reactable
+  include Tagging
 end

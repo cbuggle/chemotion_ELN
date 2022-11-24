@@ -77,6 +77,48 @@ module Chemotion
         { reactions: reactions }
       end
 
+      desc 'get options for Select'
+      params do
+        optional :collection_id, type: Integer, desc: 'Collection id'
+        optional :sync_collection_id, type: Integer, desc: 'SyncCollectionsUser id'
+        optional :from_date, type: Integer, desc: 'created_date from in ms'
+        optional :to_date, type: Integer, desc: 'created_date to in ms'
+        optional :filter_created_at, type: Boolean, desc: 'filter by created at or updated at'
+      end
+      get :index_options do
+        reactions = if params[:collection_id]
+                      begin
+                        Collection.belongs_to_or_shared_by(current_user.id,
+                                                           current_user.group_ids).find(params[:collection_id]).reactions
+                      rescue ActiveRecord::RecordNotFound
+                        Reaction.none
+                      end
+                    elsif params[:sync_collection_id]
+                      begin
+                        current_user.all_sync_in_collections_users.find(params[:sync_collection_id]).collection.reactions
+                      rescue ActiveRecord::RecordNotFound
+                        Reaction.none
+                      end
+                    else
+                      current_user.reactions
+                      Reaction.joins(:collections).where('collections.user_id = ?',
+                                                         current_user.id).distinct.order('reactions.id')
+                    end.order('id')
+
+        # We piggyback all attributes required in the Reaction Editor (e.g. on it's reaction index page).
+        # This is WAY faster (100x) then fetching the complete reaction index from the ELN backend by GET '/reactions'. cbuggle, 28.11.2021.
+        { reactions: reactions.map do |reaction|
+                       { value: reaction.id, label: reaction.short_label, short_label: reaction.short_label,
+                         reaction_svg_file: reaction.reaction_svg_file, id: reaction.id }
+                     end }
+      end
+
+      desc 'get options for collection Select'
+      get :collection_select_options do
+        { collection_options:
+        current_user.collections.map { |collection| { value: collection.id, label: collection.label } } }
+      end
+
       desc 'Return serialized reaction by id'
       params do
         requires :id, type: Integer, desc: 'Reaction id'
@@ -131,6 +173,27 @@ module Chemotion
 
             finder.result
           end
+        end
+      end
+
+      desc 'Create associated reaction procedure unless existant'
+      params do
+        requires :id, type: Integer, desc: 'Reaction id'
+      end
+
+      route_param :id do
+        before do
+          @reaction = Reaction.find_by(id: params[:id])
+          error!('404 Not Found', 404) unless @reaction
+
+          @element_policy = ElementPolicy.new(current_user, @reaction)
+          error!('401 Unauthorized', 401) unless current_user && @element_policy.read?
+        end
+
+        post :reaction_process do
+          ReactionProcess.find_or_create_by(reaction: @reaction)
+
+          present @reaction.reaction_process, with: Entities::ReactionProcessEntity, root: :reaction_process
         end
       end
 

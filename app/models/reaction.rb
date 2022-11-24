@@ -64,24 +64,24 @@ class Reaction < ApplicationRecord
   pg_search_scope :search_by_reaction_rinchi_string, against: :rinchi_string
 
   pg_search_scope :search_by_sample_name, associated_against: {
-    samples: :name
+    samples: :name,
   }
 
   pg_search_scope :search_by_iupac_name, associated_against: {
-    sample_molecules: :iupac_name
+    sample_molecules: :iupac_name,
   }
 
   pg_search_scope :search_by_inchistring, associated_against: {
-    sample_molecules: :inchistring
+    sample_molecules: :inchistring,
   }
 
   pg_search_scope :search_by_cano_smiles, associated_against: {
-    sample_molecules: :cano_smiles
+    sample_molecules: :cano_smiles,
   }
 
   pg_search_scope :search_by_substring, against: :name, associated_against: {
     samples: :name,
-    sample_molecules: :iupac_name
+    sample_molecules: :iupac_name,
   }, using: { trigram: { threshold: 0.0001 } }
 
   # scopes for suggestions
@@ -131,6 +131,9 @@ class Reaction < ApplicationRecord
   has_many :products, through: :reactions_product_samples, source: :sample
   has_many :product_molecules, through: :products, source: :molecule
 
+  has_many :reactions_intermediate_samples, -> { order(position: :asc) }, dependent: :destroy
+  has_many :intermediate_samples, through: :reactions_intermediate_samples, source: :sample
+
   has_many :literals, as: :element, dependent: :destroy
   has_many :literatures, through: :literals
 
@@ -151,6 +154,8 @@ class Reaction < ApplicationRecord
   after_create :update_counter
 
   has_one :container, as: :containable
+
+  has_one :reaction_process
 
   def self.get_associated_samples(reaction_ids)
     ReactionsSample.where(reaction_id: reaction_ids).pluck(:sample_id)
@@ -188,15 +193,15 @@ class Reaction < ApplicationRecord
 
   def temperature_display_with_unit
     tp = temperature_display
-    !tp.empty? ? tp + ' ' + temperature['valueUnit'] : ''
+    tp.empty? ? '' : tp + ' ' + temperature['valueUnit']
   end
 
   def description_contents
-    description['ops'].map { |s| s['insert'] }.join
+    description['ops'].pluck('insert').join
   end
 
   def observation_contents
-    observation['ops'].map { |s| s['insert'] }.join
+    observation['ops'].pluck('insert').join
   end
 
   def update_svg_file!
@@ -213,7 +218,7 @@ class Reaction < ApplicationRecord
       {
         starting_materials: :reactions_starting_material_samples,
         reactants: :reactions_reactant_samples,
-        products: :reactions_product_samples
+        products: :reactions_product_samples,
       }.each do |prop, resource|
         collection = public_send(resource).includes(sample: :molecule)
         paths[prop] = collection.map do |reactions_sample|
@@ -237,7 +242,9 @@ class Reaction < ApplicationRecord
     end
     if reaction_svg_file_changed? && reaction_svg_file_was.present?
       file_was = File.join(Rails.public_path, 'images', 'reactions', reaction_svg_file_was)
-      File.delete(file_was) if Reaction.where(reaction_svg_file: reaction_svg_file_was).length < 2 && File.exist?(file_was)
+      if Reaction.where(reaction_svg_file: reaction_svg_file_was).length < 2 && File.exist?(file_was)
+        File.delete(file_was)
+      end
     end
     reaction_svg_file
   end
@@ -254,7 +261,7 @@ class Reaction < ApplicationRecord
 
   def solvents_in_svg
     names = solvents.map(&:preferred_label)
-    names && !names.empty? ? names : [solvent]
+    (names.presence || [solvent])
   end
 
   def cleanup_array_fields
@@ -276,9 +283,7 @@ class Reaction < ApplicationRecord
     if temperature&.fetch('userText', nil).present?
       self.temperature = temperature.merge('userText' => scrubber(temperature['userText']))
     end
-    if conditions.present?
-      self.conditions = scrubber(conditions)
-    end
+    self.conditions = scrubber(conditions) if conditions.present?
   end
 
   private

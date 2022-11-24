@@ -400,7 +400,7 @@ module Chemotion
           @sample.update!(attributes)
           @sample.save_segments(segments: params[:segments], current_user_id: current_user.id)
 
-          #save to profile
+          # save to profile
           kinds = @sample.container&.analyses&.pluck(Arel.sql("extended_metadata->'kind'"))
           recent_ols_term_update('chmo', kinds) if kinds&.length&.positive?
 
@@ -457,6 +457,7 @@ module Chemotion
         optional :inventory_sample, type: Boolean, default: false
         optional :molecular_mass, type: Float
         optional :sum_formula, type: String
+        optional :reaction_id, type: String
       end
       post do
         molecule_id = if params[:decoupled] && params[:molfile].blank?
@@ -466,7 +467,7 @@ module Chemotion
                       end
         attributes = {
           name: params[:name],
-          short_label: params[:short_label],
+          short_label: params[:short_label].presence,
           external_label: params[:external_label],
           target_amount_value: params[:target_amount_value],
           target_amount_unit: params[:target_amount_unit],

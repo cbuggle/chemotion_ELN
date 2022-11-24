@@ -25,7 +25,10 @@ gem 'countries'
 
 gem 'delayed_cron_job'
 gem 'delayed_job_active_record'
+
 gem 'devise'
+gem 'devise-jwt' # authentication also requires 'jwt' and 'rack-cors' which can be found below.
+
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 gem 'ed25519'
@@ -37,6 +40,9 @@ gem 'faraday-multipart'
 gem 'font-awesome-rails'
 gem 'fun_sftp', git: 'https://github.com/fl9/fun_sftp.git', branch: 'allow-port-option'
 gem 'fx'
+
+# Google protocol buffers for use in ORD.
+gem 'google-protobuf', '~> 3.19', '>= 3.19.1'
 
 gem 'grape'
 gem 'grape-entity'
@@ -119,7 +125,7 @@ gem 'thumbnailer', git: 'https://github.com/merlin-p/thumbnailer.git'
 gem 'turbo-sprockets-rails4'
 gem 'tzinfo-data'
 
-gem 'webpacker', git: 'https://github.com/rails/webpacker', branch: 'master'
+gem 'webpacker', '6.0.0.beta.7'
 gem 'whenever', require: false
 
 gem 'yaml_db'
@@ -180,6 +186,10 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'ruby_jard'
 
+  # Convenient RSpec Syntax
+  gem 'rspec-its'
+  gem 'shoulda-matchers'
+
   gem 'spring'
 end
 
@@ -198,7 +208,6 @@ group :test do
 
   gem 'simplecov', require: false
   gem 'simplecov-lcov', require: false
-
   gem 'webdrivers'
   gem 'webmock'
 end

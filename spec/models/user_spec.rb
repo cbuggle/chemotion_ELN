@@ -104,5 +104,14 @@ RSpec.describe 'User' do
     it 'can not find a uniq user by name_abbreviation with different case' do
       expect(User.try_find_by_name_abbreviation(user_lower.name_abbreviation.downcase)).to be_nil
     end
+
+    it '#jwt_auth_token' do
+      user.save!
+      expect(
+        JWT.decode(user.jwt_auth_token, Rails.application.secrets.secret_key_base),
+      ).to eq(
+        [{ 'jti' => user.jti, 'sub' => user.id }, { 'alg' => 'HS256' }],
+      )
+    end
   end
 end

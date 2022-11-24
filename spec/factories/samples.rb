@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :sample do
     sequence(:name) { |i| "Sample #{i}" }
@@ -34,9 +36,17 @@ FactoryBot.define do
         sample.container = FactoryBot.create(:container, :with_analysis) unless sample.container
       end
     end
+
+    transient do
+      reaction {}
+    end
+
+    after :create do |sample, obj|
+      ReactionsSample.create(sample: sample, reaction: obj.reaction) if obj.reaction
+    end
   end
 
-  factory :sample_without_analysis, class: Sample do
+  factory :sample_without_analysis, class: 'Sample' do
     sequence(:name) { |i| "Sample #{i}" }
 
     target_amount_value { 100 }

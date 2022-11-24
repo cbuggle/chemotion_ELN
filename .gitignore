@@ -82,6 +82,7 @@
 /public/images/*
 !/public/images/wild_card/
 !/public/images/ghs/
+!/public/images/vessels/
 
 /public/editors/*
 !/public/editors/.keep

@@ -5,6 +5,9 @@ require_relative 'boot'
 require 'rails/all'
 require 'dotenv'
 
+# require 'proto/ord_kit_dataset_pb'
+require './app/ord_kit/proto/ord_kit_reaction_pb'
+
 Dotenv.load
 
 # Require the gems listed in Gemfile, including any gems
@@ -34,6 +37,7 @@ module Chemotion
 
     config.autoload_paths += Dir[Rails.root.join('app')]
     config.autoload_paths += Dir[Rails.root.join('lib')]
+    config.autoload_paths += Dir[Rails.root.join('helpers')]
 
     config.active_job.queue_adapter = :delayed_job
 

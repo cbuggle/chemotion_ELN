@@ -26,7 +26,7 @@ class API < Grape::API
     end
 
     def detect_current_user
-      detect_current_user_from_session || detect_current_user_from_jwt
+      detect_current_user_from_session || detect_current_user_from_jwt || detect_current_user_from_token_auth
     end
 
     def detect_current_user_from_session
@@ -37,7 +37,15 @@ class API < Grape::API
       decoded_token = JsonWebToken.decode(current_token)
       user_id = decoded_token[:user_id]
 
-      User.find_by!(id: user_id)
+      User.find(user_id)
+    rescue StandardError
+      nil
+    end
+
+    def detect_current_user_from_token_auth
+      token = Warden::JWTAuth::HeaderParser.from_env(env)
+      decoded_token = JWT.decode(token, Rails.application.secrets.secret_key_base)
+      User.find_by(id: decoded_token[0]['sub'], jti: decoded_token[0]['jti'])
     rescue StandardError
       nil
     end
@@ -60,6 +68,7 @@ class API < Grape::API
 
     def is_public_request?
       request.path.start_with?(
+        '/users/sign_in',
         '/api/v1/public/',
         '/api/v1/chemscanner/',
         '/api/v1/chemspectra/',
@@ -142,6 +151,10 @@ class API < Grape::API
   mount Chemotion::ResearchPlanMetadataAPI
   mount Chemotion::ScreenAPI
   mount Chemotion::UserAPI
+  mount Chemotion::ReactionProcessAPI
+  mount Chemotion::ReactionProcessActionAPI
+  mount Chemotion::ReactionProcessStepAPI
+  mount Chemotion::VesselAPI
   mount Chemotion::ReactionSvgAPI
   mount Chemotion::PermissionAPI
   mount Chemotion::SuggestionAPI

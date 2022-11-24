@@ -50,7 +50,6 @@
 #
 
 # rubocop: disable Metrics/ClassLength
-# rubocop: disable Metrics/MethodLength
 # rubocop: disable Metrics/AbcSize
 
 class User < ApplicationRecord
@@ -59,8 +58,12 @@ class User < ApplicationRecord
 
   acts_as_paranoid
   # Include default devise modules. Others available are: :timeoutable
+  include Devise::JWT::RevocationStrategies::JTIMatcher
+
   devise :database_authenticatable, :registerable, :confirmable,
-         :recoverable, :rememberable, :trackable, :validatable, :lockable, :omniauthable, authentication_keys: [:login]
+         :recoverable, :rememberable, :trackable, :validatable, :lockable, :omniauthable,
+         :jwt_authenticatable, jwt_revocation_strategy: Devise::JWT::RevocationStrategies::Null, authentication_keys: [:login]
+
   has_one :profile, dependent: :destroy
   has_one :container, as: :containable
 
@@ -100,9 +103,12 @@ class User < ApplicationRecord
   has_many :calendar_entries, foreign_key: :created_by, inverse_of: :creator, dependent: :destroy
   has_many :comments, foreign_key: :created_by, inverse_of: :creator, dependent: :destroy
 
+  has_many :user_vessels, dependent: :destroy
+  has_many :vessels, through: :user_vessels
+
   accepts_nested_attributes_for :affiliations, :profile
 
-  validates_presence_of :first_name, :last_name, allow_blank: false
+  validates :first_name, :last_name, presence: { allow_blank: false }
 
   validates :name_abbreviation, uniqueness: { message: 'is already in use.' }
   validate :name_abbreviation_reserved_list, on: :create
@@ -113,7 +119,9 @@ class User < ApplicationRecord
   # NB: only Persons and Admins can get a confirmation email and confirm their email.
   before_create :skip_confirmation_notification!, unless: proc { |user| %w[Person Admin].include?(user.type) }
   # NB: option to skip devise confirmable for Admins and Persons
-  before_create :skip_confirmation!, if: proc { |user| %w[Person Admin].include?(user.type) && self.class.allow_unconfirmed_access_for.nil? }
+  before_create :skip_confirmation!, if: proc { |user|
+                                           %w[Person Admin].include?(user.type) && self.class.allow_unconfirmed_access_for.nil?
+                                         }
   before_create :set_account_active, if: proc { |user| %w[Person].include?(user.type) }
 
   after_create :create_chemotion_public_collection
@@ -123,7 +131,7 @@ class User < ApplicationRecord
   after_create :send_welcome_email, if: proc { |user| %w[Person].include?(user.type) }
   before_destroy :delete_data
 
-  scope :by_name, ->(query) {
+  scope :by_name, lambda { |query|
     where("LOWER(first_name) ILIKE ? OR LOWER(last_name) ILIKE ? OR LOWER(first_name || ' ' || last_name) ILIKE ?",
           "#{sanitize_sql_like(query.downcase)}%", "#{sanitize_sql_like(query.downcase)}%", "#{sanitize_sql_like(query.downcase)}%")
   }
@@ -149,13 +157,13 @@ class User < ApplicationRecord
   end
 
   def login
-    @login || self.name_abbreviation || self.email
+    @login || name_abbreviation || email
   end
 
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if (login = conditions.delete(:login))
-      where(conditions).where(["name_abbreviation = :value OR lower(email) = lower(:value)", { value: login }]).first
+      where(conditions).where(['name_abbreviation = :value OR lower(email) = lower(:value)', { value: login }]).first
     else
       where(conditions).first
     end
@@ -201,8 +209,8 @@ class User < ApplicationRecord
       max_val = name_abbr_config[:length_default]&.last || 3
     end
 
-    na.blank? || !na.length.between?(min_val, max_val) &&
-      errors.add(:name_abbreviation, "has to be #{min_val} to #{max_val} characters long")
+    na.blank? || (!na.length.between?(min_val, max_val) &&
+      errors.add(:name_abbreviation, "has to be #{min_val} to #{max_val} characters long"))
   end
 
   def mail_checker
@@ -228,21 +236,21 @@ class User < ApplicationRecord
   end
 
   def restore_counters_data
-    samples_number = self.samples_created.pluck(:short_label).map do |l|
+    samples_number = samples_created.pluck(:short_label).map do |l|
       l.split('-').map(&:to_i)
     end.flatten.max || 0
 
-    reactions_number = self.reactions.pluck(:name).map do |l|
+    reactions_number = reactions.pluck(:name).map do |l|
       l.split('#').last.to_i
     end.max || 0
 
     self.counters = {
       samples: samples_number,
       reactions: reactions_number,
-      wellplates: self.wellplates.count + self.wellplates.deleted.count
+      wellplates: wellplates.count + wellplates.deleted.count,
     }
 
-    self.save!
+    save!
   end
 
   def increment_counter(key)
@@ -255,27 +263,29 @@ class User < ApplicationRecord
   end
 
   def has_profile
-    self.create_profile if !self.profile
-    if self.type == 'Person'
-      profile = self.profile
-      data = profile.data || {}
-      file = Rails.root.join('db', 'chmo.default.profile.json')
-      result = JSON.parse(File.read(file, encoding: 'bom|utf-8')) if File.exist?(file)
-      unless result.nil? || result['ols_terms'].nil?
-        data['chmo'] = result['ols_terms']
-        data['is_templates_moderator'] = false
-        data['molecule_editor'] = false
-        data['converter_admin'] = false
-        data.merge!(layout: {
-          'sample' => 1,
-          'reaction' => 2,
-          'wellplate' => 3,
-          'screen' => 4,
-          'research_plan' => 5
-        }) if (data['layout'].nil?)
-        self.profile.update_columns(data: data)
-      end
+    create_profile unless profile
+    return unless type == 'Person'
+
+    profile = self.profile
+    data = profile.data || {}
+    file = Rails.root.join('db', 'chmo.default.profile.json')
+    result = JSON.parse(File.read(file, encoding: 'bom|utf-8')) if File.exist?(file)
+    return if result.nil? || result['ols_terms'].nil?
+
+    data['chmo'] = result['ols_terms']
+    data['is_templates_moderator'] = false
+    data['molecule_editor'] = false
+    data['converter_admin'] = false
+    if data['layout'].nil?
+      data.merge!(layout: {
+                    'sample' => 1,
+                    'reaction' => 2,
+                    'wellplate' => 3,
+                    'screen' => 4,
+                    'research_plan' => 5,
+                  })
     end
+    self.profile.update_columns(data: data)
   end
 
   has_many :users_groups, dependent: :destroy, foreign_key: :user_id
@@ -299,7 +309,7 @@ class User < ApplicationRecord
 
   def current_affiliations
     Affiliation.joins(
-      'INNER JOIN user_affiliations ua ON ua.affiliation_id = affiliations.id'
+      'INNER JOIN user_affiliations ua ON ua.affiliation_id = affiliations.id',
     ).where(
       '(ua.user_id = ?) and (ua.deleted_at ISNULL) and (ua.to ISNULL or ua.to > ?)',
       id, Time.now
@@ -337,7 +347,8 @@ class User < ApplicationRecord
   end
 
   def update_matrix
-    check_sql = ApplicationRecord.send(:sanitize_sql_array, ["SELECT to_regproc('generate_users_matrix') IS NOT null as rs"])
+    check_sql = ApplicationRecord.send(:sanitize_sql_array,
+                                       ["SELECT to_regproc('generate_users_matrix') IS NOT null as rs"])
     result = ApplicationRecord.connection.exec_query(check_sql)
 
     if result.presence&.first&.fetch('rs', false)
@@ -349,12 +360,17 @@ class User < ApplicationRecord
   end
 
   def remove_from_matrices
-    Matrice.where('include_ids @> ARRAY[?]', [id]).each { |ma| ma.update_columns(include_ids: ma.include_ids -= [id]) }
-    Matrice.where('exclude_ids @> ARRAY[?]', [id]).each { |ma| ma.update_columns(exclude_ids: ma.exclude_ids -= [id]) }
+    Matrice.where('include_ids @> ARRAY[?]', [id]).find_each do |ma|
+      ma.update_columns(include_ids: ma.include_ids -= [id])
+    end
+    Matrice.where('exclude_ids @> ARRAY[?]', [id]).find_each do |ma|
+      ma.update_columns(exclude_ids: ma.exclude_ids -= [id])
+    end
   end
 
   def self.gen_matrix(user_ids = nil)
-    check_sql = ApplicationRecord.send(:sanitize_sql_array, ["SELECT to_regproc('generate_users_matrix') IS NOT null as rs"])
+    check_sql = ApplicationRecord.send(:sanitize_sql_array,
+                                       ["SELECT to_regproc('generate_users_matrix') IS NOT null as rs"])
     result = ApplicationRecord.connection.exec_query(check_sql)
     if result.presence&.first&.fetch('rs', false)
       sql = if user_ids.present?
@@ -406,6 +422,10 @@ class User < ApplicationRecord
     super && provider.blank?
   end
 
+    def jwt_auth_token
+      JWT.encode({ sub: id, jti: jti }, Rails.application.secrets.secret_key_base)
+    end
+
   def extra_rules
     Matrice.extra_rules || {}
   end
@@ -427,7 +447,7 @@ class User < ApplicationRecord
   end
 
   def create_chemotion_public_collection
-    return unless self.type == 'Person'
+    return unless type == 'Person'
 
     Collection.create(user: self, label: 'chemotion-repository.net', is_locked: true, position: 1)
   end
@@ -437,11 +457,11 @@ class User < ApplicationRecord
   end
 
   def send_welcome_email
-    file_path =  Rails.public_path.join('welcome-message.md')
+    file_path = Rails.public_path.join('welcome-message.md')
     if File.exist?(file_path)
       SendWelcomeEmailJob.perform_later(id)
     else
-      #do nothing
+      # do nothing
     end
   end
 
@@ -509,5 +529,4 @@ class Group < User
 end
 
 # rubocop: enable Metrics/ClassLength
-# rubocop: enable Metrics/MethodLength
 # rubocop: enable Metrics/AbcSize

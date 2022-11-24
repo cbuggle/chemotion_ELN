@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2023_08_10_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "pg_trgm"
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
@@ -689,6 +690,15 @@ ActiveRecord::Schema.define(version: 2023_08_10_100000) do
     t.index ["well_id"], name: "index_measurements_on_well_id"
   end
 
+  create_table "media", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string "type"
+    t.string "sum_formula"
+    t.string "sample_name"
+    t.string "molecule_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "messages", id: :serial, force: :cascade do |t|
     t.integer "channel_id"
     t.jsonb "content", null: false
@@ -826,6 +836,55 @@ ActiveRecord::Schema.define(version: 2023_08_10_100000) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
+  create_table "provenances", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "reaction_process_id"
+    t.datetime "starts_at"
+    t.string "city"
+    t.string "doi"
+    t.string "patent"
+    t.string "publication_url"
+    t.string "username"
+    t.string "name"
+    t.string "orcid"
+    t.string "organization"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reaction_process_actions", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.uuid "reaction_process_step_id"
+    t.string "action_name"
+    t.integer "position"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.integer "duration"
+    t.integer "start_time"
+    t.json "workup"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reaction_process_steps", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.uuid "reaction_process_id"
+    t.string "name"
+    t.integer "position"
+    t.boolean "locked"
+    t.integer "duration"
+    t.integer "start_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "reaction_process_vessel_id"
+  end
+
+  create_table "reaction_processes", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.integer "reaction_id"
+    t.integer "duration"
+    t.datetime "starts_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "reactions", id: :serial, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -874,6 +933,10 @@ ActiveRecord::Schema.define(version: 2023_08_10_100000) do
     t.boolean "waste", default: false
     t.float "coefficient", default: 1.0
     t.boolean "show_label", default: false, null: false
+    t.integer "reaction_step"
+    t.string "intermediate_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at"
     t.index ["reaction_id"], name: "index_reactions_samples_on_reaction_id"
     t.index ["sample_id"], name: "index_reactions_samples_on_sample_id"
   end
@@ -1062,6 +1125,7 @@ ActiveRecord::Schema.define(version: 2023_08_10_100000) do
     t.string "sum_formula"
     t.jsonb "solvent"
     t.boolean "dry_solvent", default: false
+    t.boolean "hide_in_eln"
     t.boolean "inventory_sample", default: false
     t.index ["deleted_at"], name: "index_samples_on_deleted_at"
     t.index ["identifier"], name: "index_samples_on_identifier"
@@ -1069,6 +1133,14 @@ ActiveRecord::Schema.define(version: 2023_08_10_100000) do
     t.index ["molecule_id"], name: "index_samples_on_sample_id"
     t.index ["molecule_name_id"], name: "index_samples_on_molecule_name_id"
     t.index ["user_id"], name: "index_samples_on_user_id"
+  end
+
+  create_table "samples_preparations", force: :cascade do |t|
+    t.integer "sample_id"
+    t.uuid "reaction_process_id"
+    t.string "preparations", array: true
+    t.string "equipment", array: true
+    t.string "details"
   end
 
   create_table "scan_results", force: :cascade do |t|
@@ -1275,10 +1347,12 @@ ActiveRecord::Schema.define(version: 2023_08_10_100000) do
     t.datetime "locked_at"
     t.boolean "account_active"
     t.integer "matrix", default: 0
+    t.string "jti"
     t.jsonb "providers"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["jti"], name: "index_users_on_jti"
     t.index ["name_abbreviation"], name: "index_users_on_name_abbreviation", unique: true, where: "(name_abbreviation IS NOT NULL)"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
