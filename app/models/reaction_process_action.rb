@@ -24,8 +24,6 @@ class ReactionProcessAction < ApplicationRecord
 
   validate :validate_workup
 
-  after_create :create_transfer_target_action
-
   delegate :reaction, :reaction_process, to: :reaction_process_step
 
   def parse_params(action_params)
@@ -218,11 +216,4 @@ class ReactionProcessAction < ApplicationRecord
     actions
   end
 
-  def create_transfer_target_action
-    return unless action_name == 'TRANSFER'
-    return unless workup['transfer_source_step_id'] == reaction_process_step.id
-
-    transfer_step = ReactionProcessStep.find workup['transfer_target_step_id']
-    transfer_step.add_transfer_target_action(reaction_process_step, workup)
-  end
 end

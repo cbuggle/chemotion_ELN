@@ -44,6 +44,8 @@ class ReactionProcessStep < ApplicationRecord
   end
 
   def append_action(action_params)
+    return create_transfer_target_action(action_params.workup) if action_params.action_name == 'TRANSFER'
+
     action = reaction_process_actions.new(
       position: reaction_process_actions.count,
       start_time: duration,
@@ -63,19 +65,6 @@ class ReactionProcessStep < ApplicationRecord
     end
     save
     reaction_process.normalize_timestamps
-  end
-
-  def add_transfer_target_action(process_step, workup)
-    new_action = ReactionProcessAction.new(action_name: 'TRANSFER', reaction_process_step: self, workup: workup)
-
-    sample = Sample.find_by(id: workup['sample_id'])
-
-    new_action.position = reaction_process_actions.count
-    new_action.workup['description'] = "from #{process_step.label}:"
-    new_action.workup['description'] += " #{sample.preferred_label || sample.short_label}"
-    new_action.workup['description'] += " #{workup['transfer_percentage']}%"
-    reaction_process_actions << new_action
-    new_action
   end
 
   def toggle_locked
@@ -114,6 +103,23 @@ class ReactionProcessStep < ApplicationRecord
 
   def added_material_ids(material_type)
     add_actions_acting_as(material_type).map { |action| action.workup['sample_id'] }
+  end
+
+  protected
+
+  def create_transfer_target_action( workup)
+    target_step = ReactionProcessStep.find workup['transfer_target_step_id']
+
+    new_action = ReactionProcessAction.new(action_name: 'TRANSFER', workup: workup)
+
+    sample = Sample.find_by(id: workup['sample_id'])
+
+    new_action.position = target_step.reaction_process_actions.count
+    new_action.workup['description'] = "from #{label}:"
+    new_action.workup['description'] += " #{sample.preferred_label || sample.short_label}"
+    new_action.workup['description'] += " #{workup['transfer_percentage']}%"
+    target_step.reaction_process_actions << new_action
+    new_action
   end
 
   private
