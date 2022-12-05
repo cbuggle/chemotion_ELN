@@ -92,4 +92,37 @@ class ReactionProcessStep < ApplicationRecord
     reaction_process.normalize_timestamps
     steps
   end
+
+  def added_materials(material_type)
+    added_material_ids = reaction_process.reaction_process_steps.where('position <= ?', position).map do |process_step|
+      process_step.added_material_ids(material_type)
+    end.flatten.uniq
+
+    case material_type
+    when 'SOLVENT'
+      Sample.find added_material_ids
+    when 'ADDITIVE'
+      Medium::Additive.find added_material_ids
+    when 'MEDIUM'
+      Medium::MediumSample.find added_material_ids
+    when 'DIVERSE_SOLVENT'
+      Medium::DiverseSolvent.find added_material_ids
+    else
+      []
+    end
+  end
+
+  def added_material_ids(material_type)
+    add_actions_acting_as(material_type).map { |action| action.workup['sample_id'] }
+  end
+
+  private
+
+  def add_actions_acting_as(material_type)
+    add_actions.select { |action| action.workup['acts_as'] == material_type }
+  end
+
+  def add_actions
+    reaction_process_actions.select { |action| action.action_name == 'ADD' }
+  end
 end

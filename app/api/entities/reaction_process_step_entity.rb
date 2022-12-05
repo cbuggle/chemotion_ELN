@@ -4,7 +4,7 @@ module Entities
   class ReactionProcessStepEntity < ApplicationEntity
     expose(
       :id, :name, :position, :label, :locked, :start_time, :duration, :reaction_process_id, :reaction_id,
-      :step_name_suggestions_options, :samples_options, :added_samples_options, :equipment_options,
+      :step_name_suggestions_options, :materials_options, :added_materials_options, :equipment_options,
       :mounted_equipment_options, :transfer_to_options, :transfer_sample_options,
       :action_equipment_options
     )
@@ -51,9 +51,9 @@ module Entities
       process_step_names.map.with_index { |name, idx| { value: idx, label: name } }
     end
 
-    def samples_options
+    def materials_options
       samples = object.reaction.starting_materials + object.reaction.reactants
-      solvents = object.reaction.solvents + object.reaction.purification_solvents
+      solvents = (object.reaction.solvents + object.reaction.purification_solvents).uniq
       intermediates = object.reaction.intermediate_samples
 
       # solvents are to be defined terminally as bespoken with NJung, cbuggle, 06.10.2021
@@ -77,13 +77,13 @@ module Entities
       }
     end
 
-    def added_samples_options
+    def added_materials_options
       {
         # Delivering SOLVENT, MEDIUM und ADDITIVE as bespoken with NJung, 06.10.2021.
-        SOLVENT: Sample.find(added_solvent_ids).map { |s| { value: s.id, label: s.preferred_label.to_s } },
-        MEDIUM: Medium::MediumSample.find(added_medium_sample_ids).map { |s| { value: s.id, label: s.label.to_s } },
-        ADDITIVE: Medium::Additive.find(added_additive_ids).map { |s| { value: s.id, label: s.label.to_s } },
-        DIVERSE_SOLVENT: Medium::DiverseSolvent.find(added_diverse_solvent_ids).map do |s|
+        SOLVENT: object.added_materials('SOLVENT').map { |s| { value: s.id, label: s.preferred_label.to_s } },
+        MEDIUM: object.added_materials('MEDIUM').map { |s| { value: s.id, label: s.label.to_s } },
+        ADDITIVE: object.added_materials('ADDITIVE').map { |s| { value: s.id, label: s.label.to_s } },
+        DIVERSE_SOLVENT: object.added_materials('DIVERSE_SOLVENT').map do |s|
                            { value: s.id, label: s.label.to_s }
                          end,
       }
@@ -145,43 +145,11 @@ module Entities
       end
     end
 
-    def added_sample_ids
-      add_actions_acting_as('SAMPLE').map { |action| action.workup['sample_id'] }
-    end
-
-    def saved_sample_ids
-      add_actions_acting_as('SAMPLE').map { |action| action.workup['sample_id'] }
-    end
-
-    def added_solvent_ids
-      add_actions_acting_as('SOLVENT').map { |action| action.workup['sample_id'] }
-    end
-
-    def added_diverse_solvent_ids
-      add_actions_acting_as('DIVERSE_SOLVENT').map { |action| action.workup['sample_id'] }
-    end
-
-    def added_medium_sample_ids
-      add_actions_acting_as('MEDIUM').map { |action| action.workup['sample_id'] }
-    end
-
-    def added_additive_ids
-      add_actions_acting_as('ADDITIVE').map { |action| action.workup['sample_id'] }
-    end
-
     def mounted_equipment
       object.reaction_process_actions.select { |action| action.workup['mount_action'] == 'MOUNT' }
             .map do |action|
         action.workup['equipment'].to_s
       end
-    end
-
-    def add_actions_acting_as(acts_as)
-      add_actions.select { |action| action.workup['acts_as'] == acts_as }
-    end
-
-    def add_actions
-      object.reaction_process_actions.select { |action| action.action_name == 'ADD' }
     end
 
     def saved_sample_ids

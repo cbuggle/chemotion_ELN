@@ -22,9 +22,9 @@ describe Chemotion::ReactionProcessStepAPI do
         reaction_process_id: anything,
         reaction_process_actions: [],
         vessel: hash_including('name' => 'A vessel'),
-        samples_options: { 'ADDITIVE' => [], 'MEDIUM' => [], 'INTERMEDIATE' => [], 'SAMPLE' => [], 'SOLVENT' => [],
+        materials_options: { 'ADDITIVE' => [], 'MEDIUM' => [], 'INTERMEDIATE' => [], 'SAMPLE' => [], 'SOLVENT' => [],
                            'DIVERSE_SOLVENT' => [] },
-        added_samples_options: { 'ADDITIVE' => [], 'MEDIUM' => [], 'SOLVENT' => [], 'DIVERSE_SOLVENT' => [] },
+        added_materials_options: { 'ADDITIVE' => [], 'MEDIUM' => [], 'SOLVENT' => [], 'DIVERSE_SOLVENT' => [] },
         equipment_options: array_including(hash_including({ 'label' => 'Cannula', 'value' => 'CANNULA' })),
         mounted_equipment_options: [],
       }.deep_stringify_keys
@@ -87,7 +87,7 @@ describe Chemotion::ReactionProcessStepAPI do
 
     context 'with added samples' do
       let!(:sample) { create(:sample, reaction: reaction_process_step.reaction) }
-      let(:expected_samples_options) do
+      let(:expected_materials_options) do
         {
           'ADDITIVE' => [],
           'MEDIUM' => [],
@@ -102,11 +102,11 @@ describe Chemotion::ReactionProcessStepAPI do
 
       it 'delivers sample_options' do
         pending "I failed to setup a sample that is properly associated with the reaction. Probably lacks some associated collection or something 'SOLVENT'=>'[]'" # cbuggle, 23.8.2021
-        expect(json_response['reaction_process_step']['samples_options']).to include expected_samples_options
+        expect(json_response['reaction_process_step']['materials_options']).to include expected_materials_options
       end
 
       it 'delivers added sample_options' do
-        expect(json_response['reaction_process_step']['added_samples_options']).to include expected_samples_options
+        expect(json_response['reaction_process_step']['added_materials_options']).to include expected_materials_options
       end
     end
   end
