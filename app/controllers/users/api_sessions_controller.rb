@@ -2,12 +2,14 @@
 
 module Users
   class ApiSessionsController < Devise::SessionsController
+    respond_to :json
+
     private
 
     def respond_with(_resource, _opts = {})
       respond_to do |format|
         format.json do
-          render json: { message: 'You are logged in.', user: UserSerializer.new(current_user).to_json, status: :ok }
+          render json: { message: 'You are logged in.' }
         end
       end
     end

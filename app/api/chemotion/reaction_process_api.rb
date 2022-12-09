@@ -4,7 +4,60 @@ module Chemotion
   class ReactionProcessAPI < Grape::API
     helpers StrongParamsHelpers
 
-    namespace :reaction_process do
+    namespace :reactions do
+      desc 'Create associated reaction procedure unless existant'
+      params do
+        requires :id, type: Integer, desc: 'Reaction id'
+      end
+
+      route_param :id do
+        before do
+          @reaction = Reaction.find_by(id: params[:id])
+          error!('404 Not Found', 404) unless @reaction
+
+          @element_policy = ElementPolicy.new(current_user, @reaction)
+          error!('401 Unauthorized', 401) unless current_user && @element_policy.read?
+        end
+
+        get :reaction_process do
+          ReactionProcess.find_or_create_by(reaction: @reaction)
+
+          present @reaction.reaction_process, with: Entities::ReactionProcessEntity, root: :reaction_process
+        end
+      end
+    end
+
+    namespace :reaction_processes do
+      desc 'get options for Select'
+      params do
+        optional :collection_id, type: Integer, desc: 'Collection id'
+      end
+
+      get do
+        reactions = if params[:collection_id]
+                      begin
+                        Collection.belongs_to_or_shared_by(current_user.id,
+                                                           current_user.group_ids).find(params[:collection_id]).reactions
+                      rescue ActiveRecord::RecordNotFound
+                        Reaction.none
+                      end
+                    else
+                      current_user.collections.map(&:reactions).flatten.uniq
+                    end.sort_by(&:id)
+
+        # Attributes required in the Reaction Editor (e.g. on it's reaction index page).
+        { reactions: reactions.map do |reaction|
+                       { value: reaction.id, label: reaction.short_label, short_label: reaction.short_label,
+                         reaction_svg_file: reaction.reaction_svg_file, id: reaction.id }
+                     end }
+      end
+
+      desc 'get options for collection Select'
+      get :collection_select_options do
+        { collection_select_options:
+        current_user.collections.map { |collection| { value: collection.id, label: collection.label } } }
+      end
+
       route_param :id do
         before do
           @reaction_process = ReactionProcess.find(params[:id])
@@ -86,7 +139,7 @@ module Chemotion
               error!('404 Not Found', 404) unless vessel
               if @reaction_process
                 ReactionProcessVessel.find_or_create_by(reaction_process: @reaction_process,
-                                                          vessel: vessel)
+                                                        vessel: vessel)
               end
             end
 
