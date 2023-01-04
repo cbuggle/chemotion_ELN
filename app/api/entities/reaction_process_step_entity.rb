@@ -6,17 +6,23 @@ module Entities
       :id, :name, :position, :label, :locked, :start_time, :duration, :reaction_process_id, :reaction_id,
       :step_name_suggestions_options, :materials_options, :added_materials_options, :equipment_options,
       :mounted_equipment_options, :transfer_to_options, :transfer_sample_options,
-      :action_equipment_options
+      :action_equipment_options, :step_number, :total_steps
     )
 
     expose_timestamps
 
+    expose! :actions, using: 'Entities::ReactionProcessActionEntity'
     expose! :reaction_process_actions, using: 'Entities::ReactionProcessActionEntity'
     expose! :vessel, using: 'Entities::VesselEntity'
 
     private
 
     def reaction_process_actions
+      # only for backwards compatibality
+      actions
+    end
+
+    def actions
       object.reaction_process_actions.order('position')
     end
 
@@ -37,6 +43,10 @@ module Entities
 
     def duration
       object.duration || 0
+    end
+
+    def total_steps
+      object.reaction_process.reaction_process_steps.count
     end
 
     def step_name_suggestions_options
