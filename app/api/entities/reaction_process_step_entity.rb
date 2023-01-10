@@ -4,7 +4,7 @@ module Entities
   class ReactionProcessStepEntity < ApplicationEntity
     expose(
       :id, :name, :position, :label, :locked, :start_time, :duration, :reaction_process_id, :reaction_id,
-      :step_name_suggestions_options, :materials_options, :added_materials_options, :equipment_options,
+      :materials_options, :added_materials_options, :equipment_options,
       :mounted_equipment_options, :transfer_to_options, :transfer_sample_options,
       :action_equipment_options, :step_number, :total_steps
     )
@@ -47,18 +47,6 @@ module Entities
 
     def total_steps
       object.reaction_process.reaction_process_steps.count
-    end
-
-    def step_name_suggestions_options
-      reaction_ids = Reaction.where(creator: object.reaction.creator).ids
-
-      procedure_ids = ReactionProcess.where(reaction_id: reaction_ids).ids
-
-      process_steps = ReactionProcessStep.where(reaction_process_id: procedure_ids).all
-
-      process_step_names = process_steps.filter_map(&:name).uniq.reject { |name| name == object.name }
-
-      process_step_names.map.with_index { |name, idx| { value: idx, label: name } }
     end
 
     def materials_options

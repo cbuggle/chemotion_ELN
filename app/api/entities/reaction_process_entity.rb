@@ -97,7 +97,20 @@ module Entities
           preparations: sample_preparation_options,
           equipment: sample_equipment_options,
         },
+        step_name_suggestions: step_name_suggestion_options
       }
+    end
+
+    def step_name_suggestion_options
+      reaction_ids = Reaction.where(creator: object.reaction.creator).ids
+
+      procedure_ids = ReactionProcess.where(reaction_id: reaction_ids).ids
+
+      process_steps = ReactionProcessStep.where(reaction_process_id: procedure_ids).all
+
+      process_step_names = process_steps.filter_map(&:name).uniq
+
+      process_step_names.map.with_index { |name, idx| { value: idx, label: name } }
     end
 
     def vessel_options
