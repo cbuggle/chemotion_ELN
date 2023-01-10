@@ -5,7 +5,7 @@ module Chemotion
     helpers StrongParamsHelpers
     include Grape::Extensions::Hashie::Mash::ParamBuilder
 
-    namespace :reaction_process_step do
+    namespace :reaction_process_steps do
       route_param :id do
         before do
           @reaction_process_step = ReactionProcessStep.find_by(id: params[:id])
@@ -26,7 +26,7 @@ module Chemotion
         end
 
         put do
-          @reaction_process_step.update params[:reaction_process_step]
+          @reaction_process_step.update permitted_params[:reaction_process_step]
           present @reaction_process_step, with: Entities::ReactionProcessStepEntity, root: :reaction_process_step
         end
 

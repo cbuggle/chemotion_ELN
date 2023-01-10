@@ -16,9 +16,9 @@ Rails.application.routes.draw do
     devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: 'users/omniauth' }
 
     devise_scope :user do
-      # I tried to include `sessions: 'users/sessions'` (in devise_for controllers:) for the editor specific
+      # I tried to include `sessions: 'users/sessions'` (in devise_for controllers:) for the Reaction Process Editor specific
       # authentication overrides. However this interfered with ELN authentication, raising errors.
-      # The easy workaround is to have a separate api sign_in route for the reaction process editor.
+      # The easy workaround is to have a separate api sign_in route for the Reaction Process Editor.
       post 'api/v1/sign_in', to: 'users/api_sessions#create', format: :json
       delete 'api/v1/sign_out', to: 'users/api_sessions#destroy', format: :json
     end

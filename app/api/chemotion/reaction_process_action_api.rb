@@ -6,7 +6,7 @@ module Chemotion
     include Grape::Extensions::Hashie::Mash::ParamBuilder
     helpers StrongParamsHelpers
 
-    namespace :reaction_process_action do
+    namespace :reaction_process_actions do
       route_param :id do
         before do
           @action = ReactionProcessAction.find_by(id: params[:id])

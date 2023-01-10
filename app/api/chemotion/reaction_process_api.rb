@@ -121,11 +121,19 @@ module Chemotion
 
         namespace :reaction_process_steps do
           desc 'Create an associated ReactionProcessStep'
+          params do
+            requires :reaction_process_step, type: Hash do
+              optional :name
+              optional :locked
+            end
+          end
+
           post do
             new_step = @reaction_process.reaction_process_steps.create(
-              position: @reaction_process.reaction_process_steps.count,
+              position: @reaction_process.reaction_process_steps.count
             )
 
+            new_step.update params[:reaction_process_step]
             new_step.update(start_time: @reaction_process.duration)
             present new_step, with: Entities::ReactionProcessStepEntity, root: :reaction_process_step
           end
