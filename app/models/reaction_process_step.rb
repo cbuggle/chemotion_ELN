@@ -29,11 +29,16 @@ class ReactionProcessStep < ApplicationRecord
   delegate :reaction, to: :reaction_process
 
   def label
-    "Step #{step_number}"
+    "#{position + 1}/#{reaction_process.reaction_process_steps.count} #{name}"
   end
 
-  def step_number
-    position + 1
+  def update_position(position)
+    reaction_process_steps = reaction_process.reaction_process_steps.order(:position).to_a
+    reaction_process_steps.delete(self)
+    reaction_process_steps.insert(position, self)
+    reaction_process_steps.each_with_index { |reaction_process_step, idx| reaction_process_step.update(position: idx) }
+    reaction_process.normalize_timestamps
+    reaction_process_steps
   end
 
   def set_vessel(new_vessel)
@@ -43,7 +48,7 @@ class ReactionProcessStep < ApplicationRecord
     save
   end
 
-  def append_action(action_params)
+  def append_action(action_params, insert_before)
     return create_transfer_target_action(action_params.workup) if action_params.action_name == 'TRANSFER'
 
     action = reaction_process_actions.new(
@@ -55,6 +60,11 @@ class ReactionProcessStep < ApplicationRecord
 
     action.set_initial_description
     action.save
+
+    action.update_position(insert_before) if insert_before
+
+    create_condition_end_action(action) if action_params.action_name == 'CONDITION'
+
     action
   end
 
@@ -105,9 +115,18 @@ class ReactionProcessStep < ApplicationRecord
     add_actions_acting_as(material_type).map { |action| action.workup['sample_id'] }
   end
 
-  protected
+  private
 
-  def create_transfer_target_action( workup)
+  def create_condition_end_action(action)
+    reaction_process_actions.create!(
+      position: reaction_process_actions.count,
+      start_time: duration,
+      action_name: 'CONDITION_END',
+      workup: action.workup.merge(start_condition_id: action.id)
+    )
+  end
+
+  def create_transfer_target_action(workup)
     target_step = ReactionProcessStep.find workup['transfer_target_step_id']
 
     new_action = ReactionProcessAction.new(action_name: 'TRANSFER', workup: workup)
@@ -121,8 +140,6 @@ class ReactionProcessStep < ApplicationRecord
     target_step.reaction_process_actions << new_action
     new_action
   end
-
-  private
 
   def add_actions_acting_as(material_type)
     add_actions.select { |action| action.workup['acts_as'] == material_type }

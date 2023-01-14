@@ -26,6 +26,15 @@ class ReactionProcessAction < ApplicationRecord
 
   delegate :reaction, :reaction_process, to: :reaction_process_step
 
+
+  def action_number
+    position + 1 # this will be filtered for actions only (without condition actions)
+  end
+
+  def label
+    "#{action_number} #{action_name} #{workup['description']}"
+  end
+
   def parse_params(action_params)
     update(action_params)
     update_duration_by_workup(action_params.workup)

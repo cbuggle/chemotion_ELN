@@ -3,24 +3,18 @@
 module Entities
   class ReactionProcessStepEntity < ApplicationEntity
     expose(
-      :id, :name, :position, :label, :locked, :start_time, :duration, :reaction_process_id, :reaction_id,
+      :id, :name, :position, :locked, :start_time, :duration, :reaction_process_id, :reaction_id,
       :materials_options, :added_materials_options, :equipment_options,
       :mounted_equipment_options, :transfer_to_options, :transfer_sample_options,
-      :action_equipment_options, :step_number, :total_steps
+      :action_equipment_options, :label
     )
 
     expose_timestamps
 
     expose! :actions, using: 'Entities::ReactionProcessActionEntity'
-    expose! :reaction_process_actions, using: 'Entities::ReactionProcessActionEntity'
     expose! :vessel, using: 'Entities::VesselEntity'
 
     private
-
-    def reaction_process_actions
-      # only for backwards compatibality
-      actions
-    end
 
     def actions
       object.reaction_process_actions.order('position')
@@ -43,10 +37,6 @@ module Entities
 
     def duration
       object.duration || 0
-    end
-
-    def total_steps
-      object.reaction_process.reaction_process_steps.count
     end
 
     def materials_options
@@ -106,7 +96,7 @@ module Entities
     def transfer_to_options
       process_steps = object.reaction_process.reaction_process_steps.reject { |s| s == object }
 
-      process_steps.map { |process_step| { value: process_step.id, label: process_step.label.to_s } }
+      process_steps.sort_by(&:position).map { |process_step| { value: process_step.id, label: process_step.label } }
     end
 
     # This is just hardcoded definining the available equipment depending on action type.

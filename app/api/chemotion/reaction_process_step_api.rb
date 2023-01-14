@@ -30,6 +30,11 @@ module Chemotion
           present @reaction_process_step, with: Entities::ReactionProcessStepEntity, root: :reaction_process_step
         end
 
+        desc 'Update Position of a ReactionProcessStep within the ReactionProcess (i.e. re-sort)'
+        put :update_position do
+          @reaction_process_step.update_position(params[:position])
+        end
+
         desc 'Destroy a ReactionProcessStep'
         delete do
           @reaction_process_step.destroy_from_reaction_process
@@ -41,11 +46,12 @@ module Chemotion
               requires :action_name, type: String, desc: 'Name of the Action described'
               requires :workup, type: Hash, desc: 'Custom Action Parameters'
             end
+            optional :insert_before
           end
 
           desc 'Add a ReactionProcessAction'
           post do
-            action = @reaction_process_step.append_action permitted_params[:action]
+            action = @reaction_process_step.append_action(permitted_params[:action], params[:insert_before])
             if action.valid?
               status 201
               present action, with: Entities::ReactionProcessActionEntity, root: :reaction_process_action

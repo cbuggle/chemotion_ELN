@@ -2,7 +2,7 @@
 
 module Entities
   class ReactionProcessActionEntity < ApplicationEntity
-    expose(:id, :action_name, :position, :workup,
+    expose(:id, :action_name, :position, :workup, :action_number, :label,
            :starts_at, :ends_at, :duration, :start_time)
 
     expose! :sample, using: 'Entities::SampleEntity'
@@ -16,6 +16,10 @@ module Entities
 
     def duration
       object.duration || 0
+    end
+
+    def action_number
+      object.position + 1
     end
   end
 end
