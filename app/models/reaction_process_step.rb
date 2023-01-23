@@ -28,12 +28,20 @@ class ReactionProcessStep < ApplicationRecord
 
   delegate :reaction, to: :reaction_process
 
-  def numbered_actions
-    reaction_process_actions.order(:position).reject(&:is_condition_action?)
-  end
-
   def label
     "#{position + 1}/#{reaction_process.reaction_process_steps.count} #{name}"
+  end
+
+  def numbered_actions
+    reaction_process_actions.order(:position).reject(&:is_condition?)
+  end
+
+  def actions_count
+    reaction_process_actions.size
+  end
+
+  def last_action_position
+    actions_count - 1
   end
 
   def update_position(position)
@@ -122,12 +130,14 @@ class ReactionProcessStep < ApplicationRecord
   private
 
   def create_condition_end_action(action)
-    reaction_process_actions.create!(
+    condition_end = reaction_process_actions.create!(
       position: reaction_process_actions.count,
       start_time: duration,
       action_name: 'CONDITION_END',
-      workup: action.workup.merge(start_condition_id: action.id),
+      workup: action.workup.merge(condition_start_id: action.id),
     )
+    action.workup['condition_end_id'] = condition_end.id
+    action.save
   end
 
   def create_transfer_target_action(workup)

@@ -19,25 +19,30 @@
 
 class ReactionProcessAction < ApplicationRecord
   belongs_to :reaction_process_step
+  before_destroy :destroy_condition_end
 
   validate :validate_workup
 
   delegate :reaction, :reaction_process, to: :reaction_process_step
 
+  def label
+    "#{action_number} #{action_name} #{workup['description']}"
+  end
+
   def action_number
-    if is_condition_action?
+    if is_condition?
       ''
     else
       reaction_process_step.numbered_actions.find_index(self) + 1
     end # this will be filtered for actions only (without condition actions)
   end
 
-  def is_condition_action?
+  def is_condition?
     %w[CONDITION CONDITION_END].include?(action_name)
   end
 
-  def label
-    "#{action_number} #{action_name} #{workup['description']}"
+  def step_actions_count
+    reaction_process_step.actions_count
   end
 
   def parse_params(action_params)
@@ -198,9 +203,17 @@ class ReactionProcessAction < ApplicationRecord
     actions.delete(self)
     actions.each_with_index { |action, idx| action.update(position: idx) }
 
-    delete
+    destroy
 
     reaction_process_step.normalize_timestamps
     actions
+  end
+
+  private
+
+  def destroy_condition_end
+    return unless action_name == 'CONDITION'
+
+    condition_end = ReactionProcessAction.find_by(id: workup['condition_end_id'])&.destroy
   end
 end
