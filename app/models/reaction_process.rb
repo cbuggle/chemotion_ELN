@@ -38,4 +38,8 @@ class ReactionProcess < ApplicationRecord
     end
     save
   end
+
+  def saved_sample_ids
+    reaction_process_steps.map(&:saved_sample_ids).flatten.uniq
+  end
 end

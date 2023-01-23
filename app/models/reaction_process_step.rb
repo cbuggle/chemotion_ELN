@@ -29,7 +29,11 @@ class ReactionProcessStep < ApplicationRecord
   delegate :reaction, to: :reaction_process
 
   def label
-    "#{position + 1}/#{reaction_process.reaction_process_steps.count} #{name}"
+    "#{step_number}/#{reaction_process.reaction_process_steps.count} #{name}"
+  end
+
+  def step_number
+    position + 1
   end
 
   def numbered_actions
@@ -125,6 +129,10 @@ class ReactionProcessStep < ApplicationRecord
 
   def added_material_ids(material_type)
     add_actions_acting_as(material_type).map { |action| action.workup['sample_id'] }
+  end
+
+  def saved_sample_ids
+     reaction_process_actions.select { |action| action.action_name == 'SAVE' }.map { |action| action.workup['sample_id'] }
   end
 
   private

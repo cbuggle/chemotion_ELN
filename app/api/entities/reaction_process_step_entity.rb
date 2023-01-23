@@ -24,8 +24,8 @@ module Entities
       object.reaction_process_id || 'None'
     end
 
-    # We piggyback the reaction_id, samples_options, added_samples_options, equipment_options, mounted_equipment_options
-    # onto each process_step for convenient usage in UI Selects. cbuggle, 24.8.2021.
+    # We piggyback the reaction_id, samples_options, added_samples_options, equipment_options, mounted_equipment_options,
+    # transfer_sample_options onto each process_step for convenient usage in UI Selects. cbuggle, 24.8.2021.
 
     def reaction_id
       object.reaction.id
@@ -88,15 +88,19 @@ module Entities
     end
 
     def transfer_sample_options
-      Sample.where(id: saved_sample_ids).includes(%i[molecule molecule_name]).map do |s|
+      Sample.where(id: transferable_sample_ids).includes(%i[molecule molecule_name]).map do |s|
         { value: s.id, label: (s.preferred_label || s.short_label).to_s }
       end
     end
 
     def transfer_to_options
-      process_steps = object.reaction_process.reaction_process_steps.reject { |s| s == object }
+      process_steps = object.reaction_process.reaction_process_steps
 
       process_steps.sort_by(&:position).map { |process_step| { value: process_step.id, label: process_step.label } }
+    end
+
+    def transferable_sample_ids
+      object.reaction_process.saved_sample_ids
     end
 
     # This is just hardcoded definining the available equipment depending on action type.
@@ -138,14 +142,6 @@ module Entities
             .map do |action|
         action.workup['equipment'].to_s
       end
-    end
-
-    def saved_sample_ids
-      save_sample_actions.map { |action| action.workup['sample_id'] }
-    end
-
-    def save_sample_actions
-      object.reaction_process_actions.select { |action| action.action_name == 'SAVE' }
     end
   end
 end
