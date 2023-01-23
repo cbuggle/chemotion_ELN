@@ -28,6 +28,10 @@ class ReactionProcessStep < ApplicationRecord
 
   delegate :reaction, to: :reaction_process
 
+  def numbered_actions
+    reaction_process_actions.order(:position).reject(&:is_condition_action?)
+  end
+
   def label
     "#{position + 1}/#{reaction_process.reaction_process_steps.count} #{name}"
   end
@@ -122,7 +126,7 @@ class ReactionProcessStep < ApplicationRecord
       position: reaction_process_actions.count,
       start_time: duration,
       action_name: 'CONDITION_END',
-      workup: action.workup.merge(start_condition_id: action.id)
+      workup: action.workup.merge(start_condition_id: action.id),
     )
   end
 

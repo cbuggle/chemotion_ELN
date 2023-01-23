@@ -20,15 +20,20 @@
 class ReactionProcessAction < ApplicationRecord
   belongs_to :reaction_process_step
 
-  before_validation :fix_workup
-
   validate :validate_workup
 
   delegate :reaction, :reaction_process, to: :reaction_process_step
 
-
   def action_number
-    position + 1 # this will be filtered for actions only (without condition actions)
+    if is_condition_action?
+      ''
+    else
+      reaction_process_step.numbered_actions.find_index(self) + 1
+    end # this will be filtered for actions only (without condition actions)
+  end
+
+  def is_condition_action?
+    %w[CONDITION CONDITION_END].include?(action_name)
   end
 
   def label
@@ -84,40 +89,14 @@ class ReactionProcessAction < ApplicationRecord
     errors.add(:workup, 'Missing Sample') if workup['sample_id'].blank?
   end
 
-  def fix_workup
-    self.workup ||= {}
-    if action_name == 'REMOVE'
-      # This could be improved. We fix workup_param keys which might be filled out when
-      # the user switches "acts_as" in the "REMOVE" UI form, because the different "REMOVE" partials
-      # will fill different workup (and retain them in their UI state, then persist them).
-      # We remove the non-applicable ones here.
-
-      # As these are very few, it is much more convenient to set this straight here than
-      # to setup complicated param handling in the UI form. cbuggle, 02.08.2021
-      if workup['acts_as'] == 'ADDITIVE'
-        workup.delete('duration_in_minutes')
-        workup.delete('remove_repetitions')
-      end
-
-      if workup['acts_as'] == 'MEDIUM'
-        workup.delete('remove_temperature')
-        workup.delete('remove_pressure')
-      end
-    end
-
-    workup.delete('equipment') unless action_name == 'EQUIP' || workup['apply_extra_equipment']
-  end
-
   def set_initial_description
     return if workup['description'].present?
 
-    fix_workup
-
     case action_name
     when 'ADD'
-      self.workup['description'] = workup['acts_as'].to_s
-      self.workup['description'] += " #{workup['target_amount_value']}"
-      self.workup['description'] += " #{workup['target_amount_unit']}"
+      workup['description'] = workup['acts_as'].to_s
+      workup['description'] += " #{workup['target_amount_value']}"
+      workup['description'] += " #{workup['target_amount_unit']}"
 
       sample_text = if has_medium?
                       Medium::Medium.find_by(id: workup['sample_id']).label
@@ -126,49 +105,49 @@ class ReactionProcessAction < ApplicationRecord
                       sample.preferred_label || sample.short_label
                     end
 
-      self.workup['description'] += " #{sample_text}"
+      workup['description'] += " #{sample_text}"
     when 'SAVE'
       sample = Sample.find_by(id: workup['sample_id'])
 
-      self.workup['description'] = workup['intermediate_type'].to_s
-      self.workup['description'] += " #{sample.preferred_label || sample.short_label}"
-      self.workup['description'] += " #{workup['target_amount_value']}"
-      self.workup['description'] += " #{workup['target_amount_unit']}"
+      workup['description'] = workup['intermediate_type'].to_s
+      workup['description'] += " #{sample.preferred_label || sample.short_label}"
+      workup['description'] += " #{workup['target_amount_value']}"
+      workup['description'] += " #{workup['target_amount_unit']}"
     when 'TRANSFER'
       transfer_step = ReactionProcessStep.find workup['transfer_target_step_id']
       sample = Sample.find_by(id: workup['sample_id'])
 
-      self.workup['description'] = "to #{transfer_step.label}:"
-      self.workup['description'] += " #{sample.preferred_label || sample.short_label}"
-      self.workup['description'] += " #{workup['transfer_percentage']}%"
+      workup['description'] = "to #{transfer_step.label}:"
+      workup['description'] += " #{sample.preferred_label || sample.short_label}"
+      workup['description'] += " #{workup['transfer_percentage']}%"
     when 'EQUIP'
-      self.workup['description'] = " #{workup['mount_action']}"
-      self.workup['description'] += " #{workup['equipment']}"
+      workup['description'] = " #{workup['mount_action']}"
+      workup['description'] += " #{workup['equipment']}"
     when 'MOTION'
-      self.workup['description'] = workup['motion_type'].to_s
-      self.workup['description'] += " #{workup['motion_mode']}"
-      self.workup['description'] += " #{workup['motion_speed']}"
-      self.workup['description'] += " #{workup['motion_unit']}"
+      workup['description'] = workup['motion_type'].to_s
+      workup['description'] += " #{workup['motion_mode']}"
+      workup['description'] += " #{workup['motion_speed']}"
+      workup['description'] += " #{workup['motion_unit']}"
     when 'CONDITION'
-      self.workup['description'] = workup['condition_tendency'].to_s
-      self.workup['description'] += " #{workup['condition_type']}"
-      self.workup['description'] += " #{workup['condition_value']}"
-      self.workup['description'] += " #{workup['condition_unit']}"
+      workup['description'] = workup['condition_tendency'].to_s
+      workup['description'] += " #{workup['condition_type']}"
+      workup['description'] += " #{workup['condition_value']}"
+      workup['description'] += " #{workup['condition_unit']}"
 
     when 'REMOVE'
-      self.workup['description'] += medium.label
+      workup['description'] += medium.label
       case workup['acts_as']
       when 'ADDITIVE'
-        self.workup['description'] += " #{workup['remove_temperature']} °C"
-        self.workup['description'] += " #{workup['remove_pressure']} mbar"
+        workup['description'] += " #{workup['remove_temperature']} °C"
+        workup['description'] += " #{workup['remove_pressure']} mbar"
 
       when 'MEDIUM'
-        self.workup['description'] += " #{workup['remove_repetitions']} times"
-        self.workup['description'] += " #{workup['duration_in_minutes']} minutes"
+        workup['description'] += " #{workup['remove_repetitions']} times"
+        workup['description'] += " #{workup['duration_in_minutes']} minutes"
       end
     when 'PURIFY'
-      self.workup['description'] = workup['purify_type'].to_s
-      self.workup['description'] += " #{workup['purify_automation']}"
+      workup['description'] = workup['purify_type'].to_s
+      workup['description'] += " #{workup['purify_automation']}"
     end
   end
 
@@ -224,5 +203,4 @@ class ReactionProcessAction < ApplicationRecord
     reaction_process_step.normalize_timestamps
     actions
   end
-
 end
