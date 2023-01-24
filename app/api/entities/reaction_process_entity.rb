@@ -93,11 +93,12 @@ module Entities
         # diverse_solvents: diverse_solvents,
         vessels: vessel_options,
         samples_preparations: {
-          samples: samples_options,
+          prepared_samples: samples_options(prepared_samples),
+          unprepared_samples: samples_options(unprepared_samples),
           preparations: sample_preparation_options,
           equipment: sample_equipment_options,
         },
-        step_name_suggestions: step_name_suggestion_options
+        step_name_suggestions: step_name_suggestion_options,
       }
     end
 
@@ -130,11 +131,19 @@ module Entities
       object.reaction.reactions_solvent_samples +
       object.reaction.reactions_purification_solvent_samples +
       object.reaction.reactions_product_samples +
-      object.reaction.reactions_intermediate_samples).map(&:sample)
+      object.reaction.reactions_intermediate_samples).map(&:sample).uniq
     end
 
-    def samples_options
-      preparable_samples.map { |s| { value: s.id, label: s.preferred_label || s.short_label.to_s } }
+    def prepared_samples
+      object.samples_preparations.map(&:sample)
+    end
+
+    def unprepared_samples
+      preparable_samples - prepared_samples
+    end
+
+    def samples_options(samples)
+      samples.map { |s| { value: s.id, label: s.preferred_label || s.short_label.to_s } }
     end
 
     def sample_preparation_options
