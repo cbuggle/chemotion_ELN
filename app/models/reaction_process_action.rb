@@ -57,8 +57,6 @@ class ReactionProcessAction < ApplicationRecord
 
     sample.collections << (reaction.collections - sample.collections)
 
-    Rails.logger.info workup
-
     sample.hide_in_eln = workup['hide_in_eln']
     sample.target_amount_value = workup['sample']['target_amount_value'].to_f
     sample.target_amount_unit = workup['sample']['target_amount_unit']
@@ -99,7 +97,8 @@ class ReactionProcessAction < ApplicationRecord
 
     case action_name
     when 'ADD'
-      workup['description'] = workup['acts_as'].to_s
+      acts_as = workup['acts_as'] == 'DIVERSE_SOLVENT' ? 'SOLVENT' : workup['acts_as']
+      workup['description'] = acts_as
       workup['description'] += " #{workup['target_amount_value']}"
       workup['description'] += " #{workup['target_amount_unit']}"
 
@@ -154,6 +153,7 @@ class ReactionProcessAction < ApplicationRecord
       workup['description'] = workup['purify_type'].to_s
       workup['description'] += " #{workup['purify_automation']}"
     end
+    workup['description'].squish!
   end
 
   def medium

@@ -15,7 +15,11 @@
 
 module Medium
   class Medium < ApplicationRecord
-    # STI Base Class for Medium::MediumSample, Medium::Additive, Medium::DiversSolvent
+    # STI Base Class for Medium::MediumSample, Medium::Additive, Medium::DiverseSolvent
     # self.abstract_class = true
+
+    def preferred_label
+      label
+    end
   end
 end

@@ -42,6 +42,7 @@ module Entities
     def materials_options
       samples = object.reaction.starting_materials + object.reaction.reactants
       solvents = (object.reaction.solvents + object.reaction.purification_solvents).uniq
+      diverse_solvents = Medium::DiverseSolvent.all
       intermediates = object.reaction.intermediate_samples
 
       # solvents are to be defined terminally as bespoken with NJung, cbuggle, 06.10.2021
@@ -51,13 +52,10 @@ module Entities
                   { value: s.id, label: s.preferred_label.to_s, amount: s.preferred_volume_amount,
                     unit: s.preferred_volume_unit }
                 end,
-        SOLVENT: solvents.map do |s|
-                   { value: s.id, label: s.preferred_label.to_s, amount: s.target_amount_value,
-                     unit: s.target_amount_unit }
-                 end,
+        SOLVENT: options_for_solvents(solvents, 'SOLVENT') + options_for_solvents(diverse_solvents, 'DIVERSE_SOLVENT'),
         MEDIUM: Medium::MediumSample.all.map { |s| { value: s.id, label: s.label.to_s } },
         ADDITIVE: Medium::Additive.all.map { |s| { value: s.id, label: s.label.to_s } },
-        DIVERSE_SOLVENT: Medium::DiverseSolvent.all.map { |s| { value: s.id, label: s.label.to_s } },
+        DIVERSE_SOLVENT: diverse_solvents.all.map { |s| { value: s.id, label: s.label.to_s } },
         INTERMEDIATE: intermediates.map do |s|
                         { value: s.id, label: s.short_label.to_s, amount: s.target_amount_value,
                           unit: s.target_amount_unit }
@@ -75,6 +73,13 @@ module Entities
                            { value: s.id, label: s.label.to_s }
                          end,
       }
+    end
+
+    def options_for_solvents(solvents, acts_as)
+      solvents.map do |s|
+        { value: s.id, label: s.preferred_label.to_s, amount: s.try(:target_amount_value),
+          unit: s.try(:target_amount_unit), acts_as: acts_as }
+      end
     end
 
     def equipment_options

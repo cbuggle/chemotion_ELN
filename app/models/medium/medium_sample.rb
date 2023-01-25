@@ -16,7 +16,7 @@
 module Medium
   class MediumSample < ::Medium::Medium
     def label
-      sample_name? ? sample_name : sum_formula
+      sample_name || sum_formula
     end
   end
 end

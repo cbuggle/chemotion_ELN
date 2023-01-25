@@ -16,7 +16,7 @@
 module Medium
   class Additive < ::Medium::Medium
     def label
-      sample_name? ? sample_name : molecule_name
+      sample_name || molecule_name
     end
   end
 end
