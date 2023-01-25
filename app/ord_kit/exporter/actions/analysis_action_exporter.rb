@@ -7,12 +7,19 @@ module OrdKit
         private
 
         def step_action
-          # TODO: Add more to the ELN Editor? A textfield 'analysis_number' is all we have.
           {
-            analysis: OrdKit::ReactionActionAnalysis.new(
-              details: workup['analysis_number'],
+            analysis: OrdKit::Analysis.new(
+              number: workup['analysis_number'],
+              chmo_id: workup['chmo_id']&.to_i,
+              type: analysis_type,
             ),
           }
+        end
+
+        def analysis_type
+          OrdKit::Analysis::AnalysisType.const_get(workup['analysis_type'])
+        rescue NameError
+          OrdKit::Analysis::AnalysisType::UNSPECIFIED
         end
       end
     end

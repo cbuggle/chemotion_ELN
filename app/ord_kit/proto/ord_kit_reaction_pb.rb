@@ -84,6 +84,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :transfer, :message, 12, "ord_kit.ReactionActionTransfer"
         optional :wait, :message, 13, "ord_kit.ReactionActionWait"
         optional :save_sample, :message, 14, "ord_kit.ReactionActionSaveSample"
+        optional :analysis, :message, 15, "ord_kit.Analysis"
       end
     end
     add_message "ord_kit.ReactionActionAdd" do
@@ -142,9 +143,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :transfer_source_reaction_step_id, :string, 2
       optional :transfer_target_reaction_step_id, :string, 3
       optional :amount, :message, 4, "ord_kit.Amount"
-    end
-    add_message "ord_kit.ReactionActionAnalysis" do
-      optional :number, :string, 1
     end
     add_message "ord_kit.ReactionActionWait" do
       optional :duration, :message, 1, "ord_kit.Time"
@@ -353,6 +351,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :DROPPING_FUNNEL, 38
       value :BUCHNER_FUNNEL, 39
       value :MICROWAVE_REACTOR, 40
+      value :CHROMATOGRAPHY_DEVICE, 41
+      value :HPLC, 42
+      value :HPLC_COLUMN, 43
+      value :CARTRIDGE, 44
     end
     add_message "ord_kit.VesselAttachment" do
       optional :type, :enum, 1, "ord_kit.VesselAttachment.VesselAttachmentType"
@@ -798,6 +800,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       map :data, :string, :message, 5, "ord_kit.Data"
       optional :instrument_manufacturer, :string, 6
       optional :instrument_last_calibrated, :message, 7, "ord_kit.DateTime"
+      proto3_optional :number, :int32, 8
     end
     add_enum "ord_kit.Analysis.AnalysisType" do
       value :UNSPECIFIED, 0
@@ -1039,7 +1042,6 @@ module OrdKit
   ReactionActionPurify::PurifyType = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("ord_kit.ReactionActionPurify.PurifyType").enummodule
   ReactionActionPurify::FiltrationMode = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("ord_kit.ReactionActionPurify.FiltrationMode").enummodule
   ReactionActionTransfer = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("ord_kit.ReactionActionTransfer").msgclass
-  ReactionActionAnalysis = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("ord_kit.ReactionActionAnalysis").msgclass
   ReactionActionWait = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("ord_kit.ReactionActionWait").msgclass
   ReactionActionSaveSample = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("ord_kit.ReactionActionSaveSample").msgclass
   Amount = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("ord_kit.Amount").msgclass

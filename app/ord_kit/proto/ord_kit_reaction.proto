@@ -215,6 +215,7 @@ message ReactionInput {
       ReactionActionTransfer transfer = 12;
       ReactionActionWait wait = 13;
       ReactionActionSaveSample save_sample = 14;
+      Analysis analysis = 15;
     }
   }
 
@@ -233,7 +234,9 @@ message ReactionInput {
 
   message ReactionActionEquip {
     enum EquipActionType {
-      UNSPECIFIED = 0; // proto3 requires first enumeration 0. UNSPECIFIED is useless as EquipActionType.
+      // proto3 requires first enumeration 0, which will be omitted in .proto dump.
+      // However we want it always human readable. UNSPECIFIED is useless as EquipActionType.
+      UNSPECIFIED = 0;
       MOUNT = 1;
       UNMOUNT = 2;
     }
@@ -286,10 +289,6 @@ message ReactionInput {
     string transfer_source_reaction_step_id = 2;
     string transfer_target_reaction_step_id = 3;
     Amount amount = 4;
-  }
-
-  message ReactionActionAnalysis {
-    string number = 1;
   }
 
   message ReactionActionWait {
