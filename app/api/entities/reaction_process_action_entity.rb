@@ -2,13 +2,17 @@
 
 module Entities
   class ReactionProcessActionEntity < ApplicationEntity
-    expose(:id, :action_name, :position, :workup, :action_number, :label,
+    expose(:id, :step_id, :action_name, :position, :workup, :action_number, :label,
            :starts_at, :ends_at, :duration, :start_time, :min_position, :max_position)
 
     expose! :sample, using: 'Entities::SampleEntity'
     expose! :medium, using: 'Entities::ReactionMediumEntity'
 
     private
+
+    def step_id
+      object.reaction_process_step_id
+    end
 
     def min_position
       return 0 unless object.action_name == 'CONDITION_END'
