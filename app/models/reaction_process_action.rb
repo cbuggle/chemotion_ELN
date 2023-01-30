@@ -26,7 +26,9 @@ class ReactionProcessAction < ApplicationRecord
   delegate :reaction, :reaction_process, to: :reaction_process_step
 
   def label
-    "#{action_number} #{action_name} #{workup['description']}".titlecase
+    # titlecase will replace "-" which we want to preserve as they are part of the sample names.
+    # Very provisionally anyway.
+    "#{action_number} #{action_name} #{workup['description']}".split('-').map(&:titlecase).join('-')
   end
 
   def action_number
