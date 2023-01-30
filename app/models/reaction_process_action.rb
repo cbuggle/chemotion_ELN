@@ -139,7 +139,7 @@ class ReactionProcessAction < ApplicationRecord
       workup['description'] += " #{workup['condition_unit']}"
 
     when 'REMOVE'
-      workup['description'] += medium.label
+      workup['description'] = medium&.label
       case workup['acts_as']
       when 'ADDITIVE'
         workup['description'] += " #{workup['remove_temperature']} °C"
@@ -152,6 +152,8 @@ class ReactionProcessAction < ApplicationRecord
     when 'PURIFY'
       workup['description'] = workup['purify_type'].to_s
       workup['description'] += " #{workup['purify_automation']}"
+    else
+      workup['description'] = "".dup
     end
     workup['description'].squish!
   end
