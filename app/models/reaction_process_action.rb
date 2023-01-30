@@ -26,7 +26,7 @@ class ReactionProcessAction < ApplicationRecord
   delegate :reaction, :reaction_process, to: :reaction_process_step
 
   def label
-    "#{action_number} #{action_name} #{workup['description']}"
+    "#{action_number} #{action_name} #{workup['description']}".titlecase
   end
 
   def action_number
