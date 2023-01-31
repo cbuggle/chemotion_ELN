@@ -25,26 +25,28 @@ class ReactionProcessAction < ApplicationRecord
 
   delegate :reaction, :reaction_process, to: :reaction_process_step
 
-  def label
-    # titlecase will replace "-" which we want to preserve as they are part of the sample names.
-    # Very provisionally anyway.
-    "#{action_number} #{action_name} #{workup['description']}".split('-').map(&:titlecase).join('-')
+  def activity_number
+    is_condition? ? condition_number : action_number
   end
 
   def action_number
-    if is_condition?
-      ''
-    else
-      reaction_process_step.numbered_actions.find_index(self) + 1
-    end # this will be filtered for actions only (without condition actions)
+    reaction_process_step.numbered_actions.find_index(self) + 1
+  end
+
+  def condition_number
+    reaction_process_step.numbered_condition_starts.find_index(condition_start_action) + 1
   end
 
   def is_condition?
-    %w[CONDITION CONDITION_END].include?(action_name)
+    is_condition_start? || is_condition_end?
   end
 
-  def step_actions_count
-    reaction_process_step.actions_count
+  def is_condition_start?
+    %w[CONDITION].include?(action_name)
+  end
+
+  def is_condition_end?
+    %w[CONDITION_END].include?(action_name)
   end
 
   def parse_params(action_params)
@@ -94,72 +96,6 @@ class ReactionProcessAction < ApplicationRecord
     errors.add(:workup, 'Missing Sample') if workup['sample_id'].blank?
   end
 
-  def set_initial_description
-    return if workup['description'].present?
-
-    case action_name
-    when 'ADD'
-      acts_as = workup['acts_as'] == 'DIVERSE_SOLVENT' ? 'SOLVENT' : workup['acts_as']
-      workup['description'] = acts_as
-      workup['description'] += " #{workup['target_amount_value']}"
-      workup['description'] += " #{workup['target_amount_unit']}"
-
-      sample_text = if has_medium?
-                      Medium::Medium.find_by(id: workup['sample_id']).label
-                    else
-                      sample = Sample.find_by(id: workup['sample_id'])
-                      sample.preferred_label || sample.short_label
-                    end
-
-      workup['description'] += " #{sample_text}"
-    when 'SAVE'
-      sample = Sample.find_by(id: workup['sample_id'])
-
-      workup['description'] = workup['intermediate_type'].to_s
-      workup['description'] += " #{sample.preferred_label || sample.short_label}"
-      workup['description'] += " #{workup['target_amount_value']}"
-      workup['description'] += " #{workup['target_amount_unit']}"
-    when 'TRANSFER'
-      transfer_step = ReactionProcessStep.find workup['transfer_target_step_id']
-      sample = Sample.find_by(id: workup['sample_id'])
-
-      workup['description'] = "to #{transfer_step.label}:"
-      workup['description'] += " #{sample.preferred_label || sample.short_label}"
-      workup['description'] += " #{workup['transfer_percentage']}%"
-    when 'EQUIP'
-      workup['description'] = " #{workup['mount_action']}"
-      workup['description'] += " #{workup['equipment']}"
-    when 'MOTION'
-      workup['description'] = workup['motion_type'].to_s
-      workup['description'] += " #{workup['motion_mode']}"
-      workup['description'] += " #{workup['motion_speed']}"
-      workup['description'] += " #{workup['motion_unit']}"
-    when 'CONDITION'
-      workup['description'] = workup['condition_tendency'].to_s
-      workup['description'] += " #{workup['condition_type']}"
-      workup['description'] += " #{workup['condition_value']}"
-      workup['description'] += " #{workup['condition_unit']}"
-
-    when 'REMOVE'
-      workup['description'] = medium&.label
-      case workup['acts_as']
-      when 'ADDITIVE'
-        workup['description'] += " #{workup['remove_temperature']} °C"
-        workup['description'] += " #{workup['remove_pressure']} mbar"
-
-      when 'MEDIUM'
-        workup['description'] += " #{workup['remove_repetitions']} times"
-        workup['description'] += " #{workup['duration_in_minutes']} minutes"
-      end
-    when 'PURIFY'
-      workup['description'] = workup['purify_type'].to_s
-      workup['description'] += " #{workup['purify_automation']}"
-    else
-      workup['description'] = "".dup
-    end
-    workup['description'].squish!
-  end
-
   def medium
     return unless has_medium?
 
@@ -173,11 +109,11 @@ class ReactionProcessAction < ApplicationRecord
   end
 
   def has_sample?
-    !has_medium?
+    workup['sample_id'].present? && !has_medium?
   end
 
   def has_medium?
-    %w[ADDITIVE MEDIUM DIVERSE_SOLVENT].include?(workup['acts_as'])
+    workup['sample_id'].present? && %w[ADDITIVE MEDIUM DIVERSE_SOLVENT].include?(workup['acts_as'])
   end
 
   def update_position(position)
@@ -213,11 +149,19 @@ class ReactionProcessAction < ApplicationRecord
     actions
   end
 
+  def condition_start_action
+    is_condition_start? ? self : ReactionProcessAction.find_by(id: workup['condition_start_id'])
+  end
+
+  def condition_end_action
+    return unless is_condition_start?
+
+    ReactionProcessAction.find_by(id: workup['condition_end_id'])
+  end
+
   private
 
   def destroy_condition_end
-    return unless action_name == 'CONDITION'
-
-    condition_end = ReactionProcessAction.find_by(id: workup['condition_end_id'])&.destroy
+    condition_end_action&.destroy
   end
 end

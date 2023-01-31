@@ -37,15 +37,19 @@ class ReactionProcessStep < ApplicationRecord
   end
 
   def numbered_actions
-    reaction_process_actions.order(:position).reject(&:is_condition?)
+    @numbered_actions ||= reaction_process_actions.order(:position).reject(&:is_condition?)
   end
 
-  def actions_count
+  def numbered_condition_starts
+    @numbered_conditions ||= reaction_process_actions.order(:position).select(&:is_condition_start?)
+  end
+
+  def action_count
     reaction_process_actions.size
   end
 
   def last_action_position
-    actions_count - 1
+    action_count - 1
   end
 
   def update_position(position)
@@ -73,8 +77,6 @@ class ReactionProcessStep < ApplicationRecord
     )
 
     action.parse_params action_params
-
-    action.set_initial_description
     action.save
 
     action.update_position(insert_before) if insert_before

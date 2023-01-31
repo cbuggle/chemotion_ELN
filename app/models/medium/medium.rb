@@ -18,6 +18,10 @@ module Medium
     # STI Base Class for Medium::MediumSample, Medium::Additive, Medium::DiverseSolvent
     # self.abstract_class = true
 
+    def short_label
+      label
+    end
+
     def preferred_label
       label
     end

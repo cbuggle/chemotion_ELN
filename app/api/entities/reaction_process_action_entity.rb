@@ -2,13 +2,22 @@
 
 module Entities
   class ReactionProcessActionEntity < ApplicationEntity
-    expose(:id, :step_id, :action_name, :position, :workup, :action_number, :label,
+    expose(:id, :step_id, :action_name, :position, :workup, :activity_number, :sample_names,
            :starts_at, :ends_at, :duration, :start_time, :min_position, :max_position)
 
     expose! :sample, using: 'Entities::SampleEntity'
     expose! :medium, using: 'Entities::ReactionMediumEntity'
 
     private
+
+    def sample_names
+      # Supporting attribute for easy display in frontend.
+      names = []
+      names << object.sample.preferred_label if object.has_sample?
+      names << object.medium.preferred_label if object.has_medium?
+      names << Sample.where(id: object.workup['purify_solvent_sample_ids']).map(&:short_label)
+      names.join(' ')
+    end
 
     def step_id
       object.reaction_process_step_id
@@ -38,10 +47,6 @@ module Entities
 
     def duration
       object.duration || 0
-    end
-
-    def action_number
-      object.position + 1
     end
   end
 end
