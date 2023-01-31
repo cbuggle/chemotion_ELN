@@ -117,9 +117,6 @@ module Entities
         ADD: equipment_options,
         SAVE: [],
         TRANSFER: [],
-        MOTION: options_for(%w[
-                              STIRRER SHAKER HEATING_SHAKER TUBE BALL_MILLING
-                            ]),
         EQUIP: equipment_options,
         CONDITION: {
           TEMPERATURE: options_for(
@@ -129,6 +126,7 @@ module Entities
           PH: options_for(['PIPET']),
           PRESSURE: options_for(['REACTOR']),
           IRRADIATION: options_for(%w[ULTRA_SOUND_BATH UV_LAMP LED]),
+          MOTION: options_for(%w[STIRRER SHAKER HEATING_SHAKER TUBE BALL_MILLING]),
         },
         REMOVE: options_for(%w[PUMP TUBE COIL]),
         PURIFY: options_for(%w[FILTER SEPARATION_FILTER EXTRACTOR
