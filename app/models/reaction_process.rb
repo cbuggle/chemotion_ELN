@@ -25,6 +25,8 @@ class ReactionProcess < ApplicationRecord
 
   has_one :provenance, dependent: :destroy
 
+  delegate :reaction_svg_file, to: :reaction
+
   def create_vessel(create_vessel_params)
     vessel = vessels.create create_vessel_params
     UserVessel.create(user: creator, vessel: vessel)

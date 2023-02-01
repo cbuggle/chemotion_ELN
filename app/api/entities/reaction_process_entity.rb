@@ -25,6 +25,8 @@ module Entities
 
     expose! :select_options
 
+    expose! :reaction_svg_file
+
     private
 
     def duration
