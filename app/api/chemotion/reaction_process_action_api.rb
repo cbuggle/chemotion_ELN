@@ -22,7 +22,7 @@ module Chemotion
         desc 'Update a ReactionProcessAction'
         put do
           @action.parse_params permitted_params[:action]
-          present @action, with: Entities::ReactionProcessActionEntity, root: :reaction_process_action
+          present @action, with: Entities::ProcessEditor::ReactionProcessActionEntity, root: :reaction_process_action
         end
 
         desc 'Update Timer of a ReactionProcessAction'

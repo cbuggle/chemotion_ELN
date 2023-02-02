@@ -14,7 +14,7 @@ module Chemotion
 
         desc 'Get a ReactionProcessStep'
         get do
-          present @reaction_process_step, with: Entities::ReactionProcessStepEntity, root: :reaction_process_step
+          present @reaction_process_step, with: Entities::ProcessEditor::ReactionProcessStepEntity, root: :reaction_process_step
         end
 
         desc 'Update ReactionProcessStep'
@@ -27,7 +27,7 @@ module Chemotion
 
         put do
           @reaction_process_step.update permitted_params[:reaction_process_step]
-          present @reaction_process_step, with: Entities::ReactionProcessStepEntity, root: :reaction_process_step
+          present @reaction_process_step, with: Entities::ProcessEditor::ReactionProcessStepEntity, root: :reaction_process_step
         end
 
         desc 'Update Position of a ReactionProcessStep within the ReactionProcess (i.e. re-sort)'
@@ -54,7 +54,7 @@ module Chemotion
             action = @reaction_process_step.append_action(permitted_params[:action], params[:insert_before])
             if action.valid?
               status 201
-              present action, with: Entities::ReactionProcessActionEntity, root: :reaction_process_action
+              present action, with: Entities::ProcessEditor::ReactionProcessActionEntity, root: :reaction_process_action
             else
               status 422
               action.errors

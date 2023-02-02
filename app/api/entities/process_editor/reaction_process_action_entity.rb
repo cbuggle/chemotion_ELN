@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 module Entities
+  module ProcessEditor
   class ReactionProcessActionEntity < ApplicationEntity
     expose(:id, :step_id, :action_name, :position, :workup, :activity_number, :sample_names,
            :starts_at, :ends_at, :duration, :start_time, :min_position, :max_position)
 
-    expose :sample, using: 'Entities::SampleEntity'
-    expose :medium, using: 'Entities::ReactionMediumEntity'
+    expose :sample, using: 'Entities::ProcessEditor::SampleEntity'
+    expose :medium, using: 'Entities::ProcessEditor::ReactionMediumEntity'
 
     private
 
@@ -49,4 +50,6 @@ module Entities
       object.duration || 0
     end
   end
+end
+
 end

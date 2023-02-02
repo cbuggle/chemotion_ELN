@@ -1,27 +1,29 @@
 # frozen_string_literal: true
 
 module Entities
+
+   module ProcessEditor
   class ReactionProcessEntity < ApplicationEntity
     expose(:id, :reaction_id, :short_label, :duration, :starts_at)
 
     expose_timestamps
 
-    expose :vessels, using: 'Entities::VesselEntity'
-    expose :user_vessels, using: 'Entities::VesselEntity'
-    expose :reaction_process_steps, using: 'Entities::ReactionProcessStepEntity'
+    expose :vessels, using: 'Entities::ProcessEditor::VesselEntity'
+    expose :user_vessels, using: 'Entities::ProcessEditor::VesselEntity'
+    expose :reaction_process_steps, using: 'Entities::ProcessEditor::ReactionProcessStepEntity'
 
-    expose :starting_materials, using: 'Entities::ReactionMaterialEntity'
-    expose :reactants, using: 'Entities::ReactionMaterialEntity'
-    expose :solvents, using: 'Entities::ReactionMaterialEntity'
-    expose :purification_solvents, using: 'Entities::ReactionMaterialEntity'
-    expose :products, using: 'Entities::ReactionMaterialEntity'
-    expose :intermediate_samples, using: 'Entities::ReactionMaterialEntity'
+    expose :starting_materials, using: 'Entities::ProcessEditor::ReactionMaterialEntity'
+    expose :reactants, using: 'Entities::ProcessEditor::ReactionMaterialEntity'
+    expose :solvents, using: 'Entities::ProcessEditor::ReactionMaterialEntity'
+    expose :purification_solvents, using: 'Entities::ProcessEditor::ReactionMaterialEntity'
+    expose :products, using: 'Entities::ProcessEditor::ReactionMaterialEntity'
+    expose :intermediate_samples, using: 'Entities::ProcessEditor::ReactionMaterialEntity'
 
-    expose :samples_preparations, using: 'Entities::SamplePreparationEntity'
+    expose :samples_preparations, using: 'Entities::ProcessEditor::SamplePreparationEntity'
 
     expose :additives
     expose :diverse_solvents
-    expose :provenance, using: 'Entities::ProvenanceEntity'
+    expose :provenance, using: 'Entities::ProcessEditor::ProvenanceEntity'
 
     expose :select_options
 
@@ -164,4 +166,5 @@ module Entities
       end
     end
   end
+end
 end

@@ -24,13 +24,12 @@ module Chemotion
           # However substantially it is a GET. We use it only to fetch data (never manipulate).
           reaction_process = ReactionProcess.find_or_create_by(reaction_id: params[:id])
 
-          present reaction_process, with: Entities::ReactionProcessEntity, root: :reaction_process
+          present reaction_process, with: Entities::ProcessEditor::ReactionProcessEntity, root: :reaction_process
         end
       end
     end
 
     namespace :reaction_processes do
-      desc 'get options for Select'
       params do
         optional :collection_id, type: Integer, desc: 'Collection id'
       end
@@ -68,7 +67,7 @@ module Chemotion
 
         desc 'Get a ReactionProcess'
         get do
-          present @reaction_process, with: Entities::ReactionProcessEntity, root: :reaction_process
+          present @reaction_process, with: Entities::ProcessEditor::ReactionProcessEntity, root: :reaction_process
         end
 
         namespace :provenance do
@@ -137,7 +136,7 @@ module Chemotion
 
             new_step.update params[:reaction_process_step]
             new_step.update(start_time: @reaction_process.duration)
-            present new_step, with: Entities::ReactionProcessStepEntity, root: :reaction_process_step
+            present new_step, with: Entities::ProcessEditor::ReactionProcessStepEntity, root: :reaction_process_step
           end
         end
 
