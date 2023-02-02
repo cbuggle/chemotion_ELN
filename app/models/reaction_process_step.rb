@@ -172,6 +172,6 @@ class ReactionProcessStep < ApplicationRecord
   end
 
   def add_actions
-    reaction_process_actions.select { |action| action.action_name == 'ADD' }
+    @add_actions ||= reaction_process_actions.select { |action| action.action_name == 'ADD' }
   end
 end

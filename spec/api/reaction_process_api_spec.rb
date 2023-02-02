@@ -38,7 +38,7 @@ describe Chemotion::ReactionProcessAPI do
 
   describe 'POST /api/v1/reaction/:id/reaction_process' do
     subject do
-      post("/api/v1/reactions/#{uninitialized_reaction.id}/reaction_process",
+      get("/api/v1/reactions/#{uninitialized_reaction.id}/reaction_process",
            headers: jwt_authorization_header(uninitialized_reaction.creator))
     end
 
@@ -67,9 +67,9 @@ describe Chemotion::ReactionProcessAPI do
     end
   end
 
-  describe 'GET /api/v1/reaction_process' do
+  describe 'GET /api/v1/reaction_processes' do
     before do
-      get("/api/v1/reaction_process/#{reaction_process.id}", headers: jwt_authorization_header(reaction.creator))
+      get("/api/v1/reaction_processes/#{reaction_process.id}", headers: jwt_authorization_header(reaction.creator))
     end
 
     it 'responds 200' do
@@ -81,17 +81,21 @@ describe Chemotion::ReactionProcessAPI do
     end
   end
 
-  describe 'POST /api/v1/reaction_process/:id/reaction_process_steps' do
+  describe 'POST /api/v1/reaction_processes/:id/reaction_process_steps' do
+    subject(:api_call) do
+      post("/api/v1/reaction_processes/#{reaction_process.id}/reaction_process_steps",
+           headers: jwt_authorization_header(reaction.creator),
+           params: { reaction_process_step: { name: 'step1' } })
+    end
+
     it 'responds 201' do
-      post("/api/v1/reaction_process/#{reaction_process.id}/reaction_process_steps",
-           headers: jwt_authorization_header(reaction.creator))
+      api_call
       expect(response).to have_http_status :created
     end
 
     it 'creates ReactionProcessStep' do
       expect do
-        post("/api/v1/reaction_process/#{reaction_process.id}/reaction_process_steps",
-             headers: jwt_authorization_header(reaction.creator))
+        api_call
       end.to(
         change(ReactionProcessStep, :count).from(1).to(2),
       )
