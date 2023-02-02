@@ -15,7 +15,7 @@ module Entities
       names = []
       names << object.sample.preferred_label if object.has_sample?
       names << object.medium.preferred_label if object.has_medium?
-      names << Sample.where(id: object.workup['purify_solvent_sample_ids']).map(&:short_label)
+      names << Sample.where(id: object.workup['purify_solvent_sample_ids']).map(&:preferred_label)
       names.join(' ')
     end
 
