@@ -12,17 +12,8 @@ module Entities
     expose :user_vessels, using: 'Entities::ProcessEditor::VesselEntity'
     expose :reaction_process_steps, using: 'Entities::ProcessEditor::ReactionProcessStepEntity'
 
-    expose :starting_materials, using: 'Entities::ProcessEditor::ReactionMaterialEntity'
-    expose :reactants, using: 'Entities::ProcessEditor::ReactionMaterialEntity'
-    expose :solvents, using: 'Entities::ProcessEditor::ReactionMaterialEntity'
-    expose :purification_solvents, using: 'Entities::ProcessEditor::ReactionMaterialEntity'
-    expose :products, using: 'Entities::ProcessEditor::ReactionMaterialEntity'
-    expose :intermediate_samples, using: 'Entities::ProcessEditor::ReactionMaterialEntity'
-
     expose :samples_preparations, using: 'Entities::ProcessEditor::SamplePreparationEntity'
 
-    expose :additives
-    expose :diverse_solvents
     expose :provenance, using: 'Entities::ProcessEditor::ProvenanceEntity'
 
     expose :select_options
@@ -53,38 +44,6 @@ module Entities
       object.creator.vessels
     end
 
-    def starting_materials
-      object.reaction.reactions_starting_material_samples
-    end
-
-    def reactants
-      object.reaction.reactions_reactant_samples
-    end
-
-    def solvents
-      object.reaction.reactions_solvent_samples
-    end
-
-    def purification_solvents
-      object.reaction.reactions_purification_solvent_samples
-    end
-
-    def products
-      object.reaction.reactions_product_samples
-    end
-
-    def intermediate_samples
-      object.reaction.reactions_intermediate_samples
-    end
-
-    def additives
-      Medium::Additive.all.map { |s| { value: s.id, label: s.label.to_s } }
-    end
-
-    def diverse_solvents
-      Medium::DiverseSolvent.all.map { |s| { value: s.id, label: s.label.to_s } }
-    end
-
     def provenance
       object.provenance || Provenance.new(reaction_process: object, email: object.creator.email,
                                           username: object.creator.name)
@@ -92,9 +51,6 @@ module Entities
 
     def select_options
       {
-        # solvents: solvents,
-        # additives: additives,
-        # diverse_solvents: diverse_solvents,
         vessels: vessel_options,
         samples_preparations: {
           prepared_samples: samples_options(prepared_samples),
