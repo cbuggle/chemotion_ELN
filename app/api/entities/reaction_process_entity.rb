@@ -6,26 +6,26 @@ module Entities
 
     expose_timestamps
 
-    expose! :vessels, using: 'Entities::VesselEntity'
-    expose! :user_vessels, using: 'Entities::VesselEntity'
-    expose! :reaction_process_steps, using: 'Entities::ReactionProcessStepEntity'
+    expose :vessels, using: 'Entities::VesselEntity'
+    expose :user_vessels, using: 'Entities::VesselEntity'
+    expose :reaction_process_steps, using: 'Entities::ReactionProcessStepEntity'
 
-    expose! :starting_materials, using: 'Entities::ReactionMaterialEntity'
-    expose! :reactants, using: 'Entities::ReactionMaterialEntity'
-    expose! :solvents, using: 'Entities::ReactionMaterialEntity'
-    expose! :purification_solvents, using: 'Entities::ReactionMaterialEntity'
-    expose! :products, using: 'Entities::ReactionMaterialEntity'
-    expose! :intermediate_samples, using: 'Entities::ReactionMaterialEntity'
+    expose :starting_materials, using: 'Entities::ReactionMaterialEntity'
+    expose :reactants, using: 'Entities::ReactionMaterialEntity'
+    expose :solvents, using: 'Entities::ReactionMaterialEntity'
+    expose :purification_solvents, using: 'Entities::ReactionMaterialEntity'
+    expose :products, using: 'Entities::ReactionMaterialEntity'
+    expose :intermediate_samples, using: 'Entities::ReactionMaterialEntity'
 
-    expose! :samples_preparations, using: 'Entities::SamplePreparationEntity'
+    expose :samples_preparations, using: 'Entities::SamplePreparationEntity'
 
-    expose! :additives
-    expose! :diverse_solvents
-    expose! :provenance, using: 'Entities::ProvenanceEntity'
+    expose :additives
+    expose :diverse_solvents
+    expose :provenance, using: 'Entities::ProvenanceEntity'
 
-    expose! :select_options
+    expose :select_options
 
-    expose! :reaction_svg_file
+    expose :reaction_svg_file
 
     private
 
@@ -137,7 +137,7 @@ module Entities
     end
 
     def prepared_samples
-      object.samples_preparations.map(&:sample)
+      object.samples_preparations.includes([:sample]).map(&:sample)
     end
 
     def unprepared_samples

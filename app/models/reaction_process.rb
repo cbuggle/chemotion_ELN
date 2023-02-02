@@ -21,7 +21,7 @@ class ReactionProcess < ApplicationRecord
 
   has_many :samples_preparations, dependent: :destroy
 
-  has_many :reaction_process_steps, dependent: :destroy
+  has_many :reaction_process_steps, -> { includes([:vessel]) }, dependent: :destroy
 
   has_one :provenance, dependent: :destroy
 
@@ -42,6 +42,6 @@ class ReactionProcess < ApplicationRecord
   end
 
   def saved_sample_ids
-    reaction_process_steps.map(&:saved_sample_ids).flatten.uniq
+    reaction_process_steps.includes([:reaction_process_actions]).map(&:saved_sample_ids).flatten.uniq
   end
 end

@@ -109,11 +109,19 @@ class ReactionProcessAction < ApplicationRecord
   end
 
   def has_sample?
-    workup['sample_id'].present? && !has_medium?
+    acts_as_sample? && workup['sample_id'].present?
   end
 
   def has_medium?
-    workup['sample_id'].present? && %w[ADDITIVE MEDIUM DIVERSE_SOLVENT].include?(workup['acts_as'])
+    acts_as_medium? && workup['sample_id'].present?
+  end
+
+  def acts_as_sample?
+    !acts_as_medium?
+  end
+
+  def acts_as_medium?
+    %w[ADDITIVE MEDIUM DIVERSE_SOLVENT].include?(workup['acts_as'])
   end
 
   def update_position(position)

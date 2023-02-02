@@ -11,8 +11,8 @@ module Entities
 
     expose_timestamps
 
-    expose! :actions, using: 'Entities::ReactionProcessActionEntity'
-    expose! :vessel, using: 'Entities::VesselEntity'
+    expose :actions, using: 'Entities::ReactionProcessActionEntity'
+    expose :vessel, using: 'Entities::VesselEntity'
 
     private
 
@@ -21,7 +21,7 @@ module Entities
     end
 
     def reaction_process_id
-      object.reaction_process_id || 'None'
+      object.reaction_process_id
     end
 
     # We piggyback the reaction_id, samples_options, added_samples_options, equipment_options, mounted_equipment_options,
@@ -83,7 +83,7 @@ module Entities
     end
 
     def equipment_options
-      OrdKit::Equipment::EquipmentType.constants.map do |equipment|
+      @equipment_options ||= OrdKit::Equipment::EquipmentType.constants.map do |equipment|
         { value: equipment.to_s, label: equipment.to_s.titlecase }
       end
     end
@@ -93,19 +93,20 @@ module Entities
     end
 
     def transfer_sample_options
-      Sample.where(id: transferable_sample_ids).includes(%i[molecule molecule_name]).map do |s|
+      @transfer_sample_options ||= Sample.where(id: transferable_sample_ids).includes(%i[molecule
+                                                                                         molecule_name]).map do |s|
         { value: s.id, label: (s.preferred_label || s.short_label).to_s }
       end
     end
 
     def transfer_to_options
-      process_steps = object.reaction_process.reaction_process_steps
+      process_steps = object.reaction_process.reaction_process_steps.order(:position)
 
-      process_steps.sort_by(&:position).map { |process_step| { value: process_step.id, label: process_step.label } }
+      process_steps.map { |process_step| { value: process_step.id, label: process_step.label } }
     end
 
     def transferable_sample_ids
-      object.reaction_process.saved_sample_ids
+      @transferable_sample_ids ||= object.reaction_process.saved_sample_ids
     end
 
     # This is just hardcoded definining the available equipment depending on action type.

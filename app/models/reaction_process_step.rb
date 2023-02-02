@@ -24,7 +24,7 @@ class ReactionProcessStep < ApplicationRecord
 
   has_one :vessel, through: :reaction_process_vessel
 
-  has_many :reaction_process_actions, dependent: :destroy
+  has_many :reaction_process_actions, dependent: :destroy, counter_cache: true
 
   delegate :reaction, to: :reaction_process
 
@@ -45,7 +45,7 @@ class ReactionProcessStep < ApplicationRecord
   end
 
   def action_count
-    reaction_process_actions.size
+    @action_count ||= reaction_process_actions.size
   end
 
   def last_action_position
@@ -134,7 +134,9 @@ class ReactionProcessStep < ApplicationRecord
   end
 
   def saved_sample_ids
-     reaction_process_actions.select { |action| action.action_name == 'SAVE' }.map { |action| action.workup['sample_id'] }
+    reaction_process_actions.select do |action|
+      action.action_name == 'SAVE'
+    end.map { |action| action.workup['sample_id'] }
   end
 
   private

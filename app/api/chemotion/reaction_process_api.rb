@@ -20,9 +20,11 @@ module Chemotion
         end
 
         get :reaction_process do
-          ReactionProcess.find_or_create_by(reaction: @reaction)
+          # Creating the ReactionProcess when non-existant sort of violates REST/CRUD principles.
+          # However substantially it is a GET. We use it only to fetch data (never manipulate).
+          reaction_process = ReactionProcess.find_or_create_by(reaction_id: params[:id])
 
-          present @reaction.reaction_process, with: Entities::ReactionProcessEntity, root: :reaction_process
+          present reaction_process, with: Entities::ReactionProcessEntity, root: :reaction_process
         end
       end
     end
@@ -130,7 +132,7 @@ module Chemotion
 
           post do
             new_step = @reaction_process.reaction_process_steps.create(
-              position: @reaction_process.reaction_process_steps.count
+              position: @reaction_process.reaction_process_steps.count,
             )
 
             new_step.update params[:reaction_process_step]
