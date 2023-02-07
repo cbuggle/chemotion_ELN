@@ -24,7 +24,7 @@ class ReactionProcessStep < ApplicationRecord
 
   has_one :vessel, through: :reaction_process_vessel
 
-  has_many :reaction_process_actions, dependent: :destroy, counter_cache: true
+  has_many :reaction_process_actions, dependent: :destroy
 
   delegate :reaction, to: :reaction_process
 
