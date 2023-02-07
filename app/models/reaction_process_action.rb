@@ -19,7 +19,6 @@
 
 class ReactionProcessAction < ApplicationRecord
   belongs_to :reaction_process_step
-  before_destroy :destroy_condition_end
 
   validate :validate_workup
 
@@ -34,19 +33,11 @@ class ReactionProcessAction < ApplicationRecord
   end
 
   def condition_number
-    reaction_process_step.numbered_condition_starts.find_index(condition_start_action) + 1
+    reaction_process_step.numbered_conditions.find_index(self) + 1
   end
 
   def is_condition?
-    is_condition_start? || is_condition_end?
-  end
-
-  def is_condition_start?
     %w[CONDITION].include?(action_name)
-  end
-
-  def is_condition_end?
-    %w[CONDITION_END].include?(action_name)
   end
 
   def parse_params(action_params)
@@ -62,16 +53,18 @@ class ReactionProcessAction < ApplicationRecord
     sample.collections << (reaction.collections - sample.collections)
 
     sample.hide_in_eln = workup['hide_in_eln']
+
+    sample.name = workup['sample']['name']
+    sample.short_label = workup['sample']['short_label']
+    sample.description = workup['sample']['description']
     sample.target_amount_value = workup['sample']['target_amount_value'].to_f
     sample.target_amount_unit = workup['sample']['target_amount_unit']
     sample.purity = workup['sample']['purity'].to_f
-    sample.description = workup['sample']['description']
-    sample.external_label = workup['sample']['external_label']
     sample.location = workup['sample']['location']
-    sample.save!
+    save! # short_label will be autocreated on save
 
-    sample.external_label = sample.short_label unless sample.external_label.present?
-    sample.name = "#{workup['sample']['intermediate_type']} #{sample.short_label}" if sample.name.blank?
+    sample.external_label ||= sample.short_label
+    sample.name ||= "#{workup['sample']['intermediate_type']} #{sample.short_label}"
     sample.save!
 
     self.workup['sample_id'] = sample.id
@@ -157,19 +150,4 @@ class ReactionProcessAction < ApplicationRecord
     actions
   end
 
-  def condition_start_action
-    is_condition_start? ? self : ReactionProcessAction.find_by(id: workup['condition_start_id'])
-  end
-
-  def condition_end_action
-    return unless is_condition_start?
-
-    ReactionProcessAction.find_by(id: workup['condition_end_id'])
-  end
-
-  private
-
-  def destroy_condition_end
-    condition_end_action&.destroy
-  end
 end

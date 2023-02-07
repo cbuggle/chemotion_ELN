@@ -40,8 +40,8 @@ class ReactionProcessStep < ApplicationRecord
     @numbered_actions ||= reaction_process_actions.order(:position).reject(&:is_condition?)
   end
 
-  def numbered_condition_starts
-    @numbered_conditions ||= reaction_process_actions.order(:position).select(&:is_condition_start?)
+  def numbered_conditions
+    @numbered_conditions ||= reaction_process_actions.order(:position).select(&:is_condition?)
   end
 
   def action_count
@@ -80,8 +80,6 @@ class ReactionProcessStep < ApplicationRecord
     action.save
 
     action.update_position(insert_before) if insert_before
-
-    create_condition_end_action(action) if action_params.action_name == 'CONDITION'
 
     action
   end
@@ -140,17 +138,6 @@ class ReactionProcessStep < ApplicationRecord
   end
 
   private
-
-  def create_condition_end_action(action)
-    condition_end = reaction_process_actions.create!(
-      position: reaction_process_actions.count,
-      start_time: duration,
-      action_name: 'CONDITION_END',
-      workup: action.workup.merge(condition_start_id: action.id),
-    )
-    action.workup['condition_end_id'] = condition_end.id
-    action.save
-  end
 
   def create_transfer_target_action(workup)
     target_step = ReactionProcessStep.find workup['transfer_target_step_id']
