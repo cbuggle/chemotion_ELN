@@ -6,9 +6,9 @@ Medium::MediumSample.find_or_create_by(sample_name: 'Hydrogen', molecule_name: '
 Medium::MediumSample.find_or_create_by(sample_name: 'Carbon Dioxide', molecule_name: '', sum_formula: 'CO2')
 
 Medium::Additive.find_or_create_by(sample_name: 'Brine', molecule_name: 'sodium;chloride')
-Medium::Additive.find_or_create_by(sample_name: '', molecule_name: 'dipotassium;sulfate')
+Medium::Additive.find_or_create_by(molecule_name: 'dipotassium;sulfate').update(sample_name: 'dipotassium;sulfate')
 Medium::Additive.find_or_create_by(sample_name: 'Silica Gel', molecule_name: '')
-Medium::Additive.find_or_create_by(sample_name: '', molecule_name: 'disodium;sulfate')
+Medium::Additive.find_or_create_by(molecule_name: 'disodium;sulfate').update(sample_name: 'disodium;sulfate')
 Medium::Additive.find_or_create_by(sample_name: 'Celite', molecule_name: '')
 Medium::Additive.find_or_create_by(sample_name: 'sat. NaHCO3 solution', molecule_name: '')
 Medium::Additive.find_or_create_by(sample_name: 'sat. NH4Cl solution', molecule_name: '')
