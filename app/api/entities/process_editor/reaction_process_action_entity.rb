@@ -9,10 +9,12 @@ module Entities
       expose :sample, using: 'Entities::ProcessEditor::SampleEntity'
       expose :medium, using: 'Entities::ProcessEditor::ReactionMediumEntity'
 
+      expose :current_conditions
+
       private
 
       def sample_names
-        # Supporting attribute for easy display in frontend.
+        # Supportive attribute for easy display in frontend.
         names = []
         names << object.sample.preferred_label if object.has_sample?
         names << object.medium.preferred_label if object.has_medium?
@@ -29,7 +31,7 @@ module Entities
       end
 
       def max_position
-        object.reaction_process_step.last_action_position
+        reaction_process_step.last_action_position
       end
 
       def start_time
@@ -38,6 +40,14 @@ module Entities
 
       def duration
         object.duration || 0
+      end
+
+      def current_conditions
+        reaction_process_step.action_current_conditions[object.position]
+      end
+
+      def reaction_process_step
+        @reaction_process_step ||= object.reaction_process_step
       end
     end
   end

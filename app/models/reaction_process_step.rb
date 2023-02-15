@@ -44,6 +44,10 @@ class ReactionProcessStep < ApplicationRecord
     @numbered_conditions ||= reaction_process_actions.order(:position).select(&:is_condition?)
   end
 
+  def action_current_conditions
+    @action_current_conditions ||= calculate_action_current_conditions
+  end
+
   def action_count
     @action_count ||= reaction_process_actions.size
   end
@@ -160,5 +164,24 @@ class ReactionProcessStep < ApplicationRecord
 
   def add_actions
     @add_actions ||= reaction_process_actions.select { |action| action.action_name == 'ADD' }
+  end
+
+  def calculate_action_current_conditions
+    current_conditions = {}
+    standard_units = { TEMPERATURE: '°C', PRESSURE: 'mbar', PH: 'pH', IRRADIATION: 'nm', SHAKE: 'rpm',
+                       STIR_BAR: 'rpm' }.stringify_keys
+    reaction_process_actions.order(:position).map do |activity|
+      if activity.is_condition?
+        current_conditions[activity.workup['condition_type']] = "#{activity.workup['condition_value']} #{standard_units[activity.workup['condition_type']]}"
+
+        # provisionally we use both, the generic "condition_type|value" and the specific _value.
+        # These are two different concepts which need to be cleaned after discussed with NJung
+        current_conditions['TEMPERATURE'] ||= "#{activity.workup['temperature_value']} #{standard_units['TEMPERATURE']}"
+        current_conditions['PRESSURE'] ||= "#{activity.workup['pressure_value']} #{standard_units['PRESSURE']}"
+        current_conditions['IRRADIATION'] ||= "#{activity.workup['irradiation_value']} #{standard_units['IRRADIATION']}"
+        current_conditions['PH'] ||= "#{activity.workup['ph_value']} #{standard_units['PH']}"
+      end
+      current_conditions.dup
+    end
   end
 end
