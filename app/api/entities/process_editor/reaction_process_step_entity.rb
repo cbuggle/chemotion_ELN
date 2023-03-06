@@ -7,7 +7,7 @@ module Entities
         :id, :name, :position, :locked, :start_time, :duration, :reaction_process_id, :reaction_id,
         :materials_options, :added_materials_options, :equipment_options,
         :mounted_equipment_options, :transfer_to_options, :transfer_sample_options,
-        :action_equipment_options, :label
+        :action_equipment_options, :label, :final_conditions
       )
 
       expose_timestamps
