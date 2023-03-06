@@ -40,10 +40,12 @@ class ReactionProcessAction < ApplicationRecord
     %w[CONDITION].include?(action_name)
   end
 
-  def parse_params(action_params)
-    update(action_params)
-    update_duration_by_workup(action_params.workup)
-    save_intermediate(action_params.workup) if action_name == 'SAVE'
+  def update_by_params(action_params)
+    ActiveRecord::Base.transaction do
+      update(action_params)
+      update_duration_by_workup(action_params.workup)
+      save_intermediate(action_params.workup) if action_name == 'SAVE'
+    end
   end
 
   def save_intermediate(workup)
@@ -54,17 +56,15 @@ class ReactionProcessAction < ApplicationRecord
 
     sample.hide_in_eln = workup['hide_in_eln']
 
-    sample.name = workup['sample']['name']
+    sample.name = workup['sample']['name'] || "#{workup['sample']['intermediate_type']} #{sample.short_label}"
     sample.short_label = workup['sample']['short_label']
+    sample.external_label = sample.short_label
     sample.description = workup['sample']['description']
     sample.target_amount_value = workup['sample']['target_amount_value'].to_f
     sample.target_amount_unit = workup['sample']['target_amount_unit']
     sample.purity = workup['sample']['purity'].to_f
     sample.location = workup['sample']['location']
-    save! # short_label will be autocreated on save
 
-    sample.external_label ||= sample.short_label
-    sample.name ||= "#{workup['sample']['intermediate_type']} #{sample.short_label}"
     sample.save!
 
     self.workup['sample_id'] = sample.id
@@ -149,5 +149,4 @@ class ReactionProcessAction < ApplicationRecord
     reaction_process_step.normalize_timestamps
     actions
   end
-
 end

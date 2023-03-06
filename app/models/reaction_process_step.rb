@@ -88,8 +88,7 @@ class ReactionProcessStep < ApplicationRecord
       start_time: duration,
     )
 
-    action.parse_params action_params
-    action.save
+    action.update_by_params action_params
 
     action.update_position(insert_before) if insert_before
 
