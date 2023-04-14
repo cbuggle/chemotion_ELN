@@ -1,6 +1,11 @@
-// Copyright 20202 Chrisian Buggle
-// Enhancement to Ord::Kit for KIT IOC
+// Copyright 2023 KIT ELN Reaction Database Authors
+//
+// Enhanced to Ord::Kit for KIT IOC
 // (Karlsruhe Institute of Technology / Institute for Organical Chemistry).
+//
+// v0.1.0
+// (draft, 14.04.2023)
+//
 //
 // Copyright 2020 Open Reaction Database Project Authors
 //
@@ -872,7 +877,6 @@ message StirringConditions {
 
   Automation.AutomationType automation = 4;
 }
-
 
 message IlluminationConditions {
   enum IlluminationType {
