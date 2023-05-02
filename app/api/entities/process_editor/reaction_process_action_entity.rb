@@ -4,7 +4,7 @@ module Entities
   module ProcessEditor
     class ReactionProcessActionEntity < ApplicationEntity
       expose(:id, :step_id, :action_name, :position, :workup, :activity_number, :sample_names,
-             :starts_at, :ends_at, :duration, :start_time, :min_position, :max_position)
+             :starts_at, :ends_at, :duration, :start_time)
 
       expose :sample, using: 'Entities::ProcessEditor::SampleEntity'
       expose :medium, using: 'Entities::ProcessEditor::ReactionMediumEntity'
@@ -24,14 +24,6 @@ module Entities
 
       def step_id
         object.reaction_process_step_id
-      end
-
-      def min_position
-        0
-      end
-
-      def max_position
-        reaction_process_step.last_action_position
       end
 
       def start_time
