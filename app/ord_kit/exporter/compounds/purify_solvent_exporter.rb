@@ -5,7 +5,14 @@ module OrdKit
     module Compounds
       class PurifySolventExporter
         def initialize(sample_id)
-          @sample = Sample.find sample_id
+          # Not optimal. We have 2 types of solvents: Samples, PurificationSolvents
+          # As NJung explicitly requested to have them joined in one UI select,
+          # they are joined together in ReactionProcessStepEntity#materials_options
+          # and consequently the ids of 2 different models are stored in a single array.
+          # Maybe there is a better way as this creates some issues.
+          # We need to .find in multiple models (PurificationSolvents have uuid, so sort of ok)
+
+          @sample = Sample.find_by(id: sample_id) || Medium::DiverseSolvent.find_by(id: sample_id)
         end
 
         def to_ord
