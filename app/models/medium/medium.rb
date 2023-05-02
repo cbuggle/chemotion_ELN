@@ -18,11 +18,20 @@ module Medium
     # STI Base Class for Medium::MediumSample, Medium::Additive, Medium::DiverseSolvent
     # self.abstract_class = true
 
+    # We have alias methods basically because the ELN has a potpourri of attributes like
+    # name, label, preferred_label, short_label and it sometimes is unclear which should
+    # be used in the process editor.
+    # We alias them in Medium as well because we do not want to distinguish models all the time.
+
     def short_label
       label
     end
 
     def preferred_label
+      label
+    end
+
+    def name
       label
     end
   end
