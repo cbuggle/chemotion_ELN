@@ -16,22 +16,24 @@ class ReactionProcess < ApplicationRecord
   delegate :creator, to: :reaction
   belongs_to :reaction, optional: false
 
-  has_many :reaction_process_vessel, dependent: :destroy
-  has_many :vessels, through: :reaction_process_vessel, dependent: :destroy
+  # has_many :reaction_process_vessel, dependent: :destroy
+  # has_many :vessels, through: :reaction_process_vessel, dependent: :destroy
 
   has_many :samples_preparations, dependent: :destroy
 
-  has_many :reaction_process_steps, -> { includes([:vessel]) }, dependent: :destroy
+  # TODO: reinsert once Vessel model is in main.
+  #  has_many :reaction_process_steps, -> { includes([:vessel]) }, dependent: :destroy
+  has_many :reaction_process_steps, dependent: :destroy
 
   has_one :provenance, dependent: :destroy
 
   delegate :reaction_svg_file, to: :reaction
 
-  def create_vessel(create_vessel_params)
-    vessel = vessels.create create_vessel_params
-    UserVessel.create(user: creator, vessel: vessel)
-    vessel
-  end
+  # def create_vessel(create_vessel_params)
+  #   vessel = vessels.create create_vessel_params
+  #   UserVessel.create(user: creator, vessel: vessel)
+  #   vessel
+  # end
 
   def normalize_timestamps
     self.duration = reaction_process_steps.order(:position).reduce(0) do |sum, process_step|

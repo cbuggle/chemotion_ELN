@@ -154,7 +154,7 @@ class API < Grape::API
   mount Chemotion::ReactionProcessAPI
   mount Chemotion::ReactionProcessActionAPI
   mount Chemotion::ReactionProcessStepAPI
-  mount Chemotion::VesselAPI
+ #  mount Chemotion::VesselAPI  # TODO reinsert once Vessel model is in main.
   mount Chemotion::ReactionSvgAPI
   mount Chemotion::PermissionAPI
   mount Chemotion::SuggestionAPI

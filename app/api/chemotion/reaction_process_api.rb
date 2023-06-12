@@ -140,28 +140,29 @@ module Chemotion
           end
         end
 
-        namespace :vessels do
-          route_param :vessel_id do
-            desc 'Add the Vessel to the ReactionProcess'
-            put do
-              vessel = Vessel.find params[:vessel_id]
-              error!('404 Not Found', 404) unless vessel
-              if @reaction_process
-                ReactionProcessVessel.find_or_create_by(reaction_process: @reaction_process,
-                                                        vessel: vessel)
-              end
-            end
+        # TODO: reinsert once Vessel model is in main.
+        # namespace :vessels do
+        #   route_param :vessel_id do
+        #     desc 'Add the Vessel to the ReactionProcess'
+        #     put do
+        #       vessel = Vessel.find params[:vessel_id]
+        #       error!('404 Not Found', 404) unless vessel
+        #       if @reaction_process
+        #         ReactionProcessVessel.find_or_create_by(reaction_process: @reaction_process,
+        #                                                 vessel: vessel)
+        #       end
+        #     end
 
-            desc 'Delete a Vessels from the ReactionProcess'
-            delete do
-              @vessel = @reaction_process.vessels.find_by(id: params[:vessel_id])
-              error!('401 Unauthorized', 401) unless @reaction_process.reaction.creator == current_user
-              error!('404 Not Found', 404) unless @vessel
+        #     desc 'Delete a Vessels from the ReactionProcess'
+        #     delete do
+        #       @vessel = @reaction_process.vessels.find_by(id: params[:vessel_id])
+        #       error!('401 Unauthorized', 401) unless @reaction_process.reaction.creator == current_user
+        #       error!('404 Not Found', 404) unless @vessel
 
-              @reaction_process.reaction_process_vessel.where(vessel_id: params[:vessel_id]).delete_all
-            end
-          end
-        end
+        #       @reaction_process.reaction_process_vessel.where(vessel_id: params[:vessel_id]).delete_all
+        #     end
+        #   end
+        # end
       end
     end
   end

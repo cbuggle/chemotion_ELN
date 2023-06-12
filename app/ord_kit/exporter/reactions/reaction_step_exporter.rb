@@ -19,7 +19,7 @@ module OrdKit
         private
 
         def setup
-          ReactionSetupExporter.new(model).to_ord
+          nil # ReactionSetupExporter.new(model).to_ord
         end
 
         def reaction_actions

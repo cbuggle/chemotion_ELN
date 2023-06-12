@@ -13,7 +13,7 @@ module Entities
       expose_timestamps
 
       expose :actions, using: 'Entities::ProcessEditor::ReactionProcessActionEntity'
-      expose :vessel, using: 'Entities::ProcessEditor::VesselEntity'
+      # expose :vessel, using: 'Entities::ProcessEditor::VesselEntity'
 
       private
 

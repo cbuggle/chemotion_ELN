@@ -6,7 +6,6 @@ class CreateReactionProcessSteps < ActiveRecord::Migration[4.2]
       t.uuid :reaction_process_id
       t.uuid :reaction_process_vessel_id
       t.string :name
-      t.string :vessel_preparations
       t.integer :position
 
       t.boolean :locked

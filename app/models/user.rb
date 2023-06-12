@@ -103,8 +103,8 @@ class User < ApplicationRecord
   has_many :calendar_entries, foreign_key: :created_by, inverse_of: :creator, dependent: :destroy
   has_many :comments, foreign_key: :created_by, inverse_of: :creator, dependent: :destroy
 
-  has_many :user_vessels, dependent: :destroy
-  has_many :vessels, through: :user_vessels
+  # has_many :user_vessels, dependent: :destroy  # TODO reinsert once Vessel model is in main.
+  # has_many :vessels, through: :user_vessels  # TODO reinsert once Vessel model is in main.
 
   accepts_nested_attributes_for :affiliations, :profile
 
