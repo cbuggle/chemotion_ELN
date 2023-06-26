@@ -39,25 +39,27 @@ module OrdKit
         # ELN only sets one at a time (which is a perfectly valid ORD usecase).
 
         def temperature
-          return unless workup['condition_type'] == 'TEMPERATURE'
+          return unless workup['TEMPERATURE']
 
-          Conditions::TemperatureConditionsExporter.new(model).to_ord
+          Conditions::TemperatureConditionsExporter.new(workup['TEMPERATURE']).to_ord
         end
 
         def pressure
-          return unless workup['condition_type'] == 'PRESSURE'
+          return unless workup['PRESSURE']
 
-          Conditions::PressureConditionsExporter.new(model).to_ord
+          Conditions::PressureConditionsExporter.new(workup['PRESSURE']).to_ord
         end
 
         def stirring
-          nil # n/a. In ELN stirring is an action (type "MOTION"), not a condition.
-        end
+          return unless workup['MOTION']
+
+          Conditions::MotionConditionsExporter.new(workup['MOTION']).to_ord
+         end
 
         def illumination
-          return unless workup['condition_type'] == 'IRRADIATION'
+          return unless workup['IRRADIATION']
 
-          Conditions::IrradiationConditionsExporter.new(model).to_ord
+          Conditions::IrradiationConditionsExporter.new(workup['IRRADIATION']).to_ord
         end
 
         def electrochemistry
@@ -65,9 +67,9 @@ module OrdKit
         end
 
         def ph
-          return unless workup['condition_type'] == 'PH'
+          return unless workup['PH']
 
-          Conditions::PhAdjustConditionsExporter.new(model).to_ord
+          Conditions::PhAdjustConditionsExporter.new(workup['PH']).to_ord
         end
 
         def conditions_are_dynamic

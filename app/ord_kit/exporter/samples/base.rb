@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module OrdKit
   module Exporter
     module Samples
@@ -16,7 +17,7 @@ module OrdKit
             addition_speed: addition_speed,
             addition_temperature: addition_temperature,
             addition_time: addition_time,
-            flow_rate: flow_rate
+            flow_rate: flow_rate,
           )
         end
 
@@ -31,9 +32,10 @@ module OrdKit
         end
 
         def addition_device
-          nil # TODO: hardcoded nil. Shall we assign the extra equipment?
+          nil
+          # hardcoded nil. cbuggle, 23.06.2023.
+          # TODO: Shall we assign the extra equipment (which is already in ReactionActionAdd - being an array)?
         end
-
 
         def addition_time
           OrdKit::Time.new(
@@ -70,4 +72,3 @@ module OrdKit
     end
   end
 end
-

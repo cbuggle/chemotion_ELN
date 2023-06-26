@@ -1,10 +1,14 @@
 // Copyright 2023 KIT ELN Reaction Database Authors
+// Nicole Jung <nicole.jung@kit.edu>, Christian Buggle <christian@buggle.net>
 //
-// Enhanced to Ord::Kit for KIT IOC
+// Ord::Kit for KIT IOC
 // (Karlsruhe Institute of Technology / Institute for Organical Chemistry).
+// Schema for the KIT ELN Reaction Database,
+// allowing to store data describing the process of a chemical reaction
+// (enhancing but incompatible to ORD Schema in either direction).
 //
-// v0.1.0
-// (draft, 14.04.2023)
+// v0.2.0
+// (draft, 26.06.2023)
 //
 //
 // Copyright 2020 Open Reaction Database Project Authors
@@ -21,8 +25,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
-// Schema for the KIT ELN Reaction Database (based on but incompatible to the ORD Schema).
 syntax = "proto3";
 
 package ord_kit;
@@ -209,7 +211,7 @@ message ReactionInput {
     int32 position = 2;
     Time start_time = 3;
     Time duration = 4;
-    Equipment extra_equipment = 5;
+    repeated Equipment extra_equipment = 5;
     oneof action {
       ReactionActionAdd addition = 6;
       ReactionActionRemove removal = 7;
@@ -233,7 +235,7 @@ message ReactionInput {
     optional ReactionRole.ReactionRoleType reaction_role = 1;
     ReactionInput input = 2;
 
-    Compound reaction_replacement_medium = 3;   // TODO: Compound? maybe ReactionInput
+    Compound reaction_replacement_medium = 3;   // TODO: Compound? maybe ReactionInput?
     int32 removal_repetitions = 4;
   }
 
@@ -609,7 +611,7 @@ message Equipment {
       FLASK = 9;
       DOSING_STATION = 10;
       LIQUID_HANDLING_SYSTEM = 11;
-      SYRING_AND_SYRINGE_PUMP = 12;
+      SYRINGE_AND_SYRINGE_PUMP = 12;
       HEATING_MANTLE = 13;
       BLOW_DRYER = 14;
       OIL_BATH = 15;
@@ -897,6 +899,9 @@ message IlluminationConditions {
   Wavelength peak_wavelength = 3;
   string color = 4;
   Length distance_to_vessel = 5;
+  Power power = 6;
+  optional bool power_is_ramp = 7;
+  optional Power power_end = 8;
 }
 
 message ElectrochemistryConditions {
@@ -1477,6 +1482,17 @@ message Current {
   // Precision of the measurement (with the same units as `value`).
   optional double precision = 2;
   CurrentUnit units = 3;
+}
+message Power {
+  enum PowerUnit {
+    UNSPECIFIED = 0;
+    WATT = 1;
+    MILLIWATT = 2;
+  }
+  optional double value = 1;
+  // Precision of the measurement (with the same units as `value`).
+  optional double precision = 2;
+  PowerUnit units = 3;
 }
 message Voltage {
   enum VoltageUnit {

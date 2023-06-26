@@ -19,9 +19,7 @@ module OrdKit
         attr_reader :value, :unit
 
         def temperature_unit
-          OrdKit::Temperature::TemperatureUnit.const_get(unit || ELN_DEFAULT_TEMPERATURE_UNIT)
-        rescue NameError
-          OrdKit::Temperature::TemperatureUnit::UNSPECIFIED
+          OrdKit::Temperature::TemperatureUnit.const_get ELN_DEFAULT_TEMPERATURE_UNIT
         end
       end
     end

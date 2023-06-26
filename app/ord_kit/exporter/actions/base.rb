@@ -58,14 +58,16 @@ module OrdKit
         def extra_equipment
           return unless workup['apply_extra_equipment']
 
-          OrdKit::Equipment.new(
-            type: equipment_type,
-            details: nil,  # Currently not present in ELN Editor.
-          )
+          workup['equipment'].map do |equipment|
+            OrdKit::Equipment.new(
+              type: equipment_type(equipment),
+              details: '',  # Currently n/a in ELN.
+            )
+          end
         end
 
-        def equipment_type
-          OrdKit::Equipment::EquipmentType.const_get(workup['equipment'])
+        def equipment_type(equipment)
+          OrdKit::Equipment::EquipmentType.const_get(equipment)
         rescue NameError
           OrdKit::Equipment::EquipmentType::UNSPECIFIED
         end

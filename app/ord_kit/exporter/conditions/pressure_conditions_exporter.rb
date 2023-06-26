@@ -22,11 +22,11 @@ module OrdKit
         end
 
         def setpoint
-          return unless model.workup['condition_value']
+          return unless model['value']
 
           # For now we work only with bars / millibars.
           unit = OrdKit::Pressure::PressureUnit::BAR
-          value = 1000 * model.workup['condition_value'].to_f
+          value = model['value'].to_f / 1000
 
           OrdKit::Pressure.new(
             value: value.to_f,

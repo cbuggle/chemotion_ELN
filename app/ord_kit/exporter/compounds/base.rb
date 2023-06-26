@@ -38,7 +38,7 @@ module OrdKit
             features: nil, #   map :features, :string, :message, 7, "ord.Data"
             analyses: nil, #   map :analyses, :string, :message, 8, "ord.Analysis",
             purity: purity,
-            is_waterfree_solvent: is_waterfree_solvent == "true"
+            is_waterfree_solvent: is_waterfree_solvent
           )
         end
 

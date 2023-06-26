@@ -4,17 +4,22 @@ module OrdKit
   module Exporter
     module Amounts
       class PressureExporter < OrdKit::Exporter::Amounts::Base
+        ELN_DEFAULT_PRESSURE_UNIT = 'BAR'
 
         def to_ord
           return unless value
-          # This models a flow rate and corrsponds to "AdditionSpeed.type=Flow_Rate",
-          # which is a separate ORD message (sibling which I find weird).
-          # Might change this when rewriting UI. cbuggle.
-         OrdKit::Pressure.new(
+
+          OrdKit::Pressure.new(
             value: value.to_f / 1000,
             precision: 10, # TODO: Check .
-            units: OrdKit::Pressure::PressureUnit::BAR
+            units: pressure_unit,
           )
+        end
+
+        private
+
+        def pressure_unit
+          OrdKit::Pressure::PressureUnit.const_get ELN_DEFAULT_PRESSURE_UNIT
         end
       end
     end
