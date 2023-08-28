@@ -198,6 +198,7 @@ class ReactionProcessStep < ApplicationRecord
       IRRADIATION: { value: nil, unit: nil, additional_information: '' },
       PH: { value: nil, unit: nil, additional_information: '' },
       MOTION: { mode: nil, value: nil, unit: nil },
+      EQUIPMENT: { value: nil }
     }.stringify_keys
   end
 end
