@@ -12,6 +12,10 @@ Medium::Additive.find_or_create_by(molecule_name: 'disodium;sulfate').update(sam
 Medium::Additive.find_or_create_by(sample_name: 'Celite', molecule_name: '')
 Medium::Additive.find_or_create_by(sample_name: 'sat. NaHCO3 solution', molecule_name: '')
 Medium::Additive.find_or_create_by(sample_name: 'sat. NH4Cl solution', molecule_name: '')
+Medium::Additive.find_or_create_by(sample_name: 'Sodium sulfate (Na2SO4)', molecule_name: '')
+Medium::Additive.find_or_create_by(sample_name: 'Magnesium sulfate (MgSO4)', molecule_name: '')
+Medium::Additive.find_or_create_by(sample_name: 'Activated charcoal', molecule_name: '')
+Medium::Additive.find_or_create_by(sample_name: 'Molecular sieves', molecule_name: '')
 
 
 [{
