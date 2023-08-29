@@ -640,6 +640,8 @@ message Equipment {
       DROPPING_FUNNEL = 38;
       BUCHNER_FUNNEL = 39;
       MICROWAVE_REACTOR = 40;
+      FUNNEL = 41;
+      WATER_COOLER = 42;
   }
   EquipmentType type = 1;
   string details = 2;
