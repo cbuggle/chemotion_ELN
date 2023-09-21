@@ -44,12 +44,14 @@ class ReactionProcessStep < ApplicationRecord
     @numbered_conditions ||= reaction_process_actions.order(:position).select(&:is_condition?)
   end
 
-  def action_post_conditions
-    @action_post_conditions ||= calculate_action_post_conditions
-  end
+  # We assemble an Array of action_pre_conditions, action_post_conditions
 
   def action_pre_conditions
-    @action_pre_conditions ||= [default_conditions] + action_post_conditions
+    @action_pre_conditions ||= [global_default_conditions] + action_post_conditions
+  end
+
+  def action_post_conditions
+    @action_post_conditions ||= calculate_action_post_conditions
   end
 
   def final_conditions
@@ -179,7 +181,7 @@ class ReactionProcessStep < ApplicationRecord
     # standard_units = { TEMPERATURE: '°C', PRESSURE: 'mbar', PH: 'pH', IRRADIATION: 'nm', SHAKE: 'rpm',
     #                    STIR_BAR: 'rpm' }.stringify_keys
 
-    current_conditions = default_conditions
+    current_conditions = global_default_conditions
 
     reaction_process_actions.order(:position).map do |activity|
       if activity.is_condition?
@@ -191,12 +193,14 @@ class ReactionProcessStep < ApplicationRecord
     end
   end
 
-  def default_conditions
+  def global_default_conditions
+    # Default conditions are stored backend as we want to enable user- oder reaction specific
+    # conditions at some point. Hardcoded for now as bespoken with NJung. cbuggle, 20.9.2023.
     {
-      TEMPERATURE: { value: nil, unit: nil, additional_information: '' },
-      PRESSURE: { value: nil, unit: nil },
+      TEMPERATURE: { value: "20", unit: "CELSIUS", additional_information: '' },
+      PRESSURE: { value: "1013", unit: "MBAR" },
+      PH: { value: 7, unit: 'PH',  additional_information: '' },
       IRRADIATION: { value: nil, unit: nil, additional_information: '' },
-      PH: { value: nil, unit: nil, additional_information: '' },
       MOTION: { mode: nil, value: nil, unit: nil },
       EQUIPMENT: { value: nil }
     }.stringify_keys

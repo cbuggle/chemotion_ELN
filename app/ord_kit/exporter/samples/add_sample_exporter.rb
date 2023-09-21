@@ -17,9 +17,9 @@ module OrdKit
         end
 
         def flow_rate
-          return unless model.workup['add_sample_speed']
+          return unless model.workup['add_sample_velocity']
 
-          OrdKit::Exporter::Amounts::FlowRateExporter.new(value: model.workup['add_sample_speed']).to_ord
+          OrdKit::Exporter::Amounts::FlowRateExporter.new(value: model.workup['add_sample_velocity']).to_ord
         end
 
         def addition_pressure
@@ -27,7 +27,7 @@ module OrdKit
         end
 
         def addition_speed
-          OrdKit::Exporter::Amounts::AdditionSpeedExporter.new(value: model.workup['add_sample_speed']).to_ord
+          OrdKit::Exporter::Amounts::AdditionSpeedExporter.new(value: model.workup['add_sample_velocity']).to_ord
         end
 
         def addition_temperature

@@ -13,7 +13,6 @@
 #
 
 class ReactionProcess < ApplicationRecord
-  delegate :creator, to: :reaction
   belongs_to :reaction, optional: false
 
   # has_many :reaction_process_vessel, dependent: :destroy
@@ -27,7 +26,7 @@ class ReactionProcess < ApplicationRecord
 
   has_one :provenance, dependent: :destroy
 
-  delegate :reaction_svg_file, to: :reaction
+  delegate :creator, :reaction_svg_file, to: :reaction
 
   # def create_vessel(create_vessel_params)
   #   vessel = vessels.create create_vessel_params
