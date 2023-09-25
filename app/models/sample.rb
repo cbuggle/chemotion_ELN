@@ -575,14 +575,6 @@ class Sample < ApplicationRecord
     tag&.taggable_data&.fetch('user_labels', nil)
   end
 
-  def preferred_volume_amount
-    real_amount_value || target_amount_value
-  end
-
-  def preferred_volume_unit
-    real_amount_unit || target_amount_unit
-  end
-
   private
 
   def has_collections

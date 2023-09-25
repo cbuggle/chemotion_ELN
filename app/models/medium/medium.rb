@@ -34,5 +34,14 @@ module Medium
     def name
       label
     end
+
+    def target_amount_value
+    end
+
+    def target_amount_unit
+    end
+
+    def sample_svg_file
+    end
   end
 end

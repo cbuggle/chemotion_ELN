@@ -24,18 +24,6 @@ class ReactionProcessAction < ApplicationRecord
 
   delegate :reaction, :reaction_process, to: :reaction_process_step
 
-  def activity_number
-    is_condition? ? condition_number : action_number
-  end
-
-  def action_number
-    reaction_process_step.numbered_actions.find_index(self) + 1
-  end
-
-  def condition_number
-    reaction_process_step.numbered_conditions.find_index(self) + 1
-  end
-
   def is_condition?
     %w[CONDITION].include?(action_name)
   end
@@ -78,11 +66,6 @@ class ReactionProcessAction < ApplicationRecord
 
   def validate_workup
     validate_workup_sample if %w[ADD SAVE].include?(action_name)
-    validate_workup_equip if %w[EQUIP].include?(action_name)
-  end
-
-  def validate_workup_equip
-    errors.add(:workup, 'Missing Equipment') if workup['equipment'].blank?
   end
 
   def validate_workup_sample
@@ -114,6 +97,7 @@ class ReactionProcessAction < ApplicationRecord
   end
 
   def acts_as_medium?
+    # These are the 3 subclasses stored in the STI table `media`
     %w[ADDITIVE MEDIUM DIVERSE_SOLVENT].include?(workup['acts_as'])
   end
 

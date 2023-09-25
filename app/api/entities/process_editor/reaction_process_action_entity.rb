@@ -3,7 +3,7 @@
 module Entities
   module ProcessEditor
     class ReactionProcessActionEntity < ApplicationEntity
-      expose(:id, :step_id, :action_name, :position, :workup, :activity_number, :sample_names,
+      expose(:id, :step_id, :action_name, :position, :workup, :sample_names,
              :starts_at, :ends_at, :duration, :start_time)
 
       expose :sample, using: 'Entities::ProcessEditor::SampleEntity'

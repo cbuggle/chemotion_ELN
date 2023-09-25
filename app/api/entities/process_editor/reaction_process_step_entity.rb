@@ -5,7 +5,7 @@ module Entities
     class ReactionProcessStepEntity < ApplicationEntity
       expose(
         :id, :name, :position, :locked, :start_time, :duration, :reaction_process_id, :reaction_id,
-        :materials_options, :added_materials_options, :equipment_options,
+        :materials_options, :added_materials_options, :removable_materials_options, :equipment_options,
         :mounted_equipment_options, :transfer_to_options, :transfer_sample_options,
         :action_equipment_options, :label, :final_conditions
       )
@@ -41,47 +41,64 @@ module Entities
       end
 
       def materials_options
+        # We assemble the material options as required in the Frontend.
+        # It's a hodgepodge of samples of different origin merged assigned to certain keys, where the differing
+        # materials also have differing attributes to cope with. This has been discussed with and defined by NJung
+        # though I'm not entirely certain it's 100% correct yet, as technical class_names differ from colloquial.
         samples = object.reaction.starting_materials + object.reaction.reactants
         solvents = (object.reaction.solvents + object.reaction.purification_solvents).uniq
         diverse_solvents = Medium::DiverseSolvent.all
+        additives = Medium::Additive.all
+        media = Medium::MediumSample.all
         intermediates = object.reaction.intermediate_samples
 
         # solvents are to be defined terminally as bespoken with NJung, cbuggle, 06.10.2021
-
         {
-          SAMPLE: samples.map do |s|
-                    { value: s.id, label: s.preferred_label.to_s, amount: s.preferred_volume_amount,
-                      unit: s.preferred_volume_unit }
-                  end,
-          SOLVENT: options_for_solvents(solvents,
-                                        'SOLVENT') + options_for_solvents(diverse_solvents, 'DIVERSE_SOLVENT'),
-          MEDIUM: Medium::MediumSample.all.map { |s| { value: s.id, label: s.label.to_s } },
-          ADDITIVE: Medium::Additive.all.map { |s| { value: s.id, label: s.label.to_s } },
-          DIVERSE_SOLVENT: diverse_solvents.all.map { |s| { value: s.id, label: s.label.to_s } },
-          INTERMEDIATE: intermediates.map do |s|
-                          { value: s.id, label: s.short_label.to_s, amount: s.target_amount_value,
-                            unit: s.target_amount_unit }
-                        end,
+          SAMPLE: samples_options(samples, 'SAMPLE'),
+          SOLVENT: samples_options(solvents, 'SOLVENT') + samples_options(diverse_solvents, 'DIVERSE_SOLVENT'),
+          MEDIUM: samples_options(media, 'MEDIUM'),
+          ADDITIVE: samples_options(additives, 'ADDITIVE'),
+          DIVERSE_SOLVENT: samples_options(diverse_solvents, 'DIVERSE_SOLVENT'),
+          INTERMEDIATE: samples_options(intermediates, 'SAMPLE'),
+        }
+      end
+
+      def removable_materials_options
+        # For UI selects to remove previously added materials, scoped to acts_as.
+        {
+          # Delivering SOLVENT, MEDIUM und ADDITIVE as bespoken with NJung, 06.10.2021.
+          SOLVENT: samples_options(object.added_materials('SOLVENT'), 'SOLVENT'),
+          MEDIUM: samples_options(object.added_materials('MEDIUM'), 'MEDIUM'),
+          ADDITIVE: samples_options(object.added_materials('ADDITIVE'), 'ADDITIVE'),
+          DIVERSE_SOLVENT: samples_options(object.added_materials('DIVERSE_SOLVENT'), 'DIVERSE_SOLVENT'),
         }
       end
 
       def added_materials_options
-        {
-          # Delivering SOLVENT, MEDIUM und ADDITIVE as bespoken with NJung, 06.10.2021.
-          SOLVENT: object.added_materials('SOLVENT').map { |s| { value: s.id, label: s.preferred_label.to_s } },
-          MEDIUM: object.added_materials('MEDIUM').map { |s| { value: s.id, label: s.label.to_s } },
-          ADDITIVE: object.added_materials('ADDITIVE').map { |s| { value: s.id, label: s.label.to_s } },
-          DIVERSE_SOLVENT: object.added_materials('DIVERSE_SOLVENT').map do |s|
-                             { value: s.id, label: s.label.to_s }
-                           end,
-        }
+        # For the ProcessStepHeader in the UI, in order of actions.
+        object.reaction_process_actions.map do |action|
+          sample_option(action.sample || action.medium, action.workup['acts_as']) if action.action_name == 'ADD'
+        end.compact.uniq
       end
 
-      def options_for_solvents(solvents, acts_as)
-        solvents.map do |s|
-          { value: s.id, label: s.preferred_label.to_s, amount: s.try(:target_amount_value),
-            unit: s.try(:target_amount_unit), acts_as: acts_as }
+      def samples_options(samples, acts_as)
+        samples.map do |sample|
+          sample_option(sample, acts_as)
         end
+      end
+
+      # This is too big for "options" and should probably move to its own entity ("SampleOptionEntity")?
+      def sample_option(sample, acts_as)
+        {
+          id: sample.id,
+          value: sample.id,
+          # Can we unify this? Using preferred_labels as in most ELN which in turn is an attribute derived from `external_label` but
+          # when a sample is saved it gets it's "short_label" set. This is quite irritating.
+          label: sample.preferred_label || sample.short_label,
+          amount: sample&.target_amount_value,
+          unit: sample&.target_amount_unit,
+          sample_svg_file: sample&.sample_svg_file,
+          acts_as: acts_as }
       end
 
       def equipment_options
@@ -144,10 +161,13 @@ module Entities
       end
 
       def mounted_equipment
-        object.reaction_process_actions.select { |action| action.workup['mount_action'] == 'MOUNT' }
-              .map do |action|
-          action.workup['equipment'].to_s
-        end
+        object.reaction_process_actions.map do |action|
+          if action.action_name == 'CONDITION'
+            action.workup['EQUIPMENT'].try(:[], :value)
+          else
+            action.workup['equipment']
+          end
+        end.flatten.uniq.compact
       end
     end
   end
