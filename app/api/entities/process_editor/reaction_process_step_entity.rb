@@ -88,6 +88,7 @@ module Entities
       end
 
       # This is too big for "options" and should probably move to its own entity ("SampleOptionEntity")?
+      # We also have sample_options in the ReactionProcessEntity which contain only :value, :label.
       def sample_option(sample, acts_as)
         {
           id: sample.id,

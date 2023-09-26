@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_10_100000) do
+ActiveRecord::Schema.define(version: 2023_09_26_182753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -1141,6 +1141,8 @@ ActiveRecord::Schema.define(version: 2023_08_10_100000) do
     t.string "preparations", array: true
     t.string "equipment", array: true
     t.string "details"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
   end
 
   create_table "scan_results", force: :cascade do |t|

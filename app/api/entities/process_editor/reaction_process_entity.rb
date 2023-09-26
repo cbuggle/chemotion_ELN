@@ -55,7 +55,7 @@ module Entities
           samples_preparations: {
             prepared_samples: samples_options(prepared_samples),
             unprepared_samples: samples_options(unprepared_samples),
-            preparations: sample_preparation_options,
+            # preparations: sample_preparation_options,
             equipment: sample_equipment_options,
           },
           step_name_suggestions: step_name_suggestion_options,
@@ -97,7 +97,7 @@ module Entities
       end
 
       def prepared_samples
-        object.samples_preparations.includes([:sample]).map(&:sample)
+        object.samples_preparations.order(:created_at).includes([:sample]).map(&:sample)
       end
 
       def unprepared_samples
@@ -108,11 +108,12 @@ module Entities
         samples.map { |s| { value: s.id, label: s.preferred_label || s.short_label.to_s } }
       end
 
-      def sample_preparation_options
-        # A well defined subset of OrdKit::CompoundPreparation::CompoundPreparationTypes
-        options_from_ord_constants(%w[DISSOLVED HOMOGENIZED TEMPERATURE_ADJUSTED
-                                      DEGASSED]).push({ label: 'Drying', value: 'DRIED' })
-      end
+      # def sample_preparation_options
+      #   # We deliver all PreparationType from ORD constants.
+      #   # The ReactionProcessEditor does not use them but has a well defined subset as required by KIT.
+      #   # Subsequentally this might be obsolete.
+      #   options_from_ord_constants(OrdKit::CompoundPreparation::PreparationType.constants)
+      # end
 
       def sample_equipment_options
         options_from_ord_constants(OrdKit::Equipment::EquipmentType.constants)
