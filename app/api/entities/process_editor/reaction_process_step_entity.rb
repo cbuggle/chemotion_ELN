@@ -64,7 +64,7 @@ module Entities
       end
 
       def removable_materials_options
-        # For UI selects to remove previously added materials, scoped to acts_as.
+        # For UI selects to REMOVE select with previously added materials, scoped to acts_as.
         {
           # Delivering SOLVENT, MEDIUM und ADDITIVE as bespoken with NJung, 06.10.2021.
           SOLVENT: samples_options(object.added_materials('SOLVENT'), 'SOLVENT'),
@@ -95,8 +95,13 @@ module Entities
           # Can we unify this? Using preferred_labels as in most ELN which in turn is an attribute derived from `external_label` but
           # when a sample is saved it gets it's "short_label" set. This is quite irritating.
           label: sample.preferred_label || sample.short_label,
-          amount: sample&.target_amount_value,
-          unit: sample&.target_amount_unit,
+          amount: sample.target_amount_value,
+          unit: sample.target_amount_unit,
+          unit_amounts: {
+            'mmol': sample.amount_mmol,
+            'mg': sample.amount_mg,
+            'ml': sample.amount_ml
+          },
           sample_svg_file: sample&.sample_svg_file,
           acts_as: acts_as }
       end
@@ -130,7 +135,7 @@ module Entities
 
       # This is just hardcoded definining the available equipment depending on action type.
       # These are subsets of OrdKit::Equipment::EquipmentType. It's important to have each constant in the ORD as well (else ORD export will write 'UNSEPCIFIED')
-      # It might move to a dedicated class when too much clutter.
+      # It might move to a dedicated class when too much clutter. We need to define this backend as the equipment
 
       def action_equipment_options
         {
@@ -146,7 +151,7 @@ module Entities
             PH: options_for(['PIPET']),
             PRESSURE: options_for(['REACTOR']),
             IRRADIATION: options_for(%w[ULTRA_SOUND_BATH UV_LAMP LED]),
-            MOTION: options_for(%w[STIRRER SHAKER HEATING_SHAKER TUBE BALL_MILLING]),
+            MOTION: options_for(%w[STIRRER SHAKER HEATING_SHAKER TUBE BALL_MILLING])
           },
           REMOVE: options_for(%w[PUMP TUBE COIL]),
           PURIFY: options_for(%w[FILTER SEPARATION_FILTER EXTRACTOR
