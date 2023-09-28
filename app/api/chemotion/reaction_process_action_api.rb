@@ -25,12 +25,6 @@ module Chemotion
           present @action, with: Entities::ProcessEditor::ReactionProcessActionEntity, root: :reaction_process_action
         end
 
-        desc 'Update Timer of a ReactionProcessAction'
-        put :timer do
-          @action.update_timer(params[:timer])
-          @action
-        end
-
         desc 'Update Position of a ReactionProcessAction'
         put :update_position do
           @action.update_position(params[:position])

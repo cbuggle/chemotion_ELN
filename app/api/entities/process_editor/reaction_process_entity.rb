@@ -3,7 +3,7 @@
 module Entities
   module ProcessEditor
     class ReactionProcessEntity < ApplicationEntity
-      expose(:id, :reaction_id, :short_label, :duration, :starts_at)
+      expose(:id, :reaction_id, :short_label)
 
       expose_timestamps
 
@@ -21,10 +21,6 @@ module Entities
 
       private
 
-      def duration
-        object.duration || 0
-      end
-
       def reaction_process_steps
         # ActiveModel::Serializer#has_many lacks method `order`, or it didn't work.
         # This was the easiest workaround. cbuggle. 09.07.2021
@@ -32,7 +28,7 @@ module Entities
       end
 
       def short_label
-        object.reaction.short_label
+        object.short_label
       end
 
       # TODO: reinsert once Vessel model is in main.

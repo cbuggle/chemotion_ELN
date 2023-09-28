@@ -4,20 +4,20 @@
 #
 # Table name: provenances
 #
-#  id                    :uuid             not null, primary key
+#  id                  :uuid             not null, primary key
 #  reaction_process_id :string
-#  starts_at             :datetime
-#  city                  :string
-#  doi                   :string
-#  patent                :string
-#  publication_url       :string
-#  username              :string
-#  name                  :string
-#  orcid                 :string
-#  organization          :string
-#  email                 :string
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
+#  starts_at           :datetime
+#  city                :string
+#  doi                 :string
+#  patent              :string
+#  publication_url     :string
+#  username            :string
+#  name                :string
+#  orcid               :string
+#  organization        :string
+#  email               :string
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
 #
 
 class Provenance < ApplicationRecord

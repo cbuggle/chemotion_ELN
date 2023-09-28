@@ -4,17 +4,13 @@
 #
 # Table name: reaction_process_actions
 #
-#  id                         :uuid             not null, primary key
+#  id                       :uuid             not null, primary key
 #  reaction_process_step_id :uuid
-#  action_name                :string
-#  position                   :integer
-#  workup                     :json
-#  created_at                 :datetime         not null
-#  updated_at                 :datetime         not null
-#  starts_at                  :datetime
-#  ends_at                    :datetime
-#  duration                   :integer
-#  start_time                 :integer
+#  action_name              :string
+#  position                 :integer
+#  workup                   :json
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
 #
 
 class ReactionProcessAction < ApplicationRecord
@@ -106,21 +102,7 @@ class ReactionProcessAction < ApplicationRecord
     actions.delete(self)
     actions.insert(position, self)
     actions.each_with_index { |action, idx| action.update(position: idx) }
-    reaction_process_step.normalize_timestamps
     actions
-  end
-
-  def update_timer(timer_params)
-    update(starts_at: timer_params[:starts_at])
-    update(ends_at: timer_params[:ends_at])
-    update(duration: timer_params[:duration])
-    reaction_process_step.normalize_timestamps
-  end
-
-  def update_duration_by_workup(workup)
-    update(duration: workup['duration_in_minutes'] * 60) if workup['duration_in_minutes']
-    update(duration: workup['duration']) if workup['duration']
-    reaction_process_step.normalize_timestamps
   end
 
   def delete_from_reaction_process_step
@@ -130,7 +112,6 @@ class ReactionProcessAction < ApplicationRecord
 
     destroy
 
-    reaction_process_step.normalize_timestamps
     actions
   end
 end

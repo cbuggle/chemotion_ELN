@@ -3,8 +3,7 @@
 module Entities
   module ProcessEditor
     class ReactionProcessActionEntity < ApplicationEntity
-      expose(:id, :step_id, :action_name, :position, :workup, :sample_names,
-             :starts_at, :ends_at, :duration, :start_time)
+      expose(:id, :step_id, :action_name, :position, :workup, :sample_names)
 
       expose :sample, using: 'Entities::ProcessEditor::SampleEntity'
       expose :medium, using: 'Entities::ProcessEditor::ReactionMediumEntity'
@@ -24,14 +23,6 @@ module Entities
 
       def step_id
         object.reaction_process_step_id
-      end
-
-      def start_time
-        object.start_time || 0
-      end
-
-      def duration
-        object.duration || 0
       end
 
       def current_conditions

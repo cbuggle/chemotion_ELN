@@ -4,7 +4,7 @@ module Entities
   module ProcessEditor
     class ReactionProcessStepEntity < ApplicationEntity
       expose(
-        :id, :name, :position, :locked, :start_time, :duration, :reaction_process_id, :reaction_id,
+        :id, :name, :position, :locked, :reaction_process_id, :reaction_id,
         :materials_options, :added_materials_options, :removable_materials_options, :equipment_options,
         :mounted_equipment_options, :transfer_to_options, :transfer_sample_options,
         :action_equipment_options, :label, :final_conditions
@@ -30,14 +30,6 @@ module Entities
 
       def reaction_id
         object.reaction.id
-      end
-
-      def start_time
-        object.start_time || 0
-      end
-
-      def duration
-        object.duration || 0
       end
 
       def materials_options

@@ -4,17 +4,15 @@
 #
 # Table name: reaction_process_steps
 #
-#  id                           :uuid             not null, primary key
+#  id                         :uuid             not null, primary key
 #  reaction_process_id        :uuid
+#  name                       :string
+#  position                   :integer
+#  locked                     :boolean
+#  duration                   :integer
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
 #  reaction_process_vessel_id :uuid
-#  name                         :string
-#  vessel_preparations          :string
-#  position                     :integer
-#  created_at                   :datetime         not null
-#  updated_at                   :datetime         not null
-#  locked                       :boolean
-#  duration                     :integer
-#  start_time                   :integer
 #
 
 class ReactionProcessStep < ApplicationRecord
@@ -71,7 +69,6 @@ class ReactionProcessStep < ApplicationRecord
     reaction_process_steps.delete(self)
     reaction_process_steps.insert(position, self)
     reaction_process_steps.each_with_index { |reaction_process_step, idx| reaction_process_step.update(position: idx) }
-    reaction_process.normalize_timestamps
     reaction_process_steps
   end
 
@@ -86,8 +83,7 @@ class ReactionProcessStep < ApplicationRecord
     return create_transfer_target_action(action_params.workup) if action_params.action_name == 'TRANSFER'
 
     action = reaction_process_actions.new(
-      position: reaction_process_actions.count,
-      start_time: duration,
+      position: reaction_process_actions.count
     )
 
     action.update_by_params action_params
@@ -95,15 +91,6 @@ class ReactionProcessStep < ApplicationRecord
     action.update_position(insert_before) if insert_before
 
     action
-  end
-
-  def normalize_timestamps
-    self.duration = reaction_process_actions.order(:position).reduce(0) do |sum, action|
-      action.update(start_time: sum)
-      sum + action.duration.to_i
-    end
-    save
-    reaction_process.normalize_timestamps
   end
 
   def toggle_locked
@@ -117,7 +104,6 @@ class ReactionProcessStep < ApplicationRecord
     steps.each_with_index { |step, idx| step.update(position: idx) }
     destroy
 
-    reaction_process.normalize_timestamps
     steps
   end
 

@@ -69,46 +69,6 @@ describe Chemotion::ReactionProcessActionAPI do
     end
   end
 
-  describe 'PUT /api/v1/action/:id/timer' do
-    subject do
-      put("/api/v1/reaction_process_action/#{action.id}/timer",
-          params: update_timer_params.to_json,
-          headers: {
-            'HTTP_ACCEPT' => 'application/json',
-            'CONTENT_TYPE' => 'application/json',
-          }.merge(jwt_authorization_header(reaction.creator)))
-    end
-
-    let(:starts_at) { 1.hour.ago }
-    let(:ends_at) { Time.zone.now }
-    let(:duration) { 3600 }
-    let(:update_timer_params) do
-      { timer: {
-        starts_at: starts_at,
-        ends_at: ends_at,
-        duration: duration,
-      } }
-    end
-
-    it 'updates startsAt' do
-      expect { subject }.to change {
-        action.reload.starts_at
-      }.from(nil).to(be_within(1).of(starts_at))
-    end
-
-    it 'updates endsAt' do
-      expect { subject }.to change {
-        action.reload.ends_at
-      }.from(nil).to(be_within(1).of(ends_at))
-    end
-
-    it 'updates duration' do
-      expect { subject }.to change {
-        action.reload.duration
-      }.from(nil).to(duration)
-    end
-  end
-
   describe 'DELETE /api/v1/action/:id' do
     subject do
       delete("/api/v1/reaction_process_action/#{action.id}", headers: jwt_authorization_header(reaction.creator))
