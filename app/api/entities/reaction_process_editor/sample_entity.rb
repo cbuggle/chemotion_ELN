@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Entities
-  module ProcessEditor
+  module ReactionProcessEditor
     class SampleEntity < ApplicationEntity
       expose :id
       expose :short_label

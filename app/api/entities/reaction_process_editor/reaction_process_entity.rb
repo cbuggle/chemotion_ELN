@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
 module Entities
-  module ProcessEditor
+  module ReactionProcessEditor
     class ReactionProcessEntity < ApplicationEntity
       expose(:id, :reaction_id, :short_label)
 
       expose_timestamps
 
-      #  expose :vessels, using: 'Entities::ProcessEditor::VesselEntity'  # TODO reinsert once Vessel model is in main.
-      #  expose :user_vessels, using: 'Entities::ProcessEditor::VesselEntity' # TODO reinsert once Vessel model is in main.
-      expose :reaction_process_steps, using: 'Entities::ProcessEditor::ReactionProcessStepEntity'
+      #  expose :vessels, using: 'Entities::ReactionProcessEditor::VesselEntity'  # TODO reinsert once Vessel model is in main.
+      #  expose :user_vessels, using: 'Entities::ReactionProcessEditor::VesselEntity' # TODO reinsert once Vessel model is in main.
+      expose :reaction_process_steps, using: 'Entities::ReactionProcessEditor::ReactionProcessStepEntity'
 
-      expose :samples_preparations, using: 'Entities::ProcessEditor::SamplePreparationEntity'
+      expose :samples_preparations, using: 'Entities::ReactionProcessEditor::SamplePreparationEntity'
 
-      expose :provenance, using: 'Entities::ProcessEditor::ProvenanceEntity'
+      expose :provenance, using: 'Entities::ReactionProcessEditor::ProvenanceEntity'
 
       expose :select_options
 
@@ -41,8 +41,9 @@ module Entities
       # end
 
       def provenance
-        object.provenance || Provenance.new(reaction_process: object, email: object.creator.email,
-                                            username: object.creator.name)
+        object.provenance || ::ReactionProcessEditor::Provenance.new(reaction_process: object,
+                                                                     email: object.creator.email,
+                                                                     username: object.creator.name)
       end
 
       def select_options
@@ -61,9 +62,9 @@ module Entities
       def step_name_suggestion_options
         reaction_ids = Reaction.where(creator: object.reaction.creator).ids
 
-        procedure_ids = ReactionProcess.where(reaction_id: reaction_ids).ids
+        procedure_ids = ::ReactionProcessEditor::ReactionProcess.where(reaction_id: reaction_ids).ids
 
-        process_steps = ReactionProcessStep.where(reaction_process_id: procedure_ids).all
+        process_steps = ::ReactionProcessEditor::ReactionProcessStep.where(reaction_process_id: procedure_ids).all
 
         process_step_names = process_steps.filter_map(&:name).uniq
 

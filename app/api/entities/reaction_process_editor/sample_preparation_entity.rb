@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module Entities
-  module ProcessEditor
+  module ReactionProcessEditor
     class SamplePreparationEntity < ApplicationEntity
       expose(:id, :sample_id, :preparations, :equipment, :details)
 
-      expose! :sample, using: 'Entities::ProcessEditor::SampleEntity'
+      expose! :sample, using: 'Entities::ReactionProcessEditor::SampleEntity'
 
       private
 

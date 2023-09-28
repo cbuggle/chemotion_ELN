@@ -39,12 +39,14 @@
 #  molecule_name_id    :integer
 #  molfile_version     :string(20)
 #  stereo              :jsonb
+#  mol_rdkit           :string
 #  metrics             :string           default("mmm")
 #  decoupled           :boolean          default(FALSE), not null
 #  molecular_mass      :float
 #  sum_formula         :string
 #  solvent             :jsonb
 #  dry_solvent         :boolean          default(FALSE)
+#  hide_in_eln         :boolean
 #  inventory_sample    :boolean          default(FALSE)
 #
 # Indexes

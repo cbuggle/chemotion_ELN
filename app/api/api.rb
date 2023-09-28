@@ -130,7 +130,7 @@ class API < Grape::API
 
   # desc: whitelisted tables and columns for advanced_search
   WL_TABLES = {
-    'samples' => %w(name short_label external_label xref),
+    'samples' => %w[name short_label external_label xref],
   }
   TARGET = Rails.env.production? ? 'https://www.chemotion-repository.net/' : 'http://localhost:3000/'
 
@@ -151,10 +151,6 @@ class API < Grape::API
   mount Chemotion::ResearchPlanMetadataAPI
   mount Chemotion::ScreenAPI
   mount Chemotion::UserAPI
-  mount Chemotion::ReactionProcessAPI
-  mount Chemotion::ReactionProcessActionAPI
-  mount Chemotion::ReactionProcessStepAPI
- #  mount Chemotion::VesselAPI  # TODO reinsert once Vessel model is in main.
   mount Chemotion::ReactionSvgAPI
   mount Chemotion::PermissionAPI
   mount Chemotion::SuggestionAPI
@@ -191,11 +187,19 @@ class API < Grape::API
   mount Chemotion::ChemicalAPI
   mount Chemotion::CalendarEntryAPI
   mount Chemotion::CommentAPI
+
   mount Labimotion::ConverterAPI
   mount Labimotion::GenericElementAPI
   mount Labimotion::GenericDatasetAPI
   mount Labimotion::SegmentAPI
   mount Labimotion::LabimotionHubAPI
+
+  namespace :reaction_process_editor do
+    mount Chemotion::ReactionProcessEditor::ReactionProcessActionAPI
+    mount Chemotion::ReactionProcessEditor::ReactionProcessAPI
+    mount Chemotion::ReactionProcessEditor::ReactionProcessStepAPI
+    #  mount Chemotion::ReactionProcessEditor::VesselAPI  # TODO reinsert once Vessel model is in main.
+  end
 
   if Rails.env.development?
     add_swagger_documentation(info: {

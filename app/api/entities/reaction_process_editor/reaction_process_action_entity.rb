@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module Entities
-  module ProcessEditor
+  module ReactionProcessEditor
     class ReactionProcessActionEntity < ApplicationEntity
       expose(:id, :step_id, :action_name, :position, :workup, :sample_names)
 
-      expose :sample, using: 'Entities::ProcessEditor::SampleEntity'
-      expose :medium, using: 'Entities::ProcessEditor::ReactionMediumEntity'
+      expose :sample, using: 'Entities::ReactionProcessEditor::SampleEntity'
+      expose :medium, using: 'Entities::ReactionProcessEditor::ReactionMediumEntity'
 
       expose :current_conditions, :pre_conditions, :post_conditions
 

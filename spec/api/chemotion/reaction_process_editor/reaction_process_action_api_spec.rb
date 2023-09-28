@@ -3,7 +3,7 @@
 require 'rails_helper'
 include RequestSpecHelper
 
-describe Chemotion::ReactionProcessActionAPI do
+describe Chemotion::ReactionProcessEditor::ReactionProcessActionAPI do
   let(:json_response) { JSON.parse(response.body) }
 
   let!(:reaction_process_step) { create(:reaction_process_step) }

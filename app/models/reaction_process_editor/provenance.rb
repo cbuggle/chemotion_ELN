@@ -20,25 +20,27 @@
 #  updated_at          :datetime         not null
 #
 
-class Provenance < ApplicationRecord
-  belongs_to :reaction_process
+module ReactionProcessEditor
+  class Provenance < ApplicationRecord
+    belongs_to :reaction_process
 
-  def initialize(*args)
-    super
-    set_rounded_starts_at
-  end
+    def initialize(*args)
+      super
+      set_rounded_starts_at
+    end
 
-  def starts_at=(time)
-    super(DateTime.parse(time))
-  rescue TypeError, Date::Error
-  end
+    def starts_at=(time)
+      super(DateTime.parse(time))
+    rescue TypeError, Date::Error
+    end
 
-  private
+    private
 
-  def set_rounded_starts_at
-    return if starts_at.present?
+    def set_rounded_starts_at
+      return if starts_at.present?
 
-    round_to = 60.to_f # seconds, i.e. 1 minutes.
-    self[:starts_at] = Time.zone.at((Time.zone.now.to_i / round_to).floor * round_to).to_s
+      round_to = 60.to_f # seconds, i.e. 1 minutes.
+      self[:starts_at] = Time.zone.at((Time.zone.now.to_i / round_to).floor * round_to).to_s
+    end
   end
 end

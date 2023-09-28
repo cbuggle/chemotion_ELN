@@ -1,10 +1,15 @@
-# rubocop:disable Metrics/BlockLength, Layout/LineLength, Style/FrozenStringLiteralComment
+# frozen_string_literal: true
+
+# rubocop:disable Metrics/BlockLength
 #
 Rails.application.routes.draw do
   post '/graphql', to: 'graphql#execute' unless Rails.env.production?
 
   if ENV['DEVISE_DISABLED_SIGN_UP'].presence == 'true'
-    devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: 'users/omniauth' }, skip: [:registrations]
+    devise_for :users, controllers: {
+      registrations: 'users/registrations',
+      omniauth_callbacks: 'users/omniauth',
+    }, skip: [:registrations]
     as :user do
       get 'sign_in' => 'devise/sessions#new'
       get 'users/sign_up' => 'devise/sessions#new', as: 'new_user_registration'
@@ -16,11 +21,12 @@ Rails.application.routes.draw do
     devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: 'users/omniauth' }
 
     devise_scope :user do
-      # I tried to include `sessions: 'users/sessions'` (in devise_for controllers:) for the Reaction Process Editor specific
-      # authentication overrides. However this interfered with ELN authentication, raising errors.
-      # The easy workaround is to have a separate api sign_in route for the Reaction Process Editor.
-      post 'api/v1/sign_in', to: 'users/api_sessions#create', format: :json
-      delete 'api/v1/sign_out', to: 'users/api_sessions#destroy', format: :json
+      with_options format: :json do
+        # Separate session endpoints for ReactionProcessEditor ( < Devise::SessionsController).
+        # Using the general Users::Sessions will interfere with ELN authentication.
+        post 'api/v1/reaction_process_editor/sign_in', to: 'reaction_process_editor/sessions#create'
+        delete 'api/v1/reaction_process_editor/sign_out', to: 'reaction_process_editor/sessions#destroy'
+      end
     end
   end
 
@@ -95,4 +101,4 @@ Rails.application.routes.draw do
   get 'test', to: 'pages#test'
 end
 
-# rubocop: enable Metrics/BlockLength, Layout/LineLength, Style/FrozenStringLiteralComment
+# rubocop: enable Metrics/BlockLength

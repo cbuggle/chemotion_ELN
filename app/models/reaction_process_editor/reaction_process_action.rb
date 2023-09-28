@@ -12,7 +12,7 @@
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #
-
+  module ReactionProcessEditor
 class ReactionProcessAction < ApplicationRecord
   belongs_to :reaction_process_step
 
@@ -114,4 +114,5 @@ class ReactionProcessAction < ApplicationRecord
 
     actions
   end
+end
 end

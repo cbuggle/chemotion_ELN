@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Entities
-  module ProcessEditor
+  module ReactionProcessEditor
     class ProvenanceEntity < ApplicationEntity
       expose(:reaction_process_id,
              :starts_at,

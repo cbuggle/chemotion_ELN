@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Entities
-  module ProcessEditor
+  module ReactionProcessEditor
     class ReactionProcessStepEntity < ApplicationEntity
       expose(
         :id, :name, :position, :locked, :reaction_process_id, :reaction_id,
@@ -12,8 +12,8 @@ module Entities
 
       expose_timestamps
 
-      expose :actions, using: 'Entities::ProcessEditor::ReactionProcessActionEntity'
-      # expose :vessel, using: 'Entities::ProcessEditor::VesselEntity'
+      expose :actions, using: 'Entities::ReactionProcessEditor::ReactionProcessActionEntity'
+      # expose :vessel, using: 'Entities::ReactionProcessEditor::VesselEntity'
 
       private
 

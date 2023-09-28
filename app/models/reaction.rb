@@ -33,12 +33,15 @@
 #  duration           :string
 #  rxno               :string
 #  conditions         :string
+#  variations         :jsonb
 #
 # Indexes
 #
-#  index_reactions_on_deleted_at      (deleted_at)
-#  index_reactions_on_rinchi_web_key  (rinchi_web_key)
-#  index_reactions_on_role            (role)
+#  index_reactions_on_deleted_at        (deleted_at)
+#  index_reactions_on_rinchi_short_key  (rinchi_short_key)
+#  index_reactions_on_rinchi_web_key    (rinchi_web_key)
+#  index_reactions_on_role              (role)
+#  index_reactions_on_rxno              (rxno)
 #
 
 class Reaction < ApplicationRecord
@@ -155,7 +158,9 @@ class Reaction < ApplicationRecord
 
   has_one :container, as: :containable
 
-  has_one :reaction_process, -> { includes(:reaction_process_steps) }
+  has_one :reaction_process, -> { includes(:reaction_process_steps) },
+          class_name: 'ReactionProcessEditor::ReactionProcess',
+          inverse_of: :reaction, dependent: :destroy
 
   def self.get_associated_samples(reaction_ids)
     ReactionsSample.where(reaction_id: reaction_ids).pluck(:sample_id)
@@ -223,7 +228,7 @@ class Reaction < ApplicationRecord
         collection = public_send(resource).includes(sample: :molecule)
         paths[prop] = collection.map do |reactions_sample|
           sample = reactions_sample.sample
-          params = [ sample.get_svg_path ]
+          params = [sample.get_svg_path]
           params[0] = sample.svg_text_path if reactions_sample.show_label
           params.append(yield_amount(sample.id)) if prop == :products
           params

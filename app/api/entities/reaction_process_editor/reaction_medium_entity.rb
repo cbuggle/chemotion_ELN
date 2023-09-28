@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Entities
-  module ProcessEditor
+  module ReactionProcessEditor
     # wraps a ReactionsSample object
     class ReactionMediumEntity < ApplicationEntity
       expose(

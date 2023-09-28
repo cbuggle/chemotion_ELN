@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :reaction_process_action do
+  factory :reaction_process_action, class: 'ReactionProcessEditor::ReactionProcessAction' do
     reaction_process_step { ReactionProcessStep.first || create(:reaction_process_step) }
     workup do
       { target_amount_value: '500',

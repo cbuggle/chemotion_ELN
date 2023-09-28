@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :reaction_process_step do
+  factory :reaction_process_step, class: 'ReactionProcessEditor::ReactionProcessStep' do
     transient do
-      reaction_process { ReactionProcess.first || create(:reaction_process) }
+      reaction_process { ReactionProcessEditor::ReactionProcess.first || create(:reaction_process) }
     end
 
     after(:build) do |process_step, object|

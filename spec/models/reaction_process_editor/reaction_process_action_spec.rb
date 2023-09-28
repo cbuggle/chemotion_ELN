@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ReactionProcessAction do
+RSpec.describe ReactionProcessEditor::ReactionProcessAction do
   subject { build(:reaction_process_action) }
 
   it { is_expected.to belong_to(:reaction_process_step) }

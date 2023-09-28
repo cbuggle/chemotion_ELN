@@ -1,7 +1,6 @@
 # frozen_string_literal: true
-
-module Users
-  class ApiSessionsController < Devise::SessionsController
+module ReactionProcessEditor
+  class SessionsController < Devise::SessionsController
     respond_to :json
 
     private
