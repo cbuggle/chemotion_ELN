@@ -197,7 +197,7 @@ class ReactionProcessStep < ApplicationRecord
     # Default conditions are stored backend as we want to enable user- oder reaction specific
     # conditions at some point. Hardcoded for now as bespoken with NJung. cbuggle, 20.9.2023.
     {
-      TEMPERATURE: { value: "20", unit: "CELSIUS", additional_information: '' },
+      TEMPERATURE: { value: "21", unit: "CELSIUS", additional_information: '' },
       PRESSURE: { value: "1013", unit: "MBAR" },
       PH: { value: 7, unit: 'PH',  additional_information: '' },
       IRRADIATION: { value: nil, unit: nil, additional_information: '' },
