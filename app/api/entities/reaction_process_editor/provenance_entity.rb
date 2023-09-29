@@ -2,7 +2,7 @@
 
 module Entities
   module ReactionProcessEditor
-    class ProvenanceEntity < ApplicationEntity
+    class ProvenanceEntity < Grape::Entity
       expose(:reaction_process_id,
              :starts_at,
              :city,

@@ -2,15 +2,13 @@
 
 module Entities
   module ReactionProcessEditor
-    class ReactionProcessStepEntity < ApplicationEntity
+    class ReactionProcessStepEntity < Grape::Entity
       expose(
         :id, :name, :position, :locked, :reaction_process_id, :reaction_id,
         :materials_options, :added_materials_options, :removable_materials_options, :equipment_options,
         :mounted_equipment_options, :transfer_to_options, :transfer_sample_options,
         :action_equipment_options, :label, :final_conditions
       )
-
-      expose_timestamps
 
       expose :actions, using: 'Entities::ReactionProcessEditor::ReactionProcessActionEntity'
       # expose :vessel, using: 'Entities::ReactionProcessEditor::VesselEntity'
@@ -91,12 +89,13 @@ module Entities
           amount: sample.target_amount_value,
           unit: sample.target_amount_unit,
           unit_amounts: {
-            'mmol': sample.amount_mmol,
-            'mg': sample.amount_mg,
-            'ml': sample.amount_ml
+            mmol: sample.amount_mmol,
+            mg: sample.amount_mg,
+            ml: sample.amount_ml,
           },
           sample_svg_file: sample&.sample_svg_file,
-          acts_as: acts_as }
+          acts_as: acts_as,
+        }
       end
 
       def equipment_options
@@ -144,7 +143,7 @@ module Entities
             PH: options_for(['PIPET']),
             PRESSURE: options_for(['REACTOR']),
             IRRADIATION: options_for(%w[ULTRA_SOUND_BATH UV_LAMP LED]),
-            MOTION: options_for(%w[STIRRER SHAKER HEATING_SHAKER TUBE BALL_MILLING])
+            MOTION: options_for(%w[STIRRER SHAKER HEATING_SHAKER TUBE BALL_MILLING]),
           },
           REMOVE: options_for(%w[PUMP TUBE COIL]),
           PURIFY: options_for(%w[FILTER SEPARATION_FILTER EXTRACTOR

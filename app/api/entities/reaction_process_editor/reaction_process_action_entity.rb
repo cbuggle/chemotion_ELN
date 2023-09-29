@@ -2,7 +2,7 @@
 
 module Entities
   module ReactionProcessEditor
-    class ReactionProcessActionEntity < ApplicationEntity
+    class ReactionProcessActionEntity < Grape::Entity
       expose(:id, :step_id, :action_name, :position, :workup, :sample_names)
 
       expose :sample, using: 'Entities::ReactionProcessEditor::SampleEntity'

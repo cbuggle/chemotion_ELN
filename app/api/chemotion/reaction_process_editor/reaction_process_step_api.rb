@@ -3,8 +3,11 @@
 module Chemotion
   module ReactionProcessEditor
     class ReactionProcessStepAPI < Grape::API
-      helpers StrongParamsHelpers
       include Grape::Extensions::Hashie::Mash::ParamBuilder
+
+      helpers StrongParamsHelpers
+
+      # rescue_from :all
 
       namespace :reaction_process_steps do
         route_param :id do

@@ -1,9 +1,21 @@
 # frozen_string_literal: true
 
+if Rails.env.development?
+  # Rails fails to load this file on the first request complaining
+  # > Unable to autoload constant Entities::ReactionProcessEditor::ReactionEntity,
+  # > expected /home/chemotion-dev/app/app/api/entities/reaction_process_editor/reaction_entity.rb to define it):
+  # which is nonsense. Everything works fine on the second request, or when we explicitly require the file.
+  # Seems to happen mostly with this one file but has been seen with reaction_process_entity as well.
+  # Apparently some hickup with the module definition. cbuggle, 29.09.2023.
+  require 'api/entities/reaction_process_editor/reaction_entity'
+end
+
 module Chemotion
   module ReactionProcessEditor
     class ReactionProcessAPI < Grape::API
       helpers StrongParamsHelpers
+
+      rescue_from :all
 
       namespace :reactions do
         params do
@@ -134,7 +146,6 @@ module Chemotion
               )
 
               new_step.update params[:reaction_process_step]
-              new_step.update(start_time: @reaction_process.duration)
               present new_step, with: Entities::ReactionProcessEditor::ReactionProcessStepEntity,
                                 root: :reaction_process_step
             end

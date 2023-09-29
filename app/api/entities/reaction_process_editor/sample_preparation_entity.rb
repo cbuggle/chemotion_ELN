@@ -2,10 +2,10 @@
 
 module Entities
   module ReactionProcessEditor
-    class SamplePreparationEntity < ApplicationEntity
+    class SamplePreparationEntity < Grape::Entity
       expose(:id, :sample_id, :preparations, :equipment, :details)
 
-      expose! :sample, using: 'Entities::ReactionProcessEditor::SampleEntity'
+      expose :sample, using: 'Entities::ReactionProcessEditor::SampleEntity'
 
       private
 

@@ -2,10 +2,8 @@
 
 module Entities
   module ReactionProcessEditor
-    class ReactionProcessEntity < ApplicationEntity
+    class ReactionProcessEntity < Grape::Entity
       expose(:id, :reaction_id, :short_label)
-
-      expose_timestamps
 
       #  expose :vessels, using: 'Entities::ReactionProcessEditor::VesselEntity'  # TODO reinsert once Vessel model is in main.
       #  expose :user_vessels, using: 'Entities::ReactionProcessEditor::VesselEntity' # TODO reinsert once Vessel model is in main.

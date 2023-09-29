@@ -3,9 +3,11 @@
 module Chemotion
   module ReactionProcessEditor
     class ReactionProcessActionAPI < Grape::API
-      include Grape::Kaminari
       include Grape::Extensions::Hashie::Mash::ParamBuilder
+
       helpers StrongParamsHelpers
+
+      # rescue_from :all
 
       namespace :reaction_process_actions do
         route_param :id do
@@ -23,7 +25,8 @@ module Chemotion
           desc 'Update a ReactionProcessAction'
           put do
             @action.update_by_params permitted_params[:action]
-            present @action, with: Entities::ReactionProcessEditor::ReactionProcessActionEntity, root: :reaction_process_action
+            present @action, with: Entities::ReactionProcessEditor::ReactionProcessActionEntity,
+                             root: :reaction_process_action
           end
 
           desc 'Update Position of a ReactionProcessAction'

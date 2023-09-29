@@ -27,6 +27,7 @@ module ReactionProcessEditor
     def update_by_params(action_params)
       ActiveRecord::Base.transaction do
         update(action_params)
+        # update_duration_by_workup(action_params.workup)
         save_intermediate(action_params.workup) if action_name == 'SAVE'
       end
     end
@@ -40,7 +41,7 @@ module ReactionProcessEditor
       sample.hide_in_eln = workup['hide_in_eln']
 
       sample.name = workup['sample']['name'] || "#{workup['sample']['intermediate_type']} #{sample.short_label}"
-      sample.short_label = workup['sample']['short_label']
+      sample.short_label = workup['sample']['short_label'].presence
       sample.external_label = sample.short_label
       sample.description = workup['sample']['description']
       sample.target_amount_value = workup['sample']['target_amount_value'].to_f

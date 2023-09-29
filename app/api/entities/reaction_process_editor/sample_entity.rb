@@ -2,7 +2,7 @@
 
 module Entities
   module ReactionProcessEditor
-    class SampleEntity < ApplicationEntity
+    class SampleEntity < Grape::Entity
       expose :id
       expose :short_label
       expose :sample_svg_file
@@ -12,7 +12,7 @@ module Entities
       expose :location
       expose :hide_in_eln
 
-      expose! :amounts
+      expose :amounts
 
       private
 
