@@ -39,7 +39,8 @@ module OrdKit
 
         def addition_time
           OrdKit::Time.new(
-            value: model.start_time.to_i,
+            value: 0, # TODO: redundan start_time has been removed, needs to be calculated.
+            # model.start_time.to_i,
             precision: nil,
             units: OrdKit::Time::TimeUnit::SECOND,
           )
@@ -47,7 +48,7 @@ module OrdKit
 
         def addition_duration
           OrdKit::Time.new(
-            value: model.duration.to_i,
+            value: model.workup['duration'].to_i,
             precision: nil,
             units: OrdKit::Time::TimeUnit::SECOND,
           )

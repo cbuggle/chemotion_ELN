@@ -14,7 +14,9 @@
 #  updated_at          :datetime
 #
 
-class SamplesPreparation < ApplicationRecord
-  belongs_to :reaction_process
-  belongs_to :sample
+module ReactionProcessEditor
+  class SamplesPreparation < ApplicationRecord
+    belongs_to :reaction_process
+    belongs_to :sample
+  end
 end

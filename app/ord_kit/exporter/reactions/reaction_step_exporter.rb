@@ -30,7 +30,7 @@ module OrdKit
 
         def start_time
           OrdKit::Time.new(
-            value: model.start_time.to_i,
+            value: 0, #model.start_time.to_i,
             precision: nil,
             units: OrdKit::Time::TimeUnit::SECOND,
           )

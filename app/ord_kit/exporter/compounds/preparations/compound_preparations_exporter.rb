@@ -19,7 +19,7 @@ module OrdKit
           private
 
           def samples_preparation
-            SamplesPreparation.find_by(reaction_process: model.reaction_process,
+            ReactionProcessEditor::SamplesPreparation.find_by(reaction_process: model.reaction_process,
                                        sample_id: model.workup['sample_id'])
           end
 

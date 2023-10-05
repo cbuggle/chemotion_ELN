@@ -39,7 +39,7 @@ module OrdKit
 
         def start_time
           OrdKit::Time.new(
-            value: model.start_time.to_i,
+            value: 0, # TODO: We have removed redundant attribute start_time;
             precision: nil,
             units: OrdKit::Time::TimeUnit::SECOND,
           )
@@ -49,7 +49,7 @@ module OrdKit
           # We deliver all Times in seconds per convention
           # (this is the finest granularity, milliseconds not available). cbuggle, 6.1.2022
           OrdKit::Time.new(
-            value: model.duration.to_i,
+            value: model.workup['duration'].to_i,
             precision: nil,
             units: OrdKit::Time::TimeUnit::SECOND,
           )

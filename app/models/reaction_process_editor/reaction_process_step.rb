@@ -26,6 +26,10 @@ module ReactionProcessEditor
 
     delegate :reaction, to: :reaction_process
 
+    def duration
+      reaction_process_actions.reduce(0) { |sum, action| sum + action.workup['duration'].to_i }
+    end
+
     def label
       "#{step_number}/#{reaction_process.reaction_process_steps.count} #{name}"
     end
