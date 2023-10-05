@@ -13,11 +13,19 @@ module Entities
 
       expose :provenance, using: 'Entities::ReactionProcessEditor::ProvenanceEntity'
 
+      expose :default_conditions
+      expose :conditions_equipment_options
       expose :select_options
 
       expose :reaction_svg_file
 
       private
+
+      def default_conditions
+        ::ReactionProcessEditor::SelectOptions.instance.global_default_conditions
+                         .merge(object.default_conditions.to_h)
+                         .merge({ reaction_process_id: object.id }) # Piggybacked for convenience in UI Forms.
+      end
 
       def reaction_process_steps
         # ActiveModel::Serializer#has_many lacks method `order`, or it didn't work.
@@ -112,6 +120,10 @@ module Entities
 
       def sample_equipment_options
         options_from_ord_constants(OrdKit::Equipment::EquipmentType.constants)
+      end
+
+      def conditions_equipment_options
+        ::ReactionProcessEditor::SelectOptions.instance.action_type_equipment['CONDITION']
       end
 
       def options_from_ord_constants(ord_constants)

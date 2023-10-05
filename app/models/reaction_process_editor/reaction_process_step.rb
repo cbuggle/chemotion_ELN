@@ -42,14 +42,9 @@ module ReactionProcessEditor
       @numbered_conditions ||= reaction_process_actions.order(:position).select(&:is_condition?)
     end
 
-    # We assemble an Array of action_pre_conditions, action_post_conditions
-
+    # We assemble an Array of action_pre_conditions which the ReactionActionEntity indexes by its position.
     def action_pre_conditions
-      @action_pre_conditions ||= [global_default_conditions] + action_post_conditions
-    end
-
-    def action_post_conditions
-      @action_post_conditions ||= calculate_action_post_conditions
+      @action_pre_conditions ||= [initial_conditions] + calculate_action_post_conditions
     end
 
     def final_conditions
@@ -165,12 +160,7 @@ module ReactionProcessEditor
     end
 
     def calculate_action_post_conditions
-      # Sort of provisional.
-
-      # standard_units = { TEMPERATURE: '°C', PRESSURE: 'mbar', PH: 'pH', IRRADIATION: 'nm', SHAKE: 'rpm',
-      #                    STIR_BAR: 'rpm' }.stringify_keys
-
-      current_conditions = global_default_conditions
+      current_conditions = initial_conditions
 
       reaction_process_actions.order(:position).map do |activity|
         if activity.is_condition?
@@ -182,17 +172,11 @@ module ReactionProcessEditor
       end
     end
 
-    def global_default_conditions
-      # Default conditions are stored backend as we want to enable user- oder reaction specific
-      # conditions at some point. Hardcoded for now as bespoken with NJung. cbuggle, 20.9.2023.
-      {
-        TEMPERATURE: { value: '21', unit: 'CELSIUS', additional_information: '' },
-        PRESSURE: { value: '1013', unit: 'MBAR' },
-        PH: { value: 7, unit: 'PH', additional_information: '' },
-        IRRADIATION: { value: nil, unit: nil, additional_information: '' },
-        MOTION: { mode: nil, value: nil, unit: nil },
-        EQUIPMENT: { value: nil },
-      }.stringify_keys
+    def initial_conditions
+      # TODO: Will be enhanced by fallback to user default conditions.
+      ReactionProcessEditor::SelectOptions.instance
+                                          .global_default_conditions
+                                          .merge(reaction_process.default_conditions.to_h)
     end
   end
 end

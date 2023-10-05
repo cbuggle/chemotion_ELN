@@ -4,10 +4,11 @@
 #
 # Table name: reaction_processes
 #
-#  id          :uuid             not null, primary key
-#  reaction_id :integer
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id                 :uuid             not null, primary key
+#  reaction_id        :integer
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  default_conditions :jsonb
 #
 
 module ReactionProcessEditor

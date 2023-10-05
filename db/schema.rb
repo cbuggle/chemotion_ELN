@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_28_131556) do
+ActiveRecord::Schema.define(version: 2023_10_05_095022) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -876,6 +876,7 @@ ActiveRecord::Schema.define(version: 2023_09_28_131556) do
     t.integer "reaction_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "default_conditions"
   end
 
   create_table "reactions", id: :serial, force: :cascade do |t|

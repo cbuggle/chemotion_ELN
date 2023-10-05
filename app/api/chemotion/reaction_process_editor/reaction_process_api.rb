@@ -102,6 +102,16 @@ module Chemotion
             end
           end
 
+          namespace :default_conditions do
+            desc 'Update the Default Conditions of the reaction.'
+            params do
+              requires :default_conditions, type: Hash, desc: 'The Default Conditions of the reaction.'
+            end
+            put do
+              @reaction_process.update permitted_params
+            end
+          end
+
           namespace :samples_preparations do
             desc 'Update or Create a Sample Preparation'
             params do

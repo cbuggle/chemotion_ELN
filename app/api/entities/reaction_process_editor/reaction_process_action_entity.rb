@@ -8,7 +8,7 @@ module Entities
       expose :sample, using: 'Entities::ReactionProcessEditor::SampleEntity'
       expose :medium, using: 'Entities::ReactionProcessEditor::ReactionMediumEntity'
 
-      expose :current_conditions, :pre_conditions, :post_conditions
+      expose :pre_conditions
 
       private
 
@@ -23,16 +23,6 @@ module Entities
 
       def step_id
         object.reaction_process_step_id
-      end
-
-      def current_conditions
-        # probably obsolete, keeping provisionally  for UI backwards compatibility
-        reaction_process_step.action_post_conditions[object.position]
-      end
-
-      def post_conditions
-        # probably obsolete, keeping provisionally  for UI backwards compatibility
-        reaction_process_step.action_post_conditions[object.position]
       end
 
       def pre_conditions

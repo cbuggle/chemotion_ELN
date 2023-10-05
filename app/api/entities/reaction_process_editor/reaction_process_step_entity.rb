@@ -7,7 +7,7 @@ module Entities
         :id, :name, :position, :locked, :reaction_process_id, :reaction_id,
         :materials_options, :added_materials_options, :removable_materials_options, :equipment_options,
         :mounted_equipment_options, :transfer_to_options, :transfer_sample_options,
-        :action_equipment_options, :label, :final_conditions
+        :action_type_equipment_options, :label, :final_conditions
       )
 
       expose :actions, using: 'Entities::ReactionProcessEditor::ReactionProcessActionEntity'
@@ -99,9 +99,7 @@ module Entities
       end
 
       def equipment_options
-        @equipment_options ||= OrdKit::Equipment::EquipmentType.constants.map do |equipment|
-          { value: equipment.to_s, label: equipment.to_s.titlecase }
-        end
+        ::ReactionProcessEditor::SelectOptions.instance.all_ord_equipment
       end
 
       def mounted_equipment_options
@@ -125,30 +123,8 @@ module Entities
         @transferable_sample_ids ||= object.reaction_process.saved_sample_ids
       end
 
-      # This is just hardcoded definining the available equipment depending on action type.
-      # These are subsets of OrdKit::Equipment::EquipmentType. It's important to have each constant in the ORD as well (else ORD export will write 'UNSEPCIFIED')
-      # It might move to a dedicated class when too much clutter. We need to define this backend as the equipment
-
-      def action_equipment_options
-        {
-          ADD: equipment_options,
-          SAVE: [],
-          TRANSFER: [],
-          EQUIP: equipment_options,
-          CONDITION: {
-            TEMPERATURE: options_for(
-              %w[HEATING_MANTLE BLOW_DRYER OIL_BATH ICE_BATH
-                 ALUMINIUM_BLOCK WATER_BATH SAND_BATH],
-            ),
-            PH: options_for(['PIPET']),
-            PRESSURE: options_for(['REACTOR']),
-            IRRADIATION: options_for(%w[ULTRA_SOUND_BATH UV_LAMP LED]),
-            MOTION: options_for(%w[STIRRER SHAKER HEATING_SHAKER TUBE BALL_MILLING]),
-          },
-          REMOVE: options_for(%w[PUMP TUBE COIL]),
-          PURIFY: options_for(%w[FILTER SEPARATION_FILTER EXTRACTOR
-                                 SPE_COLUMN FSPE_COLUMN FLASH_COLUMN DISTILLATION_APPARATUS SEPARATION_FUNNEL BUCHNER_FUNNEL]),
-        }
+      def action_type_equipment_options
+        ::ReactionProcessEditor::SelectOptions.instance.action_type_equipment
       end
 
       def options_for(string_array)
