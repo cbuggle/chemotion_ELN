@@ -39,23 +39,11 @@ module ReactionProcessEditor
 
     def global_default_conditions
       # Hardcoded Default conditions are stored backend as we enable user- and reaction specific
-      # conditions.
+      # conditions. Conveniently sort of misplaced in "SelectOptions".
       @global_default_conditions ||= {
         TEMPERATURE: { value: '21', unit: 'CELSIUS', additional_information: '' },
         PRESSURE: { value: '1013', unit: 'MBAR' },
         PH: { value: 7, unit: 'PH', additional_information: '' },
-        IRRADIATION: { value: nil, unit: nil, additional_information: '' },
-        MOTION: { mode: nil, value: nil, unit: nil },
-        EQUIPMENT: { value: nil },
-      }.deep_stringify_keys
-
-       {
-        TEMPERATURE: { value: nil, unit: 'CELSIUS', additional_information: '' },
-        PRESSURE: { value: nil, unit: nil },
-        PH: { value: 7, unit: 'PH', additional_information: '' },
-        IRRADIATION: { value: nil, unit: nil, additional_information: '' },
-        MOTION: { mode: nil, value: nil, unit: nil },
-        EQUIPMENT: { value: nil },
       }.deep_stringify_keys
     end
 

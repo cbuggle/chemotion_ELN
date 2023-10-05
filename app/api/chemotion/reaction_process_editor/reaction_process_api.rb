@@ -61,10 +61,32 @@ module Chemotion
           present reactions, with: Entities::ReactionProcessEditor::ReactionEntity, root: :reactions
         end
 
-        desc 'get options for collection Select'
+        desc 'get options for collection Select.'
         get :collection_select_options do
           { collection_select_options:
           current_user.collections.map { |collection| { value: collection.id, label: collection.label } } }
+        end
+
+        namespace :user_default_conditions do
+          desc 'Update the Default Conditions of the User.'
+          params do
+            requires :default_conditions, type: Hash, desc: 'The Default Conditions of the User.'
+          end
+          put do
+            reaction_process_defaults = ::ReactionProcessEditor::ReactionProcessDefaults
+                                        .find_or_initialize_by(user: current_user)
+            reaction_process_defaults.update permitted_params
+          end
+        end
+
+        desc 'get default_conditions of a User.'
+        get :default_conditions do
+          {
+            global: ::ReactionProcessEditor::SelectOptions.instance.global_default_conditions,
+            user: current_user.reaction_process_defaults&.default_conditions.to_h,
+            conditions_equipment_options:
+             ::ReactionProcessEditor::SelectOptions.instance.action_type_equipment['CONDITION'],
+          }
         end
 
         route_param :id do
@@ -102,10 +124,10 @@ module Chemotion
             end
           end
 
-          namespace :default_conditions do
-            desc 'Update the Default Conditions of the reaction.'
+          namespace :reaction_default_conditions do
+            desc 'Update the Default Conditions of the Reaction.'
             params do
-              requires :default_conditions, type: Hash, desc: 'The Default Conditions of the reaction.'
+              requires :default_conditions, type: Hash, desc: 'The Default Conditions of the Reaction.'
             end
             put do
               @reaction_process.update permitted_params

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_10_05_095022) do
+ActiveRecord::Schema.define(version: 2023_10_05_135006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -859,6 +859,13 @@ ActiveRecord::Schema.define(version: 2023_10_05_095022) do
     t.json "workup"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "reaction_process_defaults", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "user_id"
+    t.jsonb "default_conditions"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "reaction_process_steps", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|

@@ -34,6 +34,14 @@ module ReactionProcessEditor
     #   vessel
     # end
 
+    def user_default_conditions
+      creator.reaction_process_defaults&.default_conditions.to_h
+    end
+
+    def reaction_default_conditions
+      default_conditions.to_h
+    end
+
     def saved_sample_ids
       reaction_process_steps.includes([:reaction_process_actions]).map(&:saved_sample_ids).flatten.uniq
     end

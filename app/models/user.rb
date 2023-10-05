@@ -107,6 +107,8 @@ class User < ApplicationRecord
   # has_many :user_vessels, dependent: :destroy  # TODO reinsert once Vessel model is in main.
   # has_many :vessels, through: :user_vessels  # TODO reinsert once Vessel model is in main.
 
+  has_one :reaction_process_defaults, class_name: 'ReactionProcessEditor::ReactionProcessDefaults', dependent: :destroy
+
   accepts_nested_attributes_for :affiliations, :profile
 
   validates :first_name, :last_name, presence: { allow_blank: false }

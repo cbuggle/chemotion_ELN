@@ -173,10 +173,10 @@ module ReactionProcessEditor
     end
 
     def initial_conditions
-      # TODO: Will be enhanced by fallback to user default conditions.
       ReactionProcessEditor::SelectOptions.instance
                                           .global_default_conditions
-                                          .merge(reaction_process.default_conditions.to_h)
+                                          .merge(reaction_process.user_default_conditions)
+                                          .merge(reaction_process.reaction_default_conditions)
     end
   end
 end

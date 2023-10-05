@@ -13,7 +13,7 @@ module Entities
 
       expose :provenance, using: 'Entities::ReactionProcessEditor::ProvenanceEntity'
 
-      expose :default_conditions
+      expose :reaction_default_conditions, :user_default_conditions
       expose :conditions_equipment_options
       expose :select_options
 
@@ -21,10 +21,22 @@ module Entities
 
       private
 
-      def default_conditions
-        ::ReactionProcessEditor::SelectOptions.instance.global_default_conditions
-                         .merge(object.default_conditions.to_h)
-                         .merge({ reaction_process_id: object.id }) # Piggybacked for convenience in UI Forms.
+      def reaction_default_conditions
+        ::ReactionProcessEditor::SelectOptions
+          .instance
+          .global_default_conditions
+          .merge(object.user_default_conditions)
+          .merge(object.reaction_default_conditions)
+          .merge({ reaction_process_id: object.id }) # Piggybacked for convenience in UI Forms.
+
+        object.reaction_default_conditions.merge({ reaction_process_id: object.id })
+      end
+
+      def user_default_conditions
+        ::ReactionProcessEditor::SelectOptions
+          .instance
+          .global_default_conditions
+          .merge(object.user_default_conditions)
       end
 
       def reaction_process_steps
