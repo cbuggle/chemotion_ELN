@@ -642,6 +642,7 @@ message Equipment {
       MICROWAVE_REACTOR = 40;
       FUNNEL = 41;
       WATER_COOLER = 42;
+      SEPARATION_FILTER = 43;
   }
   EquipmentType type = 1;
   string details = 2;
