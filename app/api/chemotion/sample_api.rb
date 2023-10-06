@@ -457,7 +457,6 @@ module Chemotion
         optional :inventory_sample, type: Boolean, default: false
         optional :molecular_mass, type: Float
         optional :sum_formula, type: String
-        optional :reaction_id, type: String
       end
       post do
         molecule_id = if params[:decoupled] && params[:molfile].blank?
@@ -467,7 +466,7 @@ module Chemotion
                       end
         attributes = {
           name: params[:name],
-          short_label: params[:short_label].presence,
+          short_label: params[:short_label],
           external_label: params[:external_label],
           target_amount_value: params[:target_amount_value],
           target_amount_unit: params[:target_amount_unit],
