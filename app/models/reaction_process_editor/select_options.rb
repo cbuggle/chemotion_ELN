@@ -10,7 +10,7 @@ module ReactionProcessEditor
     # We define this backend as some of it is retrieved from ORD constants which are unavailable in RPE UI.
 
     def all_ord_equipment
-       @all_ord_equipment ||= OrdKit::Equipment::EquipmentType.constants.map do |equipment|
+      @all_ord_equipment ||= OrdKit::Equipment::EquipmentType.constants.map do |equipment|
         { value: equipment.to_s, label: equipment.to_s.titlecase }
       end
     end
@@ -32,9 +32,9 @@ module ReactionProcessEditor
           MOTION: options_for(%w[STIRRER SHAKER HEATING_SHAKER TUBE BALL_MILLING]),
         },
         REMOVE: options_for(%w[PUMP TUBE COIL]),
-        PURIFY: options_for(%w[FILTER SEPARATION_FILTER EXTRACTOR
-                               SPE_COLUMN FSPE_COLUMN FLASH_COLUMN DISTILLATION_APPARATUS SEPARATION_FUNNEL BUCHNER_FUNNEL]),
-        }.deep_stringify_keys
+        PURIFY: options_for(%w[FILTER SEPARATION_FILTER EXTRACTOR SPE_COLUMN FSPE_COLUMN
+                               FLASH_COLUMN DISTILLATION_APPARATUS SEPARATION_FUNNEL BUCHNER_FUNNEL]),
+      }.deep_stringify_keys
     end
 
     def global_default_conditions

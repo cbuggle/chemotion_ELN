@@ -145,12 +145,7 @@ module ReactionProcessEditor
 
       new_action = ReactionProcessAction.new(action_name: 'TRANSFER', workup: workup)
 
-      sample = Sample.find_by(id: workup['sample_id'])
-
       new_action.position = target_step.reaction_process_actions.count
-      new_action.workup['description'] = "from #{label}:"
-      new_action.workup['description'] += " #{sample.preferred_label || sample.short_label}"
-      new_action.workup['description'] += " #{workup['transfer_percentage']}%"
       target_step.reaction_process_actions << new_action
       new_action
     end

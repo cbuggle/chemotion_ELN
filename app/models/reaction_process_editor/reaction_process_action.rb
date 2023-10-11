@@ -27,7 +27,6 @@ module ReactionProcessEditor
     def update_by_params(action_params)
       ActiveRecord::Base.transaction do
         update(action_params)
-        # update_duration_by_workup(action_params.workup)
         save_intermediate(action_params.workup) if action_name == 'SAVE'
       end
     end
@@ -40,16 +39,19 @@ module ReactionProcessEditor
 
       sample.hide_in_eln = workup['hide_in_eln']
 
-      sample.name = workup['sample']['name'] || "#{workup['sample']['intermediate_type']} #{sample.short_label}"
-      sample.short_label = workup['sample']['short_label'].presence
-      sample.external_label = sample.short_label
-      sample.description = workup['sample']['description']
-      sample.target_amount_value = workup['sample']['target_amount_value'].to_f
-      sample.target_amount_unit = workup['sample']['target_amount_unit']
-      sample.purity = workup['sample']['purity'].to_f
-      sample.location = workup['sample']['location']
+      sample.short_label = workup['short_label'].presence&.strip
+      sample.name = workup['name'].presence&.strip
+      sample.description = workup['description'].presence&.strip
+      sample.target_amount_value = workup['target_amount_value'].to_f
+      sample.target_amount_unit = workup['target_amount_unit']
+      sample.purity = workup['purity'].to_f
+      sample.location = workup['location']
 
       sample.save!
+
+      # Keep sample.external_label and workup in sync with potentially auto-generated short_label
+      sample.update(external_label: sample.short_label)
+      self.workup['short_label'] = sample.short_label
 
       self.workup['sample_id'] = sample.id
       save!
@@ -57,7 +59,7 @@ module ReactionProcessEditor
       ris = ReactionsIntermediateSample.find_or_create_by(reaction: reaction,
                                                           sample: sample,
                                                           reaction_step: reaction_process_step.step_number)
-      ris.update(intermediate_type: workup['sample']['intermediate_type'])
+      ris.update(intermediate_type: workup['intermediate_type'])
     end
 
     def validate_workup

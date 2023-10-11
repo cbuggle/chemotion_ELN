@@ -107,10 +107,12 @@ module Entities
       end
 
       def transfer_sample_options
-        @transfer_sample_options ||= Sample.where(id: transferable_sample_ids).includes(%i[molecule
-                                                                                           molecule_name]).map do |s|
-          { value: s.id, label: (s.preferred_label || s.short_label).to_s }
-        end
+        @transfer_sample_options ||=
+          Sample.where(id: transferable_sample_ids).includes(%i[
+                                                               molecule molecule_name residues
+                                                             ]).map do |sample|
+            sample_option(sample, 'SAMPLE')
+          end
       end
 
       def transfer_to_options
