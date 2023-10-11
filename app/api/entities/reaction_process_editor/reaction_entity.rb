@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
-class Entities::ReactionProcessEditor::ReactionEntity < Grape::Entity
-  expose(:id, :short_label, :reaction_svg_file)
+module Entities
+  module ReactionProcessEditor
+    class ReactionEntity < Grape::Entity
+      expose(:id, :short_label, :reaction_svg_file)
 
-  expose(:value)
+      expose(:value)
 
-  private
+      private
 
-  def value
-    object.id
+      def value
+        object.id
+      end
+    end
   end
 end
