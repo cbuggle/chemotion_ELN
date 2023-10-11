@@ -1344,6 +1344,7 @@ message Analysis {
   map<string, Data> data = 5;
   string instrument_manufacturer = 6;
   DateTime instrument_last_calibrated = 7;
+  string number = 8;
 }
 
 message ReactionProvenance {
