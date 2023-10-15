@@ -6,7 +6,7 @@ module Entities
       expose(
         :id, :name, :position, :locked, :reaction_process_id, :reaction_id,
         :materials_options, :added_materials_options, :removable_materials_options, :equipment_options,
-        :mounted_equipment_options, :transfer_to_options, :transfer_sample_options,
+        :mounted_equipment_options, :transfer_to_options, :transfer_sample_options, :addition_speed_type_options,
         :action_type_equipment_options, :label, :final_conditions
       )
 
@@ -34,8 +34,8 @@ module Entities
         # We assemble the material options as required in the Frontend.
         # It's a hodgepodge of samples of different origin merged assigned to certain keys, where the differing
         # materials also have differing attributes to cope with. This has been discussed with and defined by NJung
-        # though I'm not entirely certain it's 100% correct yet, as technical class_names differ from colloquial.
-        samples = object.reaction.starting_materials + object.reaction.reactants
+        # though I'm not entirely certain it's 100% correct yet, as colloquial naming differs from technical keys.
+        samples = object.reaction.starting_materials.includes([:molecule_name]) + object.reaction.reactants.includes([:molecule_name])
         solvents = (object.reaction.solvents + object.reaction.purification_solvents).uniq
         diverse_solvents = Medium::DiverseSolvent.all
         additives = Medium::Additive.all
@@ -127,6 +127,10 @@ module Entities
 
       def action_type_equipment_options
         ::ReactionProcessEditor::SelectOptions.instance.action_type_equipment
+      end
+
+      def addition_speed_type_options
+ ::ReactionProcessEditor::SelectOptions.instance.addition_speed_type
       end
 
       def options_for(string_array)

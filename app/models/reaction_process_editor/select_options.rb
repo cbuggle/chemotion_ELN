@@ -10,9 +10,7 @@ module ReactionProcessEditor
     # We define this backend as some of it is retrieved from ORD constants which are unavailable in RPE UI.
 
     def all_ord_equipment
-      @all_ord_equipment ||= OrdKit::Equipment::EquipmentType.constants.map do |equipment|
-        { value: equipment.to_s, label: equipment.to_s.titlecase }
-      end
+      @all_ord_equipment ||= options_for(OrdKit::Equipment::EquipmentType.constants)
     end
 
     def action_type_equipment
@@ -47,11 +45,15 @@ module ReactionProcessEditor
       }.deep_stringify_keys
     end
 
+    def addition_speed_type
+      @addition_speed_type ||= options_for(OrdKit::ReactionInput::AdditionSpeed::AdditionSpeedType.constants)
+    end
+
     private
 
     def options_for(string_array)
       string_array.map do |string|
-        { value: string, label: string.titlecase }
+        { value: string.to_s, label: string.to_s.titlecase }
       end
     end
   end
