@@ -3,29 +3,39 @@
 module Entities
   module ReactionProcessEditor
     class ReactionProcessEntity < Grape::Entity
-      expose(:id, :short_label)
+      expose :id, :short_label
 
       #  expose :vessels, using: 'Entities::ReactionProcessEditor::VesselEntity'  # TODO reinsert once Vessel model is in main.
       #  expose :user_vessels, using: 'Entities::ReactionProcessEditor::VesselEntity' # TODO reinsert once Vessel model is in main.
       expose :reaction_process_steps, using: 'Entities::ReactionProcessEditor::ReactionProcessStepEntity'
-
       expose :samples_preparations, using: 'Entities::ReactionProcessEditor::SamplePreparationEntity'
-
       expose :provenance, using: 'Entities::ReactionProcessEditor::ProvenanceEntity'
 
-      expose :reaction_default_conditions, :user_default_conditions
-      expose :conditions_equipment_options
-      expose :select_options
-
       expose :reaction_svg_file
+      expose :reaction_default_conditions, :user_default_conditions
+
+      expose :select_options
 
       private
 
+      def reaction_process_steps
+        # ActiveModel::Serializer#has_many lacks method `order`, or it didn't work.
+        # This was the easiest workaround. cbuggle. 09.07.2021
+        object.reaction_process_steps.order('position')
+      end
+
+      def samples_preparations
+        object.samples_preparations.order('created_at')
+      end
+
+      def provenance
+        object.provenance || ::ReactionProcessEditor::Provenance.new(reaction_process: object,
+                                                                     email: object.creator.email,
+                                                                     username: object.creator.name)
+      end
+
       def reaction_default_conditions
-        ::ReactionProcessEditor::SelectOptions
-          .instance
-          .global_default_conditions
-          .merge(object.user_default_conditions)
+        user_default_conditions
           .merge(object.reaction_default_conditions)
           .merge({ reaction_process_id: object.id }) # Piggybacked for convenience in UI Forms.
 
@@ -39,31 +49,6 @@ module Entities
           .merge(object.user_default_conditions)
       end
 
-      def reaction_process_steps
-        # ActiveModel::Serializer#has_many lacks method `order`, or it didn't work.
-        # This was the easiest workaround. cbuggle. 09.07.2021
-        object.reaction_process_steps.order('position')
-      end
-
-      def short_label
-        object.short_label
-      end
-
-      # TODO: reinsert once Vessel model is in main.
-      # def vessels
-      #   object.vessels.order(:created_at)
-      # end
-
-      # def user_vessels
-      #   object.creator.vessels
-      # end
-
-      def provenance
-        object.provenance || ::ReactionProcessEditor::Provenance.new(reaction_process: object,
-                                                                     email: object.creator.email,
-                                                                     username: object.creator.name)
-      end
-
       def select_options
         {
           #   vessels: vessel_options,  # TODO reinsert once Vessel model is in main.
@@ -72,10 +57,20 @@ module Entities
             unprepared_samples: samples_options(unprepared_samples),
             # preparations: sample_preparation_options,
             equipment: sample_equipment_options,
+            preparation_types: preparation_types_options,
           },
           step_name_suggestions: step_name_suggestion_options,
+          condition_types_equipment: condition_types_equipment_options,
         }
       end
+      # TODO: reinsert once Vessel model is in main.
+      # def vessels
+      #   object.vessels.order(:created_at)
+      # end
+
+      # def user_vessels
+      #   object.creator.vessels
+      # end
 
       def step_name_suggestion_options
         reaction_ids = Reaction.where(creator: object.reaction.creator).ids
@@ -120,7 +115,9 @@ module Entities
       end
 
       def samples_options(samples)
-        samples.map { |s| { value: s.id, label: s.preferred_label || s.short_label.to_s , sample_svg_file: s.sample_svg_file }}
+        samples.map do |s|
+          { value: s.id, label: s.preferred_label || s.short_label.to_s, sample_svg_file: s.sample_svg_file }
+        end
       end
 
       # def sample_preparation_options
@@ -134,7 +131,11 @@ module Entities
         options_from_ord_constants(OrdKit::Equipment::EquipmentType.constants)
       end
 
-      def conditions_equipment_options
+      def preparation_types_options
+        ::ReactionProcessEditor::SelectOptions.instance.preparation_types
+      end
+
+      def condition_types_equipment_options
         ::ReactionProcessEditor::SelectOptions.instance.action_type_equipment['CONDITION']
       end
 
