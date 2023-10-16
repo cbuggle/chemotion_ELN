@@ -8,7 +8,7 @@ module Entities
       expose :sample, using: 'Entities::ReactionProcessEditor::SampleEntity'
       expose :medium, using: 'Entities::ReactionProcessEditor::ReactionMediumEntity'
 
-      expose :pre_conditions
+      expose :preconditions
 
       expose :intermediate_type, :source_step_name # supportive piggybacks required in TRANSFER only
 
@@ -39,8 +39,8 @@ module Entities
         object.reaction_process_step_id
       end
 
-      def pre_conditions
-        reaction_process_step.action_pre_conditions[object.position]
+      def preconditions
+        reaction_process_step.action_preconditions[object.position]
       end
 
       def reaction_process_step

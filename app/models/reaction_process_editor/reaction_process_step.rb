@@ -46,13 +46,13 @@ module ReactionProcessEditor
       @numbered_conditions ||= reaction_process_actions.order(:position).select(&:is_condition?)
     end
 
-    # We assemble an Array of action_pre_conditions which the ReactionActionEntity indexes by its position.
-    def action_pre_conditions
-      @action_pre_conditions ||= [initial_conditions] + calculate_action_post_conditions
+    # We assemble an Array of action_preconditions which the ReactionActionEntity indexes by its position.
+    def action_preconditions
+      @action_preconditions ||= [initial_conditions] + calculate_action_post_conditions
     end
 
     def final_conditions
-      @final_conditions ||= action_pre_conditions.last
+      @final_conditions ||= action_preconditions.last
     end
 
     def action_count
