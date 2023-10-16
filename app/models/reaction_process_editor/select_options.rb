@@ -49,6 +49,11 @@ module ReactionProcessEditor
       @addition_speed_type ||= options_for(OrdKit::ReactionInput::AdditionSpeed::AdditionSpeedType.constants)
     end
 
+    def preparation_types
+      @preparation_types ||= options_for(%w[DISSOLVED HOMOGENIZED TEMPERATURE_ADJUSTED
+                                            DEGASSED]) + [{ value: 'DRIED', label: 'Drying' }]
+    end
+
     private
 
     def options_for(string_array)

@@ -120,7 +120,7 @@ module Entities
       end
 
       def samples_options(samples)
-        samples.map { |s| { value: s.id, label: s.preferred_label || s.short_label.to_s } }
+        samples.map { |s| { value: s.id, label: s.preferred_label || s.short_label.to_s , sample_svg_file: s.sample_svg_file }}
       end
 
       # def sample_preparation_options
