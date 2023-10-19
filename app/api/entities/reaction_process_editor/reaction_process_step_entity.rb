@@ -23,11 +23,12 @@ module Entities
         object.reaction_process_id
       end
 
-      # We piggyback the reaction_id, samples_options, added_samples_options, equipment_options, mounted_equipment_options,
-      # transfer_sample_options onto each process_step for convenient usage in UI Selects. cbuggle, 24.8.2021.
+      # We piggyback the reaction_id, samples_options, added_samples_options, equipment_options,
+      # mounted_equipment_options,transfer_sample_options onto each process_step for convenient usage in UI Selects.
+      # This creates a lot of redundant data, maybe piggyback to reaction_process instead. cbuggle, 24.8.2021.
 
       def reaction_id
-        object.reaction.id
+        reaction.id
       end
 
       def materials_options
@@ -35,19 +36,16 @@ module Entities
         # It's a hodgepodge of samples of different origin merged assigned to certain keys, where the differing
         # materials also have differing attributes to cope with. This has been discussed with and defined by NJung
         # though I'm not entirely certain it's 100% correct yet, as colloquial naming differs from technical keys.
-        samples = object.reaction.starting_materials.includes([:molecule_name]) + object.reaction.reactants.includes([:molecule_name])
-        solvents = (object.reaction.solvents + object.reaction.purification_solvents).uniq
+        samples = reaction.starting_materials + reaction.reactants
+        solvents = (reaction.solvents + reaction.purification_solvents).uniq
         diverse_solvents = Medium::DiverseSolvent.all
-        additives = Medium::Additive.all
-        media = Medium::MediumSample.all
-        intermediates = object.reaction.intermediate_samples
+        intermediates = reaction.intermediate_samples
 
-        # solvents are to be defined terminally as bespoken with NJung, cbuggle, 06.10.2021
         {
           SAMPLE: samples_options(samples, 'SAMPLE'),
           SOLVENT: samples_options(solvents, 'SOLVENT') + samples_options(diverse_solvents, 'DIVERSE_SOLVENT'),
-          MEDIUM: samples_options(media, 'MEDIUM'),
-          ADDITIVE: samples_options(additives, 'ADDITIVE'),
+          MEDIUM: samples_options(Medium::MediumSample.all, 'MEDIUM'),
+          ADDITIVE: samples_options(Medium::Additive.all, 'ADDITIVE'),
           DIVERSE_SOLVENT: samples_options(diverse_solvents, 'DIVERSE_SOLVENT'),
           INTERMEDIATE: samples_options(intermediates, 'SAMPLE'),
         }
@@ -66,9 +64,9 @@ module Entities
 
       def added_materials_options
         # For the ProcessStepHeader in the UI, in order of actions.
-        object.reaction_process_actions.map do |action|
+        object.reaction_process_actions.filter_map do |action|
           sample_option(action.sample || action.medium, action.workup['acts_as']) if action.action_name == 'ADD'
-        end.compact.uniq
+        end.uniq
       end
 
       def samples_options(samples, acts_as)
@@ -83,8 +81,8 @@ module Entities
         {
           id: sample.id,
           value: sample.id,
-          # Can we unify this? Using preferred_labels as in most ELN which in turn is an attribute derived from `external_label` but
-          # when a sample is saved it gets it's "short_label" set. This is quite irritating.
+          # Can we unify this? Using preferred_labels as in most ELN which in turn is an attribute derived from
+          # `external_label` but when a sample is saved it gets it's "short_label" set. This is quite irritating.
           label: sample.preferred_label || sample.short_label,
           amount: sample.target_amount_value,
           unit: sample.target_amount_unit,
@@ -130,7 +128,7 @@ module Entities
       end
 
       def addition_speed_type_options
- ::ReactionProcessEditor::SelectOptions.instance.addition_speed_type
+        ::ReactionProcessEditor::SelectOptions.instance.addition_speed_type
       end
 
       def options_for(string_array)
@@ -147,6 +145,10 @@ module Entities
             action.workup['equipment']
           end
         end.flatten.uniq.compact
+      end
+
+      def reaction
+        object.reaction
       end
     end
   end

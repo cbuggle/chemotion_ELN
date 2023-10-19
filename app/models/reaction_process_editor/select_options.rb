@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'singleton'
 
 module ReactionProcessEditor
@@ -7,7 +9,7 @@ module ReactionProcessEditor
     # These are subsets of OrdKit::Equipment::EquipmentType. It's important to use only constants fron
     # the ORD (else ORD export will eventually write 'UNSEPCIFIED').
     #
-    # We define this backend as some of it is retrieved from ORD constants which are unavailable in RPE UI.
+    # We define this backend as some of it is retrieved directly from ORD constants which are unknown in RPE UI.
 
     def all_ord_equipment
       @all_ord_equipment ||= options_for(OrdKit::Equipment::EquipmentType.constants)
@@ -20,13 +22,10 @@ module ReactionProcessEditor
         TRANSFER: [],
         CONDITION: {
           EQUIPMENT: all_ord_equipment,
-          TEMPERATURE: options_for(
-            %w[HEATING_MANTLE BLOW_DRYER OIL_BATH ICE_BATH
-               ALUMINIUM_BLOCK WATER_BATH SAND_BATH],
-          ),
-          PH: options_for(['PIPET']),
+          TEMPERATURE: temperature_equipment_options,
+          PH: ph_adjust_equipment_options,
           PRESSURE: options_for(['REACTOR']),
-          IRRADIATION: options_for(%w[ULTRA_SOUND_BATH UV_LAMP LED]),
+          IRRADIATION: options_for(OrdKit::IlluminationConditions::IlluminationType.constants),
           MOTION: options_for(%w[STIRRER SHAKER HEATING_SHAKER TUBE BALL_MILLING]),
         },
         REMOVE: options_for(%w[PUMP TUBE COIL]),
@@ -56,10 +55,35 @@ module ReactionProcessEditor
 
     private
 
+    # options for can be used where all value.to_titlecase yields a useful label (e.g. DISSOLVED -> Dissolved)
+    # but some dont't which we then need to define explizitly hardcoded.
     def options_for(string_array)
       string_array.map do |string|
         { value: string.to_s, label: string.to_s.titlecase }
       end
+    end
+
+    def temperature_equipment_options
+      [{ label: 'Unspecified', value: 'UNSPECIFIED' },
+       { label: 'Custom', value: 'CUSTOM' },
+       { label: 'Room Temperature', value: 'AMBIENT' },
+       { label: 'Temp of Oil Bath', value: 'OIL_BATH' },
+       { label: 'Water Bath', value: 'WATER_BATH' },
+       { label: 'Sand Bath', value: 'SAND_BATH' },
+       { label: 'Ice Bath', value: 'ICE_BATH' },
+       { label: 'Dry Aluminium Plate', value: 'DRY_ALUMINUM_PLATE' },
+       { label: 'Microwave', value: 'MICROWAVE' },
+       { label: 'Dry Ice Bath', value: 'DRY_ICE_BATH' },
+       { label: 'Air Fan', value: 'AIR_FAN' },
+       { label: 'Liquid Nitrogen', value: 'LIQUID_NITROGEN' },
+       { label: 'Measurement in Reaction', value: 'MEASUREMENT_IN_REACTION' },
+       { label: 'Temp of other contact Media', value: 'CONTACT_MEDIUM' }]
+    end
+
+    def ph_adjust_equipment_options
+      [{ label: 'pH Electrode', value: 'PH_ELECTRODE' },
+       { label: 'pH Stripe', value: 'PH_STRIPE' },
+       { label: 'Other', value: 'PH_OTHER' }]
     end
   end
 end

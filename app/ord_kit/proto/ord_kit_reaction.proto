@@ -7,8 +7,8 @@
 // allowing to store data describing the process of a chemical reaction
 // (enhancing but incompatible to ORD Schema in either direction).
 //
-// v0.2.0
-// (draft, 26.06.2023)
+// v0.3.0
+// (draft, 17.10.2023)
 //
 //
 // Copyright 2020 Open Reaction Database Project Authors
@@ -70,7 +70,6 @@ message Reaction {
   ReactionProvenance provenance = 9;
   // Official ID for this reaction in the Open Reaction Database.
   string reaction_id = 10;
-
   // A reaction may consist of any numer of ReactionSteps.
   repeated ReactionStep reaction_steps = 11;
 }
@@ -211,18 +210,16 @@ message ReactionInput {
     int32 position = 2;
     Time start_time = 3;
     Time duration = 4;
-    repeated Equipment extra_equipment = 5;
+    repeated Equipment equipment = 5;
     oneof action {
       ReactionActionAdd addition = 6;
       ReactionActionRemove removal = 7;
-      ReactionActionEquip equip = 8;
-      ReactionActionCondition condition = 9;
-      ReactionActionMotion motion = 10;
-      ReactionActionPurify purify = 11;
-      ReactionActionTransfer transfer = 12;
-      ReactionActionWait wait = 13;
-      ReactionActionSaveSample save_sample = 14;
-      Analysis analysis = 15;
+      ReactionActionCondition condition = 8;
+      ReactionActionPurify purify = 9;
+      ReactionActionTransfer transfer = 10;
+      ReactionActionWait wait = 11;
+      ReactionActionSaveSample save_sample = 12;
+      Analysis analysis = 13;
     }
   }
 
@@ -235,39 +232,13 @@ message ReactionInput {
     optional ReactionRole.ReactionRoleType reaction_role = 1;
     ReactionInput input = 2;
 
-    Compound reaction_replacement_medium = 3;   // TODO: Compound? maybe ReactionInput?
-    int32 removal_repetitions = 4;
-  }
-
-  message ReactionActionEquip {
-    enum EquipActionType {
-      // proto3 requires first enumeration 0, which will be omitted in .proto dump.
-      // However we want it always human readable. UNSPECIFIED is useless as EquipActionType.
-      UNSPECIFIED = 0;
-      MOUNT = 1;
-      UNMOUNT = 2;
-    }
-    EquipActionType mount_action = 1;
-    Equipment equipment = 2;
+    string replacement_medium = 3;   // TODO: Compound? maybe ReactionInput?
+    int32 remove_repetitions = 4;
   }
 
   message ReactionActionCondition {
-    enum TendencyType {
-      UNSPECIFIED = 0;
-      INCREASE = 1;
-      DECREASE = 2;
-    }
     ReactionConditions conditions = 1;
-
-    // This is redundant to the condition change and has only a supportive role.
-    // When e.g. temp is set higher than before, it increases, no matter what's the tendency value.
-    TendencyType tendency = 2;
-
-    string details = 3;
-  }
-
-  message ReactionActionMotion {
-    StirringConditions motion = 1;
+    string details = 2;
   }
 
   message ReactionActionPurify {
@@ -279,7 +250,7 @@ message ReactionInput {
       CRYSTALLIZATION = 4;
     }
     enum FiltrationMode {
-      KEEP_UNSPECIFIED = 0; // avoid naming collision with PurifyType::UNSPECIFIED (shouldn't this be ok as it's scoped??)
+      KEEP_UNSPECIFIED = 0; // avoid naming collision with PurifyType::UNSPECIFIED (shouldn't this be ok in its scope??)
       KEEP_PERMEATE = 1;
       KEEP_RETENTATE = 2;
     }
@@ -896,6 +867,7 @@ message IlluminationConditions {
     BROAD_SPECTRUM = 8;
     LAMP = 9;
     LASER = 10;
+    MICROWAVE_REACTOR = 11;
   }
   IlluminationType type = 1;
   string details = 2;  // E.g. manufacturer, setup specifications, etc.
