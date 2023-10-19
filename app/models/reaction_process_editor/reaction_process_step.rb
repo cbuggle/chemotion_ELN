@@ -46,7 +46,7 @@ module ReactionProcessEditor
       @numbered_conditions ||= reaction_process_actions.order(:position).select(&:is_condition?)
     end
 
-    # We assemble an Array of action_preconditions which the ReactionActionEntity indexes by its position.
+    # We assemble an Array of action_preconditions which the ReactionActionEntity then indexes by its position.
     def action_preconditions
       @action_preconditions ||= [initial_conditions] + calculate_action_post_conditions
     end
@@ -162,7 +162,7 @@ module ReactionProcessEditor
       current_conditions = initial_conditions
 
       reaction_process_actions.order(:position).map do |activity|
-        if activity.is_condition?
+        if activity.condition?
           current_conditions.each do |key, current_condition|
             current_conditions[key] = activity.workup[key] || current_condition || {}
           end

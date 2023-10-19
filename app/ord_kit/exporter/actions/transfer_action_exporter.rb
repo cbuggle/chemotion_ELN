@@ -22,7 +22,11 @@ module OrdKit
         end
 
         def transfer_source_reaction_step_id
-          workup['transfer_source_step_id']
+          ris = ReactionsIntermediateSample.find_by(sample: model.sample, reaction: model.reaction)
+
+          return unless ris.reaction_step
+
+          model.reaction_process.reaction_process_steps[ris.reaction_step - 1]&.id
         end
 
         def transfer_target_reaction_step_id

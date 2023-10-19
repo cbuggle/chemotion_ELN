@@ -3,14 +3,14 @@
 module OrdKit
   module Exporter
     module Reactions
-      class ReactionStepExporter < OrdKit::Exporter::Base
-        def to_ord
+      class ReactionProcessStepExporter < OrdKit::Exporter::Base
+        def to_ord(starts_at:)
           OrdKit::ReactionStep.new(
             reaction_step_id: model.id,
-            position: model.position,
+            position: model.position + 1,
             setup: setup,
-            actions: reaction_actions,
-            start_time: start_time,
+            actions: reaction_process_actions,
+            start_time: start_time(starts_at),
             duration: duration,
             outcomes: outcomes,
           )
@@ -22,15 +22,22 @@ module OrdKit
           nil # ReactionSetupExporter.new(model).to_ord
         end
 
-        def reaction_actions
-          model.reaction_process_actions.order(:position).filter_map do |rpa|
-            ReactionActionExporter.new(rpa).to_ord
+        def reaction_process_actions
+          start_times = process_actions.inject([0]) do |starts, rps|
+            starts << (starts.last + rps.workup['duration'].to_i)
+          end
+          process_actions.map.with_index do |rpa, idx|
+            ReactionProcessActionExporter.new(rpa).to_ord(starts_at: start_times[idx])
           end
         end
 
-        def start_time
+        def process_actions
+          model.reaction_process_actions.order(:position)
+        end
+
+        def start_time(starts_at)
           OrdKit::Time.new(
-            value: 0, #model.start_time.to_i,
+            value: starts_at.to_i / 1000, # model.start_time.to_i,
             precision: nil,
             units: OrdKit::Time::TimeUnit::SECOND,
           )
@@ -38,7 +45,7 @@ module OrdKit
 
         def duration
           OrdKit::Time.new(
-            value: model.duration.to_i,
+            value: model.duration.to_i / 1000,
             precision: nil,
             units: OrdKit::Time::TimeUnit::SECOND,
           )

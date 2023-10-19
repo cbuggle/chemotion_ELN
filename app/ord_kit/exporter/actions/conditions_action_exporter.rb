@@ -6,37 +6,33 @@ module OrdKit
       class ConditionsActionExporter < Base
         private
 
+        def equipment
+          return unless workup['EQUIPMENT'] && workup['EQUIPMENT']['value']
+
+          workup['EQUIPMENT']['value'].map do |equipment|
+            OrdKit::Equipment.new(
+              type: equipment_type(equipment),
+              details: '', # Currently n/a in ELN.
+            )
+          end
+        end
+
         def step_action
-          {
-            condition: ReactionActionCondition.new(
-              conditions: conditions,
-              tendency: tendency,
-              details: description,
-            ),
-          }
+          { conditions: conditions }
         end
 
         def conditions
           ReactionConditions.new(
             temperature: temperature,
+            ph: ph,
             pressure: pressure,
             stirring: stirring,
             illumination: illumination,
             electrochemistry: electrochemistry,
-            ph: ph,
             conditions_are_dynamic: conditions_are_dynamic,
             details: condition_details,
           )
         end
-
-        def tendency
-          ReactionActionCondition::TendencyType.const_get workup['condition_tendency'].to_s
-        rescue NameError
-          ReactionActionCondition::TendencyType::UNSPECIFIED
-        end
-
-        # The ORD ReactionConditions knows all types of condition in a single message.
-        # ELN only sets one at a time (which is a perfectly valid ORD usecase).
 
         def temperature
           return unless workup['TEMPERATURE']
@@ -54,7 +50,7 @@ module OrdKit
           return unless workup['MOTION']
 
           Conditions::MotionConditionsExporter.new(workup['MOTION']).to_ord
-         end
+        end
 
         def illumination
           return unless workup['IRRADIATION']
@@ -77,7 +73,7 @@ module OrdKit
         end
 
         def condition_details
-          nil # n/a unkown in ELN Editor.s
+          nil # n/a unkown in ELN Editor.
         end
       end
     end

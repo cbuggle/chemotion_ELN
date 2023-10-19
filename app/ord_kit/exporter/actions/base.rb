@@ -8,14 +8,14 @@ module OrdKit
         # Provides implementation for the common methods details, duration,
         # Provides empty implementation step_action which needs to be implemented in subclasses.
 
-        def to_ord
+        def to_ord(starts_at:)
           OrdKit::ReactionAction.new(
             {
               description: description,
               position: position,
-              start_time: start_time,
+              start_time: start_time(starts_at),
               duration: duration,
-              extra_equipment: extra_equipment,
+              equipment: equipment,
             }.merge(step_action),
           )
         end
@@ -23,40 +23,36 @@ module OrdKit
         private
 
         delegate :workup, to: :model
-        # def workup
-        #   model.workup
-        # end
 
         # ORD attributes in order of ORD definition by convention (they are numbered).
-
         def description
           workup['description']
         end
 
         def position
-          model.position
+          model.position + 1
         end
 
-        def start_time
+        def start_time(starts_at)
           OrdKit::Time.new(
-            value: 0, # TODO: We have removed redundant attribute start_time;
+            value: starts_at.to_i / 1000,
             precision: nil,
             units: OrdKit::Time::TimeUnit::SECOND,
           )
         end
 
         def duration
-          # We deliver all Times in seconds per convention
-          # (this is the finest granularity, milliseconds not available). cbuggle, 6.1.2022
+          # We deliver all Times in seconds per convention. However currently we store milliseconds.
+          # (this is the finest granularity, milliseconds not available in ORD). cbuggle, 6.1.2022
           OrdKit::Time.new(
-            value: model.workup['duration'].to_i,
+            value: workup['duration'].to_i / 1000,
             precision: nil,
             units: OrdKit::Time::TimeUnit::SECOND,
           )
         end
 
-        def extra_equipment
-          return unless workup['apply_extra_equipment']
+        def equipment
+          return unless workup['equipment']
 
           workup['equipment'].map do |equipment|
             OrdKit::Equipment.new(

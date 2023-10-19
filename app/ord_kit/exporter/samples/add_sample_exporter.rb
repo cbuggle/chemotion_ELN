@@ -10,30 +10,42 @@ module OrdKit
           [
             OrdKit::Exporter::Compounds::AddCompoundExporter.new(
               model,
-            ).to_ord(
-              is_waterfree_solvent: model.workup['is_waterfree_solvent'],
-            ),
+            ).to_ord,
           ]
         end
 
         def flow_rate
-          return unless model.workup['add_sample_velocity']
+          return unless model.workup['add_sample_velocity_value']
 
-          OrdKit::Exporter::Amounts::FlowRateExporter.new(value: model.workup['add_sample_velocity']).to_ord
+          OrdKit::Exporter::Amounts::FlowRateExporter.new(
+            value: model.workup['add_sample_velocity_value'],
+            unit: model.workup['add_sample_velocity_unit'],
+          ).to_ord
         end
 
         def addition_pressure
-          OrdKit::Exporter::Amounts::PressureExporter.new(value: model.workup['pressure_value']).to_ord
+          return unless model.workup['add_sample_pressure_value']
+
+          OrdKit::Exporter::Amounts::PressureExporter.new(
+            value: model.workup['add_sample_pressure_value'],
+            unit: model.workup['add_sample_pressure_unit'],
+          ).to_ord
         end
 
         def addition_speed
-          OrdKit::Exporter::Amounts::AdditionSpeedExporter.new(value: model.workup['add_sample_velocity']).to_ord
+          return unless model.workup['addition_speed_type']
+
+          OrdKit::Exporter::Amounts::AdditionSpeedExporter.new(
+            value: model.workup['addition_speed_type'],
+          ).to_ord
         end
 
         def addition_temperature
+          return unless model.workup['add_sample_temperature_value']
+
           OrdKit::Exporter::Amounts::TemperatureExporter.new(
-            value: model.workup['temperature_value'],
-            unit: model.workup['temperature_value_unit'],
+            value: model.workup['add_sample_temperature_value'],
+            unit: model.workup['add_sample_temperature_value_unit'],
           ).to_ord
         end
       end

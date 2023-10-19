@@ -9,33 +9,22 @@ module OrdKit
           when 'l', 'ml', 'mcl', 'nl'
             OrdKit::Amount.new(
               volume_includes_solutes: volume_includes_solutes,
-              volume: VolumeExporter.new(
-                value: value,
-                unit: unit,
-              ).to_ord,
+              volume: VolumeExporter.new(value: value, unit: unit).to_ord,
             )
           when 'kg', 'g', 'mg', 'mcg'
             OrdKit::Amount.new(
               volume_includes_solutes: volume_includes_solutes,
-              mass: MassExporter.new(
-                value: value,
-                unit: unit,
-              ).to_ord,
+              mass: MassExporter.new(value: value, unit: unit).to_ord,
             )
           when 'mol', 'mmol', 'mcmol', 'nanomol'
             OrdKit::Amount.new(
               volume_includes_solutes: volume_includes_solutes,
-              moles: MolesExporter.new(
-                value: value,
-                unit: unit,
-              ).to_ord,
+              moles: MolesExporter.new(value: value, unit: unit).to_ord,
             )
-          when '%', 'percent'
+          when 'PERCENT'
             OrdKit::Amount.new(
               volume_includes_solutes: volume_includes_solutes,
-              percentage: PercentageExporter.new(
-                value: value,
-              ).to_ord,
+              percentage: PercentageExporter.new(value: value).to_ord,
             )
           end
         end

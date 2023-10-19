@@ -20,8 +20,12 @@ module ReactionProcessEditor
 
     delegate :reaction, :reaction_process, to: :reaction_process_step
 
-    def is_condition?
+    def condition?
       %w[CONDITION].include?(action_name)
+    end
+
+    def adds_sample?
+      %w[ADD TRANSFER].include?(action_name)
     end
 
     def update_by_params(action_params)

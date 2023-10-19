@@ -4,7 +4,7 @@ module OrdKit
   module Exporter
     module Amounts
       class FlowRateExporter < OrdKit::Exporter::Amounts::Base
-        ELN_DEFAULT_FLOWRATE_UNIT = 'MILLILITER_PER_MINUTE'
+        ELN_DEFAULT_FLOWRATE_UNIT = OrdKit::FlowRate::FlowRateUnit::MILLILITER_PER_MINUTE
 
         def to_ord
           return unless value
@@ -15,8 +15,14 @@ module OrdKit
           OrdKit::FlowRate.new(
             value: value.to_f,
             precision: nil,
-            units: OrdKit::FlowRate::FlowRateUnit.const_get(ELN_DEFAULT_FLOWRATE_UNIT),
+            units: flow_rate_unit_for[unit] || ELN_DEFAULT_FLOWRATE_UNIT,
           )
+        end
+
+        private
+
+        def flow_rate_unit_for
+          { MLMIN: OrdKit::FlowRate::FlowRateUnit::MILLILITER_PER_MINUTE }
         end
       end
     end

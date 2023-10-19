@@ -6,8 +6,8 @@ module OrdKit
       class IrradiationConditionsExporter < OrdKit::Exporter::Base
         # Works on ReactionProcessAction "CONDITION / IRRADIATION"
 
-        ELN_DEFAULT_WAVELENGTH_TYPE = OrdKit::Wavelength::WavelengthUnit::NANOMETER
-        ELN_DEFAULT_POWER_UNIT = 'WATT'
+        ELN_DEFAULT_WAVELENGTH_TYPE =
+          ELN_DEFAULT_POWER_UNIT = 'WATT'
 
         def to_ord
           OrdKit::IlluminationConditions.new(
@@ -38,7 +38,8 @@ module OrdKit
           Wavelength.new(
             value: model['value'].to_i,
             precision: nil, # n/a. Unkown in ELN.
-            units: ELN_DEFAULT_WAVELENGTH_TYPE,
+            # Only allowed are NANOMETER and WAVENUMBER (its inverse), WAVENUMBER is unknown in ELN.
+            units: OrdKit::Wavelength::WavelengthUnit::NANOMETER,
           )
         end
 

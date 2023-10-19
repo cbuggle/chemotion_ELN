@@ -19,18 +19,20 @@ module OrdKit
           private
 
           def samples_preparation
-            ReactionProcessEditor::SamplesPreparation.find_by(reaction_process: model.reaction_process,
-                                       sample_id: model.workup['sample_id'])
+            ReactionProcessEditor::SamplesPreparation.find_by(
+              reaction_process: model.reaction_process,
+              sample: model.sample,
+            )
           end
 
           def preparation_type
-            Array(samples_preparation.preparations).map do |preparation|
+            Array(samples_preparation&.preparations).map do |preparation|
               OrdKit::CompoundPreparation::PreparationType.const_get(preparation)
             end
           end
 
           def equipment
-            Array(samples_preparation.equipment).map do |equip|
+            Array(samples_preparation&.equipment).map do |equip|
               OrdKit::Equipment.new(
                 type: OrdKit::Equipment::EquipmentType.const_get(equip),
                 details: nil, # Currently not present in ELN Editor.

@@ -8,13 +8,7 @@ module OrdKit
 
         def step_action
           {
-            wait: OrdKit::ReactionActionWait.new(
-              duration: OrdKit::Time.new(
-                value: model.duration,
-                precision: nil,
-                units: OrdKit::Time::TimeUnit::SECOND,
-              ),
-            ),
+            wait: OrdKit::ReactionActionWait.new(duration: duration),
           }
         end
       end

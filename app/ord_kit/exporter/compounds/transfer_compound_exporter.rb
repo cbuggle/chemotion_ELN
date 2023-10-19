@@ -36,7 +36,7 @@ module OrdKit
         def amount
           Amount.new(
             percentage: Amounts::AmountExporter.new(
-              value: (model.workup['transfer_percentage'] || 0) * 100,
+              value: (workup['transfer_percentage'] || 0) * 100,
             ).to_ord,
           )
         end

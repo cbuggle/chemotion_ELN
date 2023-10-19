@@ -85,20 +85,15 @@ message ReactionStep {
   string reaction_step_id = 1;
   // The position of this step within the Reaction
   int32 position = 2;
-
+  // The start_time (in seconds) in the total reaction.
+  Time start_time = 3;
+  // The total duration.
+  Time duration = 4;
   // The setup specifies how the reaction step was prepared.
   // Most importantly it contains the Vessel.
-  ReactionSetup setup = 3;
-
+  ReactionSetup setup = 5;
   // The indivdual actions defining the ReactionStep.
-  repeated ReactionAction actions = 4;
-
-  // The total duration (in seconds) in the total reaction.
-  Time start_time = 5;
-
-  // The total duration.
-  Time duration = 6;
-
+  repeated ReactionAction actions = 6;
   // Each reaction steps outcome may contains all analyses and
   // confirmed/expected product// structures at a particular reaction time.
   repeated ReactionOutcome outcomes = 7;
@@ -214,7 +209,7 @@ message ReactionInput {
     oneof action {
       ReactionActionAdd addition = 6;
       ReactionActionRemove removal = 7;
-      ReactionActionCondition condition = 8;
+      ReactionConditions conditions = 8;
       ReactionActionPurify purify = 9;
       ReactionActionTransfer transfer = 10;
       ReactionActionWait wait = 11;
@@ -236,10 +231,11 @@ message ReactionInput {
     int32 remove_repetitions = 4;
   }
 
-  message ReactionActionCondition {
-    ReactionConditions conditions = 1;
-    string details = 2;
-  }
+  // Obsolete? details are not used yet.
+  // message ReactionActionCondition {
+  //   ReactionConditions conditions = 1;
+  //   string details = 2;
+  // }
 
   message ReactionActionPurify {
     enum PurifyType {

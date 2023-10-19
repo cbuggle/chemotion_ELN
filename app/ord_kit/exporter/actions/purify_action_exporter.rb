@@ -13,7 +13,7 @@ module OrdKit
               filtration_mode: filtration_mode,
               automation: automation,
               solvents: solvents,
-              ratio: ratio
+              ratio: ratio,
             ),
           }
         end
@@ -25,9 +25,11 @@ module OrdKit
         end
 
         def filtration_mode
-          OrdKit::ReactionActionPurify::FiltrationMode.const_get workup['filtration_mode'] if workup['purify_type'] == 'FILTRATION'
-        # rescue NameError
-        #   OrdKit::ReactionActionPurify::FiltrationMode.UNSPECIFIED
+          return unless workup['purify_type'] == 'FILTRATION'
+
+          OrdKit::ReactionActionPurify::FiltrationMode.const_get workup['filtration_mode']
+        rescue NameError
+          OrdKit::ReactionActionPurify::FiltrationMode.UNSPECIFIED
         end
 
         def automation

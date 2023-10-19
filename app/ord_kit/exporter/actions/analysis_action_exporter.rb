@@ -10,7 +10,7 @@ module OrdKit
           {
             analysis: OrdKit::Analysis.new(
               number: workup['analysis_number'],
-              chmo_id: workup['chmo_id']&.to_i,
+              chmo_id: workup['chmo_id'].to_i,
               type: analysis_type,
             ),
           }

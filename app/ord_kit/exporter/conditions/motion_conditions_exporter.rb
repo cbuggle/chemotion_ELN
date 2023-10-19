@@ -7,7 +7,7 @@ module OrdKit
         # Works on ReactionProcessAction ("CONDITION / TEMPERATURE")
 
         def to_ord
-         StirringConditions.new(
+          StirringConditions.new(
             type: stirring_method_type,
             details: details,
             rate: stirring_rate,

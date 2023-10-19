@@ -10,16 +10,11 @@ module OrdKit
           return unless value
 
           OrdKit::Pressure.new(
+            # ORD has only BAR, no MBAR. We use only MBAR in ELN. We need to convert.
             value: value.to_f / 1000,
-            precision: 10, # TODO: Check .
-            units: pressure_unit,
+            precision: nil,
+            units: OrdKit::Pressure::PressureUnit.const_get(ELN_DEFAULT_PRESSURE_UNIT),
           )
-        end
-
-        private
-
-        def pressure_unit
-          OrdKit::Pressure::PressureUnit.const_get ELN_DEFAULT_PRESSURE_UNIT
         end
       end
     end

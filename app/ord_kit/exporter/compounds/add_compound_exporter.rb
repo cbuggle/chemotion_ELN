@@ -31,15 +31,15 @@ module OrdKit
         end
 
         def reaction_role
-          OrdKit::ReactionRole::ReactionRoleType.const_get model.workup['acts_as']
+          OrdKit::ReactionRole::ReactionRoleType.const_get workup['acts_as']
         rescue NameError
           OrdKit::ReactionRole::ReactionRoleType::UNSPECIFIED
         end
 
         def amount
           Amounts::AmountExporter.new(
-            value: model.workup['target_amount_value'],
-            unit: model.workup['target_amount_unit'],
+            value: workup['target_amount_value'],
+            unit: workup['target_amount_unit'],
           ).to_ord
         end
 

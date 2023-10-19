@@ -33,13 +33,14 @@ module OrdKit
 
         def addition_device
           nil
-          # hardcoded nil. cbuggle, 23.06.2023.
-          # TODO: Shall we assign the extra equipment (which is already in ReactionActionAdd - being an array)?
+          # Concept incompatible to ELN. Hardcoded nil.
+          # In ELN equipment is an array (not a single device)
+          # and is stored with the action (not with the Compound added by the action)
         end
 
         def addition_time
           OrdKit::Time.new(
-            value: 0, # TODO: redundan start_time has been removed, needs to be calculated.
+            value: 0, # TODO: redundant start_time has been removed, needs to be calculated.
             # model.start_time.to_i,
             precision: nil,
             units: OrdKit::Time::TimeUnit::SECOND,
@@ -48,7 +49,7 @@ module OrdKit
 
         def addition_duration
           OrdKit::Time.new(
-            value: model.workup['duration'].to_i,
+            value: workup['duration'].to_i / 1000,
             precision: nil,
             units: OrdKit::Time::TimeUnit::SECOND,
           )
