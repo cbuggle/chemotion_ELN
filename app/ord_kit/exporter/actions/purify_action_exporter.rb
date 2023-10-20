@@ -33,7 +33,7 @@ module OrdKit
         end
 
         def automation
-          Automation::AutomationType.const_get workup['purify_automation']
+          Automation::AutomationType.const_get workup['automation_mode']
         rescue NameError
           Automation::AutomationType::UNSPECIFIED
         end

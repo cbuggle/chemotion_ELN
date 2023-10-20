@@ -10,7 +10,7 @@ module Entities
 
       expose :preconditions
 
-      expose :intermediate_type, :source_step_name # supportive piggybacks required in TRANSFER only
+      expose :intermediate_type, :transfer_source_step_name # supportive piggybacks required in TRANSFER only
 
       private
 
@@ -20,18 +20,19 @@ module Entities
         ReactionsIntermediateSample.find_by(reaction: object.reaction, sample: object.sample)&.intermediate_type
       end
 
-      def source_step_name
-        return unless object.action_name == 'TRANSFER'
+      def transfer_source_step_name
+        ris = ReactionsIntermediateSample.find_by(sample: object.sample, reaction: object.reaction)
 
-        ::ReactionProcessEditor::ReactionProcessStep.find_by(id: object.workup['transfer_source_step_id'])&.name
+        return unless object.action_name == 'TRANSFER' && ris.reaction_step
+
+        object.reaction_process.reaction_process_steps[ris.reaction_step - 1]&.name
       end
 
       def sample_names
         # Supportive attribute for easy display in frontend.
-        names = []
+        names = Sample.where(id: object.workup['purify_solvent_sample_ids']).map(&:preferred_label)
         names << object.sample.preferred_label if object.has_sample?
         names << object.medium.preferred_label if object.has_medium?
-        names << Sample.where(id: object.workup['purify_solvent_sample_ids']).map(&:preferred_label)
         names.join(', ')
       end
 

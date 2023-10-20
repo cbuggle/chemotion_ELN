@@ -3,6 +3,8 @@
 module Entities
   module ReactionProcessEditor
     class ReactionProcessEntity < Grape::Entity
+      SELECT_OPTIONS = ::ReactionProcessEditor::SelectOptions.instance
+
       expose :id, :short_label
 
       #  expose :vessels, using: 'Entities::ReactionProcessEditor::VesselEntity'  # TODO reinsert once Vessel model is in main.
@@ -17,6 +19,8 @@ module Entities
       expose :select_options
 
       private
+
+      delegate :reaction, to: :object
 
       def reaction_process_steps
         # ActiveModel::Serializer#has_many lacks method `order`, or it didn't work.
@@ -43,8 +47,7 @@ module Entities
       end
 
       def user_default_conditions
-        ::ReactionProcessEditor::SelectOptions
-          .instance
+        SELECT_OPTIONS
           .global_default_conditions
           .merge(object.user_default_conditions)
       end
@@ -53,16 +56,48 @@ module Entities
         {
           #   vessels: vessel_options,  # TODO reinsert once Vessel model is in main.
           samples_preparations: {
-            prepared_samples: samples_options(prepared_samples),
-            unprepared_samples: samples_options(unprepared_samples),
-            # preparations: sample_preparation_options,
-            equipment: sample_equipment_options,
-            preparation_types: preparation_types_options,
+            prepared_samples: samples_options(prepared_samples, 'SAMPLE'),
+            unprepared_samples: samples_options(unprepared_samples, 'SAMPLE'),
+            equipment: SELECT_OPTIONS.equipment_types,
+            preparation_types: SELECT_OPTIONS.preparation_types,
           },
           step_name_suggestions: step_name_suggestion_options,
-          condition_types_equipment: condition_types_equipment_options,
+          action_type_equipment: SELECT_OPTIONS.action_type_equipment,
+          condition_additional_information: SELECT_OPTIONS.condition_additional_information,
+          addition_speed_types: SELECT_OPTIONS.addition_speed_types,
+          materials: materials_options,
+          equipment: SELECT_OPTIONS.all_ord_equipment,
+          automation_modes: SELECT_OPTIONS.automation_modes,
+          motion_types: SELECT_OPTIONS.motion_types,
+          remove_types: SELECT_OPTIONS.remove_types,
+          save_sample_types: SELECT_OPTIONS.save_sample_types,
+          analysis_types: SELECT_OPTIONS.analysis_types,
         }
       end
+
+      def materials_options
+        # We assemble the material options as required in the Frontend.
+        # It's a hodgepodge of samples of different origin merged assigned to certain keys, where the differing
+        # materials also have differing attributes to cope with. This has been discussed with and defined by NJung
+        # though I'm not entirely certain it's 100% correct yet, as colloquial naming differs from technical keys.
+        samples = reaction.starting_materials + reaction.reactants
+        solvents = (reaction.solvents + reaction.purification_solvents).uniq
+        diverse_solvents = Medium::DiverseSolvent.all
+
+        intermediates = reaction.intermediate_samples
+
+        {
+          SAMPLE: samples_options(samples, 'SAMPLE'),
+          SOLVENT: samples_options(solvents, 'SOLVENT') + samples_options(diverse_solvents, 'DIVERSE_SOLVENT'),
+          MEDIUM: samples_options(Medium::MediumSample.all, 'MEDIUM'),
+          ADDITIVE: samples_options(Medium::Additive.all, 'ADDITIVE'),
+          DIVERSE_SOLVENT: samples_options(diverse_solvents, 'DIVERSE_SOLVENT'),
+          INTERMEDIATE: samples_options(intermediates, 'SAMPLE'),
+        }
+      end
+
+      def addition_speed_type_options; end
+
       # TODO: reinsert once Vessel model is in main.
       # def vessels
       #   object.vessels.order(:created_at)
@@ -98,12 +133,12 @@ module Entities
       # end
 
       def preparable_samples
-        (object.reaction.reactions_starting_material_samples +
-        object.reaction.reactions_reactant_samples +
-        object.reaction.reactions_solvent_samples +
-        object.reaction.reactions_purification_solvent_samples +
-        object.reaction.reactions_product_samples +
-        object.reaction.reactions_intermediate_samples).map(&:sample).uniq
+        (reaction.reactions_starting_material_samples +
+        reaction.reactions_reactant_samples +
+        reaction.reactions_solvent_samples +
+        reaction.reactions_purification_solvent_samples +
+        reaction.reactions_product_samples +
+        reaction.reactions_intermediate_samples).map(&:sample).uniq
       end
 
       def prepared_samples
@@ -114,10 +149,31 @@ module Entities
         preparable_samples - prepared_samples
       end
 
-      def samples_options(samples)
-        samples.map do |s|
-          { value: s.id, label: s.preferred_label || s.short_label.to_s, sample_svg_file: s.sample_svg_file }
+      def samples_options(samples, acts_as)
+        samples.map do |sample|
+          sample_option(sample, acts_as)
         end
+      end
+
+      # This is too big for "options" and should probably move to its own entity ("SampleOptionEntity")?
+      # We also have sample_options in the ReactionProcessEntity which contain only :value, :label.
+      def sample_option(sample, acts_as)
+        {
+          id: sample.id,
+          value: sample.id,
+          # Can we unify this? Using preferred_labels as in most ELN which in turn is an attribute derived from
+          # `external_label` but when a sample is saved it gets it's "short_label" set. This is quite irritating.
+          label: sample.preferred_label || sample.short_label,
+          amount: sample.target_amount_value,
+          unit: sample.target_amount_unit,
+          unit_amounts: {
+            mmol: sample.amount_mmol,
+            mg: sample.amount_mg,
+            ml: sample.amount_ml,
+          },
+          sample_svg_file: sample&.sample_svg_file,
+          acts_as: acts_as,
+        }
       end
 
       # def sample_preparation_options
@@ -127,17 +183,13 @@ module Entities
       #   options_from_ord_constants(OrdKit::CompoundPreparation::PreparationType.constants)
       # end
 
-      def sample_equipment_options
-        options_from_ord_constants(OrdKit::Equipment::EquipmentType.constants)
-      end
+      # def sample_equipment_options; end
 
-      def preparation_types_options
-        ::ReactionProcessEditor::SelectOptions.instance.preparation_types
-      end
+      # def preparation_types_options; end
 
-      def condition_types_equipment_options
-        ::ReactionProcessEditor::SelectOptions.instance.action_type_equipment['CONDITION']
-      end
+      # def condition_types_equipment_options
+      #   SELECT_OPTIONS.action_type_equipment['CONDITION']
+      # end
 
       def options_from_ord_constants(ord_constants)
         ord_constants.map do |option|

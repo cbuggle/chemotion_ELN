@@ -5,15 +5,27 @@ module Entities
     class ReactionProcessStepEntity < Grape::Entity
       expose(
         :id, :name, :position, :locked, :reaction_process_id, :reaction_id,
-        :materials_options, :added_materials_options, :removable_materials_options, :equipment_options,
-        :mounted_equipment_options, :transfer_to_options, :transfer_sample_options, :addition_speed_type_options,
-        :action_type_equipment_options, :label, :final_conditions
+        :label, :final_conditions, :select_options
       )
 
       expose :actions, using: 'Entities::ReactionProcessEditor::ReactionProcessActionEntity'
       # expose :vessel, using: 'Entities::ReactionProcessEditor::VesselEntity'
 
       private
+
+      def reaction
+        object.reaction
+      end
+
+      def select_options
+        {
+          transferable_samples: transfer_samples_options,
+          transferable_to: transfer_to_options,
+          added_materials: added_materials_options,
+          removable_materials: removable_materials_options,
+          mounted_equipment: mounted_equipment_options,
+        }
+      end
 
       def actions
         object.reaction_process_actions.order('position')
@@ -23,54 +35,29 @@ module Entities
         object.reaction_process_id
       end
 
-      # We piggyback the reaction_id, samples_options, added_samples_options, equipment_options,
-      # mounted_equipment_options,transfer_sample_options onto each process_step for convenient usage in UI Selects.
-      # This creates a lot of redundant data, maybe piggyback to reaction_process instead. cbuggle, 24.8.2021.
-
       def reaction_id
         reaction.id
       end
 
-      def materials_options
-        # We assemble the material options as required in the Frontend.
-        # It's a hodgepodge of samples of different origin merged assigned to certain keys, where the differing
-        # materials also have differing attributes to cope with. This has been discussed with and defined by NJung
-        # though I'm not entirely certain it's 100% correct yet, as colloquial naming differs from technical keys.
-        samples = reaction.starting_materials + reaction.reactants
-        solvents = (reaction.solvents + reaction.purification_solvents).uniq
-        diverse_solvents = Medium::DiverseSolvent.all
-        intermediates = reaction.intermediate_samples
-
-        {
-          SAMPLE: samples_options(samples, 'SAMPLE'),
-          SOLVENT: samples_options(solvents, 'SOLVENT') + samples_options(diverse_solvents, 'DIVERSE_SOLVENT'),
-          MEDIUM: samples_options(Medium::MediumSample.all, 'MEDIUM'),
-          ADDITIVE: samples_options(Medium::Additive.all, 'ADDITIVE'),
-          DIVERSE_SOLVENT: samples_options(diverse_solvents, 'DIVERSE_SOLVENT'),
-          INTERMEDIATE: samples_options(intermediates, 'SAMPLE'),
-        }
-      end
-
-      def removable_materials_options
-        # For UI selects to REMOVE select with previously added materials, scoped to acts_as.
-        {
-          # Delivering SOLVENT, MEDIUM und ADDITIVE as bespoken with NJung, 06.10.2021.
-          SOLVENT: samples_options(object.added_materials('SOLVENT'), 'SOLVENT'),
-          MEDIUM: samples_options(object.added_materials('MEDIUM'), 'MEDIUM'),
-          ADDITIVE: samples_options(object.added_materials('ADDITIVE'), 'ADDITIVE'),
-          DIVERSE_SOLVENT: samples_options(object.added_materials('DIVERSE_SOLVENT'), 'DIVERSE_SOLVENT'),
-        }
-      end
-
       def added_materials_options
         # For the ProcessStepHeader in the UI, in order of actions.
-        object.reaction_process_actions.filter_map do |action|
+        object.reaction_process_actions.order(:position).filter_map do |action|
           sample_option(action.sample || action.medium, action.workup['acts_as']) if action.action_name == 'ADD'
         end.uniq
       end
 
-      def samples_options(samples, acts_as)
-        samples.map do |sample|
+      def removable_materials_options
+        # For UI selects to REMOVE only previously added materials, scoped to acts_as.
+        {
+          SOLVENT: samples_acts_as_options('SOLVENT'),
+          MEDIUM: samples_acts_as_options('MEDIUM'),
+          ADDITIVE: samples_acts_as_options('ADDITIVE'),
+          DIVERSE_SOLVENT: samples_acts_as_options('DIVERSE_SOLVENT'),
+        }
+      end
+
+      def samples_acts_as_options(acts_as)
+        object.added_materials(acts_as).map do |sample|
           sample_option(sample, acts_as)
         end
       end
@@ -96,16 +83,12 @@ module Entities
         }
       end
 
-      def equipment_options
-        ::ReactionProcessEditor::SelectOptions.instance.all_ord_equipment
-      end
-
       def mounted_equipment_options
         options_for(mounted_equipment)
       end
 
-      def transfer_sample_options
-        @transfer_sample_options ||=
+      def transfer_samples_options
+        @transfer_samples_options ||=
           Sample.where(id: transferable_sample_ids).includes(%i[
                                                                molecule molecule_name residues
                                                              ]).map do |sample|
@@ -116,25 +99,15 @@ module Entities
       def transfer_to_options
         process_steps = object.reaction_process.reaction_process_steps.order(:position)
 
-        process_steps.map { |process_step| { value: process_step.id, label: process_step.label } }
+        process_steps.map do |process_step|
+          { value: process_step.id,
+            label: process_step.label,
+            saved_sample_ids: process_step.saved_sample_ids }
+        end
       end
 
       def transferable_sample_ids
         @transferable_sample_ids ||= object.reaction_process.saved_sample_ids
-      end
-
-      def action_type_equipment_options
-        ::ReactionProcessEditor::SelectOptions.instance.action_type_equipment
-      end
-
-      def addition_speed_type_options
-        ::ReactionProcessEditor::SelectOptions.instance.addition_speed_type
-      end
-
-      def options_for(string_array)
-        string_array.map do |string|
-          { value: string, label: string.titlecase }
-        end
       end
 
       def mounted_equipment
@@ -147,8 +120,10 @@ module Entities
         end.flatten.uniq.compact
       end
 
-      def reaction
-        object.reaction
+      def options_for(string_array)
+        string_array.map do |string|
+          { value: string, label: string.titlecase }
+        end
       end
     end
   end

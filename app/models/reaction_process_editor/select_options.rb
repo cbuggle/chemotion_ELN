@@ -24,14 +24,23 @@ module ReactionProcessEditor
           EQUIPMENT: all_ord_equipment,
           TEMPERATURE: temperature_equipment_options,
           PH: ph_adjust_equipment_options,
-          PRESSURE: options_for(['REACTOR']),
-          IRRADIATION: options_for(OrdKit::IlluminationConditions::IlluminationType.constants),
-          MOTION: options_for(%w[STIRRER SHAKER HEATING_SHAKER TUBE BALL_MILLING]),
+          PRESSURE: pressure_adjustment_options,
+          IRRADIATION: irradiation_equipment_options,
+          MOTION: motion_equipment_options,
         },
-        REMOVE: options_for(%w[PUMP TUBE COIL]),
-        PURIFY: options_for(%w[FILTER SEPARATION_FILTER EXTRACTOR SPE_COLUMN FSPE_COLUMN
-                               FLASH_COLUMN DISTILLATION_APPARATUS SEPARATION_FUNNEL BUCHNER_FUNNEL]),
+        REMOVE: remove_equipment_options,
+        PURIFY: purify_equipment_options,
       }.deep_stringify_keys
+    end
+
+    def condition_additional_information
+      @condition_additional_information ||=
+        {
+          TEMPERATURE: temperature_additional_information_options,
+          PH: ph_additional_information_options,
+          PRESSURE: [],
+          IRRADIATION: irradiation_additional_information_options,
+        }
     end
 
     def global_default_conditions
@@ -44,18 +53,59 @@ module ReactionProcessEditor
       }.deep_stringify_keys
     end
 
-    def addition_speed_type
-      @addition_speed_type ||= options_for(OrdKit::ReactionInput::AdditionSpeed::AdditionSpeedType.constants)
+    def addition_speed_types
+      options_for(OrdKit::ReactionInput::AdditionSpeed::AdditionSpeedType.constants)
     end
 
     def preparation_types
-      @preparation_types ||= options_for(%w[DISSOLVED HOMOGENIZED TEMPERATURE_ADJUSTED
-                                            DEGASSED]) + [{ value: 'DRIED', label: 'Drying' }]
+      options_for(%w[DISSOLVED HOMOGENIZED TEMPERATURE_ADJUSTED DEGASSED]) +
+        [{ value: 'DRIED', label: 'Drying' }]
+    end
+
+    def equipment_types
+      options_for(OrdKit::Equipment::EquipmentType.constants)
+    end
+
+    def automation_modes
+      [{ value: 'AUTOMATIC', label: 'Automated' },
+       { value: 'MANUAL', label: 'Manual' }]
+    end
+
+    def motion_types
+      [{ value: 'UNSPECIFIED', label: 'Motion Unspecified' },
+       { value: 'CUSTOM', label: 'Motion Custom' },
+       { value: 'NONE', label: 'Motion None' },
+       { value: 'STIR_BAR', label: 'Stir' },
+       { value: 'OVERHEAD_MIXER', label: 'Overhead Mixer' },
+       { value: 'AGITATION', label: 'Shake' },
+       { value: 'BALL_MILLING', label: 'Ball Milling' },
+       { value: 'SONICATION', label: 'Sonication' },
+       { value: 'OTHER', label: 'Motion' }]
+    end
+
+    def remove_types
+      [{ value: 'MEDIUM', label: 'Medium' },
+       { value: 'ADDITIVE', label: 'Solvent (Evaporate)' },
+       { value: 'DIVERSE_SOLVENT', label: 'Diverse Solvent' }]
+    end
+
+    def save_sample_types
+      [{ value: 'CRUDE', label: 'Crude' },
+       { value: 'MIXTURE', label: 'Mixture' },
+       { value: 'INTERMEDIATE', label: 'Intermediate' }]
+    end
+
+    def analysis_types
+      [{ value: 'TLC', label: 'Thin Layer Chromatography (TLC)' },
+       { value: 'GC', label: 'Gas Chromatography (GC)' },
+       { value: 'HPLC', label: 'High Performance Liquid Chromatography (HPLC)' },
+       { value: 'GCMS', label: 'Combined GC/MS (GC/MS)' },
+       { value: 'LCMS', label: 'Combined LC/MS (LCMS)' }]
     end
 
     private
 
-    # options for can be used where all value.to_titlecase yields a useful label (e.g. DISSOLVED -> Dissolved)
+    # options_for can be used where every value.to_titlecase yields a useful label (e.g. DISSOLVED -> Dissolved)
     # but some dont't which we then need to define explizitly hardcoded.
     def options_for(string_array)
       string_array.map do |string|
@@ -64,26 +114,77 @@ module ReactionProcessEditor
     end
 
     def temperature_equipment_options
-      [{ label: 'Unspecified', value: 'UNSPECIFIED' },
-       { label: 'Custom', value: 'CUSTOM' },
-       { label: 'Room Temperature', value: 'AMBIENT' },
-       { label: 'Temp of Oil Bath', value: 'OIL_BATH' },
-       { label: 'Water Bath', value: 'WATER_BATH' },
-       { label: 'Sand Bath', value: 'SAND_BATH' },
-       { label: 'Ice Bath', value: 'ICE_BATH' },
-       { label: 'Dry Aluminium Plate', value: 'DRY_ALUMINUM_PLATE' },
-       { label: 'Microwave', value: 'MICROWAVE' },
-       { label: 'Dry Ice Bath', value: 'DRY_ICE_BATH' },
-       { label: 'Air Fan', value: 'AIR_FAN' },
-       { label: 'Liquid Nitrogen', value: 'LIQUID_NITROGEN' },
-       { label: 'Measurement in Reaction', value: 'MEASUREMENT_IN_REACTION' },
-       { label: 'Temp of other contact Media', value: 'CONTACT_MEDIUM' }]
+      options_for(%w[HEATING_MANTLE BLOW_DRYER OIL_BATH ICE_BATH ALUMINIUM_BLOCK WATER_BATH
+                     SAND_BATH])
+    end
+
+    def pressure_adjustment_options
+      options_for(%w[REACTOR])
     end
 
     def ph_adjust_equipment_options
-      [{ label: 'pH Electrode', value: 'PH_ELECTRODE' },
-       { label: 'pH Stripe', value: 'PH_STRIPE' },
-       { label: 'Other', value: 'PH_OTHER' }]
+      options_for(%w[PIPET])
+    end
+
+    def motion_equipment_options
+      options_for(%w[STIRRER SHAKER HEATING_SHAKER TUBE BALL_MILLING])
+    end
+
+    def irradiation_equipment_options
+      options_for(%w[ULTRA_SOUND_BATH UV_LAMP LED])
+    end
+
+    def remove_equipment_options
+      options_for(%w[PUMP TUBE COIL])
+    end
+
+    def purify_equipment_options
+      options_for(%w[FILTER SEPARATION_FILTER EXTRACTOR SPE_COLUMN FSPE_COLUMN
+                     FLASH_COLUMN DISTILLATION_APPARATUS SEPARATION_FUNNEL BUCHNER_FUNNEL])
+    end
+
+    def temperature_additional_information_options
+      [
+        { value: 'UNSPECIFIED', label: 'Unspecified' },
+        { value: 'CUSTOM', label: 'Custom' },
+        { value: 'AMBIENT', label: 'Room Temperature' },
+        { value: 'OIL_BATH', label: 'Temp of Oil Bath' },
+        { value: 'WATER_BATH', label: 'Water Bath' },
+        { value: 'SAND_BATH', label: 'Sand Bath' },
+        { value: 'ICE_BATH', label: 'Ice Bath' },
+        { value: 'DRY_ALUMINUM_PLATE', label: 'Dry Aluminium Plate' },
+        { value: 'MICROWAVE', label: 'Microwave' },
+        { value: 'DRY_ICE_BATH', label: 'Dry Ice Bath' },
+        { value: 'AIR_FAN', label: 'Air Fan' },
+        { value: 'LIQUID_NITROGEN', label: 'Liquid Nitrogen' },
+        { value: 'MEASUREMENT_IN_REACTION', label: 'Measurement in Reaction' },
+        { value: 'CONTACT_MEDIUM', label: 'Temp of other contact Media' },
+      ]
+    end
+
+    def ph_additional_information_options
+      [
+        { value: 'PH_ELECTRODE', label: 'pH Electrode' },
+        { value: 'PH_STRIPE', label: 'pH Stripe' },
+        { value: 'PH_OTHER', label: 'Other' },
+      ]
+    end
+
+    def irradiation_additional_information_options
+      [
+        { value: 'UNSPECIFIED', label: 'Unspecified' },
+        { value: 'LED', label: 'LED' },
+        { value: 'MICROWAVE_REACTOR', label: 'Microwave Reactor' },
+        { value: 'LAMP', label: 'Lamp' },
+        { value: 'LASER', label: 'Laser' },
+        { value: 'CUSTOM', label: 'Custom' },
+        { value: 'AMBIENT', label: 'Ambient' },
+        { value: 'HALOGEN_LAMP', label: 'Halogen Lamp' },
+        { value: 'DEUTERIUM_LAMP', label: 'Deuterium Lamp' },
+        { value: 'SOLAR_SIMULATOR', label: 'Solar Simulator' },
+        { value: 'BROAD_SPECTRUM', label: 'Broad Spectrum' },
+        { value: 'DARK', label: 'Dark' },
+      ]
     end
   end
 end
