@@ -189,9 +189,7 @@ message ReactionInput {
   Equipment addition_device = 8;
   // Specify the temperature of the material being added.
   // E.g., a cooled flask of a stock solution to be added at low temperature.
-  Temperature addition_temperature = 9;
-
-  Pressure addition_pressure = 10;
+  ReactionConditions conditions = 9;
 }
 
 
@@ -231,12 +229,6 @@ message ReactionInput {
     int32 remove_repetitions = 4;
   }
 
-  // Obsolete? details are not used yet.
-  // message ReactionActionCondition {
-  //   ReactionConditions conditions = 1;
-  //   string details = 2;
-  // }
-
   message ReactionActionPurify {
     enum PurifyType {
       UNSPECIFIED = 0; // proto3 requires first enumeration 0. UNSPECIFIED is sort of pointless as PurifyType.
@@ -259,10 +251,11 @@ message ReactionInput {
   }
 
   message ReactionActionTransfer {
-    Compound sample = 1;
-    string transfer_source_reaction_step_id = 2;
-    string transfer_target_reaction_step_id = 3;
-    Amount amount = 4;
+    ReactionRole.ReactionRoleType reaction_role = 1;
+    ReactionInput input = 2;
+    string transfer_source_reaction_step_id = 3;
+    string transfer_target_reaction_step_id = 4;
+    Amount amount = 5;
   }
 
   message ReactionActionWait {

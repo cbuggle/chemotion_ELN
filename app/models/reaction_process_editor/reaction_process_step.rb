@@ -26,6 +26,10 @@ module ReactionProcessEditor
 
     delegate :reaction, to: :reaction_process
 
+    def siblings
+      reaction_process.reaction_process_steps.order(:position)
+    end
+
     def duration
       reaction_process_actions.reduce(0) { |sum, action| sum + action.workup['duration'].to_i }
     end

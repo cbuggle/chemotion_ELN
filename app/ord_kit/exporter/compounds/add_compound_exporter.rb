@@ -31,7 +31,7 @@ module OrdKit
         end
 
         def reaction_role
-          OrdKit::ReactionRole::ReactionRoleType.const_get workup['acts_as']
+          OrdKit::ReactionRole::ReactionRoleType.const_get workup['acts_as'].to_s
         rescue NameError
           OrdKit::ReactionRole::ReactionRoleType::UNSPECIFIED
         end

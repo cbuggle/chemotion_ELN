@@ -6,7 +6,7 @@ module OrdKit
       class AnalysisActionExporter < OrdKit::Exporter::Actions::Base
         private
 
-        def step_action
+        def action_type_attributes
           {
             analysis: OrdKit::Analysis.new(
               number: workup['analysis_number'],

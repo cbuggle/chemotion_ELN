@@ -8,20 +8,23 @@ module OrdKit
           OrdKit::ReactionInput.new(
             components: components,
             crude_components: crude_components,
-            # TODO: position is actually wrong. We should count only "ADD" and "TRANSFER" for addition_order.
-            # However addition_order allows value collisions and missing positions as well, so we're fine for now.
-            addition_order: model.position + 1, # ORD is 1-indexed.
+            addition_order: addition_order,
             addition_device: addition_device,
             addition_duration: addition_duration,
-            addition_pressure: addition_pressure,
             addition_speed: addition_speed,
-            addition_temperature: addition_temperature,
             addition_time: addition_time,
             flow_rate: flow_rate,
+            conditions: conditions,
           )
         end
 
+        delegate :reaction_process, to: :model
+
         private
+
+        def conditions
+          OrdKit::Exporter::Conditions::ReactionConditionsExporter.new(model).to_ord
+        end
 
         def components
           raise StandardError, "Don't call #to_ord on abstract OrdKit::Exporter::Base"
@@ -49,27 +52,18 @@ module OrdKit
 
         def addition_duration
           OrdKit::Time.new(
-            value: workup['duration'].to_i / 1000,
+            value: model.workup['duration'].to_i / 1000,
             precision: nil,
             units: OrdKit::Time::TimeUnit::SECOND,
           )
         end
 
-        def addition_pressure
-          nil # Override where applicable (i.e. Actions ADD)
-        end
-
-        def addition_speed
-          nil # Override where applicable (i.e. Actions ADD)
-        end
-
-        def addition_temperature
-          nil # Override where applicable (i.e. Actions ADD)
-        end
-
-        def flow_rate
-          nil # Override where applicable (i.e. Actions ADD)
-        end
+        # Override where applicable (i.e. Actions ADD)
+        def addition_order; end
+        def addition_pressure; end
+        def addition_speed; end
+        def addition_temperature; end
+        def flow_rate; end
       end
     end
   end

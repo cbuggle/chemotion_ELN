@@ -97,9 +97,7 @@ module Entities
       end
 
       def transfer_to_options
-        process_steps = object.reaction_process.reaction_process_steps.order(:position)
-
-        process_steps.map do |process_step|
+        object.siblings.map do |process_step|
           { value: process_step.id,
             label: process_step.label,
             saved_sample_ids: process_step.saved_sample_ids }

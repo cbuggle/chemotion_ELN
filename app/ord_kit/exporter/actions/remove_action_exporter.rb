@@ -6,7 +6,7 @@ module OrdKit
       class RemoveActionExporter < OrdKit::Exporter::Actions::Base
         private
 
-        def step_action
+        def action_type_attributes
           {
             removal: ReactionActionRemove.new(
               reaction_role: workup['acts_as'],

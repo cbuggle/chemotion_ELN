@@ -17,63 +17,12 @@ module OrdKit
           end
         end
 
-        def step_action
+        def action_type_attributes
           { conditions: conditions }
         end
 
         def conditions
-          ReactionConditions.new(
-            temperature: temperature,
-            ph: ph,
-            pressure: pressure,
-            stirring: stirring,
-            illumination: illumination,
-            electrochemistry: electrochemistry,
-            conditions_are_dynamic: conditions_are_dynamic,
-            details: condition_details,
-          )
-        end
-
-        def temperature
-          return unless workup['TEMPERATURE']
-
-          Conditions::TemperatureConditionsExporter.new(workup['TEMPERATURE']).to_ord
-        end
-
-        def pressure
-          return unless workup['PRESSURE']
-
-          Conditions::PressureConditionsExporter.new(workup['PRESSURE']).to_ord
-        end
-
-        def stirring
-          return unless workup['MOTION']
-
-          Conditions::MotionConditionsExporter.new(workup['MOTION']).to_ord
-        end
-
-        def illumination
-          return unless workup['IRRADIATION']
-
-          Conditions::IrradiationConditionsExporter.new(workup['IRRADIATION']).to_ord
-        end
-
-        def electrochemistry
-          nil # n/a. Electrochemistry unknown in ELN Editor.
-        end
-
-        def ph
-          return unless workup['PH']
-
-          Conditions::PhAdjustConditionsExporter.new(workup['PH']).to_ord
-        end
-
-        def conditions_are_dynamic
-          false # n/a. Unknown in ELN Editor
-        end
-
-        def condition_details
-          nil # n/a unkown in ELN Editor.
+          OrdKit::Exporter::Conditions::ReactionConditionsExporter.new(model).to_ord
         end
       end
     end

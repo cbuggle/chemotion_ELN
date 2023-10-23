@@ -6,10 +6,10 @@ module OrdKit
       class TransferActionExporter < OrdKit::Exporter::Actions::Base
         private
 
-        def step_action
+        def action_type_attributes
           {
             transfer: ReactionActionTransfer.new(
-              sample: sample,
+              input: sample,
               transfer_source_reaction_step_id: transfer_source_reaction_step_id,
               transfer_target_reaction_step_id: transfer_target_reaction_step_id,
               amount: amount,
@@ -18,7 +18,7 @@ module OrdKit
         end
 
         def sample
-          OrdKit::Exporter::Compounds::TransferCompoundExporter.new(model).to_ord
+          OrdKit::Exporter::Samples::TransferSampleExporter.new(model).to_ord
         end
 
         def transfer_source_reaction_step_id
@@ -26,7 +26,9 @@ module OrdKit
 
           return unless ris.reaction_step
 
-          model.reaction_process.reaction_process_steps[ris.reaction_step - 1]&.id
+          # source_step is stored only as index (1-indexed) in its reaction_step (for human readability in ELN).
+          # We might want to add :reaction_step_id to ReactionsIntermediateSample to clarify code.
+          model.siblings[ris.reaction_step - 1]&.id
         end
 
         def transfer_target_reaction_step_id
@@ -36,7 +38,7 @@ module OrdKit
         def amount
           Amounts::AmountExporter.new(
             value: workup['transfer_percentage'],
-            unit: 'percent',
+            unit: 'PERCENT',
           ).to_ord
         end
       end

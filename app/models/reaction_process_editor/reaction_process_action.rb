@@ -20,6 +20,10 @@ module ReactionProcessEditor
 
     delegate :reaction, :reaction_process, to: :reaction_process_step
 
+    def siblings
+      reaction_process_step.reaction_process_actions.order(:position)
+    end
+
     def condition?
       %w[CONDITION].include?(action_name)
     end
@@ -104,7 +108,7 @@ module ReactionProcessEditor
     end
 
     def update_position(position)
-      actions = reaction_process_step.reaction_process_actions.order(:position).to_a
+      actions = siblings.to_a
       actions.delete(self)
       actions.insert(position, self)
       actions.each_with_index { |action, idx| action.update(position: idx) }
@@ -112,7 +116,7 @@ module ReactionProcessEditor
     end
 
     def delete_from_reaction_process_step
-      actions = reaction_process_step.reaction_process_actions.order(:position).to_a
+      actions = siblings.to_a
       actions.delete(self)
       actions.each_with_index { |action, idx| action.update(position: idx) }
 

@@ -6,7 +6,7 @@ module OrdKit
       class Base < OrdKit::Exporter::Base
         # Defines base structure of ReactionProcessAction Export
         # Provides implementation for the common methods details, duration,
-        # Provides empty implementation step_action which needs to be implemented in subclasses.
+        # Provides empty implementation action_type_attributes which needs to be implemented in subclasses.
 
         def to_ord(starts_at:)
           OrdKit::ReactionAction.new(
@@ -16,13 +16,13 @@ module OrdKit
               start_time: start_time(starts_at),
               duration: duration,
               equipment: equipment,
-            }.merge(step_action),
+            }.merge(action_type_attributes),
           )
         end
 
         private
 
-        delegate :workup, to: :model
+        delegate :workup, :reaction_process,to: :model
 
         # ORD attributes in order of ORD definition by convention (they are numbered).
         def description
@@ -68,7 +68,7 @@ module OrdKit
           OrdKit::Equipment::EquipmentType::UNSPECIFIED
         end
 
-        def step_action
+        def action_type_attributes
           raise 'OrdKit::Exporter::Actions::Base is abstract. Please subclass and provide an implementation.'
         end
       end

@@ -6,7 +6,7 @@ module OrdKit
       class PurifyActionExporter < OrdKit::Exporter::Actions::Base
         private
 
-        def step_action
+        def action_type_attributes
           {
             purify: OrdKit::ReactionActionPurify.new(
               type: purify_type,
@@ -19,7 +19,7 @@ module OrdKit
         end
 
         def purify_type
-          OrdKit::ReactionActionPurify::PurifyType.const_get workup['purify_type']
+          OrdKit::ReactionActionPurify::PurifyType.const_get workup['purify_type'].to_s
         rescue NameError
           OrdKit::ReactionActionPurify::PurifyType.UNSPECIFIED
         end
@@ -27,13 +27,13 @@ module OrdKit
         def filtration_mode
           return unless workup['purify_type'] == 'FILTRATION'
 
-          OrdKit::ReactionActionPurify::FiltrationMode.const_get workup['filtration_mode']
+          OrdKit::ReactionActionPurify::FiltrationMode.const_get workup['filtration_mode'].to_s
         rescue NameError
           OrdKit::ReactionActionPurify::FiltrationMode.UNSPECIFIED
         end
 
         def automation
-          Automation::AutomationType.const_get workup['automation_mode']
+          Automation::AutomationType.const_get workup['automation_mode'].to_s
         rescue NameError
           Automation::AutomationType::UNSPECIFIED
         end

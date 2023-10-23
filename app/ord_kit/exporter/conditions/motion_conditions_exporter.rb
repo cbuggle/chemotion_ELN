@@ -4,7 +4,7 @@ module OrdKit
   module Exporter
     module Conditions
       class MotionConditionsExporter < OrdKit::Exporter::Base
-        # Works on ReactionProcessAction ("CONDITION / TEMPERATURE")
+        # Works on ReactionProcessAction ("CONDITION / MOTION")
 
         def to_ord
           StirringConditions.new(

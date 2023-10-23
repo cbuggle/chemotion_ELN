@@ -187,7 +187,7 @@ module Entities
 
       # def preparation_types_options; end
 
-      # def condition_types_equipment_options
+      # def metrics_equipment_options
       #   SELECT_OPTIONS.action_type_equipment['CONDITION']
       # end
 

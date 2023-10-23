@@ -6,7 +6,7 @@ module OrdKit
       class SaveSampleActionExporter < OrdKit::Exporter::Actions::Base
         private
 
-        def step_action
+        def action_type_attributes
           {
             save_sample: OrdKit::ReactionActionSaveSample.new(
               sample: OrdKit::Exporter::Compounds::SaveCompoundExporter.new(model).to_ord,

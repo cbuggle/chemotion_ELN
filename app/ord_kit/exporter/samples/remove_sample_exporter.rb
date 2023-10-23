@@ -14,7 +14,7 @@ module OrdKit
             addition_duration: addition_duration,
             flow_rate: flow_rate,
             addition_device: addition_device,
-            addition_temperature: addition_temperature,
+            conditions: conditions,
           )
         end
 
@@ -24,13 +24,6 @@ module OrdKit
           [
             OrdKit::Exporter::Compounds::AddCompoundExporter.new(model).to_ord,
           ]
-        end
-
-        def addition_temperature
-          OrdKit::Exporter::Amounts::TemperatureExporter.new(
-            value: model.workup['remove_temperature'],
-            unit: 'CELSIUS', # Currently we work only with Celsius
-          ).to_ord
         end
       end
     end

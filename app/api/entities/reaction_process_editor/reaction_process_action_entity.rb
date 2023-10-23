@@ -25,7 +25,8 @@ module Entities
 
         return unless object.action_name == 'TRANSFER' && ris.reaction_step
 
-        object.reaction_process.reaction_process_steps[ris.reaction_step - 1]&.name
+        # source_step is stored only as index (1-indexed) in its reaction_step (for human readability in ELN).
+        object.reaction_process_step.siblings[ris.reaction_step - 1]&.name
       end
 
       def sample_names

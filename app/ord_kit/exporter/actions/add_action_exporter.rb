@@ -6,7 +6,7 @@ module OrdKit
       class AddActionExporter < OrdKit::Exporter::Actions::Base
         private
 
-        def step_action
+        def action_type_attributes
           {
             addition: ReactionActionAdd.new(
               reaction_role: workup['acts_as'],

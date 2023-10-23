@@ -9,7 +9,7 @@ module OrdKit
         def to_ord
           OrdKit::PressureConditions.new(
             control: control,
-            setpoint: setpoint,
+            setpoint: setpoint || OrdKit::Pressure.new,
             atmosphere: atmosphere,
             measurements: measurements,
           )

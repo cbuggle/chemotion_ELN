@@ -8,7 +8,7 @@ FactoryBot.define do
 
     after(:build) do |process_step, object|
       process_step.reaction_process = object.reaction_process
-      process_step.position = object.reaction_process.reaction_process_steps.count
+      process_step.position = object.siblings.count
     end
   end
 end

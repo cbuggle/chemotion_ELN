@@ -23,6 +23,11 @@ module OrdKit
           ).to_ord
         end
 
+        def addition_order
+          # ORD is 1-indexed.
+          model.siblings.select(&:adds_sample?).index(model) + 1
+        end
+
         def addition_pressure
           return unless model.workup['add_sample_pressure_value']
 
