@@ -74,8 +74,10 @@ module Chemotion
           {
             global: ::ReactionProcessEditor::SelectOptions.instance.global_default_conditions,
             user: current_user.reaction_process_defaults&.default_conditions.to_h,
-            conditions_equipment_options:
-             ::ReactionProcessEditor::SelectOptions.instance.action_type_equipment['CONDITION'],
+            select_options: {
+              action_type_equipment: ::ReactionProcessEditor::SelectOptions.instance.action_type_equipment,
+              condition_additional_information: ::ReactionProcessEditor::SelectOptions.instance.condition_additional_information,
+            },
           }
         end
 
@@ -129,8 +131,8 @@ module Chemotion
             params do
               requires :sample_preparation, type: Hash, desc: 'The sample preparation to create/update.' do
                 requires :sample_id, type: String
-                optional :equipment, type: Array[String]
-                optional :preparations, type: Array[String]
+                optional :equipment, type: [String]
+                optional :preparations, type: [String]
                 optional :details
               end
             end
