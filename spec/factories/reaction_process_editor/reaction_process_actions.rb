@@ -67,7 +67,7 @@ FactoryBot.define do
     factory :reaction_process_action_condition do
       action_name { 'CONDITION' }
       workup do
-        { condition_type: 'TEMPERATURE',
+        { metric: 'TEMPERATURE',
           condition_tendency: 'INCREASE',
           condition_value: '20',
           condition_unit: '°C' }

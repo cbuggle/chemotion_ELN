@@ -19,7 +19,7 @@ module ReactionProcessEditor
       @action_type_equipment ||= {
         ADD: all_ord_equipment,
         SAVE: [],
-        TRANSFER: [],
+        TRANSFER: all_ord_equipment,
         CONDITION: {
           EQUIPMENT: all_ord_equipment,
           TEMPERATURE: temperature_equipment_options,
