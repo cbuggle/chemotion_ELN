@@ -50,6 +50,9 @@ module ReactionProcessEditor
         TEMPERATURE: { value: '21', unit: 'CELSIUS', additional_information: '' },
         PRESSURE: { value: '1013', unit: 'MBAR' },
         PH: { value: 7, unit: 'PH', additional_information: '' },
+        IRRADIATION: {},
+        MOTION: {},
+        EQUIPMENT: {},
       }.deep_stringify_keys
     end
 
