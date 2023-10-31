@@ -29,7 +29,7 @@
 class ReactionsSample < ApplicationRecord
   acts_as_paranoid
   belongs_to :reaction, optional: true
-  belongs_to :sample, optional: true
+  belongs_to :sample, -> { includes [:molecule, :residues] }, optional: true
 
   before_validation :set_default
 

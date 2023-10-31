@@ -29,7 +29,7 @@ module Entities
       end
 
       def samples_preparations
-        object.samples_preparations.order('created_at')
+        object.samples_preparations.includes([:sample]).order('created_at')
       end
 
       def provenance
@@ -143,7 +143,7 @@ module Entities
       end
 
       def prepared_samples
-        object.samples_preparations.order(:created_at).includes([:sample]).map(&:sample)
+        object.samples_preparations.order(:created_at).includes(sample: [:molecule]).map(&:sample)
       end
 
       def unprepared_samples
