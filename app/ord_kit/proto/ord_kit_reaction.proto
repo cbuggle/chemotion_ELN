@@ -5,10 +5,10 @@
 // (Karlsruhe Institute of Technology / Institute for Organical Chemistry).
 // Schema for the KIT ELN Reaction Database,
 // allowing to store data describing the process of a chemical reaction
-// (enhancing but incompatible to ORD Schema in either direction).
+// (enhancing but incompatible in either direction to the original ORD Schema).
 //
-// v0.3.0
-// (draft, 17.10.2023)
+// v0.3.1
+// (draft, 31.10.2023)
 //
 //
 // Copyright 2020 Open Reaction Database Project Authors
@@ -239,8 +239,8 @@ message ReactionInput {
     }
     enum FiltrationMode {
       KEEP_UNSPECIFIED = 0; // avoid naming collision with PurifyType::UNSPECIFIED (shouldn't this be ok in its scope??)
-      KEEP_PERMEATE = 1;
-      KEEP_RETENTATE = 2;
+      KEEP_SUPERNATANT = 1;
+      KEEP_PRECIPITATE = 2;
     }
 
     PurifyType type = 1;
