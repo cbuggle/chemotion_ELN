@@ -65,6 +65,10 @@ module ReactionProcessEditor
         [{ value: 'DRIED', label: 'Drying' }]
     end
 
+    def filtration_modes
+      options_for(%w[KEEP_SUPERNATANT KEEP_PRECIPITATE])
+    end
+
     def equipment_types
       options_for(OrdKit::Equipment::EquipmentType.constants)
     end
