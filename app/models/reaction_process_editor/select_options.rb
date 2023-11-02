@@ -66,7 +66,8 @@ module ReactionProcessEditor
     end
 
     def filtration_modes
-      options_for(%w[KEEP_SUPERNATANT KEEP_PRECIPITATE])
+      [{ value: 'KEEP_SUPERNATANT', label: 'Supernatant' },
+       { value: 'KEEP_PRECIPITATE', label: 'Precipitate' }]
     end
 
     def equipment_types
