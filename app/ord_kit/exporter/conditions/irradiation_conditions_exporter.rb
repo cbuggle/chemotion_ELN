@@ -39,6 +39,7 @@ module OrdKit
             value: model['value'].to_i,
             precision: nil, # n/a. Unkown in ELN.
             # Only allowed are NANOMETER and WAVENUMBER (its inverse), WAVENUMBER is unknown in ELN.
+            # TODO: We now have the unit in the workup
             units: OrdKit::Wavelength::WavelengthUnit::NANOMETER,
           )
         end
@@ -52,13 +53,18 @@ module OrdKit
         end
 
         def power
-          OrdKit::Exporter::Amounts::PowerExporter.new(value: model['power_value'], unit: ELN_DEFAULT_POWER_UNIT).to_ord
+          return unless model['power']
+
+          # TODO: We now have the unit in the workup
+          OrdKit::Exporter::Amounts::PowerExporter.new(value: model['power']['value'],
+                                                       unit: ELN_DEFAULT_POWER_UNIT).to_ord
         end
 
         def power_end
-          return unless power_is_ramp
+          return unless power_is_ramp && model['power_end']
 
-          OrdKit::Exporter::Amounts::PowerExporter.new(value: model['power_end_value'],
+          # TODO: We now have the unit in the workup
+          OrdKit::Exporter::Amounts::PowerExporter.new(value: model['power_end']['value'],
                                                        unit: ELN_DEFAULT_POWER_UNIT).to_ord
         end
 

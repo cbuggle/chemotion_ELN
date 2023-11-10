@@ -71,8 +71,10 @@ module Entities
           # Can we unify this? Using preferred_labels as in most ELN which in turn is an attribute derived from
           # `external_label` but when a sample is saved it gets it's "short_label" set. This is quite irritating.
           label: sample.preferred_label || sample.short_label,
-          amount: sample.target_amount_value,
-          unit: sample.target_amount_unit,
+          amount: {
+            value: sample.target_amount_value,
+            unit: sample.target_amount_unit,
+          },
           unit_amounts: {
             mmol: sample.amount_mmol,
             mg: sample.amount_mg,

@@ -50,8 +50,8 @@ module ReactionProcessEditor
       sample.short_label = workup['short_label'].presence&.strip
       sample.name = workup['name'].presence&.strip
       sample.description = workup['description'].presence&.strip
-      sample.target_amount_value = workup['target_amount_value'].to_f
-      sample.target_amount_unit = workup['target_amount_unit']
+      sample.target_amount_value = workup['target_amount']['value'].to_f
+      sample.target_amount_unit = workup['target_amount']['unit']
       sample.purity = workup['purity'].to_f
       sample.location = workup['location']
 
