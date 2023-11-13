@@ -30,10 +30,6 @@ Rails.application.routes.draw do
     end
   end
 
-  authenticated :user do
-    get 'api/v1/reaction_process_editor/reaction_processes/:id/ord', to: 'reaction_process_editor/reaction_processes#ord'
-  end
-
   authenticated :user, ->(u) { u.type == 'Admin' } do
     root to: 'pages#admin', as: :admin_root
     get 'admin', to: 'pages#admin'

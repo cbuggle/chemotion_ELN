@@ -94,6 +94,20 @@ module Chemotion
                     root: :reaction_process
           end
 
+          get :ord do
+            reaction = ::ReactionProcessEditor::ReactionProcess.find(params[:id]).reaction
+
+            filename = "#{Time.zone.today.iso8601}-Reaction-#{reaction.id}-#{reaction.short_label}.kit-ord.json"
+            header 'Content-Disposition', "attachment; filename*=UTF-8''#{filename}"
+            content_type('application/json')
+
+            present OrdKit::Exporter::ReactionExporter.new(reaction).to_ord
+          rescue StandardError => e
+            header 'Content-Disposition', "attachment; filename*=UTF-8''OrdExportError-#{filename}"
+            content_type 'text/plain'
+            present "#{e.message} #{e.backtrace}"
+          end
+
           namespace :provenance do
             desc 'Update the Provenance'
             params do
