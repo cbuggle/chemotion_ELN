@@ -15,35 +15,31 @@ module OrdKit
         end
 
         def details
-          return unless model.has_sample?
+          return unless action.has_sample?
 
-          model.sample.preferred_label || model.sample.short_label
+          action.sample.preferred_label || action.sample.short_label
         end
 
         def value
-          return unless model.has_sample?
+          return unless action.has_sample?
 
-          model.sample.name # TODO: inchi? iupac? smiles?
+          action.sample.name # TODO: inchi? iupac? smiles?
         end
 
         def reaction_role
-          type = ReactionsSample.find_by(reaction: model.reaction, sample: model.sample)&.intermediate_type
+          type = ReactionsSample.find_by(reaction: action.reaction, sample: action.sample)&.intermediate_type
           OrdKit::ReactionRole::ReactionRoleType.const_get type.to_s
         rescue NameError
           OrdKit::ReactionRole::ReactionRoleType::UNSPECIFIED
         end
 
         def amount
-          Amount.new(
-            percentage: Amounts::AmountExporter.new(
-              value: (workup['transfer_percentage'] || 0) * 100,
-            ).to_ord,
-          )
+          Amount.new(percentage: Amounts::AmountExporter.new(workup['target_amount']).to_ord)
         end
 
         def preparations
           [
-            Preparations::CompoundPreparationsExporter.new(model).to_ord,
+            Preparations::CompoundPreparationsExporter.new(action).to_ord,
           ].compact
         end
 

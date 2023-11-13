@@ -3,20 +3,20 @@
 module OrdKit
   module Exporter
     module Conditions
-      class PhAdjustConditionsExporter < OrdKit::Exporter::Base
+      class PhAdjustConditionsExporter < OrdKit::Exporter::Conditions::Base
         # Works on ReactionProcessAction "CONDITION / PH"
 
         def to_ord
           OrdKit::PhAdjustConditions.new(
             measurement_type: measurement_type,
-            ph: model['value'].to_f,
+            ph: condition['value'].to_f,
           )
         end
 
         private
 
         def measurement_type
-          OrdKit::PhAdjustConditions::PhAdjustMeasurementType.const_get model['additional_information']
+          OrdKit::PhAdjustConditions::PhAdjustMeasurementType.const_get condition['additional_information']
         rescue NameError
           OrdKit::PhAdjustConditions::PhAdjustMeasurementType::UNSPECIFIED
         end

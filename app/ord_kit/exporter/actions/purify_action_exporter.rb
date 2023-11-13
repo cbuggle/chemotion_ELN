@@ -4,48 +4,29 @@ module OrdKit
   module Exporter
     module Actions
       class PurifyActionExporter < OrdKit::Exporter::Actions::Base
+        PURIFY_EXPORTER = {
+          CHROMATOGRAPHY: OrdKit::Exporter::Actions::Purify::ChromatographyExporter,
+          CRYSTALLIZATION: OrdKit::Exporter::Actions::Purify::CrystallizationExporter,
+          EXTRACTION: OrdKit::Exporter::Actions::Purify::ExtractionExporter,
+          FILTRATION: OrdKit::Exporter::Actions::Purify::FiltrationExporter,
+        }.stringify_keys
+
         private
 
         def action_type_attributes
-          {
-            purify: OrdKit::ReactionActionPurify.new(
-              type: purify_type,
-              filtration_mode: filtration_mode,
-              automation: automation,
-              solvents: solvents,
-              ratio: ratio,
-            ),
-          }
-        end
-
-        def purify_type
-          OrdKit::ReactionActionPurify::PurifyType.const_get workup['purify_type'].to_s
-        rescue NameError
-          OrdKit::ReactionActionPurify::PurifyType.UNSPECIFIED
-        end
-
-        def filtration_mode
-          return unless workup['purify_type'] == 'FILTRATION'
-
-          OrdKit::ReactionActionPurify::FiltrationMode.const_get workup['filtration_mode'].to_s
-        rescue NameError
-          OrdKit::ReactionActionPurify::FiltrationMode.UNSPECIFIED
+          { purify: purify_type_action }
         end
 
         def automation
-          Automation::AutomationType.const_get workup['automation_mode'].to_s
+          Automation::AutomationType.const_get workup['automation'].to_s
         rescue NameError
           Automation::AutomationType::UNSPECIFIED
         end
 
-        def solvents
-          Array(workup['purify_solvent_sample_ids']).filter_map do |sample_id|
-            OrdKit::Exporter::Compounds::PurifySolventExporter.new(sample_id).to_ord
-          end
-        end
-
-        def ratio
-          workup['purify_ratio']
+        def purify_type_action
+          { automation: automation }.merge(
+            PURIFY_EXPORTER[workup['purify_type']].new(workup).to_ord,
+          )
         end
       end
     end

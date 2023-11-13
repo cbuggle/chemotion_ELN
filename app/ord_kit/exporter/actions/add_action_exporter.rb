@@ -8,9 +8,9 @@ module OrdKit
 
         def action_type_attributes
           {
-            addition: ReactionActionAdd.new(
+            addition: OrdKit::ReactionProcessAction::ActionAdd.new(
               reaction_role: workup['acts_as'],
-              input: Samples::AddSampleExporter.new(model).to_ord,
+              input: Samples::AddSampleExporter.new(action).to_ord,
             ),
           }
         end

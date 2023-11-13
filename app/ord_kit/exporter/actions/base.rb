@@ -3,13 +3,18 @@
 module OrdKit
   module Exporter
     module Actions
-      class Base < OrdKit::Exporter::Base
+      class Base
         # Defines base structure of ReactionProcessAction Export
         # Provides implementation for the common methods details, duration,
         # Provides empty implementation action_type_attributes which needs to be implemented in subclasses.
+        def initialize(action)
+          @action = action
+        end
+
+        delegate :workup, to: :action
 
         def to_ord(starts_at:)
-          OrdKit::ReactionAction.new(
+          OrdKit::ReactionProcessAction.new(
             {
               description: description,
               position: position,
@@ -18,11 +23,13 @@ module OrdKit
               equipment: equipment,
             }.merge(action_type_attributes),
           )
+        rescue StandardError => e
+          raise StandardError,  workup.to_s + e.to_s
         end
 
         private
 
-        delegate :workup, :reaction_process,to: :model
+        attr_reader :action
 
         # ORD attributes in order of ORD definition by convention (they are numbered).
         def description
@@ -30,7 +37,7 @@ module OrdKit
         end
 
         def position
-          model.position + 1
+          action.position + 1
         end
 
         def start_time(starts_at)

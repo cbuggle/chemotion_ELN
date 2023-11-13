@@ -7,7 +7,7 @@ module OrdKit
         private
 
         def equipment
-          return unless workup['EQUIPMENT'] && workup['EQUIPMENT']['value']
+          return unless workup.dig('EQUIPMENT', 'value')
 
           workup['EQUIPMENT']['value'].map do |equipment|
             OrdKit::Equipment.new(
@@ -22,7 +22,7 @@ module OrdKit
         end
 
         def conditions
-          OrdKit::Exporter::Conditions::ReactionConditionsExporter.new(model).to_ord
+          OrdKit::Exporter::Conditions::ReactionConditionsExporter.new(action).to_ord
         end
       end
     end

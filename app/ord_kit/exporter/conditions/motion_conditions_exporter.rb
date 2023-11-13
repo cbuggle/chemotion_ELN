@@ -3,8 +3,8 @@
 module OrdKit
   module Exporter
     module Conditions
-      class MotionConditionsExporter < OrdKit::Exporter::Base
-        # Works on ReactionProcessAction ("CONDITION / MOTION")
+      class MotionConditionsExporter < OrdKit::Exporter::Conditions::Base
+        # Works on ReactionProcessA ("CONDITION / MOTION")
 
         def to_ord
           StirringConditions.new(
@@ -18,7 +18,7 @@ module OrdKit
         private
 
         def stirring_method_type
-          OrdKit::StirringConditions::StirringMethodType.const_get model['motion_type']
+          OrdKit::StirringConditions::StirringMethodType.const_get condition['motion_type']
         rescue NameError
           OrdKit::StirringConditions::StirringMethodType::UNSPECIFIED
         end
@@ -29,14 +29,15 @@ module OrdKit
 
         def stirring_rate
           OrdKit::StirringConditions::StirringRate.new(
-            type: OrdKit::StirringConditions::StirringRate::StirringRateType::UNSPECIFIED, # n/a. ELN works with RPM, doesn't care if that is low, medium, high.
+            # n/a. ELN works with RPM, doesn't care if that is low, medium, high.
+            type: OrdKit::StirringConditions::StirringRate::StirringRateType::UNSPECIFIED,
             details: nil, # n/a. Unkown in ELN.
-            rpm: model['value'].to_i,
+            rpm: condition.dig('speed', 'value').to_f,
           )
         end
 
         def automation
-          Automation::AutomationType.const_get model['motion_mode']
+          Automation::AutomationType.const_get condition['motion_mode']
         rescue NameError
           Automation::AutomationType::UNSPECIFIED
         end

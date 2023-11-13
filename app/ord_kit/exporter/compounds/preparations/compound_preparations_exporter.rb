@@ -4,7 +4,7 @@ module OrdKit
   module Exporter
     module Compounds
       module Preparations
-        class CompoundPreparationsExporter < OrdKit::Exporter::Base
+        class CompoundPreparationsExporter < OrdKit::Exporter::Actions::Base
           def to_ord
             return unless samples_preparation
 
@@ -20,8 +20,8 @@ module OrdKit
 
           def samples_preparation
             ReactionProcessEditor::SamplesPreparation.find_by(
-              reaction_process: model.reaction_process,
-              sample: model.sample,
+              reaction_process: action.reaction_process,
+              sample: action.sample,
             )
           end
 

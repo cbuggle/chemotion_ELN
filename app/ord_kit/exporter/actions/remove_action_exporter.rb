@@ -8,13 +8,17 @@ module OrdKit
 
         def action_type_attributes
           {
-            removal: ReactionActionRemove.new(
+            removal: OrdKit::ReactionProcessAction::ActionRemove.new(
               reaction_role: workup['acts_as'],
-              input: Samples::RemoveSampleExporter.new(model).to_ord,
+              input: Samples::RemoveSampleExporter.new(action).to_ord,
               replacement_medium: workup['replacement_medium'],
-              remove_repetitions: workup['remove_repetitions'],
+              remove_repetitions: remove_repetitions,
             ),
           }
+        end
+
+        def remove_repetitions
+          workup['remove_repetitions'] && workup['value']
         end
       end
     end

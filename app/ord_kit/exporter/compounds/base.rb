@@ -3,8 +3,13 @@
 module OrdKit
   module Exporter
     module Compounds
-      class Base < OrdKit::Exporter::Base
-        delegate :workup, to: :model
+      class Base
+        # Provides empty implementation action_type_attributes which needs to be implemented in subclasses.
+        def initialize(action)
+          @action = action
+        end
+
+        delegate :workup, to: :action
 
         def to_ord
           OrdKit::Compound.new(
@@ -19,9 +24,13 @@ module OrdKit
             purity: purity,
             is_waterfree_solvent: workup['is_waterfree_solvent'],
           )
+          rescue StandardError
+            raise StandardError, workup
         end
 
         private
+
+        attr_reader :action
 
         def identifiers
           nil
@@ -45,7 +54,7 @@ module OrdKit
 
         def purity
           OrdKit::Percentage.new(
-            value: (model.sample&.purity || 1) * 100,
+            value: (action.sample&.purity || 1) * 100,
           )
         end
       end

@@ -1,7 +1,9 @@
 module OrdKit
   module Exporter
     module Conditions
-      class ReactionConditionsExporter < OrdKit::Exporter::Actions::Base
+      class ReactionConditionsExporter < OrdKit::Exporter::Conditions::Base
+        delegate :workup, to: :condition
+
         def to_ord
           ReactionConditions.new(
             temperature: temperature,

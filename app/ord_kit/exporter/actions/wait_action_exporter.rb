@@ -8,7 +8,7 @@ module OrdKit
 
         def action_type_attributes
           {
-            wait: OrdKit::ReactionActionWait.new(duration: duration),
+            wait: OrdKit::ReactionProcessAction::ActionWait.new(duration: duration),
           }
         end
       end

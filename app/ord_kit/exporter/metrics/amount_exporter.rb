@@ -2,36 +2,34 @@
 
 module OrdKit
   module Exporter
-    module Amounts
-      class AmountExporter < OrdKit::Exporter::Amounts::Base
+    module Metrics
+      class AmountExporter < OrdKit::Exporter::Metrics::Base
         def to_ord
           case unit
           when 'l', 'ml', 'mcl', 'nl'
-            OrdKit::Amount.new(
+            Amount.new(
               volume_includes_solutes: volume_includes_solutes,
-              volume: VolumeExporter.new(value: value, unit: unit).to_ord,
+              volume: Amounts::VolumeExporter.new(amount).to_ord,
             )
           when 'kg', 'g', 'mg', 'mcg'
-            OrdKit::Amount.new(
+            Amount.new(
               volume_includes_solutes: volume_includes_solutes,
-              mass: MassExporter.new(value: value, unit: unit).to_ord,
+              mass: Amounts::MassExporter.new(amount).to_ord,
             )
           when 'mol', 'mmol', 'mcmol', 'nanomol'
-            OrdKit::Amount.new(
+            Amount.new(
               volume_includes_solutes: volume_includes_solutes,
-              moles: MolesExporter.new(value: value, unit: unit).to_ord,
+              moles: Amounts::MolesExporter.new(amount).to_ord,
             )
           when 'PERCENT'
-            OrdKit::Amount.new(
+            Amount.new(
               volume_includes_solutes: volume_includes_solutes,
-              percentage: PercentageExporter.new(value: value).to_ord,
+              percentage: Amounts::PercentageExporter.new(amount).to_ord,
             )
           end
         end
 
         private
-
-        attr_reader :value, :unit
 
         def volume_includes_solutes
           nil # hardcoded empty. Unknown in ELN.

@@ -8,8 +8,8 @@ module OrdKit
 
         def action_type_attributes
           {
-            save_sample: OrdKit::ReactionActionSaveSample.new(
-              sample: OrdKit::Exporter::Compounds::SaveCompoundExporter.new(model).to_ord,
+            save_sample: ReactionProcessAction::ActionSaveSample.new(
+              sample: OrdKit::Exporter::Compounds::SaveCompoundExporter.new(action).to_ord,
             ),
           }
         end

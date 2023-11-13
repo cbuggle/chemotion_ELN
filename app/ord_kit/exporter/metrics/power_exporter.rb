@@ -2,12 +2,10 @@
 
 module OrdKit
   module Exporter
-    module Amounts
-      class PowerExporter < OrdKit::Exporter::Amounts::Base
-        ELN_DEFAULT_POWER_UNIT = 'WATT'
-
+    module Metrics
+      class PowerExporter < OrdKit::Exporter::Metrics::Base
         def to_ord
-          OrdKit::Power.new(
+          Power.new(
             value: value.to_f,
             precision: nil,
             units: units,
@@ -17,9 +15,9 @@ module OrdKit
         private
 
         def units
-          OrdKit::Power::PowerUnit.const_get ELN_DEFAULT_POWER_UNIT
+          Power::PowerUnit.const_get unit
         rescue NameError
-          OrdKit::Power::PowerUnit::UNSPECIFIED
+          Power::PowerUnit::UNSPECIFIED
         end
       end
     end

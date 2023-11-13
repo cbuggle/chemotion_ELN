@@ -3,11 +3,11 @@
 module OrdKit
   module Exporter
     module Conditions
-      class TemperatureConditionsExporter < OrdKit::Exporter::Base
+      class TemperatureConditionsExporter < OrdKit::Exporter::Conditions::Base
         # Works on ReactionProcessAction ("CONDITION / TEMPERATURE")
 
         def to_ord
-          OrdKit::TemperatureConditions.new(
+          TemperatureConditions.new(
             control: temperature_control,
             setpoint: setpoint,
             measurements: measurements,
@@ -17,16 +17,13 @@ module OrdKit
         private
 
         def setpoint
-          OrdKit::Exporter::Amounts::TemperatureExporter.new(
-            value: model['value'],
-            unit: model['unit'],
-          ).to_ord
+          Exporter::Metrics::TemperatureExporter.new(condition).to_ord
         end
 
         def temperature_control
-          return unless model['additional_information']
+          return unless condition['additional_information']
 
-          OrdKit::TemperatureConditions::TemperatureControl.new(
+          TemperatureConditions::TemperatureControl.new(
             type: temperature_control_type,
             details: nil, # n/a. Unknown in ELN.
           )
@@ -37,9 +34,9 @@ module OrdKit
         end
 
         def temperature_control_type
-          OrdKit::TemperatureConditions::TemperatureControl::TemperatureControlType.const_get model['additional_information']
+          TemperatureConditions::TemperatureControl::TemperatureControlType.const_get condition['additional_information']
         rescue NameError
-          OrdKit::TemperatureConditions::TemperatureControl::TemperatureControlType::UNSPECIFIED
+          TemperatureConditions::TemperatureControl::TemperatureControlType::UNSPECIFIED
         end
       end
     end

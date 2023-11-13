@@ -3,7 +3,11 @@
 module OrdKit
   module Exporter
     module Samples
-      class Base < OrdKit::Exporter::Base
+      class Base
+        def initialize(action)
+          @action = action
+        end
+
         def to_ord
           OrdKit::ReactionInput.new(
             components: components,
@@ -18,16 +22,16 @@ module OrdKit
           )
         end
 
-        delegate :reaction_process, to: :model
-
         private
 
+        attr_reader :action
+
         def conditions
-          OrdKit::Exporter::Conditions::ReactionConditionsExporter.new(model).to_ord
+          OrdKit::Exporter::Conditions::ReactionConditionsExporter.new(action).to_ord
         end
 
         def components
-          raise StandardError, "Don't call #to_ord on abstract OrdKit::Exporter::Base"
+          raise StandardError, "Don't call #to_ord on abstract OrdKit::Exporter::Samples::Base"
         end
 
         def crude_components
@@ -44,7 +48,7 @@ module OrdKit
         def addition_time
           OrdKit::Time.new(
             value: 0, # TODO: redundant start_time has been removed, needs to be calculated.
-            # model.start_time.to_i,
+            # action.start_time.to_i,
             precision: nil,
             units: OrdKit::Time::TimeUnit::SECOND,
           )
@@ -52,7 +56,7 @@ module OrdKit
 
         def addition_duration
           OrdKit::Time.new(
-            value: model.workup['duration'].to_i / 1000,
+            value: action.workup['duration'].to_i / 1000,
             precision: nil,
             units: OrdKit::Time::TimeUnit::SECOND,
           )

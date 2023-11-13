@@ -1,16 +1,3 @@
-// Copyright 2023 KIT ELN Reaction Database Authors
-// Nicole Jung <nicole.jung@kit.edu>, Christian Buggle <christian@buggle.net>
-//
-// Ord::Kit for KIT IOC
-// (Karlsruhe Institute of Technology / Institute for Organical Chemistry).
-// Schema for the KIT ELN Reaction Database,
-// allowing to store data describing the process of a chemical reaction
-// (enhancing but incompatible in either direction to the original ORD Schema).
-//
-// v0.4.0
-// (draft, 11.11.2023)
-//
-//
 // Copyright 2020 Open Reaction Database Project Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Schema for the Open Reaction Database.
 syntax = "proto3";
 
-package ord_kit;
+package ord;
 
 /**
  * Throughout this schema, we introduce enums to encourage consistency in
@@ -70,33 +58,6 @@ message Reaction {
   ReactionProvenance provenance = 9;
   // Official ID for this reaction in the Open Reaction Database.
   string reaction_id = 10;
-  // A reaction may consist of any numer of ReactionSteps.
-  repeated ReactionStep reaction_steps = 11;
-}
-
-/**
- * Each ReactionStep
- * describes an atomar reaction (in a vessel) and is made of atomar
- *Actions.
- **/
-
-message ReactionStep {
-  // Unique UUID for this reaction step.
-  string reaction_step_id = 1;
-  // The position of this step within the Reaction
-  int32 position = 2;
-  // The start_time (in seconds) in the total reaction.
-  Time start_time = 3;
-  // The total duration.
-  Time duration = 4;
-  // The setup specifies how the reaction step was prepared.
-  // Most importantly it contains the Vessel.
-  ReactionSetup setup = 5;
-  // The indivdual actions defining the ReactionStep.
-  repeated ReactionProcessAction actions = 6;
-  // Each reaction steps outcome may contains all analyses and
-  // confirmed/expected product// structures at a particular reaction time.
-  repeated ReactionOutcome outcomes = 7;
 }
 
 /**
@@ -108,16 +69,16 @@ message ReactionStep {
  */
 message ReactionIdentifier {
   // Possible identifier types are listed in an enum for extensibility
-  enum IdentifierType {
+  enum ReactionIdentifierType {
     UNSPECIFIED = 0;
     CUSTOM = 1;
     REACTION_SMILES = 2;
-    REACTION_CXSMILES = 6; // Extended SMILES.
-    RDFILE = 3;            // Reaction data file.
-    RINCHI = 4;            // Reaction InChI.
-    NAME = 5;              // Named reaction or reaction category.
+    REACTION_CXSMILES = 6;  // Extended SMILES.
+    RDFILE = 3;  // Reaction data file.
+    RINCHI = 4;  // Reaction InChI.
+    REACTION_TYPE = 5;  // Named reaction or reaction category.
   }
-  IdentifierType type = 1;
+  ReactionIdentifierType type = 1;
   string details = 2;
   string value = 3;
   // Whether identifier contains atom-to-atom mapping information. When True,
@@ -172,11 +133,9 @@ message ReactionInput {
       DROPWISE = 4;
       CONTINUOUS = 5;
       PORTIONWISE = 6;
-      FLOW_RATE = 7;
     }
     AdditionSpeedType type = 1;
     // Specify, e.g., portion sizes and intervals for PORTIONWISE.
-
     string details = 2;
   }
   // The qualitative rate of addition.
@@ -185,101 +144,28 @@ message ReactionInput {
   Time addition_duration = 6;
   // For continuous synthesis, we instead specify a flow rate.
   FlowRate flow_rate = 7;
+  message AdditionDevice {
+    enum AdditionDeviceType {
+      UNSPECIFIED = 0;
+      CUSTOM = 1;
+      NONE = 2;
+      SYRINGE = 3;
+      CANNULA = 4;
+      ADDITION_FUNNEL = 5;
+    }
+    AdditionDeviceType type = 1;
+    // Specify, e.g., "gas-tight" for SYRINGE or cannula material.
+    string details = 2;
+  }
   // The device used for addition.
-  Equipment addition_device = 8;
+  AdditionDevice addition_device = 8;
   // Specify the temperature of the material being added.
   // E.g., a cooled flask of a stock solution to be added at low temperature.
-  ReactionConditions conditions = 9;
+  Temperature addition_temperature = 9;
+  // The texture immediately before addition.
+  Texture texture = 10;
 }
 
-/**
- * An individual Action defining the reaction workflow.
- * It is usually referenced within a ReactionStep.
- *
- */
-message ReactionProcessAction {
-  string description = 1;
-  int32 position = 2;
-  Time start_time = 3;
-  Time duration = 4;
-  repeated Equipment equipment = 5;
-  oneof action {
-    ActionAdd addition = 6;
-    ActionRemove removal = 7;
-    ReactionConditions conditions = 8;
-    ActionPurify purify = 9;
-    ActionTransfer transfer = 10;
-    ActionWait wait = 11;
-    ActionSaveSample save_sample = 12;
-    Analysis analysis = 13;
-  }
-
-  message ActionAdd {
-    ReactionRole.ReactionRoleType reaction_role = 1;
-    ReactionInput input = 2;
-  }
-
-  message ActionRemove {
-    optional ReactionRole.ReactionRoleType reaction_role = 1;
-    ReactionInput input = 2;
-
-    string replacement_medium = 3; // TODO: Compound? maybe ReactionInput?
-    int32 remove_repetitions = 4;
-  }
-
-  message ActionCrystallization {
-    repeated Compound solvents = 1;
-    string ratio = 2;
-  }
-  message ActionChromatography {
-    repeated Compound solvents = 1;
-    string ratio = 2;
-  }
-
-  message ActionExtraction {
-    repeated Compound solvents = 1;
-    string ratio = 2;
-  }
-
-  message ActionFiltration {
-    message FiltrationStep {
-      repeated CompoundWithRatio solvents = 1;
-      Amount amount = 2;
-      int32 repetitions = 3;
-      bool rinse_vessel = 4;
-    }
-    enum FiltrationMode {
-      UNSPECIFIED = 0;
-      KEEP_SUPERNATANT = 1;
-      KEEP_PRECIPITATE = 2;
-    }
-    repeated FiltrationStep steps = 1;
-    FiltrationMode filtration_mode = 2;
-  }
-
-  message ActionPurify {
-    oneof type {
-      ActionFiltration filtration = 1;
-      ActionExtraction extraction = 2;
-      ActionCrystallization crystallization = 3;
-      ActionChromatography chromatography = 4;
-    }
-    Automation.AutomationType automation = 5;
-  }
-
-  message ActionTransfer {
-    ReactionRole.ReactionRoleType reaction_role = 1;
-    ReactionInput input = 2;
-    string transfer_source_reaction_step_id = 3;
-    string transfer_target_reaction_step_id = 4;
-    Amount amount = 5;
-    Percentage percentage = 6;
-  }
-
-  message ActionWait { Time duration = 1; }
-
-  message ActionSaveSample { Compound sample = 1; }
-}
 /**
  * The quantitative amount of a Compound used in a particular reaction.
  * Compounds added in their pure form should have their value defined by
@@ -293,7 +179,6 @@ message Amount {
     Moles moles = 2;
     Volume volume = 3;
     UnmeasuredAmount unmeasured = 5;
-    Percentage percentage = 6;
   }
   // Whether the volume measurement refers to the pure substance or to the
   // total volume of the reaction input. An example of when this field should
@@ -327,6 +212,31 @@ message UnmeasuredAmount {
 }
 
 /**
+ * This qualitatively describes the apparent size and morphology of a Compound,
+ * a ProductCompound, or a ReactionInput.
+ */
+message Texture {
+  enum TextureType {
+    UNSPECIFIED = 0;
+    CUSTOM = 1;
+    POWDER = 2;
+    CRYSTAL = 3;
+    OIL = 4;
+    AMORPHOUS_SOLID = 5;
+    FOAM = 6;
+    WAX = 7;
+    SEMI_SOLID = 8;
+    SOLID = 9;
+    LIQUID = 10;
+    GAS = 11;
+  }
+  TextureType type = 1;
+  // Specify texture forms such as "fine needles" for CRYSTAL,
+  // "viscous" for OIL, etc.
+  string details = 2;
+}
+
+/**
  * Crude components are used in multi-step or multi-stage reactions (no strong
  * distinction is made here) where one synthetic process must be described by
  * multiple "Reaction" messages. In these cases, we often carry the crude
@@ -348,6 +258,7 @@ message CrudeComponent {
   optional bool has_derived_amount = 3;
   // If the entire crude mixture was not used, need to specify an amount.
   Amount amount = 4;
+  Texture texture = 5;
 }
 
 /**
@@ -369,7 +280,7 @@ message Compound {
     // Name of the vendor or supplier the compound was purchased from.
     string vendor = 1;
     // Compound ID in the vendor database or catalog.
-    string id = 2;
+    string catalog_id = 2;
     // Batch/lot identification.
     string lot = 3;
   }
@@ -382,17 +293,7 @@ message Compound {
   // Compounds may be assayed for quality control; analytical data should be
   // defined in the analyses map.
   map<string, Analysis> analyses = 8;
-
-  // The purity of the compound.
-  Percentage purity = 9;
-
-  // Optional flag when adding solvents.
-  optional bool is_waterfree_solvent = 10;
-}
-
-message CompoundWithRatio {
-  Compound compound = 1;
-  string ratio = 2;
+  Texture texture = 9;
 }
 
 message ReactionRole {
@@ -415,15 +316,14 @@ message ReactionRole {
     // A product can be any species produced by the reaction, whether desired
     // or undesired.
     PRODUCT = 8;
-
-    // KIT Enhancements
-    SAMPLE = 9;
-    DIVERSE_SOLVENT = 10;
-    ADDITIVE = 11;
-    MEDIUM = 12;
-    CRUDE = 13;
-    INTERMEDIATE = 14;
-    MIXTURE = 15;
+    // When there is one intended chemical equation:
+    // - Set `is_desired_product=True` to indicate a desired product.
+    // - Use BYPRODUCT to indicate a chemical species that is an expected result
+    // of the reaction but is not the product of interest.
+    // - Use SIDE_PRODUCT to indicate the product of a side reaction.
+    // - See https://doi.org/10.1021/op300317g for a discussion of these terms.
+    BYPRODUCT = 9;
+    SIDE_PRODUCT = 10;
   }
 }
 
@@ -435,20 +335,16 @@ message ReactionRole {
  * in the 'details' field.
  */
 message CompoundPreparation {
-  enum PreparationType {
+  enum CompoundPreparationType {
     UNSPECIFIED = 0;
     CUSTOM = 1;
-    NONE = 2;       // Compound used as received.
-    REPURIFIED = 3; // Compound repurified (e.g., recrystallized).
-    SPARGED = 4; // Compound sparged, most likely to be the case with solvents.
-    DRIED = 5;   // Moisture removed, e.g., using molecular sieves.
-    SYNTHESIZED = 6; // Compound synthesized in-house.
-    DISSOLVED = 7;
-    HOMOGENIZED = 8;
-    TEMPERATURE_ADJUSTED = 9;
-    DEGASSED = 10;
+    NONE = 2;  // Compound used as received.
+    REPURIFIED = 3;  // Compound repurified (e.g., recrystallized).
+    SPARGED = 4;  // Compound sparged, most likely to be the case with solvents.
+    DRIED = 5;  // Moisture removed, e.g., using molecular sieves.
+    SYNTHESIZED = 6;  // Compound synthesized in-house.
   }
-  repeated PreparationType type = 1;
+  CompoundPreparationType type = 1;
   // Full description of how the received compound was prepared.
   string details = 2;
   // The ID of the reaction that produced this species. Note that this ID must
@@ -457,8 +353,6 @@ message CompoundPreparation {
   // The referenced reaction should not merely be the procedure that was
   // followed/reproduced, but the *exact* physical experiment.
   string reaction_id = 3;
-
-  repeated Equipment equipment = 4;
 }
 
 /**
@@ -471,7 +365,7 @@ message CompoundPreparation {
  * specification of which salt.
  */
 message CompoundIdentifier {
-  enum IdentifierType {
+  enum CompoundIdentifierType {
     UNSPECIFIED = 0;
     CUSTOM = 1;
     // Simplified molecular-input line-entry system.
@@ -505,7 +399,7 @@ message CompoundIdentifier {
     // HELM; https://www.pistoiaalliance.org/helm-notation/.
     HELM = 16;
   }
-  IdentifierType type = 1;
+  CompoundIdentifierType type = 1;
   string details = 2;
   // Value of the compound identifier; certain types (e.g., PUBCHEM_CID) may
   // cast the string as an integer for downstream processing and validation.
@@ -518,6 +412,7 @@ message CompoundIdentifier {
  * preparation steps or vessel attachments, and its volume.
  */
 message Vessel {
+  // Vessel type (flask, vial, well-plate, etc.).
   enum VesselType {
     UNSPECIFIED = 0;
     CUSTOM = 1;
@@ -529,16 +424,9 @@ message Vessel {
     CONTINUOUS_STIRRED_TANK_REACTOR = 7;
     PACKED_BED_REACTOR = 8;
     NMR_TUBE = 9;
-    PRESSURE_FLASK = 10;   // E.g., sealed tube
-    PRESSURE_REACTOR = 11; // High-pressure (e.g., Parr bomb reactor)
+    PRESSURE_FLASK = 10;  // E.g., sealed tube
+    PRESSURE_REACTOR = 11;  // High-pressure (e.g., Parr bomb reactor)
     ELECTROCHEMICAL_CELL = 12;
-    SCHLENK_FLASK = 13;
-    SCHLENK_TUBE = 14;
-    MULTINECK_FLASK = 15;
-    COIL = 16;
-    CUVETTE = 17;
-    BEAKER = 18;
-    ERLENMEYER_FLASK = 19;
   }
   VesselType type = 1;
   // Include details such as "multi-neck" for ROUND_BOTTOM_FLASK,
@@ -553,10 +441,12 @@ message Vessel {
   // Size (volume) of the vessel.
   Volume volume = 6;
   // Identifier number for a microtiter plate or parallel reactor run.
-  string plate_id = 7;
+  string vessel_id = 7;
   // If a well-plate was used, the position of the well for this experiment,
   // e.g., "A4".
-  string plate_position = 8;
+  string position = 8;
+  string row = 9;
+  string col = 10;
 }
 
 message VesselMaterial {
@@ -568,62 +458,8 @@ message VesselMaterial {
     PLASTIC = 4;
     METAL = 5;
     QUARTZ = 6;
-    BROWN_GLASS = 7;
-    PFA = 8;
-    PTFE = 9;
   }
   VesselMaterialType type = 1;
-  string details = 2;
-}
-
-message Equipment {
-  enum EquipmentType {
-    UNSPECIFIED = 0;
-    CUSTOM = 1;
-    NONE = 2;
-    SYRINGE = 3;
-    CANNULA = 4;
-    ADDITION_FUNNEL = 5;
-    SPATULA = 6;
-    PIPE = 7;
-    PIPET = 8;
-    FLASK = 9;
-    DOSING_STATION = 10;
-    LIQUID_HANDLING_SYSTEM = 11;
-    SYRINGE_AND_SYRINGE_PUMP = 12;
-    HEATING_MANTLE = 13;
-    BLOW_DRYER = 14;
-    OIL_BATH = 15;
-    ICE_BATH = 16;
-    ALUMINIUM_BLOCK = 17;
-    WATER_BATH = 18;
-    SAND_BATH = 19;
-    REACTOR = 20;
-    ULTRA_SOUND_BATH = 21;
-    UV_LAMP = 22;
-    LED = 23;
-    STIRRER = 24;
-    SHAKER = 25;
-    HEATING_SHAKER = 26;
-    TUBE = 27;
-    BALL_MILLING = 28;
-    PUMP = 29;
-    COIL = 30;
-    FILTER = 31;
-    SEPARATION_FUNNEL = 32;
-    EXTRACTOR = 33;
-    SPE_COLUMN = 34;
-    FSPE_COLUMN = 35;
-    FLASH_COLUMN = 36;
-    DISTILLATION_APPARATUS = 37;
-    DROPPING_FUNNEL = 38;
-    BUCHNER_FUNNEL = 39;
-    MICROWAVE_REACTOR = 40;
-    FUNNEL = 41;
-    WATER_COOLER = 42;
-    SEPARATION_FILTER = 43;
-  }
-  EquipmentType type = 1;
   string details = 2;
 }
 
@@ -634,7 +470,7 @@ message VesselAttachment {
     CUSTOM = 2;
     SEPTUM = 3;
     CAP = 4;
-    MAT = 5;
+    MAT = 5;  // e.g. a covering for a well plate.
     REFLUX_CONDENSER = 6;
     VENT_NEEDLE = 7;
     DEAN_STARK = 8;
@@ -644,22 +480,9 @@ message VesselAttachment {
     ALUMINUM_FOIL = 12;
     THERMOCOUPLE = 13;
     BALLOON = 14;
-    GAS_ADAPTER = 15;
+    GAS_ADAPTER = 15;  // E.g. a ground-glass adapter with a gas line.
     PRESSURE_REGULATOR = 16;
     RELEASE_VALVE = 17;
-    STIRRING_BAR = 18;
-    CANNULA = 19;
-    FINDENSER = 20;
-    PRESSURE_CAPS_VIALS = 21;
-    TUBE = 22;
-    STOPPER = 23;
-    METAL_REFLUX_CONDENSER = 24;
-    SOXHLET_EXTRACTOR = 25;
-    OVERHEAD_STIRRER = 26;
-    FUNNEL = 27;
-    DROPPING_FUNNEL = 28;
-    SEPARATION_FUNNEL = 29;
-    HYDRATION_APPARATUS = 30;
   }
   VesselAttachmentType type = 1;
   // Include attachment specifications, e.g., "rubber" for SEPTUM,
@@ -680,7 +503,6 @@ message VesselPreparation {
   }
   VesselPreparationType type = 1;
   string details = 2;
-  string medium = 3;
 }
 
 message ReactionSetup {
@@ -716,25 +538,13 @@ message ReactionConditions {
   ElectrochemistryConditions electrochemistry = 5;
   FlowConditions flow = 6;
   optional bool reflux = 7;
-  PhAdjustConditions ph = 8;
+  optional float ph = 8;
   // Boolean to describe whether the conditions cannot be
   // represented by the static, single-step schema.
   optional bool conditions_are_dynamic = 9;
   // A catch-all string field for providing more information about
   // the conditions (e.g., multiple stages)
   string details = 10;
-}
-
-message PhAdjustConditions {
-  enum PhAdjustMeasurementType {
-    UNSPECIFIED = 0;
-    ELECTRODE = 1;
-    STRIPE = 2;
-    OTHER = 3;
-  }
-
-  PhAdjustMeasurementType measurement_type = 1;
-  double ph = 2;
 }
 
 message TemperatureConditions {
@@ -752,8 +562,6 @@ message TemperatureConditions {
       DRY_ICE_BATH = 9;
       AIR_FAN = 10;
       LIQUID_NITROGEN = 11;
-      MEASUREMENT_IN_REACTION = 12;
-      CONTACT_MEDIUM = 13;
     }
     TemperatureControlType type = 1;
     // Specify, e.g., ICE_BATH components (e.g., "ice water, salt"),
@@ -762,20 +570,20 @@ message TemperatureConditions {
   }
   TemperatureControl control = 1;
   Temperature setpoint = 2;
-  message Measurement {
-    enum MeasurementType {
+  message TemperatureMeasurement {
+    enum TemperatureMeasurementType {
       UNSPECIFIED = 0;
       CUSTOM = 1;
-      THERMOCOUPLE_INTERNAL = 2; // Physically in reaction solution.
-      THERMOCOUPLE_EXTERNAL = 3; // On outside of vessel or, e.g., in oil bath.
-      INFRARED = 4;              // Contactless infrared probe.
+      THERMOCOUPLE_INTERNAL = 2;  // Physically in reaction solution.
+      THERMOCOUPLE_EXTERNAL = 3;  // On outside of vessel or, e.g., in oil bath.
+      INFRARED = 4;  // Contactless infrared probe.
     }
-    MeasurementType type = 1;
+    TemperatureMeasurementType type = 1;
     string details = 2;
     Time time = 3;
     Temperature temperature = 4;
   }
-  repeated Measurement measurements = 3;
+  repeated TemperatureMeasurement measurements = 3;
 }
 
 message PressureConditions {
@@ -784,9 +592,9 @@ message PressureConditions {
       UNSPECIFIED = 0;
       CUSTOM = 1;
       AMBIENT = 2;
-      SLIGHT_POSITIVE = 3; // E.g., 1-5 psi with a gas line inlet.
-      SEALED = 4; // Fully sealed vessel (e.g., microwave vial, sealed tube).
-      PRESSURIZED = 5; // High-pressure applied, e.g., in a bomb reactor.
+      SLIGHT_POSITIVE = 3;  // E.g., 1-5 psi with a gas line inlet.
+      SEALED = 4;  // Fully sealed vessel (e.g., microwave vial, sealed tube).
+      PRESSURIZED = 5;  // High-pressure applied, e.g., in a bomb reactor.
     }
     PressureControlType type = 1;
     // Include means of pressure control in "Attachment" when appropriate.
@@ -815,19 +623,19 @@ message PressureConditions {
     string details = 2;
   }
   Atmosphere atmosphere = 3;
-  message Measurement {
+  message PressureMeasurement {
     // TODO(ccoley) get input on how to expand this enum, among others
-    enum MeasurementType {
+    enum PressureMeasurementType {
       UNSPECIFIED = 0;
       CUSTOM = 1;
       PRESSURE_TRANSDUCER = 2;
     }
-    MeasurementType type = 1;
+    PressureMeasurementType type = 1;
     string details = 2;
     Time time = 3;
     Pressure pressure = 4;
   }
-  repeated Measurement measurements = 4;
+  repeated PressureMeasurement measurements = 4;
 }
 
 message StirringConditions {
@@ -840,7 +648,6 @@ message StirringConditions {
     AGITATION = 5;
     BALL_MILLING = 6;
     SONICATION = 7;
-    OTHER = 8;
   }
   StirringMethodType type = 1;
   // Specify, e.g., "egg-shape" for STIR_BAR.
@@ -858,8 +665,6 @@ message StirringConditions {
     int32 rpm = 3;
   }
   StirringRate rate = 3;
-
-  Automation.AutomationType automation = 4;
 }
 
 message IlluminationConditions {
@@ -873,18 +678,12 @@ message IlluminationConditions {
     DEUTERIUM_LAMP = 6;
     SOLAR_SIMULATOR = 7;
     BROAD_SPECTRUM = 8;
-    LAMP = 9;
-    LASER = 10;
-    MICROWAVE_REACTOR = 11;
   }
   IlluminationType type = 1;
-  string details = 2; // E.g. manufacturer, setup specifications, etc.
+  string details = 2;  // E.g. manufacturer, setup specifications, etc.
   Wavelength peak_wavelength = 3;
   string color = 4;
   Length distance_to_vessel = 5;
-  Power power = 6;
-  optional bool power_is_ramp = 7;
-  optional Power power_end = 8;
 }
 
 message ElectrochemistryConditions {
@@ -901,14 +700,12 @@ message ElectrochemistryConditions {
   string anode_material = 5;
   string cathode_material = 6;
   Length electrode_separation = 7;
-  message Measurement {
+  message ElectrochemistryMeasurement {
     Time time = 1;
-    oneof kind {
-      Current current = 2;
-      Voltage voltage = 3;
-    }
+    Current current = 2;
+    Voltage voltage = 3;
   }
-  repeated Measurement measurements = 8;
+  repeated ElectrochemistryMeasurement measurements = 8;
   message ElectrochemistryCell {
     enum ElectrochemistryCellType {
       UNSPECIFIED = 0;
@@ -947,7 +744,7 @@ message FlowConditions {
       PTFE = 7;
       GLASS = 8;
       QUARTZ = 9;
-      SILICON = 10; // e.g., a chip-based microreactor
+      SILICON = 10;  // e.g., a chip-based microreactor
       PDMS = 11;
     }
     TubingType type = 1;
@@ -973,17 +770,17 @@ message ReactionNotes {
   // Include toxicity and other safety warnings.
   string safety_notes = 8;
   // Overflow field for full procedure details
-  string process_details = 9;
+  string procedure_details = 9;
 }
 
 message ReactionObservation {
-  Time time = 1;      // The reaction time at which the observation was made.
-  string comment = 2; // e.g. what color is the reaction?
+  Time time = 1;  // The reaction time at which the observation was made.
+  string comment = 2;  // e.g. what color is the reaction?
   Data image = 3;
 }
 
 message ReactionWorkup {
-  enum WorkupType {
+  enum ReactionWorkupType {
     UNSPECIFIED = 0;
     CUSTOM = 1;
     // Addition (quench, dilution, extraction solvent, internal standard, etc.)
@@ -1043,7 +840,7 @@ message ReactionWorkup {
     // Specify pressure and apparatus notes in "details".
     DISTILLATION = 18;
   }
-  WorkupType type = 1;
+  ReactionWorkupType type = 1;
   // Include step-specific details such as purpose of an addition, e.g.,
   // "crystallization". Include method details, e.g., "layer diffusion".
   string details = 2;
@@ -1056,7 +853,7 @@ message ReactionWorkup {
   TemperatureConditions temperature = 6;
   string keep_phase = 7;
   StirringConditions stirring = 8;
-  optional double target_ph = 9;
+  optional float target_ph = 9;
   // Indicate automated workup/purification. Include specifications in
   // "details", e.g., instrument manufacturer, solvent gradient
   // (if applicable), column material and size, etc.
@@ -1106,25 +903,6 @@ message ProductCompound {
   // (and unnormalized) metrics like an integrated UV peak area.
   repeated ProductMeasurement measurements = 3;
   string isolated_color = 4;
-  message Texture {
-    enum TextureType {
-      UNSPECIFIED = 0;
-      CUSTOM = 1;
-      POWDER = 2;
-      CRYSTAL = 3;
-      OIL = 4;
-      AMORPHOUS_SOLID = 5;
-      FOAM = 6;
-      WAX = 7;
-      SEMI_SOLID = 8;
-      SOLID = 9;
-      LIQUID = 10;
-    }
-    TextureType type = 1;
-    // Specify texture forms such as "fine needles" for CRYSTAL,
-    // "viscous" for OIL, etc.
-    string details = 2;
-  }
   Texture texture = 5;
   // Any features (e.g., calculated descriptors) of the product compound.
   map<string, Data> features = 6;
@@ -1156,7 +934,7 @@ message ProductMeasurement {
   // defined in the Analysis message (with is_of_isolated_species set
   // to True) but with a cross-reference to a product via a ProductMessage
   // (e.g., of type IDENTITY for HRMS).
-  enum MeasurementType {
+  enum ProductMeasurementType {
     UNSPECIFIED = 0;
     CUSTOM = 1;
     // An identity type indicates that the corresponding analysis was used
@@ -1184,7 +962,7 @@ message ProductMeasurement {
     // usually as a mass.
     AMOUNT = 9;
   }
-  MeasurementType type = 2;
+  ProductMeasurementType type = 2;
   // Additional information about the measurement and, in particular, how it
   // was calculated if that is ambiguous given the analysis type.
   string details = 3;
@@ -1263,11 +1041,11 @@ message ProductMeasurement {
     enum SelectivityType {
       UNSPECIFIED = 0;
       CUSTOM = 1;
-      EE = 2; // Enantiomeric excess as a percentage (desired - undesired).
-      ER = 3; // Enantiomeric ratio. (x:1) (desired / undesired).
-      DR = 4; // Diasteromeric ratio. (x:1) (desired / undesired).
-      EZ = 5; // Alkene geometry ratio. (x:1) (E / Z)
-      ZE = 6; // Alkene geometry ratio. (x:1) (Z / E)
+      EE = 2;  // Enantiomeric excess as a percentage (desired - undesired).
+      ER = 3;  // Enantiomeric ratio. (x:1) (desired / undesired).
+      DR = 4;  // Diasteromeric ratio. (x:1) (desired / undesired).
+      EZ = 5;  // Alkene geometry ratio. (x:1) (E / Z)
+      ZE = 6;  // Alkene geometry ratio. (x:1) (Z / E)
     }
     SelectivityType type = 1;
     string details = 2;
@@ -1278,35 +1056,37 @@ message ProductMeasurement {
   Wavelength wavelength = 15;
 }
 
-message DateTime { string value = 1; }
+message DateTime {
+  string value = 1;
+}
 
 message Analysis {
   // TODO(ccoley): Solicit more feedback from experimentalists
   enum AnalysisType {
     UNSPECIFIED = 0;
     CUSTOM = 1;
-    LC = 2;        // Liquid chromatography, including HPLC and UPLC.
-    GC = 3;        // Gas chromatography.
-    IR = 4;        // Infrared spectroscopy, including ReactIR.
-    NMR_1H = 5;    // 1H NMR spectroscopy.
-    NMR_13C = 6;   // 13C NMR spectroscopy.
-    NMR_OTHER = 7; // Specify type and details in "details".
-    MP = 8;        // Melting point characterization.
-    UV = 9;        // Ultraviolet spectroscopy.
-    TLC = 10;      // Thin-layer chromatography.
-    MS = 11;       // Mass spectrometry.
-    HRMS = 12;     // High resolution mass spectrometry.
-    MSMS = 13;     // Two-dimensional mass spectrometry.
-    WEIGHT = 14;   // Weight of an isolated compound.
-    LCMS = 15;     // Combined LC/MS.
-    GCMS = 16;     // Combined GC/MS.
-    ELSD = 17;     // Evaporative light scattering detector.
-    CD = 18;       // Circular Dichroism.
-    SFC = 19;      // Supercritical fluid chromatography.
-    EPR = 20;      // Electron paramagnetic resonance spectroscopy.
-    XRD = 21;      // X-ray diffraction, including single-crystal XRD.
-    RAMAN = 22;    // Raman spectroscopy.
-    ED = 23;       // Electron diffraction, including MicroED.
+    LC = 2;  // Liquid chromatography, including HPLC and UPLC.
+    GC = 3;  // Gas chromatography.
+    IR = 4;  // Infrared spectroscopy, including ReactIR.
+    NMR_1H = 5;  // 1H NMR spectroscopy.
+    NMR_13C = 6;  // 13C NMR spectroscopy.
+    NMR_OTHER = 7;  // Specify type and details in "details".
+    MP = 8;  // Melting point characterization.
+    UV = 9;  // Ultraviolet spectroscopy.
+    TLC = 10;  // Thin-layer chromatography.
+    MS = 11;  // Mass spectrometry.
+    HRMS = 12;  // High resolution mass spectrometry.
+    MSMS = 13;  // Two-dimensional mass spectrometry.
+    WEIGHT = 14;  // Weight of an isolated compound.
+    LCMS = 15;  // Combined LC/MS.
+    GCMS = 16;  // Combined GC/MS.
+    ELSD = 17;  // Evaporative light scattering detector.
+    CD = 18;  // Circular Dichroism.
+    SFC = 19;  // Supercritical fluid chromatography.
+    EPR = 20;  // Electron paramagnetic resonance spectroscopy.
+    XRD = 21;  // X-ray diffraction, including single-crystal XRD.
+    RAMAN = 22;  // Raman spectroscopy.
+    ED = 23;  // Electron diffraction, including MicroED.
   }
   AnalysisType type = 1;
   // Any details about analysis (e.g., NMR type, columns, gradients).
@@ -1322,7 +1102,6 @@ message Analysis {
   map<string, Data> data = 5;
   string instrument_manufacturer = 6;
   DateTime instrument_last_calibrated = 7;
-  string number = 8;
 }
 
 message ReactionProvenance {
@@ -1334,6 +1113,13 @@ message ReactionProvenance {
   string publication_url = 6;
   RecordEvent record_created = 7;
   repeated RecordEvent record_modified = 8;
+  // Container for arbitrary reaction metadata; e.g., an internal project
+  // identifier.
+  map<string, Data> reaction_metadata = 9;
+  // Set to true for programmatically extracted data; e.g., text mining from
+  // patents. Set to false for manually curated data or template enumeration
+  // from structured data (like a spreadsheet).
+  optional bool is_mined = 10;
 }
 
 message Person {
@@ -1382,9 +1168,9 @@ message Mass {
     MILLIGRAM = 3;
     MICROGRAM = 4;
   }
-  optional double value = 1;
+  optional float value = 1;
   // Precision of the measurement (with the same units as `value`).
-  optional double precision = 2;
+  optional float precision = 2;
   MassUnit units = 3;
 }
 message Moles {
@@ -1395,9 +1181,9 @@ message Moles {
     MICROMOLE = 3;
     NANOMOLE = 4;
   }
-  optional double value = 1;
+  optional float value = 1;
   // Precision of the measurement (with the same units as `value`).
-  optional double precision = 2;
+  optional float precision = 2;
   MolesUnit units = 3;
 }
 message Volume {
@@ -1408,9 +1194,9 @@ message Volume {
     MICROLITER = 3;
     NANOLITER = 4;
   }
-  optional double value = 1;
+  optional float value = 1;
   // Precision of the measurement (with the same units as `value`).
-  optional double precision = 2;
+  optional float precision = 2;
   VolumeUnit units = 3;
 }
 message Concentration {
@@ -1420,9 +1206,9 @@ message Concentration {
     MILLIMOLAR = 2;
     MICROMOLAR = 3;
   }
-  optional double value = 1;
+  optional float value = 1;
   // Precision of the measurement (with the same units as `value`).
-  optional double precision = 2;
+  optional float precision = 2;
   ConcentrationUnit units = 3;
 }
 message Pressure {
@@ -1436,11 +1222,10 @@ message Pressure {
     KILOPASCAL = 6;
     TORR = 7;
     MM_HG = 8;
-    MBAR = 9;
   }
-  optional double value = 1;
+  optional float value = 1;
   // Precision of the measurement (with the same units as `value`).
-  optional double precision = 2;
+  optional float precision = 2;
   PressureUnit units = 3;
 }
 message Temperature {
@@ -1450,9 +1235,9 @@ message Temperature {
     FAHRENHEIT = 2;
     KELVIN = 3;
   }
-  optional double value = 1;
+  optional float value = 1;
   // Precision of the measurement (with the same units as `value`).
-  optional double precision = 2;
+  optional float precision = 2;
   TemperatureUnit units = 3;
 }
 message Current {
@@ -1461,21 +1246,10 @@ message Current {
     AMPERE = 1;
     MILLIAMPERE = 2;
   }
-  optional double value = 1;
+  optional float value = 1;
   // Precision of the measurement (with the same units as `value`).
-  optional double precision = 2;
+  optional float precision = 2;
   CurrentUnit units = 3;
-}
-message Power {
-  enum PowerUnit {
-    UNSPECIFIED = 0;
-    WATT = 1;
-    MILLIWATT = 2;
-  }
-  optional double value = 1;
-  // Precision of the measurement (with the same units as `value`).
-  optional double precision = 2;
-  PowerUnit units = 3;
 }
 message Voltage {
   enum VoltageUnit {
@@ -1483,9 +1257,9 @@ message Voltage {
     VOLT = 1;
     MILLIVOLT = 2;
   }
-  optional double value = 1;
+  optional float value = 1;
   // Precision of the measurement (with the same units as `value`).
-  optional double precision = 2;
+  optional float precision = 2;
   VoltageUnit units = 3;
 }
 message Length {
@@ -1497,20 +1271,20 @@ message Length {
     INCH = 4;
     FOOT = 5;
   }
-  optional double value = 1;
+  optional float value = 1;
   // Precision of the measurement (with the same units as `value`).
-  optional double precision = 2;
+  optional float precision = 2;
   LengthUnit units = 3;
 }
 message Wavelength {
   enum WavelengthUnit {
     UNSPECIFIED = 0;
     NANOMETER = 1;
-    WAVENUMBER = 2; // cm^{-1}
+    WAVENUMBER = 2;  // cm^{-1}
   }
-  optional double value = 1;
+  optional float value = 1;
   // Precision of the measurement (with the same units as `value`).
-  optional double precision = 2;
+  optional float precision = 2;
   WavelengthUnit units = 3;
 }
 message FlowRate {
@@ -1522,45 +1296,36 @@ message FlowRate {
     MILLILITER_PER_SECOND = 4;
     MICROLITER_PER_HOUR = 5;
   }
-  optional double value = 1;
+  optional float value = 1;
   // Precision of the measurement (with the same units as `value`).
-  optional double precision = 2;
+  optional float precision = 2;
   FlowRateUnit units = 3;
 }
 // Used for things like conversion and yield.
 message Percentage {
-  optional double value = 1;
+  optional float value = 1;
   // Precision of the measurement (with the same units as `value`).
-  optional double precision = 2;
+  optional float precision = 2;
 }
 // Wrapper for floats to include a precision.
 message FloatValue {
-  optional double value = 1;
+  optional float value = 1;
   // Precision of the measurement (with the same units as `value`).
-  optional double precision = 2;
+  optional float precision = 2;
 }
 
 // Data is a container for arbitrary data.
 message Data {
   oneof kind {
-    double double_value = 1;
-    float float_value = 2;
-    int32 integer_value = 3;
-    bytes bytes_value = 4;
-    string string_value = 5;
-    string url = 6; // URL for data stored elsewhere.
+    float float_value = 1;
+    int32 integer_value = 2;
+    bytes bytes_value = 3;
+    string string_value = 4;
+    string url = 5;  // URL for data stored elsewhere.
   }
   // Description of these data (but avoid redundancy with map keys).
-  string description = 7;
+  string description = 6;
   // Description of the file format (if applicable); usually the file extension.
   // For example, 'png' or 'tiff' for images. If empty, we assume string data.
-  string format = 8;
-}
-
-message Automation {
-  enum AutomationType {
-    UNSPECIFIED = 0;
-    AUTOMATIC = 1;
-    MANUAL = 2;
-  }
+  string format = 7;
 }

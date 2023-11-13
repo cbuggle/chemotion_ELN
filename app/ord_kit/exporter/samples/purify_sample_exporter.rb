@@ -8,7 +8,7 @@ module OrdKit
 
         def components
           [
-            OrdKit::Exporter::Compounds::PurifyCompoundExporter.new(model).to_ord,
+            OrdKit::Exporter::Compounds::PurifyCompoundExporter.new(action).to_ord,
           ]
         end
       end

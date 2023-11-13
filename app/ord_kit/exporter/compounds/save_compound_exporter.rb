@@ -6,7 +6,7 @@ module OrdKit
       class SaveCompoundExporter < OrdKit::Exporter::Compounds::Base
         private
 
-        delegate :sample, :reaction, to: :model
+        delegate :sample, :reaction, :workup, to: :action
 
         def identifiers
           [OrdKit::CompoundIdentifier.new(
@@ -32,10 +32,7 @@ module OrdKit
         end
 
         def amount
-          Amounts::AmountExporter.new(
-            value: sample.target_amount_value,
-            unit: sample.target_amount_unit,
-          ).to_ord
+          Metrics::AmountExporter.new(workup['target_amount']).to_ord
         end
 
         def preparations

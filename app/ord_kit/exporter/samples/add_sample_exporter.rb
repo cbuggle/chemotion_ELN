@@ -8,50 +8,37 @@ module OrdKit
 
         def components
           [
-            OrdKit::Exporter::Compounds::AddCompoundExporter.new(
-              model,
-            ).to_ord,
+            OrdKit::Exporter::Compounds::AddCompoundExporter.new(action).to_ord,
           ]
-        end
-
-        def flow_rate
-          return unless model.workup['add_sample_velocity_value']
-
-          OrdKit::Exporter::Amounts::FlowRateExporter.new(
-            value: model.workup['add_sample_velocity_value'],
-            unit: model.workup['add_sample_velocity_unit'],
-          ).to_ord
         end
 
         def addition_order
           # ORD is 1-indexed.
-          model.siblings.select(&:adds_sample?).index(model) + 1
-        end
-
-        def addition_pressure
-          return unless model.workup['add_sample_pressure_value']
-
-          OrdKit::Exporter::Amounts::PressureExporter.new(
-            value: model.workup['add_sample_pressure_value'],
-            unit: model.workup['add_sample_pressure_unit'],
-          ).to_ord
-        end
-
-        def addition_speed
-          return unless model.workup['addition_speed_type']
-
-          OrdKit::Exporter::Amounts::AdditionSpeedExporter.new(
-            value: model.workup['addition_speed_type'],
-          ).to_ord
+          action.siblings.select(&:adds_sample?).index(action) + 1
         end
 
         def addition_temperature
-          return unless model.workup['add_sample_temperature_value']
+          return unless action.workup['add_sample_temperature_value']
 
-          OrdKit::Exporter::Amounts::TemperatureExporter.new(
-            value: model.workup['add_sample_temperature_value'],
-            unit: model.workup['add_sample_temperature_value_unit'],
-          ).to_ord
+          OrdKit::Exporter::Metrics::TemperatureExporter.new(action.workup['add_sample_temperature']).to_ord
+        end
+
+        def addition_pressure
+          return unless action.workup['add_sample_pressure']
+
+          OrdKit::Exporter::Metrics::PressureExporter.new(action.workup['add_sample_pressure']).to_ord
+        end
+
+        def flow_rate
+          return unless action.workup['add_sample_velocity']
+
+          OrdKit::Exporter::Metrics::FlowRateExporter.new(action.workup['add_sample_velocity']).to_ord
+        end
+
+        def addition_speed_type
+          return unless action.workup['addition_speed_type']
+
+          OrdKit::Exporter::Metrics::AdditionSpeedTypeExporter.new(action.workup['addition_speed_type']).to_ord
         end
       end
     end

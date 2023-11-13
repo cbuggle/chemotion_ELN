@@ -15,18 +15,18 @@ module OrdKit
         end
 
         def details
-          if model.has_sample?
-            model.sample.name # TODO: inchi? iupac? smiles?
-          elsif model.has_medium?
-            model.medium.sample_name
+          if action.has_sample?
+            action.sample.name # TODO: inchi? iupac? smiles?
+          elsif action.has_medium?
+            action.medium.sample_name
           end
         end
 
         def value
-          if model.has_sample?
-            model.sample.preferred_label || model.sample.short_label
-          elsif model.has_medium?
-            model.medium.label
+          if action.has_sample?
+            action.sample.preferred_label || action.sample.short_label
+          elsif action.has_medium?
+            action.medium.label
           end
         end
 
@@ -37,15 +37,12 @@ module OrdKit
         end
 
         def amount
-          Amounts::AmountExporter.new(
-            value: workup['target_amount_value'],
-            unit: workup['target_amount_unit'],
-          ).to_ord
+          OrdKit::Exporter::Metrics::AmountExporter.new(workup['target_amount']).to_ord
         end
 
         def preparations
           [
-            Preparations::CompoundPreparationsExporter.new(model).to_ord,
+            Preparations::CompoundPreparationsExporter.new(action).to_ord,
           ].compact
         end
 

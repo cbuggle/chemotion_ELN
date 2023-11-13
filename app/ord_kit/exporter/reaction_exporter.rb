@@ -5,7 +5,7 @@ module OrdKit
     class ReactionExporter < Base
       # Our KIT-ORD relevant data is stored in the ReactionProcess <-1:1-> Reaction
       # This is why we user the reaction_process.id (which is a UUID) instead of reaction.id,
-      # which is a sequential Integer which we certainly do not want to publish ... cbuggle, 2022-02-11.
+      # which is a sequential Integer which we certainly do not want to publish. cbuggle, 2022-02-11.
       def to_ord
         OrdKit::Reaction.new(
           # TODO: Fill all the nils!

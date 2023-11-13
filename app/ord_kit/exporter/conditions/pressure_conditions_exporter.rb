@@ -3,7 +3,7 @@
 module OrdKit
   module Exporter
     module Conditions
-      class PressureConditionsExporter < OrdKit::Exporter::Base
+      class PressureConditionsExporter < OrdKit::Exporter::Conditions::Base
         # Works on ReactionProcessAction ("CONDITION / PRESSURE")
 
         def to_ord
@@ -22,16 +22,14 @@ module OrdKit
         end
 
         def setpoint
-          return unless model['value']
+          return unless condition['value']
 
           # For now we work only with bars / millibars.
-          unit = OrdKit::Pressure::PressureUnit::BAR
-          value = model['value'].to_f / 1000
 
           OrdKit::Pressure.new(
-            value: value.to_f,
-            precision: 3, # TODO: Check .
-            units: unit,
+            value: condition['value'].to_f,
+            precision: nil, # TODO:
+            units: OrdKit::Pressure::PressureUnit.const_get(condition['unit']),
           )
         end
 

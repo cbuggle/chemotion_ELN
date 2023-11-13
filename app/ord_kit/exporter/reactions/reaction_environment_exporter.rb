@@ -24,7 +24,7 @@ module OrdKit
         end
 
         def vessel
-          model.vessel
+          action.vessel
         end
       end
     end
