@@ -42,6 +42,13 @@ module ReactionProcessEditor
       default_conditions.to_h
     end
 
+    def initial_conditions
+      ReactionProcessEditor::SelectOptions.instance
+                                          .global_default_conditions
+                                          .merge(user_default_conditions)
+                                          .merge(reaction_default_conditions)
+    end
+
     def saved_sample_ids
       reaction_process_steps.includes([:reaction_process_actions]).map(&:saved_sample_ids).flatten.uniq
     end

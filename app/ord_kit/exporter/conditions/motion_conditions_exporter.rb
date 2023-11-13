@@ -18,7 +18,7 @@ module OrdKit
         private
 
         def stirring_method_type
-          OrdKit::StirringConditions::StirringMethodType.const_get condition['motion_type']
+          OrdKit::StirringConditions::StirringMethodType.const_get workup['motion_type'].to_s
         rescue NameError
           OrdKit::StirringConditions::StirringMethodType::UNSPECIFIED
         end
@@ -32,12 +32,12 @@ module OrdKit
             # n/a. ELN works with RPM, doesn't care if that is low, medium, high.
             type: OrdKit::StirringConditions::StirringRate::StirringRateType::UNSPECIFIED,
             details: nil, # n/a. Unkown in ELN.
-            rpm: condition.dig('speed', 'value').to_f,
+            rpm: workup.dig('speed', 'value').to_f,
           )
         end
 
         def automation
-          Automation::AutomationType.const_get condition['motion_mode']
+          Automation::AutomationType.const_get workup['motion_mode'].to_s
         rescue NameError
           Automation::AutomationType::UNSPECIFIED
         end

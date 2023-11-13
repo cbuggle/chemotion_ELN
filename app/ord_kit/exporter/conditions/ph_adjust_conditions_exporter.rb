@@ -9,14 +9,14 @@ module OrdKit
         def to_ord
           OrdKit::PhAdjustConditions.new(
             measurement_type: measurement_type,
-            ph: condition['value'].to_f,
+            ph: workup['value'].to_f,
           )
         end
 
         private
 
         def measurement_type
-          OrdKit::PhAdjustConditions::PhAdjustMeasurementType.const_get condition['additional_information']
+          OrdKit::PhAdjustConditions::PhAdjustMeasurementType.const_get workup['additional_information']
         rescue NameError
           OrdKit::PhAdjustConditions::PhAdjustMeasurementType::UNSPECIFIED
         end

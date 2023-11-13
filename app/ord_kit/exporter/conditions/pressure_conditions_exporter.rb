@@ -22,14 +22,12 @@ module OrdKit
         end
 
         def setpoint
-          return unless condition['value']
-
-          # For now we work only with bars / millibars.
+          return if workup['value'].blank?
 
           OrdKit::Pressure.new(
-            value: condition['value'].to_f,
+            value: workup['value'].to_f,
             precision: nil, # TODO:
-            units: OrdKit::Pressure::PressureUnit.const_get(condition['unit']),
+            units: OrdKit::Pressure::PressureUnit.const_get(workup['unit']),
           )
         end
 

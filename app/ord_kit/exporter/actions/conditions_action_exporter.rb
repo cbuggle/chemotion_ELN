@@ -22,7 +22,7 @@ module OrdKit
         end
 
         def conditions
-          OrdKit::Exporter::Conditions::ReactionConditionsExporter.new(action).to_ord
+          OrdKit::Exporter::Conditions::ReactionConditionsExporter.new(workup).to_ord
         end
       end
     end

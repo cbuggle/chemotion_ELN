@@ -39,10 +39,7 @@ module Entities
       end
 
       def reaction_default_conditions
-        user_default_conditions
-          .merge(object.reaction_default_conditions)
-          .merge({ reaction_process_id: object.id }) # Piggybacked for convenience in UI Forms.
-
+        #  Piggyback reaction_process_id for convenience in UI Forms.
         object.reaction_default_conditions.merge({ reaction_process_id: object.id })
       end
 

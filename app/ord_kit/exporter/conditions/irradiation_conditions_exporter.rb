@@ -21,7 +21,7 @@ module OrdKit
         private
 
         def irradiation_type
-          IlluminationConditions::IlluminationType.const_get condition['additional_information']
+          IlluminationConditions::IlluminationType.const_get workup['additional_information'].to_s
         rescue NameError
           IlluminationConditions::IlluminationType::UNSPECIFIED
         end
@@ -31,7 +31,7 @@ module OrdKit
         end
 
         def peak_wavelength
-          Exporter::Metrics::WavelengthExporter.new(condition).to_ord
+          Exporter::Metrics::WavelengthExporter.new(workup).to_ord
           # WavelengthExporter.new.to_ord
         end
 
@@ -44,19 +44,19 @@ module OrdKit
         end
 
         def power
-          return unless condition['power']
+          return if workup['power'].blank?
 
-          Exporter::Metrics::PowerExporter.new(condition['power']).to_ord
+          Exporter::Metrics::PowerExporter.new(workup['power']).to_ord
         end
 
         def power_end
-          return unless power_is_ramp && condition['power_end']
+          return unless power_is_ramp && workup['power_end'].present?
 
-          Exporter::Metrics::PowerExporter.new(condition['power_end']).to_ord
+          Exporter::Metrics::PowerExporter.new(workup['power_end']).to_ord
         end
 
         def power_is_ramp
-          condition['power_is_ramp']
+          workup['power_is_ramp']
         end
       end
     end

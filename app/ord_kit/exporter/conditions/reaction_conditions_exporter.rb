@@ -2,9 +2,9 @@ module OrdKit
   module Exporter
     module Conditions
       class ReactionConditionsExporter < OrdKit::Exporter::Conditions::Base
-        delegate :workup, to: :condition
-
         def to_ord
+          return unless workup
+
           ReactionConditions.new(
             temperature: temperature,
             ph: ph,
@@ -18,25 +18,25 @@ module OrdKit
         end
 
         def temperature
-          return unless workup['TEMPERATURE']
+          return if workup['TEMPERATURE'].blank?
 
           Conditions::TemperatureConditionsExporter.new(workup['TEMPERATURE']).to_ord
         end
 
         def pressure
-          return unless workup['PRESSURE']
+          return if workup['PRESSURE'].blank?
 
           Conditions::PressureConditionsExporter.new(workup['PRESSURE']).to_ord
         end
 
         def stirring
-          return unless workup['MOTION']
+          return if workup['MOTION'].blank?
 
           Conditions::MotionConditionsExporter.new(workup['MOTION']).to_ord
         end
 
         def illumination
-          return unless workup['IRRADIATION']
+          return if workup['IRRADIATION'].blank?
 
           Conditions::IrradiationConditionsExporter.new(workup['IRRADIATION']).to_ord
         end
@@ -46,13 +46,13 @@ module OrdKit
         end
 
         def ph
-          return unless workup['PH']
+          return if workup['PH'].blank?
 
           Conditions::PhAdjustConditionsExporter.new(workup['PH']).to_ord
         end
 
         def conditions_are_dynamic
-          false # n/a. Unknown in ELN Editor
+          nil # n/a. Unknown in ELN Editor
         end
 
         def condition_details

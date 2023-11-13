@@ -27,7 +27,7 @@ module OrdKit
         attr_reader :action
 
         def conditions
-          OrdKit::Exporter::Conditions::ReactionConditionsExporter.new(action).to_ord
+          OrdKit::Exporter::Conditions::ReactionConditionsExporter.new(action.workup).to_ord
         end
 
         def components

@@ -12,7 +12,7 @@ module OrdKit
           identifiers: nil,
           inputs: {},
           setup: nil,
-          conditions: nil,
+          conditions: conditions,
           observations: nil,
           notes: nil,
           workups: nil,
@@ -21,6 +21,12 @@ module OrdKit
           reaction_id: model.reaction_process.id,
           reaction_steps: OrdKit::Exporter::Reactions::ReactionProcessExporter.new(model.reaction_process).to_ord,
         )
+      end
+
+      private
+
+      def conditions
+        OrdKit::Exporter::Conditions::ReactionConditionsExporter.new(model.reaction_process.initial_conditions).to_ord
       end
     end
   end

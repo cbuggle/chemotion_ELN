@@ -17,11 +17,11 @@ module OrdKit
         private
 
         def setpoint
-          Exporter::Metrics::TemperatureExporter.new(condition).to_ord
+          Exporter::Metrics::TemperatureExporter.new(workup).to_ord
         end
 
         def temperature_control
-          return unless condition['additional_information']
+          return unless workup['additional_information']
 
           TemperatureConditions::TemperatureControl.new(
             type: temperature_control_type,
@@ -34,7 +34,7 @@ module OrdKit
         end
 
         def temperature_control_type
-          TemperatureConditions::TemperatureControl::TemperatureControlType.const_get condition['additional_information']
+          TemperatureConditions::TemperatureControl::TemperatureControlType.const_get workup['additional_information']
         rescue NameError
           TemperatureConditions::TemperatureControl::TemperatureControlType::UNSPECIFIED
         end

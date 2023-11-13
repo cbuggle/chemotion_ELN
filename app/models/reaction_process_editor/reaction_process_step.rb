@@ -52,7 +52,7 @@ module ReactionProcessEditor
 
     # We assemble an Array of action_preconditions which the ReactionActionEntity then indexes by its position.
     def action_preconditions
-      @action_preconditions ||= [initial_conditions] + calculate_action_post_conditions
+      @action_preconditions ||= [reaction_process.initial_conditions] + calculate_action_post_conditions
     end
 
     def final_conditions
@@ -163,7 +163,7 @@ module ReactionProcessEditor
     end
 
     def calculate_action_post_conditions
-      current_conditions = initial_conditions
+      current_conditions = reaction_process.initial_conditions
 
       reaction_process_actions.order(:position).map do |activity|
         if activity.condition?
@@ -173,13 +173,6 @@ module ReactionProcessEditor
         end
         current_conditions.dup
       end
-    end
-
-    def initial_conditions
-      ReactionProcessEditor::SelectOptions.instance
-                                          .global_default_conditions
-                                          .merge(reaction_process.user_default_conditions)
-                                          .merge(reaction_process.reaction_default_conditions)
     end
   end
 end

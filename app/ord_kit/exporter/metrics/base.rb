@@ -7,7 +7,7 @@ module OrdKit
         def initialize(amount)
           @amount = amount
           @value = amount&.dig('value')
-          @unit = amount&.dig('unit')
+          @unit = amount&.dig('unit').to_s
         end
 
         private
