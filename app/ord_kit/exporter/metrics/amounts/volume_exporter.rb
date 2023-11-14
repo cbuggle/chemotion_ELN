@@ -11,7 +11,7 @@ module OrdKit
             ml: 'MILLILITER',
             mcl: 'MICROLITER',
             nl: 'NANOLITER',
-          }.freeze
+          }.stringify_keys.freeze
 
           def to_ord
             Volume.new(
