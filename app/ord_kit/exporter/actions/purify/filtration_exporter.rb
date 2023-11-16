@@ -23,7 +23,7 @@ module OrdKit
           end
 
           def steps
-            workup['filtration_steps'].map do |filtration_step|
+            Array(workup['filtration_steps']).map do |filtration_step|
               OrdKit::ReactionProcessAction::ActionFiltration::FiltrationStep.new(
                 solvents: solvents_with_ratio(filtration_step['solvents']),
                 amount: Metrics::AmountExporter.new(filtration_step['amount']).to_ord,
@@ -34,16 +34,12 @@ module OrdKit
           end
 
           def solvents_with_ratio(solvents)
-            solvents.map do |solvent|
+            Array(solvents).map do |solvent|
               OrdKit::CompoundWithRatio.new(
-                compound: OrdKit::Exporter::Compounds::PurifySolventExporter.new(solvent['id']).to_ord,
+                compound: Compounds::PurifySampleOrDiverseSolventExporter.new(solvent['id']).to_ord,
                 ratio: solvent['ratio'].to_s,
               )
             end
-          end
-
-          def ratio
-            workup['purify_ratio']
           end
         end
       end

@@ -34,7 +34,7 @@ module OrdKit
         end
 
         def amount
-          Amount.new(percentage: Amounts::AmountExporter.new(workup['target_amount']).to_ord)
+          Amount.new(percentage: Metrics::AmountExporter.new(workup['target_amount']).to_ord)
         end
 
         def preparations

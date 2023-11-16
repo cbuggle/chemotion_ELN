@@ -3,16 +3,9 @@
 module OrdKit
   module Exporter
     module Compounds
-      class PurifySolventExporter
-        def initialize(sample_id)
-          # Not optimal. We have 2 types of solvents: Samples, PurificationSolvents
-          # As NJung explicitly requested to have them joined in one UI select,
-          # they are joined together in ReactionProcessStepEntity#materials_options
-          # and consequently the ids of 2 different actions are stored in a single array.
-          # Maybe there is a better way as this creates some issues.
-          # We need to .find in multiple actions (PurificationSolvents have uuid, so sort of ok)
-
-          @sample = Sample.find_by(id: sample_id) || Medium::DiverseSolvent.find_by(id: sample_id)
+      class PurifyCompoundExporter
+        def initialize(sample)
+          @sample = sample
         end
 
         def to_ord
@@ -36,8 +29,8 @@ module OrdKit
         def identifiers
           [OrdKit::CompoundIdentifier.new(
             type: OrdKit::CompoundIdentifier::IdentifierType::UNSPECIFIED, # TODO: hardcoded clarify
-            details: sample.name,
-            value: sample.preferred_label || sample.short_label,
+            details: sample&.name,
+            value: sample&.preferred_label || sample&.short_label || 'missing',
           )]
         end
 

@@ -65,6 +65,14 @@ module ReactionProcessEditor
         [{ value: 'DRIED', label: 'Drying' }]
     end
 
+    def crystallization_modes
+      [
+        { value: 'NONE', label: 'None' },
+        { value: 'COLD', label: 'Cold' },
+        { value: 'HOT', label: 'Hot' },
+      ]
+    end
+
     def filtration_modes
       [{ value: 'KEEP_SUPERNATANT', label: 'Supernatant' },
        { value: 'KEEP_PRECIPITATE', label: 'Precipitate' }]

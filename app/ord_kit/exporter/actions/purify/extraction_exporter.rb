@@ -18,7 +18,7 @@ module OrdKit
 
           def solvents
             Array(workup['purify_solvent_sample_ids']).filter_map do |sample_id|
-              OrdKit::Exporter::Compounds::PurifySolventExporter.new(sample_id).to_ord
+              OrdKit::Exporter::Compounds::PurifySampleOrDiverseSolventExporter.new(sample_id).to_ord
             end
           end
 

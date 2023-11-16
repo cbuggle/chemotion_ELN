@@ -83,7 +83,7 @@ module Chemotion
           # end
           # end
 
-          desc 'Toggle lock status'
+          desc 'Toggle locked status'
           put :toggle_locked do
             @reaction_process_step.toggle_locked
             @reaction_process_step

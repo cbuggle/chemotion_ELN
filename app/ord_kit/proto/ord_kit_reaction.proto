@@ -7,8 +7,8 @@
 // allowing to store data describing the process of a chemical reaction
 // (enhancing but incompatible in either direction to the original ORD Schema).
 //
-// v0.4.0
-// (draft, 11.11.2023)
+// v0.4.1
+// (draft, 16.11.2023)
 //
 //
 // Copyright 2020 Open Reaction Database Project Authors
@@ -228,9 +228,21 @@ message ReactionProcessAction {
   }
 
   message ActionCrystallization {
-    repeated Compound solvents = 1;
-    string ratio = 2;
+    enum CrystallizationMode {
+      UNSPECIFIED = 0;
+      NONE = 1;
+      COLD = 2;
+      HOT = 3;
+    }
+
+    repeated CompoundWithRatio solvents = 1;
+    Amount amount = 2;
+    Temperature temperature = 3;
+    Time heating_duration = 4;
+    Time cooling_duration = 5;
+    CrystallizationMode crystallization_mode = 6;
   }
+
   message ActionChromatography {
     repeated Compound solvents = 1;
     string ratio = 2;

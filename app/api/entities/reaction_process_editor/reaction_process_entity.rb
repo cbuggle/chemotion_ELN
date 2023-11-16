@@ -60,7 +60,10 @@ module Entities
           },
           step_name_suggestions: step_name_suggestion_options,
           action_type_equipment: SELECT_OPTIONS.action_type_equipment,
-          filtration_modes: SELECT_OPTIONS.filtration_modes,
+          purify: {
+            filtration_modes: SELECT_OPTIONS.filtration_modes,
+            crystallization_modes: SELECT_OPTIONS.crystallization_modes,
+          },
           condition_additional_information: SELECT_OPTIONS.condition_additional_information,
           addition_speed_types: SELECT_OPTIONS.addition_speed_types,
           materials: materials_options,
