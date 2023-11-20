@@ -63,6 +63,15 @@ module Entities
           purify: {
             filtration_modes: SELECT_OPTIONS.filtration_modes,
             crystallization_modes: SELECT_OPTIONS.crystallization_modes,
+            chromatography: {
+              automation_modes: SELECT_OPTIONS.chromatography_automation_modes,
+              step_modes: SELECT_OPTIONS.chromatography_step_modes,
+              prod_modes: SELECT_OPTIONS.chromatography_prod_modes,
+              jar_materials: SELECT_OPTIONS.chromatography_jar_materials,
+              devices: SELECT_OPTIONS.chromatography_devices,
+              column_types: SELECT_OPTIONS.chromatography_column_types,
+              detectors: SELECT_OPTIONS.chromatography_detectors,
+            },
           },
           condition_additional_information: SELECT_OPTIONS.condition_additional_information,
           addition_speed_types: SELECT_OPTIONS.addition_speed_types,
@@ -70,7 +79,7 @@ module Entities
           equipment: SELECT_OPTIONS.all_ord_equipment,
           automation_modes: SELECT_OPTIONS.automation_modes,
           motion_types: SELECT_OPTIONS.motion_types,
-          remove_types: SELECT_OPTIONS.remove_types,
+          remove_sample_types: SELECT_OPTIONS.remove_sample_types,
           save_sample_types: SELECT_OPTIONS.save_sample_types,
           analysis_types: SELECT_OPTIONS.analysis_types,
         }
@@ -86,7 +95,6 @@ module Entities
         diverse_solvents = Medium::DiverseSolvent.all
 
         intermediates = reaction.intermediate_samples
-
         {
           SAMPLE: samples_options(samples, 'SAMPLE'),
           SOLVENT: samples_options(solvents, 'SOLVENT') + samples_options(diverse_solvents, 'DIVERSE_SOLVENT'),
@@ -96,8 +104,6 @@ module Entities
           INTERMEDIATE: samples_options(intermediates, 'SAMPLE'),
         }
       end
-
-      def addition_speed_type_options; end
 
       # TODO: reinsert once Vessel model is in main.
       # def vessels
@@ -128,7 +134,7 @@ module Entities
       #     material_types: options_from_ord_constants(OrdKit::VesselMaterial::VesselMaterialType.constants),
       #     volume_units: options_from_ord_constants(OrdKit::Volume::VolumeUnit.constants),
       #     environment_types: options_from_ord_constants(OrdKit::ReactionSetup::ReactionEnvironment::ReactionEnvironmentType.constants),
-      #     automation_types: options_from_ord_constants(OrdKit::Automation::AutomationType.constants),
+      #     automation_types: options_from_ord_constants(OrdKit::Automation::AutomationMode.constants),
       #     attachments: options_from_ord_constants(OrdKit::VesselAttachment::VesselAttachmentType.constants),
       #   }.stringify_keys
       # end

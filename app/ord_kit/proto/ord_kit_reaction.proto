@@ -7,8 +7,8 @@
 // allowing to store data describing the process of a chemical reaction
 // (enhancing but incompatible in either direction to the original ORD Schema).
 //
-// v0.4.1
-// (draft, 16.11.2023)
+// v0.4.2
+// (draft, 17.11.2023)
 //
 //
 // Copyright 2020 Open Reaction Database Project Authors
@@ -244,6 +244,42 @@ message ReactionProcessAction {
   }
 
   message ActionChromatography {
+    message ChromatographyStep {
+      enum Step {
+        UNSPECIFIED = 0;
+        EQUILIBRIUM = 1;
+        SEPARATION = 2;
+        AFTER_RUN = 3;
+      }
+      enum Prod {
+        PROD_UNSPECIFIED = 0;
+        ANY = 1;
+        PROD = 2;
+        NONE = 3;
+      }
+      repeated CompoundWithRatio solvents = 1;
+      Amount volume = 2;
+      Step step = 3;
+      Prod prod = 4;
+    }
+
+    message Manual {
+      Material.MaterialType material = 1;
+      Length diameter = 2;
+      Length height = 3;
+      Length filling_height = 4;
+    }
+
+    message Automated {
+      Equipment equipment = 1;
+      string type_of_column = 2;
+      FlowRate flow = 3;
+      Analysis.AnalysisType detector = 4;
+      Wavelength wavenumber = 5;
+    }
+
+    message SemiAutomated { string method = 1; }
+
     repeated Compound solvents = 1;
     string ratio = 2;
   }
@@ -276,7 +312,7 @@ message ReactionProcessAction {
       ActionCrystallization crystallization = 3;
       ActionChromatography chromatography = 4;
     }
-    Automation.AutomationType automation = 5;
+    Automation.AutomationMode automation = 5;
   }
 
   message ActionTransfer {
@@ -557,7 +593,7 @@ message Vessel {
   // "J. Young" for NMR_TUBE, etc.
   string details = 2;
   // Vessel material (glass, plastic, etc.).
-  VesselMaterial material = 3;
+  Material material = 3;
   // How the vessel was prepared for the reaction.
   repeated VesselPreparation preparations = 4;
   // Vessel attachments (septum, cap, gas adapter, etc.).
@@ -571,8 +607,8 @@ message Vessel {
   string plate_position = 8;
 }
 
-message VesselMaterial {
-  enum VesselMaterialType {
+message Material {
+  enum MaterialType {
     UNSPECIFIED = 0;
     CUSTOM = 1;
     GLASS = 2;
@@ -584,7 +620,7 @@ message VesselMaterial {
     PFA = 8;
     PTFE = 9;
   }
-  VesselMaterialType type = 1;
+  MaterialType type = 1;
   string details = 2;
 }
 
@@ -871,7 +907,7 @@ message StirringConditions {
   }
   StirringRate rate = 3;
 
-  Automation.AutomationType automation = 4;
+  Automation.AutomationMode automation = 4;
 }
 
 message IlluminationConditions {
@@ -1319,6 +1355,8 @@ message Analysis {
     XRD = 21;      // X-ray diffraction, including single-crystal XRD.
     RAMAN = 22;    // Raman spectroscopy.
     ED = 23;       // Electron diffraction, including MicroED.
+    HPLC = 24;
+    MPLC = 25;
   }
   AnalysisType type = 1;
   // Any details about analysis (e.g., NMR type, columns, gradients).
@@ -1570,9 +1608,10 @@ message Data {
 }
 
 message Automation {
-  enum AutomationType {
+  enum AutomationMode {
     UNSPECIFIED = 0;
-    AUTOMATIC = 1;
-    MANUAL = 2;
+    MANUAL = 1;
+    AUTOMATED = 2;
+    SEMI_AUTOMATED = 3;
   }
 }

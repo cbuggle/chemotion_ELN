@@ -18,9 +18,9 @@ module OrdKit
         end
 
         def automation
-          Automation::AutomationType.const_get workup['automation'].to_s
+          Automation::AutomationMode.const_get workup['automation'].to_s
         rescue NameError
-          Automation::AutomationType::UNSPECIFIED
+          Automation::AutomationMode::UNSPECIFIED
         end
 
         def purify_type_action

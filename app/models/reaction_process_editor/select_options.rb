@@ -83,8 +83,73 @@ module ReactionProcessEditor
     end
 
     def automation_modes
-      [{ value: 'AUTOMATIC', label: 'Automated' },
+      [{ value: 'AUTOMATED', label: 'Automated' },
        { value: 'MANUAL', label: 'Manual' }]
+    end
+
+    def chromatography_automation_modes
+      [{ value: 'MANUAL', label: 'Manual' },
+       { value: 'SEMI_AUTOMATED', label: 'Semi-Auto' },
+       { value: 'AUTOMATED', label: 'Auto' }]
+    end
+
+    def chromatography_step_modes
+      [{ value: 'EQUILIBRIUM', label: 'Equilibrium' },
+       { value: 'SEPARATION', label: 'Separation' },
+       { value: 'AFTER_RUN', label: 'After Run' }]
+    end
+
+    def chromatography_prod_modes
+      [{ value: 'ANY', label: 'Any' },
+       { value: 'PROD', label: 'Prod' },
+       { value: 'NONE', label: 'No' }]
+    end
+
+    def chromatography_jar_materials
+      [{ value: 'GLASS', label: 'Glass' },
+       { value: 'METAL', label: 'Metal' }]
+    end
+
+    def chromatography_devices
+      [{ value: 'HPLC', label: 'HPLC' },
+       { value: 'MPLC', label: 'MPLC' },
+       { value: 'SFC', label: 'SFC' }]
+    end
+
+    def chromatography_column_types
+      [{ value: 'HPLC', label: 'List' },
+       { value: 'MPLC', label: 'Yet' },
+       { value: 'SFC', label: 'Undefined' }]
+    end
+
+    def chromatography_detectors
+      [
+        { value: 'UNSPECIFIED', label: 'Unspecified' },
+        { value: 'CUSTOM', label: 'Custom' },
+        { value: 'LC', label: 'LC' },
+        { value: 'GC', label: 'GC' },
+        { value: 'IR', label: 'IR' },
+        { value: 'NMR_1H', label: 'NMR 1H' },
+        { value: 'NMR_13C', label: 'NMR 13C' },
+        { value: 'NMR_OTHER', label: 'NMR Other' },
+        { value: 'MP', label: 'MP' },
+        { value: 'UV', label: 'UV' },
+        { value: 'TLC', label: 'TLC' },
+        { value: 'MS', label: 'MS' },
+        { value: 'HRMS', label: 'HRMS' },
+        { value: 'MSMS', label: 'MSMS' },
+        { value: 'WEIGHT', label: 'Weight' },
+        { value: 'LCMS', label: 'LCMS' },
+        { value: 'GCMS', label: 'GCMS' },
+        { value: 'ELSD', label: 'ELSD' },
+        { value: 'CD', label: 'CD' },
+        { value: 'SFC', label: 'SFC' },
+        { value: 'EPR', label: 'EPR' },
+        { value: 'XRD', label: 'XRD' },
+        { value: 'RAMAN', label: 'RAMAN' },
+        { value: 'ED', label: 'ED' },
+        { value: 'HPLC', label: 'HPLC' },
+      ]
     end
 
     def motion_types
@@ -99,7 +164,7 @@ module ReactionProcessEditor
        { value: 'OTHER', label: 'Motion' }]
     end
 
-    def remove_types
+    def remove_sample_types
       [{ value: 'MEDIUM', label: 'Medium' },
        { value: 'ADDITIVE', label: 'Solvent (Evaporate)' },
        { value: 'DIVERSE_SOLVENT', label: 'Diverse Solvent' }]

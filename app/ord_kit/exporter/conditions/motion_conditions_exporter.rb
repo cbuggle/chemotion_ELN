@@ -37,9 +37,9 @@ module OrdKit
         end
 
         def automation
-          Automation::AutomationType.const_get workup['motion_mode'].to_s
+          Automation::AutomationMode.const_get workup['motion_mode'].to_s
         rescue NameError
-          Automation::AutomationType::UNSPECIFIED
+          Automation::AutomationMode::UNSPECIFIED
         end
       end
     end
