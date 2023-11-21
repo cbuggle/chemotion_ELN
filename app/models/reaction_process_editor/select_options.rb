@@ -78,19 +78,16 @@ module ReactionProcessEditor
        { value: 'KEEP_PRECIPITATE', label: 'Precipitate' }]
     end
 
-    def equipment_types
-      options_for(OrdKit::Equipment::EquipmentType.constants)
-    end
 
     def automation_modes
-      [{ value: 'AUTOMATED', label: 'Automated' },
-       { value: 'MANUAL', label: 'Manual' }]
+      [{ value: 'MANUAL', label: 'Manual' },
+       { value: 'AUTOMATED', label: 'Automated' }]
     end
 
     def chromatography_automation_modes
       [{ value: 'MANUAL', label: 'Manual' },
-       { value: 'SEMI_AUTOMATED', label: 'Semi-Auto' },
-       { value: 'AUTOMATED', label: 'Auto' }]
+       { value: 'SEMI_AUTOMATED', label: 'Semi-Automated' },
+       { value: 'AUTOMATED', label: 'Automated' }]
     end
 
     def chromatography_step_modes
@@ -150,6 +147,11 @@ module ReactionProcessEditor
         { value: 'ED', label: 'ED' },
         { value: 'HPLC', label: 'HPLC' },
       ]
+    end
+
+    def extraction_phases
+      [{ value: 'AQUEOUS', label: 'Aqueous' },
+       { value: 'ORGANIC', label: 'Organic' }]
     end
 
     def motion_types

@@ -55,14 +55,21 @@ module Entities
           samples_preparations: {
             prepared_samples: samples_options(prepared_samples, 'SAMPLE'),
             unprepared_samples: samples_options(unprepared_samples, 'SAMPLE'),
-            equipment: SELECT_OPTIONS.equipment_types,
+            equipment: SELECT_OPTIONS.all_ord_equipment,
             preparation_types: SELECT_OPTIONS.preparation_types,
           },
           step_name_suggestions: step_name_suggestion_options,
           action_type_equipment: SELECT_OPTIONS.action_type_equipment,
           purify: {
-            filtration_modes: SELECT_OPTIONS.filtration_modes,
-            crystallization_modes: SELECT_OPTIONS.crystallization_modes,
+            crystallization: {
+              modes: SELECT_OPTIONS.crystallization_modes,
+            },
+            extraction: {
+              phases: SELECT_OPTIONS.extraction_phases,
+            },
+            filtration: {
+              modes: SELECT_OPTIONS.filtration_modes,
+            },
             chromatography: {
               automation_modes: SELECT_OPTIONS.chromatography_automation_modes,
               step_modes: SELECT_OPTIONS.chromatography_step_modes,

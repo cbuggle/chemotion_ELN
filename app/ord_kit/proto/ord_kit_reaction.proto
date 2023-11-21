@@ -289,24 +289,32 @@ message ReactionProcessAction {
   }
 
   message ActionExtraction {
-    repeated Compound solvents = 1;
-    string ratio = 2;
+    enum ExtractionPhase {
+      UNSPECIFIED = 0;
+      AQUEOUS = 1;
+      ORGANIC = 2;
+    }
+
+    ExtractionPhase phase = 1;
+    repeated CompoundWithRatio solvents = 2;
+    Amount amount = 3;
+    Vessel vessel = 4;
   }
 
   message ActionFiltration {
+    enum FiltrationMode {
+      UNSPECIFIED = 0;
+      KEEP_SUPERNATANT = 1;
+      KEEP_PRECIPITATE = 2;
+    }
     message FiltrationStep {
       repeated CompoundWithRatio solvents = 1;
       Amount amount = 2;
       int32 repetitions = 3;
       bool rinse_vessel = 4;
     }
-    enum FiltrationMode {
-      UNSPECIFIED = 0;
-      KEEP_SUPERNATANT = 1;
-      KEEP_PRECIPITATE = 2;
-    }
-    repeated FiltrationStep steps = 1;
-    FiltrationMode filtration_mode = 2;
+    FiltrationMode filtration_mode = 1;
+    repeated FiltrationStep steps = 2;
   }
 
   message ActionPurify {

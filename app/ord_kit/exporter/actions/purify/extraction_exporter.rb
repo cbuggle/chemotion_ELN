@@ -8,22 +8,26 @@ module OrdKit
           def to_ord
             {
               extraction: {
-                solvents: solvents,
-                ratio: ratio,
+                solvents: solvents_with_ratio(workup['solvents']),
+                amount: Metrics::AmountExporter.new(workup['amount']).to_ord,
+                phase: extraction_phase,
               },
             }
           end
 
-          private
-
-          def solvents
-            Array(workup['purify_solvent_sample_ids']).filter_map do |sample_id|
-              OrdKit::Exporter::Compounds::PurifySampleOrDiverseSolventExporter.new(sample_id).to_ord
+          def solvents_with_ratio(solvents)
+            solvents&.map do |solvent|
+              OrdKit::CompoundWithRatio.new(
+                compound: OrdKit::Exporter::Compounds::PurifySampleOrDiverseSolventExporter.new(solvent['id']).to_ord,
+                ratio: solvent['ratio'].to_s,
+              )
             end
           end
 
-          def ratio
-            workup['purify_ratio']
+          def extraction_phase
+            ReactionProcessAction::ActionExtraction::ExtractionPhase.const_get workup['phase'].to_s
+          rescue NameError
+            ReactionProcessAction::ActionExtraction::ExtractionPhase::UNSPECIFIED
           end
         end
       end
