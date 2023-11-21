@@ -9,7 +9,7 @@ module OrdKit
         def to_ord
           OrdKit::PhAdjustConditions.new(
             measurement_type: measurement_type,
-            ph: workup['value'].to_f,
+            value: workup['value'].to_f,
           )
         end
 

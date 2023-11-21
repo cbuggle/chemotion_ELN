@@ -7,7 +7,7 @@
 // allowing to store data describing the process of a chemical reaction
 // (enhancing but incompatible in either direction to the original ORD Schema).
 //
-// v0.4.2
+// v0.4.3
 // (draft, 17.11.2023)
 //
 //
@@ -258,30 +258,34 @@ message ReactionProcessAction {
         NONE = 3;
       }
       repeated CompoundWithRatio solvents = 1;
-      Amount volume = 2;
+      Amount amount = 2;
       Step step = 3;
       Prod prod = 4;
     }
 
     message Manual {
-      Material.MaterialType material = 1;
+      Material material = 1;
       Length diameter = 2;
       Length height = 3;
       Length filling_height = 4;
     }
 
-    message Automated {
+    message SemiAutomated {
       Equipment equipment = 1;
-      string type_of_column = 2;
-      FlowRate flow = 3;
-      Analysis.AnalysisType detector = 4;
-      Wavelength wavenumber = 5;
+      string column_type = 2;
+      FlowRate flow_rate = 3;
+      repeated Analysis.AnalysisType detectors = 4;
+      Wavelength wavelength = 5;
     }
 
-    message SemiAutomated { string method = 1; }
+    message Automated { string method = 1; }
 
-    repeated Compound solvents = 1;
-    string ratio = 2;
+    repeated ChromatographyStep steps = 1;
+    oneof automation {
+      Automated automated = 2;
+      Manual manual = 3;
+      SemiAutomated semi_automated = 4;
+    }
   }
 
   message ActionExtraction {
@@ -782,7 +786,7 @@ message PhAdjustConditions {
   }
 
   PhAdjustMeasurementType measurement_type = 1;
-  double ph = 2;
+  double value = 2;
 }
 
 message TemperatureConditions {

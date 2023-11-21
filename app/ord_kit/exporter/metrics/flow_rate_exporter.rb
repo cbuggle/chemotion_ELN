@@ -20,7 +20,7 @@ module OrdKit
         private
 
         def flow_rate_unit
-          Moles::FlowRateUnit.const_get ORD_UNIT_MAPPING[unit].to_s
+          FlowRate::FlowRateUnit.const_get ORD_UNIT_MAPPING[unit].to_s
         rescue NameError
           FlowRate::FlowRateUnit::UNSPECIFIED
         end
