@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: reactions_samples
@@ -27,7 +29,7 @@
 #  index_reactions_samples_on_sample_id    (sample_id)
 #
 
-class ReactionsProductSample < ReactionsSample
-  # STI: this file is only here because of rails model autoloading.
+class ReactionsIntermediateSample < ReactionsSample
+  # STI: this file is required for rails model autoloading.
   # place all code in app/models/reactions_sample.rb.
 end

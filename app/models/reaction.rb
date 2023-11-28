@@ -72,24 +72,24 @@ class Reaction < ApplicationRecord
   pg_search_scope :search_by_reaction_rinchi_string, against: :rinchi_string
 
   pg_search_scope :search_by_sample_name, associated_against: {
-    samples: :name
+    samples: :name,
   }
 
   pg_search_scope :search_by_iupac_name, associated_against: {
-    sample_molecules: :iupac_name
+    sample_molecules: :iupac_name,
   }
 
   pg_search_scope :search_by_inchistring, associated_against: {
-    sample_molecules: :inchistring
+    sample_molecules: :inchistring,
   }
 
   pg_search_scope :search_by_cano_smiles, associated_against: {
-    sample_molecules: :cano_smiles
+    sample_molecules: :cano_smiles,
   }
 
   pg_search_scope :search_by_substring, against: :name, associated_against: {
     samples: :name,
-    sample_molecules: :iupac_name
+    sample_molecules: :iupac_name,
   }, using: { trigram: { threshold: 0.0001 } }
 
   # scopes for suggestions
@@ -111,19 +111,19 @@ class Reaction < ApplicationRecord
   has_many :collections, through: :collections_reactions
   accepts_nested_attributes_for :collections_reactions
 
-  has_many :reactions_samples, dependent: :destroy
+  has_many :reactions_samples, -> { includes(:sample).order(position: :asc) }, dependent: :destroy
   has_many :samples, through: :reactions_samples, source: :sample
   has_many :sample_molecules, through: :samples, source: :molecule
 
-  has_many :reactions_starting_material_samples, -> { order(position: :asc) }, dependent: :destroy
+  has_many :reactions_starting_material_samples, -> { includes(:sample).order(position: :asc) }, dependent: :destroy
   has_many :starting_materials, through: :reactions_starting_material_samples, source: :sample
   has_many :starting_material_molecules, through: :starting_materials, source: :molecule
 
-  has_many :reactions_solvent_samples, -> { order(position: :asc) }, dependent: :destroy
+  has_many :reactions_solvent_samples, -> { includes(:sample).order(position: :asc) }, dependent: :destroy
   has_many :solvents, through: :reactions_solvent_samples, source: :sample
   has_many :solvent_molecules, through: :solvents, source: :molecule
 
-  has_many :reactions_purification_solvent_samples, -> { order(position: :asc) },
+  has_many :reactions_purification_solvent_samples, -> { includes(:sample).order(position: :asc) },
            dependent: :destroy
   has_many :purification_solvents,
            through: :reactions_purification_solvent_samples,
@@ -132,13 +132,16 @@ class Reaction < ApplicationRecord
            through: :reactions_purification_solvent_samples,
            source: :sample
 
-  has_many :reactions_reactant_samples, -> { order(position: :asc) }, dependent: :destroy
+  has_many :reactions_reactant_samples, -> { includes(:sample).order(position: :asc) }, dependent: :destroy
   has_many :reactants, through: :reactions_reactant_samples, source: :sample
   has_many :reactant_molecules, through: :reactants, source: :molecule
 
-  has_many :reactions_product_samples, -> { order(position: :asc) }, dependent: :destroy
+  has_many :reactions_product_samples, -> { includes(:sample).order(position: :asc) }, dependent: :destroy
   has_many :products, through: :reactions_product_samples, source: :sample
   has_many :product_molecules, through: :products, source: :molecule
+
+  has_many :reactions_intermediate_samples, -> { includes(:sample).order(position: :asc) }, dependent: :destroy
+  has_many :intermediate_samples, through: :reactions_intermediate_samples, source: :sample
 
   has_many :literals, as: :element, dependent: :destroy
   has_many :literatures, through: :literals
@@ -161,6 +164,10 @@ class Reaction < ApplicationRecord
   after_create :update_counter
 
   has_one :container, as: :containable
+
+  has_one :reaction_process, -> { includes(:reaction_process_steps) },
+          class_name: 'ReactionProcessEditor::ReactionProcess',
+          inverse_of: :reaction, dependent: :destroy
 
   def self.get_associated_samples(reaction_ids)
     ReactionsSample.where(reaction_id: reaction_ids).pluck(:sample_id)
@@ -198,7 +205,7 @@ class Reaction < ApplicationRecord
 
   def temperature_display_with_unit
     tp = temperature_display
-    !tp.empty? ? tp + ' ' + temperature['valueUnit'] : ''
+    tp.empty? ? '' : tp + ' ' + temperature['valueUnit']
   end
 
   def description_contents
@@ -223,12 +230,12 @@ class Reaction < ApplicationRecord
       {
         starting_materials: :reactions_starting_material_samples,
         reactants: :reactions_reactant_samples,
-        products: :reactions_product_samples
+        products: :reactions_product_samples,
       }.each do |prop, resource|
         collection = public_send(resource).includes(sample: :molecule)
         paths[prop] = collection.map do |reactions_sample|
           sample = reactions_sample.sample
-          params = [ sample.get_svg_path ]
+          params = [sample.get_svg_path]
           params[0] = sample.svg_text_path if reactions_sample.show_label
           params.append(yield_amount(sample.id)) if prop == :products
           params
@@ -247,7 +254,9 @@ class Reaction < ApplicationRecord
     end
     if reaction_svg_file_changed? && reaction_svg_file_was.present?
       file_was = File.join(Rails.public_path, 'images', 'reactions', reaction_svg_file_was)
-      File.delete(file_was) if Reaction.where(reaction_svg_file: reaction_svg_file_was).length < 2 && File.exist?(file_was)
+      if Reaction.where(reaction_svg_file: reaction_svg_file_was).length < 2 && File.exist?(file_was)
+        File.delete(file_was)
+      end
     end
     reaction_svg_file
   end
@@ -264,7 +273,7 @@ class Reaction < ApplicationRecord
 
   def solvents_in_svg
     names = solvents.map(&:preferred_label)
-    names && !names.empty? ? names : [solvent]
+    names.presence || [solvent]
   end
 
   def cleanup_array_fields
@@ -286,9 +295,7 @@ class Reaction < ApplicationRecord
     if temperature&.fetch('userText', nil).present?
       self.temperature = temperature.merge('userText' => scrubber(temperature['userText']))
     end
-    if conditions.present?
-      self.conditions = scrubber(conditions)
-    end
+    self.conditions = scrubber(conditions) if conditions.present?
   end
 
   private
