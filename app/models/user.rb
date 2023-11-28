@@ -52,6 +52,8 @@
 
 # rubocop: disable Metrics/ClassLength
 # rubocop: disable Metrics/AbcSize
+# rubocop: disable Metrics/CyclicComplexity
+# rubocop: disable Metrics/PerceivedComplexity
 
 class User < ApplicationRecord
   attr_writer :login
@@ -74,14 +76,18 @@ class User < ApplicationRecord
   has_many :wellplates, through: :collections
   has_many :screens, through: :collections
   has_many :research_plans, through: :collections
+  has_many :vessels, through: :collections
+
+  # created vessels will be kept when the creator goes (dependent: nil).
+  has_many :created_vessels, class_name: 'Vessel', inverse_of: :creator, dependent: nil
 
   has_many :samples_created, foreign_key: :created_by, class_name: 'Sample'
 
   has_many :sync_out_collections_users, foreign_key: :shared_by_id, class_name: 'SyncCollectionsUser'
-  has_many :sync_in_collections_users,  foreign_key: :user_id, class_name: 'SyncCollectionsUser'
+  has_many :sync_in_collections_users, class_name: 'SyncCollectionsUser'
   has_many :sharing_collections, through: :sync_out_collections_users, source: :collection
   has_many :shared_collections,  through: :sync_in_collections_users, source: :collection
-  has_many :users_devices, dependent: :destroy, foreign_key: :user_id
+  has_many :users_devices, dependent: :destroy
   has_many :devices, through: :users_devices
   # belongs_to :selected_device, class_name: 'Device'
 
@@ -120,10 +126,13 @@ class User < ApplicationRecord
   validate :mail_checker
 
   # NB: only Persons and Admins can get a confirmation email and confirm their email.
-  before_create :skip_confirmation_notification!, unless: proc { |user| %w[Person Admin].include?(user.type) }
+  before_create :skip_confirmation_notification!, unless: proc { |user|
+                                                            %w[Person Admin].include?(user.type)
+                                                          }
   # NB: option to skip devise confirmable for Admins and Persons
   before_create :skip_confirmation!, if: proc { |user|
-                                           %w[Person Admin].include?(user.type) && self.class.allow_unconfirmed_access_for.nil?
+                                           %w[Person Admin].include?(user.type) &&
+                                             self.class.allow_unconfirmed_access_for.nil?
                                          }
   before_create :set_account_active, if: proc { |user| %w[Person].include?(user.type) }
 
@@ -136,7 +145,9 @@ class User < ApplicationRecord
 
   scope :by_name, lambda { |query|
     where("LOWER(first_name) ILIKE ? OR LOWER(last_name) ILIKE ? OR LOWER(first_name || ' ' || last_name) ILIKE ?",
-          "#{sanitize_sql_like(query.downcase)}%", "#{sanitize_sql_like(query.downcase)}%", "#{sanitize_sql_like(query.downcase)}%")
+          "#{sanitize_sql_like(query.downcase)}%",
+          "#{sanitize_sql_like(query.downcase)}%",
+          "#{sanitize_sql_like(query.downcase)}%")
   }
   scope :persons, -> { where(type: 'Person') }
 
@@ -177,7 +188,8 @@ class User < ApplicationRecord
   end
 
   def name_abbr_config
-    @name_abbr_config ||= Rails.configuration.respond_to?(:user_props) ? (Rails.configuration.user_props&.name_abbr || {}) : {}
+    @name_abbr_config ||=
+      Rails.configuration.respond_to?(:user_props) ? (Rails.configuration.user_props&.name_abbr || {}) : {}
   end
 
   def name_abbreviation_reserved_list
@@ -188,7 +200,8 @@ class User < ApplicationRecord
 
   def name_abbreviation_format
     format_abbr_default = /\A[a-zA-Z][a-zA-Z0-9\-_]*[a-zA-Z0-9]\Z/
-    format_err_msg_default = "can be alphanumeric, middle '_' and '-' are allowed, but leading digit, or trailing '-' and '_' are not."
+    format_err_msg_default =
+      "can be alphanumeric, middle '_' and '-' are allowed, but leading digit, or trailing '-' and '_' are not."
 
     format_abbr = name_abbr_config[:format_abbr].presence || format_abbr_default.presence
     format_err_msg = name_abbr_config[:format_abbr_err_msg].presence || format_err_msg_default.presence
@@ -199,7 +212,6 @@ class User < ApplicationRecord
   end
 
   def name_abbreviation_length
-    na = name_abbreviation
     case type
     when 'Group'
       min_val = name_abbr_config[:length_group]&.first || 2
@@ -212,8 +224,9 @@ class User < ApplicationRecord
       max_val = name_abbr_config[:length_default]&.last || 3
     end
 
-    na.blank? || (!na.length.between?(min_val, max_val) &&
-      errors.add(:name_abbreviation, "has to be #{min_val} to #{max_val} characters long"))
+    return if name_abbreviation.to_s.length.between?(min_val, max_val)
+
+    errors.add(:name_abbreviation, "has to be #{min_val} to #{max_val} characters long")
   end
 
   def mail_checker
@@ -291,7 +304,7 @@ class User < ApplicationRecord
     self.profile.update_columns(data: data)
   end
 
-  has_many :users_groups, dependent: :destroy, foreign_key: :user_id
+  has_many :users_groups, dependent: :destroy
   has_many :groups, through: :users_groups
 
   def group_ids
@@ -500,7 +513,7 @@ class Device < User
   has_many :users_admins, dependent: :destroy, foreign_key: :user_id
   has_many :admins, through: :users_admins, source: :admin
 
-  has_one :device_metadata, dependent: :destroy, foreign_key: :device_id
+  has_one :device_metadata, dependent: :destroy
 
   scope :by_user_ids, ->(ids) { joins(:users_devices).merge(UsersDevice.by_user_ids(ids)) }
   scope :novnc, -> { joins(:profile).merge(Profile.novnc) }
@@ -533,3 +546,5 @@ end
 
 # rubocop: enable Metrics/ClassLength
 # rubocop: enable Metrics/AbcSize
+# rubocop: enable Metrics/CyclicComplexity
+# rubocop: enable Metrics/PerceivedComplexity
