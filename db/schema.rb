@@ -787,6 +787,15 @@ ActiveRecord::Schema.define(version: 2024_06_25_105013) do
     t.index ["well_id"], name: "index_measurements_on_well_id"
   end
 
+  create_table "media", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "type"
+    t.string "sum_formula"
+    t.string "sample_name"
+    t.string "molecule_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "messages", id: :serial, force: :cascade do |t|
     t.integer "channel_id"
     t.jsonb "content", null: false
@@ -924,6 +933,58 @@ ActiveRecord::Schema.define(version: 2024_06_25_105013) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
+  create_table "provenances", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "reaction_process_id"
+    t.datetime "starts_at"
+    t.string "city"
+    t.string "doi"
+    t.string "patent"
+    t.string "publication_url"
+    t.string "username"
+    t.string "name"
+    t.string "orcid"
+    t.string "organization"
+    t.string "email"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "reaction_process_activities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "reaction_process_step_id"
+    t.string "activity_name"
+    t.integer "position"
+    t.json "workup"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at"
+  end
+
+  create_table "reaction_process_defaults", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "user_id"
+    t.jsonb "default_conditions"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "reaction_process_steps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "reaction_process_id"
+    t.uuid "vessel_id"
+    t.string "name"
+    t.integer "position"
+    t.boolean "locked"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at"
+  end
+
+  create_table "reaction_processes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "reaction_id"
+    t.jsonb "default_conditions"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at"
+  end
+
   create_table "reactions", id: :serial, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -974,6 +1035,10 @@ ActiveRecord::Schema.define(version: 2024_06_25_105013) do
     t.boolean "waste", default: false
     t.float "coefficient", default: 1.0
     t.boolean "show_label", default: false, null: false
+    t.uuid "reaction_process_step_id"
+    t.string "intermediate_type"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
     t.index ["reaction_id"], name: "index_reactions_samples_on_reaction_id"
     t.index ["sample_id"], name: "index_reactions_samples_on_sample_id"
   end
@@ -1162,12 +1227,23 @@ ActiveRecord::Schema.define(version: 2024_06_25_105013) do
     t.jsonb "solvent"
     t.boolean "inventory_sample", default: false
     t.boolean "dry_solvent", default: false
+    t.boolean "hide_in_eln"
     t.index ["deleted_at"], name: "index_samples_on_deleted_at"
     t.index ["identifier"], name: "index_samples_on_identifier"
     t.index ["inventory_sample"], name: "index_samples_on_inventory_sample"
     t.index ["molecule_id"], name: "index_samples_on_sample_id"
     t.index ["molecule_name_id"], name: "index_samples_on_molecule_name_id"
     t.index ["user_id"], name: "index_samples_on_user_id"
+  end
+
+  create_table "samples_preparations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "reaction_process_id"
+    t.integer "sample_id"
+    t.string "preparations", array: true
+    t.string "equipment", array: true
+    t.string "details"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "scan_results", force: :cascade do |t|

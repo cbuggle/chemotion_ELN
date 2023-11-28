@@ -1,18 +1,24 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: reactions_samples
 #
-#  id          :integer          not null, primary key
-#  reaction_id :integer
-#  sample_id   :integer
-#  reference   :boolean
-#  equivalent  :float
-#  position    :integer
-#  type        :string
-#  deleted_at  :datetime
-#  waste       :boolean          default(FALSE)
-#  coefficient :float            default(1.0)
-#  show_label  :boolean          default(FALSE), not null
+#  id                :integer          not null, primary key
+#  reaction_id       :integer
+#  sample_id         :integer
+#  reference         :boolean
+#  equivalent        :float
+#  position          :integer
+#  type              :string
+#  deleted_at        :datetime
+#  waste             :boolean          default(FALSE)
+#  coefficient       :float            default(1.0)
+#  show_label        :boolean          default(FALSE), not null
+#  reaction_step     :integer
+#  intermediate_type :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime
 #
 # Indexes
 #
@@ -23,7 +29,7 @@
 class ReactionsSample < ApplicationRecord
   acts_as_paranoid
   belongs_to :reaction, optional: true
-  belongs_to :sample, optional: true
+  belongs_to :sample, -> { includes %i[molecule residues] }, optional: true
 
   before_validation :set_default
 
@@ -67,7 +73,20 @@ class ReactionsProductSample < ReactionsSample
   include Tagging
 
   def formatted_yield
-    eq = self.equivalent
-    eq && !eq.nan? ? "#{(eq * 100).round.to_s} %" : "0 %"
+    eq = equivalent
+    eq && !eq.nan? ? "#{(eq * 100).round} %" : '0 %'
   end
+end
+
+class ReactionsIntermediateSample < ReactionsSample
+  scope :visible, -> { joins(:sample).merge(Sample.visible) }
+
+  def reaction_step
+    # TODO: Provisional. replaces former attribute "step_number" which gets never updated (prone to age badly.)
+    # Write a spec, maybe move to some more appropriate place.
+    ::ReactionProcessEditor::ReactionProcessStep.find_by(id: reaction_process_step_id)&.step_number
+  end
+
+  include Reactable
+  include Tagging
 end
