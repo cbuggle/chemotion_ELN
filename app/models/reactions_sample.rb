@@ -1,25 +1,29 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: reactions_samples
 #
-#  id                          :integer          not null, primary key
-#  coefficient                 :float            default(1.0)
-#  conversion_rate             :float
-#  deleted_at                  :datetime
-#  equivalent                  :float
-#  gas_phase_data              :jsonb
-#  gas_type                    :integer          default("off")
-#  position                    :integer
-#  reference                   :boolean
-#  show_label                  :boolean          default(FALSE), not null
-#  type                        :string
-#  waste                       :boolean          default(FALSE)
-#  weight_percentage           :float
-#  weight_percentage_reference :boolean          default(FALSE)
-#  created_at                  :datetime
-#  updated_at                  :datetime
-#  reaction_id                 :integer
-#  sample_id                   :integer
+#  id                           :integer          not null, primary key
+#  coefficient                  :float            default(1.0)
+#  conversion_rate              :float
+#  deleted_at                   :datetime
+#  equivalent                   :float
+#  gas_phase_data               :jsonb
+#  gas_type                     :integer          default("off")
+#  intermediate_type            :string
+#  position                     :integer
+#  reference                    :boolean
+#  show_label                   :boolean          default(FALSE), not null
+#  type                         :string
+#  waste                        :boolean          default(FALSE)
+#  weight_percentage            :float
+#  weight_percentage_reference  :boolean          default(FALSE)
+#  created_at                   :datetime
+#  updated_at                   :datetime
+#  reaction_id                  :integer
+#  reaction_process_activity_id :uuid
+#  sample_id                    :integer
 #
 # Indexes
 #
@@ -32,7 +36,7 @@ class ReactionsSample < ApplicationRecord
   has_logidze
   acts_as_paranoid
   belongs_to :reaction, optional: true
-  belongs_to :sample, optional: true
+  belongs_to :sample, -> { includes %i[molecule residues] }, optional: true
 
   before_validation :set_default
 
@@ -81,4 +85,17 @@ class ReactionsProductSample < ReactionsSample
     eq = equivalent
     eq && !eq.nan? ? "#{(eq * 100).round} %" : '0 %'
   end
+end
+
+class ReactionsIntermediateSample < ReactionsSample
+  scope :visible, -> { joins(:sample).merge(Sample.visible) }
+
+  def reaction_step
+    # TODO: Provisional. replaces former attribute "step_number" which gets never updated (prone to age badly.)
+    # Write a spec, maybe move to some more appropriate place.
+    ::ReactionProcessEditor::ReactionProcessStep.find_by(id: reaction_process_step_id)&.step_number
+  end
+
+  include Reactable
+  include Tagging
 end
