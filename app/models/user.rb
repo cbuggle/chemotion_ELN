@@ -37,13 +37,14 @@
 #  account_active         :boolean
 #  matrix                 :integer          default(0)
 #  providers              :jsonb
-#  inventory_labels       :jsonb
+#  jti                    :string
 #
 # Indexes
 #
 #  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_deleted_at            (deleted_at)
 #  index_users_on_email                 (email) UNIQUE
+#  index_users_on_jti                   (jti)
 #  index_users_on_name_abbreviation     (name_abbreviation) UNIQUE WHERE (name_abbreviation IS NOT NULL)
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_users_on_unlock_token          (unlock_token) UNIQUE
@@ -105,6 +106,8 @@ class User < ApplicationRecord
   has_many :element_text_templates, dependent: :destroy
   has_many :calendar_entries, foreign_key: :created_by, inverse_of: :creator, dependent: :destroy
   has_many :comments, foreign_key: :created_by, inverse_of: :creator, dependent: :destroy
+
+  has_one :reaction_process_defaults, class_name: 'ReactionProcessEditor::ReactionProcessDefaults', dependent: :destroy
 
   accepts_nested_attributes_for :affiliations, :profile
 
