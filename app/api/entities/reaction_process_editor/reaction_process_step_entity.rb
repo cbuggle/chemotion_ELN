@@ -9,7 +9,7 @@ module Entities
       )
 
       expose :actions, using: 'Entities::ReactionProcessEditor::ReactionProcessActionEntity'
-      # expose :vessel, using: 'Entities::ReactionProcessEditor::VesselEntity'
+      expose :vessel, using: 'Entities::ReactionProcessEditor::VesselEntity'
 
       private
 

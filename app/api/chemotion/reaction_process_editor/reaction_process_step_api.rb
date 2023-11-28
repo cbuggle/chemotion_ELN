@@ -80,6 +80,7 @@ module Chemotion
 
                 @reaction_process_step.vessel = vessel
               end
+              @reaction_process_step.save
             end
           end
 

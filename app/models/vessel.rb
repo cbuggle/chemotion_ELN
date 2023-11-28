@@ -28,6 +28,7 @@ class Vessel < ApplicationRecord
 
   has_many :collections_vessels, dependent: :destroy
   has_many :collections, through: :collections_vessels
-  delegate :details, :material_details, :material_type, :vessel_type, :volume_amount, :volume_unit, to: :vessel_template
 
+  has_many :reaction_process_steps, dependent: nil
+  delegate :details, :material_details, :material_type, :vessel_type, :volume_amount, :volume_unit, to: :vessel_template
 end

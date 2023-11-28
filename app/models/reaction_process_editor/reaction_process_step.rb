@@ -18,9 +18,7 @@ module ReactionProcessEditor
   class ReactionProcessStep < ApplicationRecord
     belongs_to :reaction_process
 
-    # belongs_to :reaction_process_vessel, optional: true
-
-    # has_one :vessel, through: :reaction_process_vessel
+    belongs_to :vessel, optional: true
 
     has_many :reaction_process_actions, dependent: :destroy
 

@@ -17,4 +17,6 @@ RSpec.describe Vessel do
 
   it { is_expected.to have_many(:collections).through(:collections_vessels) }
   it { is_expected.to have_many(:collections_vessels).dependent(:destroy) }
+
+  it { is_expected.to have_many(:reaction_process_steps).dependent(:nil)}
 end
