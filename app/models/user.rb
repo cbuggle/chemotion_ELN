@@ -106,6 +106,8 @@ class User < ApplicationRecord
   has_many :calendar_entries, foreign_key: :created_by, inverse_of: :creator, dependent: :destroy
   has_many :comments, foreign_key: :created_by, inverse_of: :creator, dependent: :destroy
 
+  has_one :reaction_process_defaults, class_name: 'ReactionProcessEditor::ReactionProcessDefaults', dependent: :destroy
+
   accepts_nested_attributes_for :affiliations, :profile
 
   validates :first_name, :last_name, presence: { allow_blank: false }
