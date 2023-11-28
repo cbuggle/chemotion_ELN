@@ -8,6 +8,7 @@ require 'rspec/repeat'
 require 'webmock/rspec'
 
 require 'factory_bot_rails'
+require 'test_prof/recipes/rspec/factory_default'
 require 'faker'
 require 'capybara'
 require 'webdrivers'
@@ -31,7 +32,7 @@ end
 Capybara.register_driver :selenium do |app|
   http_client = Selenium::WebDriver::Remote::Http::Default.new(
     open_timeout: nil,
-    read_timeout: 500
+    read_timeout: 500,
   )
 
   options = Selenium::WebDriver::Chrome::Options.new
@@ -46,16 +47,16 @@ Capybara.register_driver :selenium do |app|
       browser: 'ALL',
       client: 'ALL',
       driver: 'ALL',
-      server: 'ALL'
-    }
+      server: 'ALL',
+    },
   )
 
   Capybara::Selenium::Driver.new(
     app,
     browser: :chrome,
     http_client: http_client,
-    options: options
-    #desired_capabilities: capabilities
+    options: options,
+    # desired_capabilities: capabilities
   )
 end
 
@@ -100,9 +101,9 @@ RSpec.configure do |config|
         .to_return(
           status: 200,
           body: File.read(
-            Rails.root + "spec/fixtures/body_#{target}.json"
+            Rails.root + "spec/fixtures/body_#{target}.json",
           ),
-          headers: { 'Content-Type' => 'application/json' }
+          headers: { 'Content-Type' => 'application/json' },
         )
     end
 
@@ -130,19 +131,23 @@ RSpec.configure do |config|
     end
 
     stub_request(:get, 'http://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchikey/UFWIBTONFRDIAS-UHFFFAOYSA-N/record/JSON')
-      .with(headers: { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type' => 'text/json' })
+      .with(headers: { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                       'Content-Type' => 'text/json' })
       .to_return(status: 200, body: '', headers: {})
 
     stub_request(:get, 'http://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchikey/YMWUJEATGCHHMB-UHFFFAOYSA-N/record/JSON')
-      .with(headers: { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type' => 'text/json' })
+      .with(headers: { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                       'Content-Type' => 'text/json' })
       .to_return(status: 200, body: '', headers: {})
 
     stub_request(:get, 'http://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchikey/UHOVQNZJYSORNB-UHFFFAOYSA-N/record/JSON')
-      .with(headers: { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type' => 'text/json' })
+      .with(headers: { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                       'Content-Type' => 'text/json' })
       .to_return(status: 200, body: '', headers: {})
 
     stub_request(:get, 'http://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchikey/PNNRZXFUPQQZSO-UHFFFAOYSA-N/record/JSON')
-      .with(headers: { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type' => 'text/json' })
+      .with(headers: { 'Accept' => '*/*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                       'Content-Type' => 'text/json' })
       .to_return(status: 200, body: '', headers: {})
 
     stub_request(:post, 'http://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchikey/record/JSON')
@@ -150,7 +155,7 @@ RSpec.configure do |config|
       .to_return(
         status: 200,
         body: File.read(Rails.root + 'spec/fixtures/body_two_compounds.json'),
-        headers: { 'Content-Type' => 'application/json' }
+        headers: { 'Content-Type' => 'application/json' },
       )
     stub_request(:get, %r{http://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchikey/\S+/xrefs/RN/JSON})
       .with(headers: { 'Content-Type' => 'text/json' })
@@ -167,7 +172,7 @@ RSpec.configure do |config|
       .to_return(
         status: 200,
         body: File.read(Rails.root + 'spec/fixtures/body_123456789_CAS.xml'),
-        headers: { 'Content-Type' => 'application/xml' }
+        headers: { 'Content-Type' => 'application/xml' },
       )
     stub_request(:get, %r{http://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchikey/\S+/cids/TXT}).
       # with(:headers => {'Content-Type'=>'text/json'}).
@@ -179,7 +184,7 @@ RSpec.configure do |config|
       .to_return(
         status: 200,
         body: File.read(Rails.root + 'spec/fixtures/body_643785_LCSS.json'),
-        headers: { 'Content-Type' => 'application/json' }
+        headers: { 'Content-Type' => 'application/json' },
       )
   end
 
