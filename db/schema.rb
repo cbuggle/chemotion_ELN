@@ -823,6 +823,15 @@ ActiveRecord::Schema.define(version: 2024_09_17_085816) do
     t.index ["well_id"], name: "index_measurements_on_well_id"
   end
 
+  create_table "media", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "type"
+    t.string "sum_formula"
+    t.string "sample_name"
+    t.string "molecule_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "messages", id: :serial, force: :cascade do |t|
     t.integer "channel_id"
     t.jsonb "content", null: false
@@ -956,9 +965,70 @@ ActiveRecord::Schema.define(version: 2024_09_17_085816) do
     t.integer "curation", default: 2
     t.boolean "show_sample_name", default: false
     t.boolean "show_sample_short_label", default: false
-    t.string "user_templates", default: [], array: true
     t.index ["deleted_at"], name: "index_profiles_on_deleted_at"
     t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
+  create_table "provenances", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "reaction_process_id"
+    t.datetime "starts_at"
+    t.string "city"
+    t.string "doi"
+    t.string "patent"
+    t.string "publication_url"
+    t.string "username"
+    t.string "name"
+    t.string "orcid"
+    t.string "organization"
+    t.string "email"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "reaction_process_activities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "reaction_process_step_id"
+    t.string "activity_name"
+    t.integer "position"
+    t.json "workup"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at"
+    t.uuid "reaction_process_vessel_id"
+  end
+
+  create_table "reaction_process_defaults", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "user_id"
+    t.jsonb "default_conditions"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "reaction_process_steps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "reaction_process_id"
+    t.uuid "reaction_process_vessel_id"
+    t.string "name"
+    t.integer "position"
+    t.boolean "locked"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at"
+  end
+
+  create_table "reaction_process_vessels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "reaction_process_id"
+    t.uuid "vessel_id"
+    t.string "preparations", default: [], array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at"
+  end
+
+  create_table "reaction_processes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "reaction_id"
+    t.jsonb "default_conditions"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at"
   end
 
   create_table "reactions", id: :serial, force: :cascade do |t|
@@ -990,9 +1060,9 @@ ActiveRecord::Schema.define(version: 2024_09_17_085816) do
     t.string "duration"
     t.string "rxno"
     t.string "conditions"
-    t.jsonb "variations", default: []
     t.text "plain_text_description"
     t.text "plain_text_observation"
+    t.jsonb "variations", default: []
     t.jsonb "vessel_size", default: {"unit"=>"ml", "amount"=>nil}
     t.boolean "gaseous", default: false
     t.index ["deleted_at"], name: "index_reactions_on_deleted_at"
@@ -1013,6 +1083,10 @@ ActiveRecord::Schema.define(version: 2024_09_17_085816) do
     t.boolean "waste", default: false
     t.float "coefficient", default: 1.0
     t.boolean "show_label", default: false, null: false
+    t.uuid "reaction_process_step_id"
+    t.string "intermediate_type"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
     t.integer "gas_type", default: 0
     t.jsonb "gas_phase_data", default: {"time"=>{"unit"=>"h", "value"=>nil}, "temperature"=>{"unit"=>"°C", "value"=>nil}, "turnover_number"=>nil, "part_per_million"=>nil, "turnover_frequency"=>{"unit"=>"TON/h", "value"=>nil}}
     t.float "conversion_rate"
@@ -1202,14 +1276,25 @@ ActiveRecord::Schema.define(version: 2024_09_17_085816) do
     t.float "molecular_mass"
     t.string "sum_formula"
     t.jsonb "solvent"
-    t.boolean "dry_solvent", default: false
     t.boolean "inventory_sample", default: false
+    t.boolean "dry_solvent", default: false
+    t.boolean "hide_in_eln"
     t.index ["deleted_at"], name: "index_samples_on_deleted_at"
     t.index ["identifier"], name: "index_samples_on_identifier"
     t.index ["inventory_sample"], name: "index_samples_on_inventory_sample"
     t.index ["molecule_id"], name: "index_samples_on_sample_id"
     t.index ["molecule_name_id"], name: "index_samples_on_molecule_name_id"
     t.index ["user_id"], name: "index_samples_on_user_id"
+  end
+
+  create_table "samples_preparations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "reaction_process_id"
+    t.integer "sample_id"
+    t.string "preparations", array: true
+    t.string "equipment", array: true
+    t.string "details"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "scan_results", force: :cascade do |t|
@@ -1366,9 +1451,9 @@ ActiveRecord::Schema.define(version: 2024_09_17_085816) do
   create_table "third_party_apps", force: :cascade do |t|
     t.string "url"
     t.string "name", limit: 100, null: false
+    t.string "file_types", limit: 100
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "file_types", limit: 100
     t.index ["name"], name: "index_third_party_apps_on_name", unique: true
   end
 
@@ -1428,9 +1513,11 @@ ActiveRecord::Schema.define(version: 2024_09_17_085816) do
     t.boolean "account_active"
     t.integer "matrix", default: 0
     t.jsonb "providers"
+    t.string "jti"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["jti"], name: "index_users_on_jti"
     t.index ["name_abbreviation"], name: "index_users_on_name_abbreviation", unique: true, where: "(name_abbreviation IS NOT NULL)"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
@@ -1601,25 +1688,25 @@ ActiveRecord::Schema.define(version: 2024_09_17_085816) do
         a_userids int4[];
         u int4;
       begin
-      	select channel_type into i_channel_type
-      	from channels where id = in_channel_id;
+        select channel_type into i_channel_type
+        from channels where id = in_channel_id;
 
         case i_channel_type
-      	when 9 then
-      	  insert into notifications (message_id, user_id, created_at,updated_at)
-      	  (select in_message_id, id, now(),now() from users where deleted_at is null and type='Person');
-      	when 5,8 then
-      	  if (in_user_ids is not null) then
-      	  a_userids = in_user_ids;
-      	  end if;
-      	  FOREACH u IN ARRAY a_userids
-      	  loop
-      		  insert into notifications (message_id, user_id, created_at,updated_at)
-      		  (select distinct in_message_id, id, now(),now() from users where type='Person' and id in (select group_user_ids(u))
-      		   and not exists (select id from notifications where message_id = in_message_id and user_id = users.id));
-       	  end loop;
-      	end case;
-      	return in_message_id;
+        when 9 then
+          insert into notifications (message_id, user_id, created_at,updated_at)
+          (select in_message_id, id, now(),now() from users where deleted_at is null and type='Person');
+        when 5,8 then
+          if (in_user_ids is not null) then
+          a_userids = in_user_ids;
+          end if;
+          FOREACH u IN ARRAY a_userids
+          loop
+            insert into notifications (message_id, user_id, created_at,updated_at)
+            (select distinct in_message_id, id, now(),now() from users where type='Person' and id in (select group_user_ids(u))
+             and not exists (select id from notifications where message_id = in_message_id and user_id = users.id));
+          end loop;
+        end case;
+        return in_message_id;
       end;$function$
   SQL
   create_function :generate_users_matrix, sql_definition: <<-'SQL'
@@ -1628,31 +1715,31 @@ ActiveRecord::Schema.define(version: 2024_09_17_085816) do
        LANGUAGE plpgsql
       AS $function$
       begin
-      	if in_user_ids is null then
+        if in_user_ids is null then
           update users u set matrix = (
-      	    select coalesce(sum(2^mx.id),0) from (
-      		    select distinct m1.* from matrices m1, users u1
-      				left join users_groups ug1 on ug1.user_id = u1.id
-      		      where u.id = u1.id and ((m1.enabled = true) or ((u1.id = any(m1.include_ids)) or (u1.id = ug1.user_id and ug1.group_id = any(m1.include_ids))))
-      	      except
-      		    select distinct m2.* from matrices m2, users u2
-      				left join users_groups ug2 on ug2.user_id = u2.id
-      		      where u.id = u2.id and ((u2.id = any(m2.exclude_ids)) or (u2.id = ug2.user_id and ug2.group_id = any(m2.exclude_ids)))
-      	    ) mx
+            select coalesce(sum(2^mx.id),0) from (
+              select distinct m1.* from matrices m1, users u1
+              left join users_groups ug1 on ug1.user_id = u1.id
+                where u.id = u1.id and ((m1.enabled = true) or ((u1.id = any(m1.include_ids)) or (u1.id = ug1.user_id and ug1.group_id = any(m1.include_ids))))
+              except
+              select distinct m2.* from matrices m2, users u2
+              left join users_groups ug2 on ug2.user_id = u2.id
+                where u.id = u2.id and ((u2.id = any(m2.exclude_ids)) or (u2.id = ug2.user_id and ug2.group_id = any(m2.exclude_ids)))
+            ) mx
           );
-      	else
-      		  update users u set matrix = (
-      		  	select coalesce(sum(2^mx.id),0) from (
-      			   select distinct m1.* from matrices m1, users u1
-      				 left join users_groups ug1 on ug1.user_id = u1.id
-      			     where u.id = u1.id and ((m1.enabled = true) or ((u1.id = any(m1.include_ids)) or (u1.id = ug1.user_id and ug1.group_id = any(m1.include_ids))))
-      			   except
-      			   select distinct m2.* from matrices m2, users u2
-      				 left join users_groups ug2 on ug2.user_id = u2.id
-      			     where u.id = u2.id and ((u2.id = any(m2.exclude_ids)) or (u2.id = ug2.user_id and ug2.group_id = any(m2.exclude_ids)))
-      			  ) mx
-      		  ) where ((in_user_ids) @> array[u.id]) or (u.id in (select ug3.user_id from users_groups ug3 where (in_user_ids) @> array[ug3.group_id]));
-      	end if;
+        else
+            update users u set matrix = (
+              select coalesce(sum(2^mx.id),0) from (
+               select distinct m1.* from matrices m1, users u1
+               left join users_groups ug1 on ug1.user_id = u1.id
+                 where u.id = u1.id and ((m1.enabled = true) or ((u1.id = any(m1.include_ids)) or (u1.id = ug1.user_id and ug1.group_id = any(m1.include_ids))))
+               except
+               select distinct m2.* from matrices m2, users u2
+               left join users_groups ug2 on ug2.user_id = u2.id
+                 where u.id = u2.id and ((u2.id = any(m2.exclude_ids)) or (u2.id = ug2.user_id and ug2.group_id = any(m2.exclude_ids)))
+              ) mx
+            ) where ((in_user_ids) @> array[u.id]) or (u.id in (select ug3.user_id from users_groups ug3 where (in_user_ids) @> array[ug3.group_id]));
+        end if;
         return true;
       end
       $function$
@@ -1715,19 +1802,42 @@ ActiveRecord::Schema.define(version: 2024_09_17_085816) do
        LANGUAGE plpgsql
       AS $function$
       begin
-      	if (TG_OP='INSERT') then
+        if (TG_OP='INSERT') then
           PERFORM generate_users_matrix(null);
-      	end if;
+        end if;
 
-      	if (TG_OP='UPDATE') then
-      	  if new.enabled <> old.enabled or new.deleted_at <> new.deleted_at then
+        if (TG_OP='UPDATE') then
+          if new.enabled <> old.enabled or new.deleted_at <> new.deleted_at then
             PERFORM generate_users_matrix(null);
-      	  elsif new.include_ids <> old.include_ids then
+          elsif new.include_ids <> old.include_ids then
             PERFORM generate_users_matrix(new.include_ids || old.include_ids);
           elsif new.exclude_ids <> old.exclude_ids then
             PERFORM generate_users_matrix(new.exclude_ids || old.exclude_ids);
-      	  end if;
-      	end if;
+          end if;
+        end if;
+        return new;
+      end
+      $function$
+  SQL
+  create_function :pub_reactions_by_molecule, sql_definition: <<-'SQL'
+      CREATE OR REPLACE FUNCTION public.pub_reactions_by_molecule(collection_id integer, molecule_id integer)
+       RETURNS TABLE(reaction_ids integer)
+       LANGUAGE sql
+      AS $function$
+          (select r.id from collections c, collections_reactions cr, reactions r, reactions_samples rs, samples s,molecules m
+           where c.id=$1 and c.id = cr.collection_id and cr.reaction_id = r.id
+           and r.id = rs.reaction_id and rs.sample_id = s.id and rs.type in ('ReactionsProductSample')
+           and c.deleted_at is null and cr.deleted_at is null and r.deleted_at is null and rs.deleted_at is null and s.deleted_at is null and m.deleted_at is null
+           and s.molecule_id = m.id and m.id=$2)
+        $function$
+  SQL
+  create_function :set_segment_klasses_identifier, sql_definition: <<-'SQL'
+      CREATE OR REPLACE FUNCTION public.set_segment_klasses_identifier()
+       RETURNS trigger
+       LANGUAGE plpgsql
+      AS $function$
+      begin
+        update segment_klasses set identifier = gen_random_uuid() where identifier is null;
         return new;
       end
       $function$
