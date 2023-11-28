@@ -48,6 +48,16 @@
 #  molecule_id         :integer
 #  molecule_name_id    :integer
 #  user_id             :integer
+#  molfile_version     :string(20)
+#  stereo              :jsonb
+#  metrics             :string           default("mmm")
+#  decoupled           :boolean          default(FALSE), not null
+#  molecular_mass      :float
+#  sum_formula         :string
+#  solvent             :jsonb
+#  inventory_sample    :boolean          default(FALSE)
+#  dry_solvent         :boolean          default(FALSE)
+#  hide_in_eln         :boolean
 #
 # Indexes
 #
@@ -190,7 +200,7 @@ class Sample < ApplicationRecord
       OR EXISTS (
         SELECT 1 FROM reactions_samples rs
         WHERE rs.sample_id = samples.id
-          AND rs.type IN ('ReactionsProductSample', 'ReactionsStartingMaterialSample')
+          AND rs.type IN ('ReactionsIntermediateSample', 'ReactionsProductSample', 'ReactionsStartingMaterialSample')
       )
     SQL
   }
@@ -218,6 +228,8 @@ class Sample < ApplicationRecord
     end
   }
 
+  scope :visible, -> { where(hide_in_eln: [nil, false]) }
+
   before_save :auto_set_molfile_to_molecules_molfile
   before_save :find_or_create_molecule_based_on_inchikey
   before_save :update_molecule_name
@@ -241,7 +253,10 @@ class Sample < ApplicationRecord
   has_many :reactions_reactant_samples, dependent: :destroy
   has_many :reactions_solvent_samples, dependent: :destroy
   has_many :reactions_product_samples, dependent: :destroy
+  has_many :reactions_intermediate_samples, dependent: :destroy
+
   has_many :elements_samples, dependent: :destroy, class_name: 'Labimotion::ElementsSample'
+  has_many :samples_preparations, dependent: :destroy, class_name: 'ReactionProcessEditor::SamplesPreparation'
 
   has_many :reactions, through: :reactions_samples
   has_many :reactions_as_starting_material, through: :reactions_starting_material_samples, source: :reaction
@@ -739,7 +754,7 @@ class Sample < ApplicationRecord
     return unless rel_reaction_id
 
     ReactionsSample.where(reaction_id: rel_reaction_id,
-                          type: %w[ReactionsProductSample ReactionsReactantSample
+                          type: %w[ReactionsProductSample ReactionsReactantSample ReactionsIntermediateSample
                                    ReactionsStartingMaterialSample]).find_each(&:update_equivalent)
   end
 
@@ -804,8 +819,8 @@ class Sample < ApplicationRecord
   end
 
   def set_boiling_melting_points
-    self.boiling_point = Range.new(-Float::INFINITY, Float::INFINITY, '()') if boiling_point.nil?
-    self.melting_point = Range.new(-Float::INFINITY, Float::INFINITY, '()') if melting_point.nil?
+    self.boiling_point ||= Range.new(-Float::INFINITY, Float::INFINITY, '()')
+    self.melting_point ||= Range.new(-Float::INFINITY, Float::INFINITY, '()')
   end
 
   def update_molecule_name
@@ -815,7 +830,7 @@ class Sample < ApplicationRecord
   end
 
   def has_molarity
-    molarity_value.present? && molarity_value.positive? && density.zero?
+    molarity_value&.positive? && density.zero?
   end
 
   def has_density
