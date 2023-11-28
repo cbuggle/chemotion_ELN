@@ -77,13 +77,6 @@ module ReactionProcessEditor
       reaction_process_steps
     end
 
-    # def set_vessel(new_vessel)
-    #   self.reaction_process_vessel = ReactionProcessVessel.find_by(
-    #     reaction_process: reaction_process, vessel: new_vessel,
-    #   )
-    #   save
-    # end
-
     def append_action(action_params, insert_before)
       return create_transfer_target_action(action_params.workup) if action_params.action_name == 'TRANSFER'
 

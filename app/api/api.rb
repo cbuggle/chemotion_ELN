@@ -198,7 +198,7 @@ class API < Grape::API
     mount Chemotion::ReactionProcessEditor::ReactionProcessActionAPI
     mount Chemotion::ReactionProcessEditor::ReactionProcessAPI
     mount Chemotion::ReactionProcessEditor::ReactionProcessStepAPI
-    #  mount Chemotion::ReactionProcessEditor::VesselAPI  # TODO reinsert once Vessel model is in main.
+    mount Chemotion::ReactionProcessEditor::VesselAPI
   end
 
   if Rails.env.development?

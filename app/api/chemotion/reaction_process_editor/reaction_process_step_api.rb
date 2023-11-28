@@ -69,19 +69,19 @@ module Chemotion
             end
           end
 
-          # namespace :vessel do
-          # desc 'Set the Vessel'
-          # put do
-          # if params[:vessel].blank?
-          # @reaction_process_step.set_vessel nil
-          # else
-          # vessel = Vessel.find params[:vessel][:id]
-          # error!('404 Not Found', 404) unless vessel
-          #
-          # @reaction_process_step.set_vessel vessel
-          # end
-          # end
-          # end
+          namespace :vessel do
+            desc 'Set the Vessel'
+            put do
+              if params[:vessel_id].blank?
+                @reaction_process_step.vessel = nil
+              else
+                vessel = Vessel.find params[:vessel_id]
+                error!('404 Not Found', 404) unless vessel
+
+                @reaction_process_step.vessel = vessel
+              end
+            end
+          end
 
           desc 'Toggle locked status'
           put :toggle_locked do
