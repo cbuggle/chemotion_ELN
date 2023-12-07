@@ -205,7 +205,7 @@ class Sample < ApplicationRecord
   has_many :reactions_intermediate_samples, dependent: :destroy
 
   has_many :elements_samples, dependent: :destroy, class_name: 'Labimotion::ElementsSample'
-  has_many :samples_preparations, dependent: :destroy, class_name: 'ReactionProcessEditor::SamplesPreparatiom'
+  has_many :samples_preparations, dependent: :destroy, class_name: 'ReactionProcessEditor::SamplesPreparation'
 
   has_many :reactions, through: :reactions_samples
   has_many :reactions_as_starting_material, through: :reactions_starting_material_samples, source: :reaction
