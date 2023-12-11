@@ -49,6 +49,7 @@ import GasPhaseReactionActions from 'src/stores/alt/actions/GasPhaseReactionActi
 import { ShowUserLabels } from 'src/components/UserLabels';
 
 
+import ReactionEditorLink from 'src/components/reaction_editor/ReactionEditorLink';
 export default class ReactionDetails extends Component {
   constructor(props) {
     super(props);
@@ -338,7 +339,7 @@ export default class ReactionDetails extends Component {
             onClick={() => this.handleSubmit()}
             disabled={!permitOn(reaction) || !this.reactionIsValid()}
             style={{ display: hasChanged }} >
-            <i className="fa fa-floppy-o "></i>
+            <i className="fa fa-floppy-o"></i>
           </Button>
         </OverlayTrigger>
         {copyBtn}
@@ -375,6 +376,7 @@ export default class ReactionDetails extends Component {
             <i className="fa fa-cogs" />
           </Button>
         </OverlayTrigger>
+        <ReactionEditorLink reaction={reaction} />
         <div style={{ display: "inline-block", marginLeft: "10px" }}>
           {colLabel}
           {rsPlanLabel}
@@ -539,7 +541,7 @@ export default class ReactionDetails extends Component {
       green_chemistry: (
         <Tab eventKey="green_chemistry" title="Green Chemistry" key={`green_chem_${reaction.id}`}>
           {
-            !reaction.isNew && <CommentSection section="reaction_green_chemistry" element={reaction}/>
+            !reaction.isNew && <CommentSection section="reaction_green_chemistry" element={reaction} />
           }
           <GreenChemistry
             reaction={reaction}
