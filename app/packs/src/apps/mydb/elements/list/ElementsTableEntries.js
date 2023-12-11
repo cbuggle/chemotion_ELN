@@ -157,6 +157,7 @@ function topSecretIcon(element) {
   return null;
 }
 
+import ReactionEditorLink from 'src/components/reaction_editor/ReactionEditorLink';
 export default class ElementsTableEntries extends Component {
   constructor(props) {
     super(props);
@@ -367,6 +368,7 @@ export default class ElementsTableEntries extends Component {
             return (
               <tr key={element.id} style={style}>
                 <td width="30px">
+                  <ReactionEditorLink reaction={element} /><br />
                   <ElementCheckbox
                     element={element}
                     key={element.id}
