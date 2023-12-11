@@ -45,6 +45,7 @@ import CommentModal from 'src/components/common/CommentModal';
 import { commentActivation } from 'src/utilities/CommentHelper';
 import { formatTimeStampsOfElement } from 'src/utilities/timezoneHelper';
 
+import ReactionEditorLink from 'src/components/reaction_editor/ReactionEditorLink';
 export default class ReactionDetails extends Component {
   constructor(props) {
     super(props);
@@ -326,7 +327,7 @@ export default class ReactionDetails extends Component {
             onClick={() => this.handleSubmit()}
             disabled={!permitOn(reaction) || !this.reactionIsValid()}
             style={{ display: hasChanged }} >
-            <i className="fa fa-floppy-o "></i>
+            <i className="fa fa-floppy-o"></i>
           </Button>
         </OverlayTrigger>
         {copyBtn}
@@ -363,6 +364,7 @@ export default class ReactionDetails extends Component {
             <i className="fa fa-cogs" />
           </Button>
         </OverlayTrigger>
+        <ReactionEditorLink reaction={reaction} />
         <div style={{ display: "inline-block", marginLeft: "10px" }}>
           {colLabel}
           {rsPlanLabel}
