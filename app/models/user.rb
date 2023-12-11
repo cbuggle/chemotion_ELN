@@ -36,6 +36,7 @@
 #  locked_at              :datetime
 #  account_active         :boolean
 #  matrix                 :integer          default(0)
+#  jti                    :string
 #  providers              :jsonb
 #
 # Indexes
@@ -43,12 +44,13 @@
 #  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_deleted_at            (deleted_at)
 #  index_users_on_email                 (email) UNIQUE
+#  index_users_on_jti                   (jti)
 #  index_users_on_name_abbreviation     (name_abbreviation) UNIQUE WHERE (name_abbreviation IS NOT NULL)
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_users_on_unlock_token          (unlock_token) UNIQUE
 #
 
-# rubocop: disable Metrics/ClassLength, Metrics/CyclomaticComplexity, Performance/RedundantMerge
+# rubocop: disable Metrics/ClassLength, Metrics/CyclomaticComplexity
 # rubocop: disable Metrics/AbcSize
 # rubocop: disable Metrics/PerceivedComplexity
 
@@ -57,9 +59,14 @@ class User < ApplicationRecord
   attr_accessor :provider, :uid
 
   acts_as_paranoid
+
+  include Devise::JWT::RevocationStrategies::JTIMatcher
+
   # Include default devise modules. Others available are: :timeoutable
   devise :database_authenticatable, :registerable, :confirmable,
-         :recoverable, :rememberable, :trackable, :validatable, :lockable, :omniauthable, authentication_keys: [:login]
+         :recoverable, :rememberable, :trackable, :validatable, :lockable, :omniauthable,
+         :jwt_authenticatable, jwt_revocation_strategy: self, authentication_keys: [:login]
+
   has_one :profile, dependent: :destroy
   has_one :container, as: :containable
 
@@ -420,6 +427,10 @@ class User < ApplicationRecord
     Matrice.extra_rules || {}
   end
 
+  def jti_auth_token
+    JWT.encode({ sub: id, jti: jti }, Rails.application.secrets.secret_key_base)
+  end
+
   private
 
   # These user collections are locked, i.e., the user is not allowed to:
@@ -492,6 +503,6 @@ class Group < User
   end
 end
 
-# rubocop: enable Metrics/ClassLength, Metrics/CyclomaticComplexity, Performance/RedundantMerge
+# rubocop: enable Metrics/ClassLength, Metrics/CyclomaticComplexity
 # rubocop: enable Metrics/AbcSize
 # rubocop: enable Metrics/PerceivedComplexity
