@@ -48,4 +48,4 @@
 #  index_users_on_unlock_token          (unlock_token) UNIQUE
 #
 
-class Group < User ; end
+class Group < User; end
