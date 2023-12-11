@@ -1458,9 +1458,11 @@ ActiveRecord::Schema.define(version: 2024_07_11_120833) do
     t.boolean "account_active"
     t.integer "matrix", default: 0
     t.jsonb "providers"
+    t.string "jti"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["jti"], name: "index_users_on_jti"
     t.index ["name_abbreviation"], name: "index_users_on_name_abbreviation", unique: true, where: "(name_abbreviation IS NOT NULL)"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
