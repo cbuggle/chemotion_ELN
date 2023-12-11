@@ -321,6 +321,16 @@ export default class ReactionDetailsScheme extends Component {
         this.addSampleTo(changeEvent, 'description');
         this.addSampleTo(changeEvent, 'observation');
         break;
+      case 'reactionStepChanged':
+        this.onReactionChange(
+          this.updatedReactionForReactionStepChange(changeEvent)
+        );
+        break;
+      case 'reactionIntermediateTypeChanged':
+        this.onReactionChange(
+          this.updatedReactionForReactionIntermediateTypeChange(changeEvent)
+        );
+        break;
       default:
         break;
     }
@@ -450,6 +460,24 @@ export default class ReactionDetailsScheme extends Component {
     updatedSample.equivalent = equivalent;
 
     return this.updatedReactionWithSample(this.updatedSamplesForEquivalentChange.bind(this), updatedSample);
+  }
+
+  updatedReactionForReactionStepChange(changeEvent) {
+    const { sampleID, reactionStep } = changeEvent;
+    const updatedSample = this.props.reaction.sampleById(sampleID);
+
+    updatedSample.reaction_step = reactionStep;
+
+    return this.updatedReactionWithSample(this.updatedSamplesForReactionStepChange.bind(this), updatedSample);
+  }
+
+  updatedReactionForReactionIntermediateTypeChange(changeEvent) {
+    const { sampleID, intermediateType } = changeEvent;
+    const updatedSample = this.props.reaction.sampleById(sampleID);
+
+    updatedSample.intermediate_type = intermediateType;
+
+    return this.updatedReactionWithSample(this.updatedSamplesForIntermediateTypeChange.bind(this), updatedSample);
   }
 
   calculateEquivalent(refM, updatedSample) {
@@ -767,12 +795,34 @@ export default class ReactionDetailsScheme extends Component {
     });
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  updatedSamplesForReactionStepChange(samples, updatedSample) {
+    return samples.map((sample) => {
+      if (sample.id === updatedSample.id && updatedSample.reaction_step) {
+        sample.reaction_step = updatedSample.reaction_step;
+      }
+      return sample;
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  updatedSamplesForIntermediateTypeChange(samples, updatedSample) {
+    return samples.map((sample) => {
+      if (sample.id === updatedSample.id && updatedSample.intermediate_type) {
+        sample.intermediate_type = updatedSample.intermediate_type;
+      }
+      return sample;
+    });
+  }
+
   updatedReactionWithSample(updateFunction, updatedSample) {
     const { reaction } = this.state;
     reaction.starting_materials = updateFunction(reaction.starting_materials, updatedSample, 'starting_materials');
     reaction.reactants = updateFunction(reaction.reactants, updatedSample, 'reactants');
     reaction.solvents = updateFunction(reaction.solvents, updatedSample, 'solvents');
     reaction.products = updateFunction(reaction.products, updatedSample, 'products');
+    reaction.intermediate_samples = updateFunction(reaction.intermediate_samples, updatedSample, 'intermediate_samples');
+
     return reaction;
   }
 
@@ -908,6 +958,8 @@ export default class ReactionDetailsScheme extends Component {
     }
 
     const headReactants = reaction.starting_materials.length ?? 0;
+    const headIntermediates = reaction.intermediate_samples.length;
+
 
     return (
       <div>
@@ -944,6 +996,23 @@ export default class ReactionDetailsScheme extends Component {
               switchEquiv={this.switchEquiv}
               lockEquivColumn={lockEquivColumn}
               headIndex={headReactants}
+            />
+          </ListGroupItem>
+          <ListGroupItem style={minPadding} >
+            <MaterialGroupContainer
+              reaction={reaction}
+              materialGroup="intermediate_samples"
+              materials={reaction.intermediate_samples}
+              dropMaterial={this.dropMaterial}
+              deleteMaterial={
+                (material, materialGroup) => this.deleteMaterial(material, materialGroup)
+              }
+              dropSample={this.dropSample}
+              // showLoadingColumn={!!reaction.hasPolymers()}
+              onChange={changeEvent => this.handleMaterialsChange(changeEvent)}
+              // switchEquiv={this.switchEquiv}
+              // lockEquivColumn={lockEquivColumn}
+              headIndex={headIntermediates}
             />
           </ListGroupItem>
           <ListGroupItem style={minPadding}>

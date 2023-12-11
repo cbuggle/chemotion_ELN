@@ -919,6 +919,22 @@ export default class Sample extends Element {
     return this._equivalent;
   }
 
+  get intermediate_type() {
+    return this._intermediate_type;
+  }
+
+  set intermediate_type(intermediate_type) {
+    this._intermediate_type = intermediate_type;
+  }
+
+  get reaction_step() {
+    return this._reaction_step;
+  }
+
+  set reaction_step(reaction_step) {
+    this._reaction_step = reaction_step;
+  }
+
   set conc(conc) {
     this._conc = conc;
   }
@@ -944,6 +960,8 @@ export default class Sample extends Element {
       show_label: (this.decoupled && !this.molfile) ? true : (this.show_label || false),
       waste: this.waste,
       coefficient: this.coefficient,
+      intermediate_type: this.intermediate_type,
+      reaction_step: this.reaction_step
     };
     _.merge(params, extra_params);
     return params;
