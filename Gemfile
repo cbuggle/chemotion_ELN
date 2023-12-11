@@ -25,7 +25,10 @@ gem 'countries'
 
 gem 'delayed_cron_job'
 gem 'delayed_job_active_record'
+
 gem 'devise'
+gem 'devise-jwt' # authentication also requires 'jwt' and 'rack-cors'.
+
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 gem 'ed25519'
@@ -202,6 +205,7 @@ group :test do
   gem 'rspec-repeat'
 
   # Convenient RSpec Syntax
+  gem 'rspec-collection_matchers'
   gem 'rspec-its'
   gem 'shoulda-matchers'
 
