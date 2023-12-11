@@ -1,4 +1,6 @@
-# rubocop:disable Metrics/BlockLength, Layout/LineLength, Style/FrozenStringLiteralComment
+# frozen_string_literal: true
+
+# rubocop:disable Metrics/BlockLength
 #
 Rails.application.routes.draw do
   post '/graphql', to: 'graphql#execute' unless Rails.env.production?
@@ -15,6 +17,15 @@ Rails.application.routes.draw do
     end
   else
     devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: 'users/omniauth', sessions: 'users/sessions' }
+
+    devise_scope :user do
+      with_options format: :json do
+        # Separate session endpoints for ReactionProcessEditor ( < Devise::SessionsController).
+        # Using the general Users::Sessions will interfere with ELN authentication.
+        post 'api/v1/reaction_process_editor/sign_in', to: 'reaction_process_editor/sessions#create'
+        delete 'api/v1/reaction_process_editor/sign_out', to: 'reaction_process_editor/sessions#destroy'
+      end
+    end
   end
 
   authenticated :user, ->(u) { u.type == 'Admin' } do
@@ -83,4 +94,4 @@ Rails.application.routes.draw do
   get 'test', to: 'pages#test'
 end
 
-# rubocop: enable Metrics/BlockLength, Layout/LineLength, Style/FrozenStringLiteralComment
+# rubocop: enable Metrics/BlockLength
