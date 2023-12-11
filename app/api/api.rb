@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
-
 # module API
 require 'grape-entity'
 require 'grape-swagger'
@@ -27,7 +25,7 @@ class API < Grape::API
     end
 
     def detect_current_user
-      detect_current_user_from_session || detect_current_user_from_jwt
+      detect_current_user_from_session || detect_current_user_from_jwt || detect_current_user_from_jti_token
     end
 
     def detect_current_user_from_session
@@ -39,6 +37,14 @@ class API < Grape::API
       user_id = decoded_token[:user_id]
 
       User.find(user_id)
+    rescue StandardError
+      nil
+    end
+
+    def detect_current_user_from_jti_token
+      token = Warden::JWTAuth::HeaderParser.from_env(env)
+      decoded_token = JWT.decode(token, Rails.application.secrets.secret_key_base)
+      User.find_by(id: decoded_token[0]['sub'], jti: decoded_token[0]['jti'])
     rescue StandardError
       nil
     end
@@ -59,8 +65,9 @@ class API < Grape::API
       error!('401 Unauthorized', 401) unless current_user
     end
 
-    def is_public_request?
+    def public_request?
       request.path.start_with?(
+        '/users/sign_in',
         '/api/v1/public/',
         '/api/v1/chemscanner/',
         '/api/v1/chemspectra/',
@@ -117,7 +124,7 @@ class API < Grape::API
   end
 
   before do
-    authenticate! unless is_public_request?
+    authenticate! unless public_request?
   end
 
   # desc: whitelisted tables and columns for advanced_search
@@ -205,6 +212,15 @@ class API < Grape::API
   mount Chemotion::AdminDeviceAPI
   mount Chemotion::AdminDeviceMetadataAPI
 
+  namespace :reaction_process_editor do
+    mount ::ReactionProcessEditor::EditorAPI
+    mount ::ReactionProcessEditor::ReactionAPI
+    mount ::ReactionProcessEditor::ReactionProcessAPI
+    mount ::ReactionProcessEditor::ReactionProcessActivityAPI
+    mount ::ReactionProcessEditor::ReactionProcessStepAPI
+    mount ::ReactionProcessEditor::VesselAPI
+  end
+
   if Rails.env.development?
     add_swagger_documentation(info: {
                                 title: 'Chemotion ELN',
@@ -212,4 +228,3 @@ class API < Grape::API
                               })
   end
 end
-# rubocop:enable Metrics/ClassLength
