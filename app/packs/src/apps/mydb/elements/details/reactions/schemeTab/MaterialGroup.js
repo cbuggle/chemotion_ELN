@@ -102,6 +102,7 @@ function GeneralMaterialGroup({
   switchEquiv, lockEquivColumn
 }) {
   const isReactants = materialGroup === 'reactants';
+  const isIntermediate = materialGroup === 'intermediate_samples';
   let headers = {
     ref: 'Ref',
     group: 'Starting materials',
@@ -113,7 +114,9 @@ function GeneralMaterialGroup({
     loading: 'Loading',
     concn: 'Conc',
     vol: 'Vol',
-    eq: 'Equiv'
+    eq: 'Equiv',
+    reaction_step: 'Step',
+    intermediate_type: 'Type'
   };
 
   const reagentList = [];
@@ -156,6 +159,14 @@ function GeneralMaterialGroup({
     headers.eq = 'Yield';
   }
 
+  if (materialGroup === 'intermediate_samples') {
+    headers.group = 'Intermediates';
+    headers.ref = null;
+    headers.concn = null;
+    headers.eq = null;
+    headers.tr = null;
+  }
+
   const refTHead = (materialGroup !== 'products') ? headers.ref : null;
   /**
    * Add a (not yet persisted) sample to a material group
@@ -172,52 +183,87 @@ function GeneralMaterialGroup({
     </Button>
   );
 
+  const materialsTable = (
+    <table width="100%" className="reaction-scheme">
+      <colgroup>
+        <col style={{ width: '4%' }} />
+        <col style={{ width: showLoadingColumn ? '8%' : '15%' }} />
+        <col style={{ width: '4%' }} />
+        <col style={{ width: '2%' }} />
+        <col style={{ width: '2%' }} />
+        <col style={{ width: showLoadingColumn ? '3%' : '4%' }} />
+        <col style={{ width: showLoadingColumn ? '10%' : '11%' }} />
+        {showLoadingColumn && <col style={{ width: '11%' }} />}
+        <col style={{ width: showLoadingColumn ? '10%' : '11%' }} />
+        <col style={{ width: showLoadingColumn ? '12%' : '13%' }} />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>{addSampleButton}</th>
+          <th>{headers.group}</th>
+          {isReactants && <th colSpan={showLoadingColumn ? 9 : 8}>{reagentDd}</th>}
+          {!isReactants && <th>{refTHead}</th>}
+          <th>{headers.show_label}</th>
+          {!isReactants && <th style={{ padding: '2px 2px' }}>{headers.tr}</th>}
+          {!isReactants
+            && (
+              <th style={{ padding: '2px 2px' }}>
+                <OverlayTrigger
+                  placement="top"
+                  overlay={
+                    <Tooltip id="coefficientHeaderTitleReactionScheme">Coefficient</Tooltip>
+                  }
+                >
+                  <span>{headers.reaction_coefficient}</span>
+                </OverlayTrigger>
+              </th>
+            )}
+          {!isReactants && <th>{headers.amount}</th>}
+          {!isReactants && <th />}
+          {!isReactants && <th />}
+          {showLoadingColumn && !isReactants && <th>{headers.loading}</th>}
+          {!isReactants && <th>{headers.concn}</th>}
+          {!isReactants && permitOn(reaction) && <th>{headers.eq} {!isReactants && materialGroup !== 'products' && SwitchEquivButton(lockEquivColumn, switchEquiv)}</th>}
+        </tr>
+      </thead>
+      {contents.map(item => item)}
+    </table>
+  );
+
+  const intermediatesTable = (
+    <table width="100%" className="reaction-scheme">
+      <colgroup>
+        <col style={{ width: '4%' }} />
+        <col style={{ width: '16%' }} />
+        <col style={{ width: '4%' }} />
+        <col style={{ width: '6%' }} />
+        <col style={{ width: '20%' }} />
+        <col style={{ width: '27%' }} />
+        <col style={{ width: '23%' }} />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>{addSampleButton}</th>
+          <th>{headers.group}</th>
+          <th>{headers.show_label}</th>
+          <th>{headers.reaction_step}</th>
+          <th>{headers.intermediate_type}</th>
+          {!isReactants && <th>{headers.amount}</th>}
+          <th> </th>
+          <th> </th>
+        </tr>
+      </thead>
+      <tbody>
+        {contents.map(item => item)}
+      </tbody>
+    </table>
+  );
+
   return (
     <div>
-      <table width="100%" className="reaction-scheme">
-        <colgroup>
-          <col style={{ width: '4%' }} />
-          <col style={{ width: showLoadingColumn ? '8%' : '15%' }} />
-          <col style={{ width: '4%' }} />
-          <col style={{ width: '2%' }} />
-          <col style={{ width: '2%' }} />
-          <col style={{ width: showLoadingColumn ? '3%' : '4%' }} />
-          <col style={{ width: showLoadingColumn ? '10%' : '11%' }} />
-          {showLoadingColumn && <col style={{ width: '11%' }} />}
-          <col style={{ width: showLoadingColumn ? '10%' : '11%' }} />
-          <col style={{ width: showLoadingColumn ? '12%' : '13%' }} />
-        </colgroup>
-        <thead>
-          <tr>
-            <th>{addSampleButton}</th>
-            <th>{headers.group}</th>
-            {isReactants && <th colSpan={showLoadingColumn ? 9 : 8}>{reagentDd}</th>}
-            {!isReactants && <th>{refTHead}</th>}
-            <th>{headers.show_label}</th>
-            {!isReactants && <th style={{ padding: '2px 2px' }}>{headers.tr}</th>}
-            {!isReactants
-              && (
-                <th style={{ padding: '2px 2px' }}>
-                  <OverlayTrigger
-                    placement="top"
-                    overlay={
-                      <Tooltip id="coefficientHeaderTitleReactionScheme">Coefficient</Tooltip>
-                    }
-                  >
-                    <span>{headers.reaction_coefficient}</span>
-                  </OverlayTrigger>
-                </th>
-              )}
-            {!isReactants && <th>{headers.amount}</th>}
-            {!isReactants && <th />}
-            {!isReactants && <th />}
-            {showLoadingColumn && !isReactants && <th>{headers.loading}</th>}
-            {!isReactants && <th>{headers.concn}</th>}
-            {!isReactants && permitOn(reaction) && <th>{headers.eq} {!isReactants && materialGroup !== 'products' && SwitchEquivButton(lockEquivColumn, switchEquiv)}</th> }
-          </tr>
-        </thead>
-        {contents.map(item => item)}
-      </table>
+      {
+        isIntermediate ? intermediatesTable : materialsTable
+      }
     </div>
   );
 }
