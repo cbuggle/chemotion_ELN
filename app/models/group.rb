@@ -23,17 +23,18 @@
 #  name_abbreviation      :string(12)
 #  type                   :string           default("Person")
 #  reaction_name_prefix   :string(3)        default("R")
+#  layout                 :hstore           not null
 #  confirmation_token     :string
 #  confirmed_at           :datetime
 #  confirmation_sent_at   :datetime
 #  unconfirmed_email      :string
-#  layout                 :hstore           not null
 #  selected_device_id     :integer
 #  failed_attempts        :integer          default(0), not null
 #  unlock_token           :string
 #  locked_at              :datetime
 #  account_active         :boolean
 #  matrix                 :integer          default(0)
+#  jti                    :string
 #  providers              :jsonb
 #
 # Indexes
@@ -41,9 +42,10 @@
 #  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_deleted_at            (deleted_at)
 #  index_users_on_email                 (email) UNIQUE
+#  index_users_on_jti                   (jti)
 #  index_users_on_name_abbreviation     (name_abbreviation) UNIQUE WHERE (name_abbreviation IS NOT NULL)
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_users_on_unlock_token          (unlock_token) UNIQUE
 #
 
-class Group < User ; end
+class Group < User; end
