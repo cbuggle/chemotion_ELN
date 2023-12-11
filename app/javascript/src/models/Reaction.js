@@ -459,6 +459,9 @@ export default class Reaction extends Element {
     copy.intermediate_samples = this.intermediate_samples.map(
       sample => Sample.copyFromSampleAndCollectionId(sample, copy.collection_id)
     );
+    copy.intermediate_samples = this.intermediate_samples.map(
+      sample => Sample.copyFromSampleAndCollectionId(sample, copy.collection_id)
+    );
     copy.solvents = this.solvents.map(
       sample => Sample.copyFromSampleAndCollectionId(sample, copy.collection_id)
     );
