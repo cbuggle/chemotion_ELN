@@ -371,6 +371,7 @@ GEM
       railties (>= 4.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    google-protobuf (3.25.2-x86_64-linux)
     grape (1.8.0)
       activesupport (>= 5)
       builder
@@ -911,6 +912,7 @@ DEPENDENCIES
   font-awesome-rails
   fun_sftp!
   fx
+  google-protobuf
   grape
   grape-entity
   grape-kaminari

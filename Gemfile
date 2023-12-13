@@ -38,6 +38,9 @@ gem 'font-awesome-rails'
 gem 'fun_sftp', git: 'https://github.com/fl9/fun_sftp.git', branch: 'allow-port-option'
 gem 'fx'
 
+# Google protocol buffers for use in ORD.
+gem 'google-protobuf'
+
 gem 'grape'
 gem 'grape-entity'
 gem 'grape-kaminari'
