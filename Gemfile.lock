@@ -349,6 +349,8 @@ GEM
       railties (>= 6.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    google-protobuf (4.26.1-x86_64-linux)
+      rake (>= 13)
     grape (1.8.0)
       activesupport (>= 5)
       builder
@@ -901,6 +903,7 @@ DEPENDENCIES
   fugit
   fun_sftp!
   fx
+  google-protobuf
   grape
   grape-entity
   grape-kaminari
