@@ -32,6 +32,9 @@ module ReactionProcessEditor
 
         put do
           @reaction_process_step.update permitted_params[:reaction_process_step]
+          Usecases::ReactionProcessEditor::ReactionProcesses::CalculateVessels.execute!(
+            reaction_process_id: @reaction_process_step.reaction_process_id,
+          )
           present @reaction_process_step, with: Entities::ReactionProcessEditor::ReactionProcessStepEntity,
                                           root: :reaction_process_step
         end
@@ -73,21 +76,6 @@ module ReactionProcessEditor
               status 422
               activity.errors
             end
-          end
-        end
-
-        namespace :vessel do
-          desc 'Set the Vessel'
-          put do
-            if params[:vessel_id].blank?
-              @reaction_process_step.vessel = nil
-            else
-              vessel = Vessel.find params[:vessel_id]
-              error!('404 Not Found', 404) unless vessel
-
-              @reaction_process_step.vessel = vessel
-            end
-            @reaction_process_step.save
           end
         end
       end

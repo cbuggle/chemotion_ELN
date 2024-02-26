@@ -9,6 +9,7 @@ module Entities
 
       expose :reaction_process_steps, using: 'Entities::ReactionProcessEditor::ReactionProcessStepEntity'
       expose :samples_preparations, using: 'Entities::ReactionProcessEditor::SamplePreparationEntity'
+      expose :reaction_process_vessels, using: 'Entities::ReactionProcessEditor::ReactionProcessVesselEntity'
       expose :provenance, using: 'Entities::ReactionProcessEditor::ProvenanceEntity'
 
       expose :reaction_svg_file
@@ -19,6 +20,10 @@ module Entities
       private
 
       delegate :reaction, to: :object
+
+      def vessel_preparations
+        ::ReactionProcessEditor::ReactionProcessVessel.where(reaction_process_id: object.id)
+      end
 
       def reaction_process_steps
         object.reaction_process_steps.order('position')
@@ -53,6 +58,7 @@ module Entities
             equipment: SELECT_OPTIONS.all_ord_equipment,
             preparation_types: SELECT_OPTIONS.preparation_types,
           },
+          vessel_preparations: { preparation_types: SELECT_OPTIONS.vessel_preparation_types },
           step_name_suggestions: step_name_suggestion_options,
           activity_type_equipment: SELECT_OPTIONS.activity_type_equipment,
           purify: {

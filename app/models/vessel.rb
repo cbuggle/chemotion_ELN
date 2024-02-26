@@ -29,6 +29,10 @@ class Vessel < ApplicationRecord
   has_many :collections_vessels, dependent: :destroy
   has_many :collections, through: :collections_vessels
 
+  has_many :reaction_process_vessels, dependent: :destroy
+  has_many :reaction_processes, through: :reaction_process_vessels
+  has_many :reaction_process_steps, dependent: :nullify
+
   delegate :details, :material_details, :material_type, :vessel_type, :volume_amount, :volume_unit,
            :weight_amount, :weight_unit, to: :vessel_template
 end

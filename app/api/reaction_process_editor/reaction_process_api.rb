@@ -4,7 +4,7 @@ module ReactionProcessEditor
   class ReactionProcessAPI < Grape::API
     helpers StrongParamsHelpers
 
-    rescue_from :all
+   # rescue_from :all
 
     namespace :reaction_processes do
       route_param :id do
@@ -104,6 +104,7 @@ module ReactionProcessEditor
           params do
             requires :reaction_process_step, type: Hash do
               optional :name
+              optional :vessel_id
               optional :locked
             end
           end
@@ -114,6 +115,9 @@ module ReactionProcessEditor
             )
 
             new_step.update permitted_params[:reaction_process_step]
+            Usecases::ReactionProcessEditor::ReactionProcesses::CalculateVessels.execute!(
+              reaction_process_id: @reaction_process.id,
+            )
             present new_step, with: Entities::ReactionProcessEditor::ReactionProcessStepEntity,
                               root: :reaction_process_step
           end

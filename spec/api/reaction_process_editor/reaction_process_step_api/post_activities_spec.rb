@@ -40,7 +40,7 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.post /activities' do
 
   it_behaves_like 'authorization restricted API call'
 
-  it 'triggers usecase ReactionProcessStep::AppendActivity' do
+  it 'triggers usecase ReactionProcessSteps::AppendActivity' do
     allow(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendActivity).to receive(:execute!).and_call_original
 
     post_action_request

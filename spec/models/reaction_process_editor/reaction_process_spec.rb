@@ -8,6 +8,8 @@ RSpec.describe ReactionProcessEditor::ReactionProcess do
   it_behaves_like 'acts_as_paranoid soft-deletable model', :reaction_process
 
   it { is_expected.to belong_to(:reaction) }
+  it { is_expected.to have_many(:reaction_process_vessels).dependent(:destroy) }
+  it { is_expected.to have_many(:vessels).through(:reaction_process_vessels) }
 
   it { is_expected.to have_many(:reaction_process_steps).dependent(:destroy) }
   it { is_expected.to have_many(:samples_preparations).dependent(:destroy) }
@@ -75,7 +77,7 @@ RSpec.describe ReactionProcessEditor::ReactionProcess do
       create_default(:reaction_process_step)
       activities = create_list(:reaction_process_activity_save, 3)
       expect(reaction_process.saved_sample_ids).to include(
-        activities[0].sample.id, activities[1].sample.id, activities[2].sample.id,
+        activities[0].sample.id, activities[1].sample.id, activities[2].sample.id
       )
     end
   end
