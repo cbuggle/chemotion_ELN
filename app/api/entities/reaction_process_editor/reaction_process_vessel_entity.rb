@@ -15,7 +15,7 @@ module Entities
       end
 
       def step_names
-        object.reaction_process.reaction_process_steps.where(vessel_id: object.vessel.id).order(&:position).map(&:name)
+        object.reaction_process.reaction_process_steps.where(vessel_id: object.vessel.id).order(:position).map(&:name)
       end
     end
   end
