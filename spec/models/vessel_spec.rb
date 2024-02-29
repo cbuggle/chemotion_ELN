@@ -17,9 +17,24 @@ RSpec.describe Vessel do
 
   it { is_expected.to have_many(:collections).through(:collections_vessels) }
   it { is_expected.to have_many(:collections_vessels).dependent(:destroy) }
-  it { is_expected.to have_many(:reaction_process_steps).dependent(:nil) }
-  it { is_expected.to have_many(:reaction_process_vessels).dependent(:destroy) }
-  it { is_expected.to have_many(:reaction_processes).through(:reaction_process_vessels) }
+
+  it {
+    expect(vessel).to have_many(:reaction_process_steps)
+      .class_name('ReactionProcessEditor::ReactionProcessStep')
+      .dependent(:nullify)
+  }
+
+  it {
+    expect(vessel).to have_many(:reaction_process_vessels)
+      .class_name('ReactionProcessEditor::ReactionProcessVessel')
+      .dependent(:destroy)
+  }
+
+  it {
+    expect(vessel).to have_many(:reaction_processes)
+      .class_name('ReactionProcessEditor::ReactionProcess')
+      .through(:reaction_process_vessels)
+  }
 
   it { is_expected.to delegate_method(:details).to(:vessel_template) }
   it { is_expected.to delegate_method(:material_details).to(:vessel_template) }
