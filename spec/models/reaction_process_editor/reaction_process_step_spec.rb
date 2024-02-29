@@ -13,6 +13,7 @@ RSpec.describe ReactionProcessEditor::ReactionProcessStep do
 
   it { is_expected.to delegate_method(:reaction).to(:reaction_process) }
   it { is_expected.to delegate_method(:creator).to(:reaction_process) }
+  it { is_expected.to delegate_method(:reaction_process_vessels).to(:reaction_process) }
 
   it '#siblings' do
     create_default(:reaction_process)
