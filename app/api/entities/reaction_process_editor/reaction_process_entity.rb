@@ -21,8 +21,9 @@ module Entities
 
       delegate :reaction, to: :object
 
-      def vessel_preparations
-        ::ReactionProcessEditor::ReactionProcessVessel.where(reaction_process_id: object.id)
+      def reaction_process_vessels
+        # We go the extra mile to have them ordered by reaction_process_steps.position
+        object.reaction_process_vessels.where(vessel_id: reaction_process_steps.map(&:vessel_id).uniq)
       end
 
       def reaction_process_steps
