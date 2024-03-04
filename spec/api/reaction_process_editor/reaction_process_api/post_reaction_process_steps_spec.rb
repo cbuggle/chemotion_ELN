@@ -7,7 +7,10 @@ describe ReactionProcessEditor::ReactionProcessAPI, '.post /reaction_process_ste
   subject(:api_call) do
     post("/api/v1/reaction_process_editor/reaction_processes/#{reaction_process.id}/reaction_process_steps",
          headers: authorization_header,
-         params: { reaction_process_step: { name: 'New Step', vessel_id: vessel_id } }.to_json)
+         params: { reaction_process_step: {
+           name: 'New Step', vessel_id: vessel_id,
+           reaction_process_vessel: reaction_process_vessel_params
+         } }.to_json)
   end
 
   let!(:reaction_process) { create_default(:reaction_process) }
@@ -25,6 +28,7 @@ describe ReactionProcessEditor::ReactionProcessAPI, '.post /reaction_process_ste
   let(:authorization_header) { authorized_header(reaction_process.creator) }
 
   let(:vessel_id) { create(:vessel).id }
+  let!(:reaction_process_vessel_params) { { preparations: ['DRIED'] } }
 
   it_behaves_like 'authorization restricted API call'
 
@@ -48,12 +52,24 @@ describe ReactionProcessEditor::ReactionProcessAPI, '.post /reaction_process_ste
     )
   end
 
-  it 'triggers usecase ReactionProcesses' do
-    allow(Usecases::ReactionProcessEditor::ReactionProcesses::CalculateVessels).to receive(:execute!)
+  it 'triggers UseCase ReactionProcessVessels::CreateOrUpdate' do
+    allow(Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate).to receive(:execute!)
 
     api_call
 
-    expect(Usecases::ReactionProcessEditor::ReactionProcesses::CalculateVessels).to have_received(:execute!).with(
+    expect(Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate).to have_received(:execute!).with(
+      reaction_process_id: reaction_process.id,
+      vessel_id: vessel_id,
+      reaction_process_vessel_params: reaction_process_vessel_params,
+    )
+  end
+
+  it 'triggers UseCase ReactionProcessVessels::Calculate' do
+    allow(Usecases::ReactionProcessEditor::ReactionProcessVessels::Calculate).to receive(:execute!)
+
+    api_call
+
+    expect(Usecases::ReactionProcessEditor::ReactionProcessVessels::Calculate).to have_received(:execute!).with(
       reaction_process_id: reaction_process.id,
     )
   end

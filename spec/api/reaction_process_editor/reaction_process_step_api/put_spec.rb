@@ -7,7 +7,10 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.put' do
 
   subject(:api_call) do
     put("/api/v1/reaction_process_editor/reaction_process_steps/#{reaction_process_step.id}",
-        params: { reaction_process_step: { name: 'New Step Name', vessel_id: vessel.id, locked: true } }.to_json,
+        params: { reaction_process_step: {
+          name: 'New Step Name', vessel_id: vessel.id, locked: true,
+          reaction_process_vessel: reaction_process_vessel_params
+        } }.to_json,
         headers: authorization_header)
   end
 
@@ -15,6 +18,7 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.put' do
   let!(:reaction_process) { create_default(:reaction_process) }
   let!(:reaction_process_step) { create(:reaction_process_step, vessel: vessel) }
   let(:authorization_header) { authorized_header(reaction_process_step.creator) }
+  let!(:reaction_process_vessel_params) { { preparations: ['DRIED'] } }
 
   it_behaves_like 'authorization restricted API call'
 
@@ -30,13 +34,25 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.put' do
     end.to change { reaction_process_step.reload.locked }.from(nil).to(true)
   end
 
-  it 'triggers usecase ReactionProcesses::ReactionProcesses::CalculateVessels' do
-    allow(Usecases::ReactionProcessEditor::ReactionProcesses::CalculateVessels).to receive(:execute!)
+  it 'triggers UseCase ReactionProcessVessels::Calculate' do
+    allow(Usecases::ReactionProcessEditor::ReactionProcessVessels::Calculate).to receive(:execute!)
 
     api_call
 
-    expect(Usecases::ReactionProcessEditor::ReactionProcesses::CalculateVessels).to have_received(:execute!).with(
+    expect(Usecases::ReactionProcessEditor::ReactionProcessVessels::Calculate).to have_received(:execute!).with(
       reaction_process_id: reaction_process.id,
+    )
+  end
+
+  it 'triggers UseCase ReactionProcessVessels::CreateOrUpdate' do
+    allow(Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate).to receive(:execute!)
+
+    api_call
+
+    expect(Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate).to have_received(:execute!).with(
+      reaction_process_id: reaction_process.id,
+      vessel_id: vessel.id,
+      reaction_process_vessel_params: reaction_process_vessel_params,
     )
   end
 

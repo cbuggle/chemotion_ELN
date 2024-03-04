@@ -2,8 +2,8 @@
 
 module Usecases
   module ReactionProcessEditor
-    module ReactionProcesses
-      class CalculateVessels
+    module ReactionProcessVessels
+      class Calculate
         def self.execute!(reaction_process_id:)
           persisted_vessel_ids = ::ReactionProcessEditor::ReactionProcessVessel
                                  .where(reaction_process_id: reaction_process_id).pluck(:vessel_id)

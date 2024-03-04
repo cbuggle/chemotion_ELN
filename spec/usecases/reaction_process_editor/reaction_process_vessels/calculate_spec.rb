@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Usecases::ReactionProcessEditor::ReactionProcesses::CalculateVessels do
+RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessVessels::Calculate do
   subject(:calculate_vessels) do
     described_class.execute!(reaction_process_id: reaction_process.id)
   end
