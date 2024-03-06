@@ -21,13 +21,6 @@ module Entities
 
       delegate :reaction, to: :object
 
-      def reaction_process_vessels
-        # We go the extra mile to have them ordered by reaction_process_steps.position.
-        reaction_process_steps.map(&:vessel_id).uniq.map do |vessel_id|
-          object.reaction_process_vessels.find_by(vessel_id: vessel_id)
-        end
-      end
-
       def reaction_process_steps
         @reaction_process_steps ||= object.reaction_process_steps.order('position')
       end

@@ -26,18 +26,16 @@ module ReactionProcessEditor
           requires :reaction_process_step, type: Hash do
             optional :name
             optional :locked
-            optional :vessel_id
           end
         end
 
         put do
+          @reaction_process_step.update(reaction_process_vessel:
+            Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
+              reaction_process_id: @reaction_process_step.reaction_process_id,
+              reaction_process_vessel_params: params[:reaction_process_step][:reaction_process_vessel],
+            ))
           @reaction_process_step.update permitted_params[:reaction_process_step]
-
-          Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
-            reaction_process_id: @reaction_process_step.reaction_process_id,
-            vessel_id: params[:reaction_process_step][:vessel_id],
-            reaction_process_vessel_params: params[:reaction_process_step][:reaction_process_vessel],
-          )
 
           present @reaction_process_step, with: Entities::ReactionProcessEditor::ReactionProcessStepEntity,
                                           root: :reaction_process_step

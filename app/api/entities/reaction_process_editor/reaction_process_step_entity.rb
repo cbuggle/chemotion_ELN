@@ -9,7 +9,6 @@ module Entities
       )
 
       expose :actions, using: 'Entities::ReactionProcessEditor::ReactionProcessActivityEntity'
-      expose :vessel, using: 'Entities::ReactionProcessEditor::VesselEntity'
 
       expose :reaction_process_vessel, using: 'Entities::ReactionProcessEditor::ReactionProcessVesselEntity'
 
@@ -39,10 +38,6 @@ module Entities
 
       def reaction_id
         reaction.id
-      end
-
-      def reaction_process_vessel
-        object.reaction_process.reaction_process_vessels.find_by(vessel_id: object.vessel_id)
       end
 
       def added_materials_options

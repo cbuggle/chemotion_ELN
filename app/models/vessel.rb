@@ -32,7 +32,6 @@ class Vessel < ApplicationRecord
   has_many :reaction_process_vessels, dependent: :destroy, class_name: 'ReactionProcessEditor::ReactionProcessVessel'
   has_many :reaction_processes, through: :reaction_process_vessels,
                                 class_name: 'ReactionProcessEditor::ReactionProcess'
-  has_many :reaction_process_steps, dependent: :nullify, class_name: 'ReactionProcessEditor::ReactionProcessStep'
 
   delegate :details, :material_details, :material_type, :vessel_type, :volume_amount, :volume_unit,
            :weight_amount, :weight_unit, to: :vessel_template

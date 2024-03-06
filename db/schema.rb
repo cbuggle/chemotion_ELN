@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_19_102034) do
+ActiveRecord::Schema.define(version: 2024_03_05_183411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -938,7 +938,7 @@ ActiveRecord::Schema.define(version: 2024_02_19_102034) do
 
   create_table "reaction_process_steps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "reaction_process_id"
-    t.uuid "vessel_id"
+    t.uuid "reaction_process_vessel_id"
     t.string "name"
     t.integer "position"
     t.boolean "locked"

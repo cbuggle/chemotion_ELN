@@ -104,7 +104,6 @@ module ReactionProcessEditor
           params do
             requires :reaction_process_step, type: Hash do
               optional :name
-              optional :vessel_id
               optional :locked
             end
           end
@@ -118,7 +117,6 @@ module ReactionProcessEditor
 
             Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
               reaction_process_id: @reaction_process.id,
-              vessel_id: params[:reaction_process_step][:vessel_id],
               reaction_process_vessel_params: params[:reaction_process_step][:reaction_process_vessel],
             )
 
