@@ -115,10 +115,10 @@ module ReactionProcessEditor
 
             new_step.update permitted_params[:reaction_process_step]
 
-            Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
+            new_step.update(reaction_process_vessel: Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
               reaction_process_id: @reaction_process.id,
               reaction_process_vessel_params: params[:reaction_process_step][:reaction_process_vessel],
-            )
+            ))
 
             present new_step, with: Entities::ReactionProcessEditor::ReactionProcessStepEntity,
                               root: :reaction_process_step
