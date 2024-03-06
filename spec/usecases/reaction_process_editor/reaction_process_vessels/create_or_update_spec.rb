@@ -3,17 +3,16 @@
 RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate do
   subject(:create_or_update) do
     described_class.execute!(reaction_process_id: reaction_process.id,
-                             vessel_id: vessel.id,
                              reaction_process_vessel_params: reaction_process_vessel_params)
   end
 
   let!(:reaction_process) { create_default(:reaction_process) }
+  let!(:vessel) { create(:vessel) }
 
-  let(:reaction_process_vessel_params) { { preparations: ['DRIED'] } }
-  let(:vessel) { create(:vessel) }
+  let(:reaction_process_vessel_params) { { vessel_id: vessel.id, preparations: ['DRIED'] } }
 
   before do
-    create(:reaction_process_step, vessel: vessel)
+    allow(Usecases::ReactionProcessEditor::ReactionProcessVessels::SweepUnused).to receive(:execute!)
   end
 
   it 'creates ReactionProcessVessel' do
@@ -34,12 +33,10 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOr
            }.to(['DRIED'])
   end
 
-  it 'triggers ReactionProcesses::ReactionProcessVessels::Calculate' do
-    allow(Usecases::ReactionProcessEditor::ReactionProcessVessels::Calculate).to receive(:execute!)
-
+  it 'triggers ReactionProcesses::ReactionProcessVessels::SweepUnused' do
     create_or_update
 
-    expect(Usecases::ReactionProcessEditor::ReactionProcessVessels::Calculate).to have_received(:execute!).with(
+    expect(Usecases::ReactionProcessEditor::ReactionProcessVessels::SweepUnused).to have_received(:execute!).with(
       reaction_process_id: reaction_process.id,
     )
   end

@@ -8,5 +8,6 @@ RSpec.describe ReactionProcessEditor::ReactionProcessVessel do
   it { is_expected.to belong_to(:reaction_process) }
   it { is_expected.to belong_to(:vessel) }
 
+  it { is_expected.to have_many(:reaction_process_steps).dependent(:nullify) }
   it { is_expected.to delegate_method(:creator).to(:reaction_process) }
 end
