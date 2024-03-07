@@ -19,12 +19,6 @@ RSpec.describe Vessel do
   it { is_expected.to have_many(:collections_vessels).dependent(:destroy) }
 
   it {
-    expect(vessel).to have_many(:reaction_process_steps)
-      .class_name('ReactionProcessEditor::ReactionProcessStep')
-      .dependent(:nullify)
-  }
-
-  it {
     expect(vessel).to have_many(:reaction_process_vessels)
       .class_name('ReactionProcessEditor::ReactionProcessVessel')
       .dependent(:destroy)

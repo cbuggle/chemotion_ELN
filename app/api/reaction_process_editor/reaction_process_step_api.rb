@@ -30,12 +30,17 @@ module ReactionProcessEditor
         end
 
         put do
+          @reaction_process_step.update permitted_params[:reaction_process_step]
+
           @reaction_process_step.update(reaction_process_vessel:
             Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
               reaction_process_id: @reaction_process_step.reaction_process_id,
               reaction_process_vessel_params: params[:reaction_process_step][:reaction_process_vessel],
             ))
-          @reaction_process_step.update permitted_params[:reaction_process_step]
+
+          Usecases::ReactionProcessEditor::ReactionProcessVessels::SweepUnused.execute!(
+            reaction_process_id: @reaction_process_step.reaction_process_id,
+          )
 
           present @reaction_process_step, with: Entities::ReactionProcessEditor::ReactionProcessStepEntity,
                                           root: :reaction_process_step
@@ -59,6 +64,7 @@ module ReactionProcessEditor
             requires :activity, type: Hash do
               requires :activity_name, type: String, desc: 'Name of the Action described'
               requires :workup, type: Hash, desc: 'Custom Action Parameters'
+              optional :reaction_process_vessel, type: Hash
             end
             optional :insert_before
           end

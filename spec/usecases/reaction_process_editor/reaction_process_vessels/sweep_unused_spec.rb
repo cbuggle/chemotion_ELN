@@ -27,4 +27,11 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessVessels::SweepUnu
       sweep_unused_vessels
     end.not_to(change { ReactionProcessEditor::ReactionProcessVessel.find_by(id: reaction_process_vessel.id) })
   end
+
+  it 'retains ReactionProcessVessel used in Activities' do
+    create(:reaction_process_activity, reaction_process_vessel: replaced_reaction_process_vessel)
+    expect do
+      sweep_unused_vessels
+    end.not_to(change { ReactionProcessEditor::ReactionProcessVessel.find_by(id: replaced_reaction_process_vessel.id) })
+  end
 end

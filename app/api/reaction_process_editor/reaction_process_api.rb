@@ -120,6 +120,10 @@ module ReactionProcessEditor
               reaction_process_vessel_params: params[:reaction_process_step][:reaction_process_vessel],
             ))
 
+            Usecases::ReactionProcessEditor::ReactionProcessVessels::SweepUnused.execute!(
+              reaction_process_id: @reaction_process.id,
+            )
+
             present new_step, with: Entities::ReactionProcessEditor::ReactionProcessStepEntity,
                               root: :reaction_process_step
           end
