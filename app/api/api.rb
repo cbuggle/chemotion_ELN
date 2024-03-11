@@ -218,6 +218,7 @@ class API < Grape::API
     mount ::ReactionProcessEditor::ReactionProcessAPI
     mount ::ReactionProcessEditor::ReactionProcessActivityAPI
     mount ::ReactionProcessEditor::ReactionProcessStepAPI
+    mount ::ReactionProcessEditor::ReactionProcessVesselAPI
     mount ::ReactionProcessEditor::VesselAPI
   end
 

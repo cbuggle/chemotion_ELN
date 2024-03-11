@@ -957,6 +957,7 @@ ActiveRecord::Schema.define(version: 2024_06_25_105013) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "deleted_at"
+    t.uuid "reaction_process_vessel_id"
   end
 
   create_table "reaction_process_defaults", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -968,10 +969,19 @@ ActiveRecord::Schema.define(version: 2024_06_25_105013) do
 
   create_table "reaction_process_steps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "reaction_process_id"
-    t.uuid "vessel_id"
+    t.uuid "reaction_process_vessel_id"
     t.string "name"
     t.integer "position"
     t.boolean "locked"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at"
+  end
+
+  create_table "reaction_process_vessels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "reaction_process_id"
+    t.uuid "vessel_id"
+    t.string "preparations", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "deleted_at"
