@@ -11,8 +11,8 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessActivities::Destr
 
   it 'deletes action' do
     expect { destroy_activity }.to change {
-                                   ReactionProcessEditor::ReactionProcessActivity.exists?(deleting_activity.id)
-                                 }.to(false)
+                                     ReactionProcessEditor::ReactionProcessActivity.exists?(deleting_activity.id)
+                                   }.to(false)
   end
 
   it 'updates siblings positions' do

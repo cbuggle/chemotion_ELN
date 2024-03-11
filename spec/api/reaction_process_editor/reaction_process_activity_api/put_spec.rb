@@ -43,7 +43,7 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put' do
 
     expect(Usecases::ReactionProcessEditor::ReactionProcessActivities::Update).to have_received(:execute!).with(
       activity: activity, activity_params: update_activity_params[:activity],
-      )
+    )
   end
 
   it 'triggers ReactionProcesses::ReactionProcessVessels::SweepUnused' do

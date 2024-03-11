@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put' do
+describe ReactionProcessEditor::ReactionProcessVesselAPI, '.put' do
   include RequestSpecHelper
 
   subject(:api_call) do
