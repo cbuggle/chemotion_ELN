@@ -2,6 +2,7 @@
 
 require 'singleton'
 
+# rubocop: disable Metrics/ClassLength
 module ReactionProcessEditor
   class SelectOptions
     include Singleton
@@ -274,3 +275,4 @@ module ReactionProcessEditor
     end
   end
 end
+# rubocop: enable Metrics/ClassLength

@@ -87,7 +87,9 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendActi
 
       append_activity
 
-      expect(Usecases::ReactionProcessEditor::ReactionProcessActivities::UpdatePosition).to have_received(:execute!).with(
+      expect(
+        Usecases::ReactionProcessEditor::ReactionProcessActivities::UpdatePosition,
+      ).to have_received(:execute!).with(
         activity: instance_of(ReactionProcessEditor::ReactionProcessActivity),
         position: insert_before,
       )

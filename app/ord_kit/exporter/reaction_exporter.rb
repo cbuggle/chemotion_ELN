@@ -17,7 +17,9 @@ module OrdKit
           notes: nil,
           workups: nil,
           outcomes: nil,
-          provenance: OrdKit::Exporter::Reactions::ReactionProvenanceExporter.new(model.reaction_process.provenance).to_ord,
+          provenance: OrdKit::Exporter::Reactions::ReactionProvenanceExporter.new(
+            model.reaction_process.provenance,
+          ).to_ord,
           reaction_id: model.reaction_process.id,
           reaction_steps: OrdKit::Exporter::Reactions::ReactionProcessExporter.new(model.reaction_process).to_ord,
         )

@@ -4,7 +4,6 @@ module OrdKit
   module Exporter
     module Vessels
       class ReactionProcessVesselExporter < OrdKit::Exporter::Base
-
         attr_reader :vessel
 
         def to_ord

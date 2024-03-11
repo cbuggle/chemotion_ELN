@@ -17,6 +17,6 @@
 module ReactionProcessEditor
   class SamplesPreparation < ApplicationRecord
     belongs_to :reaction_process
-    belongs_to :sample, -> { includes(:molecule) }
+    belongs_to :sample, -> { includes(:molecule) }, inverse_of: 'samples_preparations'
   end
 end
