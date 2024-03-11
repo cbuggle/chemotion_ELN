@@ -17,6 +17,7 @@ module ReactionProcessEditor
     acts_as_paranoid
 
     belongs_to :reaction_process_step
+    belongs_to :reaction_process_vessel, optional: true
 
     validate :validate_workup
 
