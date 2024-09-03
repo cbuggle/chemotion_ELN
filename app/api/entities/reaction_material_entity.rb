@@ -18,7 +18,5 @@ module Entities
     expose! :gas_type
     expose! :gas_phase_data
     expose! :intermediate_type
-
-    expose! :sample, using: 'Entities::SampleEntity', merge: true
   end
 end
