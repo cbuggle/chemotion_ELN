@@ -75,7 +75,8 @@ module Entities
       expose! :xref
       expose! :sample_type
       expose! :sample_details
-      expose! :components,              unless: :displayed_in_list, using:     'Entities::ComponentEntity'
+      expose! :components,              unless: :displayed_in_list, using: 'Entities::ComponentEntity'
+      expose! :reaction_step
     end
     # rubocop:enable Layout/LineLength, Layout/ExtraSpacing, Metrics/BlockLength
 
@@ -145,6 +146,16 @@ module Entities
 
     def gas_phase_data
       object.reactions_samples.pick(:gas_phase_data)
+    end
+
+    def reaction_step
+      # Enhancement for IntermediateSamples as saved by the ReactionProcessEditor
+      # We want to present the position of the ReactionProcessStep in which the object (Sample) was saved.
+      intermediate = ReactionsIntermediateSample.find_by(sample_id: object.id)
+
+      return if intermediate.nil?
+
+      ::ReactionProcessEditor::ReactionProcessStep.find_by(id: intermediate.reaction_process_step_id)&.step_number
     end
   end
 end
