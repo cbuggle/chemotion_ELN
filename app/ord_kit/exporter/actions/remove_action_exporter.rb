@@ -93,7 +93,7 @@ module OrdKit
         def solvents_with_ratio(solvents)
           solvents&.map do |solvent|
             OrdKit::CompoundWithRatio.new(
-              compound: OrdKit::Exporter::Compounds::PurifySampleOrDiverseSolventExporter.new(solvent['id']).to_ord,
+              compound: OrdKit::Exporter::Compounds::PurificationSampleOrDiverseSolventExporter.new(solvent['id']).to_ord,
               ratio: solvent['ratio'].to_s,
             )
           end

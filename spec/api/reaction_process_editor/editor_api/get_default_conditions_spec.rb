@@ -14,10 +14,10 @@ describe ReactionProcessEditor::EditorAPI, '.get /default_conditions' do
 
   let(:expected_default_conditions) do
     { default_conditions: {
-      global: Entities::ReactionProcessEditor::SelectOptions::Conditions::GLOBAL_DEFAULTS,
+      global: Entities::ReactionProcessEditor::SelectOptions::Forms::Condition::GLOBAL_DEFAULTS,
       user: anything,
-      select_options: { activity_type_equipment: select_options::Equipment.instance.per_activity_type,
-                        condition_additional_information: select_options::Conditions.instance.additional_information },
+      select_options: { activity_type_equipment: select_options::Models::Equipment.instance.per_activity_type,
+                        condition_additional_information: select_options::Models::Conditions.instance.additional_information },
     } }.deep_stringify_keys
   end
 
