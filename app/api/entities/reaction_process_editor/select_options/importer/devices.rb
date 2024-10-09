@@ -18,6 +18,8 @@ module Entities
 
           def read_devices_file
             Rails.root.join(ROOT_DIR, DEVICES_FILENAME).read
+          rescue Errno::ENOENT
+            ''
           end
         end
       end
