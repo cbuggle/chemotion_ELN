@@ -23,7 +23,7 @@ module Entities
           end
 
           def devices_methods_csv
-            SelectOptions::Importer::DeviceMethods.instance.all
+            SelectOptions::Importer::DeviceMethods.new.all
           end
         end
       end

@@ -4,9 +4,7 @@ module Entities
   module ReactionProcessEditor
     module SelectOptions
       module Importer
-        class DeviceMethods < Base
-          include Singleton
-
+        class DeviceMethods
           ROOT_DIR = ENV.fetch('REACTION_PROCESS_EDITOR_DATA_DIR', nil)
           DEVICES_FILES = 'devices/*.csv'
           DEVICES_FILENAME_PREFIX = ENV.fetch('REACTION_PROCESS_EDITOR_DEVICENAME_PREFIX', '')
@@ -18,7 +16,7 @@ module Entities
           private
 
           def all_with_device_name
-            device_methods_files.map { |filename| read_csv_with_device_name(filename) }
+            @all_with_device_name ||= device_methods_files.map { |filename| read_csv_with_device_name(filename) }
           end
 
           def read_csv_with_device_name(filename)

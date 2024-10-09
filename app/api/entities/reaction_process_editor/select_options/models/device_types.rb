@@ -74,7 +74,7 @@ module Entities
           end
 
           def devices_csv
-            SelectOptions::Importer::Devices.instance.devices_csv
+            SelectOptions::Importer::Devices.new.devices_csv
           end
         end
       end

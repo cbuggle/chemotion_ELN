@@ -4,9 +4,7 @@ module Entities
   module ReactionProcessEditor
     module SelectOptions
       module Importer
-        class Devices < Base
-          include Singleton
-
+        class Devices
           ROOT_DIR = ENV.fetch('REACTION_PROCESS_EDITOR_DATA_DIR', nil)
           DEVICES_FILENAME = ENV.fetch('REACTION_PROCESS_EDITOR_DEVICES_FILENAME', '')
 
@@ -17,7 +15,7 @@ module Entities
           private
 
           def read_devices_file
-            Rails.root.join(ROOT_DIR, DEVICES_FILENAME).read
+            @read_devices_file ||= Rails.root.join(ROOT_DIR, DEVICES_FILENAME).read
           rescue Errno::ENOENT
             ''
           end
