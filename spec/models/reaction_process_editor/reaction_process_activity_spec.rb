@@ -23,7 +23,7 @@ MEDIUM_KEYS = %w[ADDITIVE MEDIUM DIVERSE_SOLVENT].freeze
 
 ACTIVITY_ADDS_SAMPLE_KEYS = %w[ADD TRANSFER].freeze
 # All Keys which are currently in use, but basically all arbitrary names / all others.
-ACTIVITY_ADDS_NO_SAMPLE_KEYS = %w[PURIFY REMOVE ANALYSIS SAVE WAIT CONDITION].freeze
+ACTIVITY_ADDS_NO_SAMPLE_KEYS = %w[PURIFICATION REMOVE ANALYSIS SAVE WAIT CONDITION].freeze
 
 RSpec.describe ReactionProcessEditor::ReactionProcessActivity do
   subject(:process_activity) { create(:reaction_process_activity) }
@@ -71,7 +71,7 @@ RSpec.describe ReactionProcessEditor::ReactionProcessActivity do
   SAMPLE_KEYS.map do |acts_as|
     describe "bearing a #{acts_as} Sample" do
       subject(:process_activity) do
-        create("reaction_process_activity_add_#{acts_as.downcase}".to_sym,
+        create(:"reaction_process_activity_add_#{acts_as.downcase}",
                workup: { sample_id: sample.id }.stringify_keys)
       end
 
@@ -106,7 +106,7 @@ RSpec.describe ReactionProcessEditor::ReactionProcessActivity do
   MEDIUM_KEYS.map do |acts_as|
     describe "bearing a #{acts_as} Medium" do
       subject(:process_activity) do
-        create("reaction_process_activity_add_#{acts_as.downcase}".to_sym,
+        create(:"reaction_process_activity_add_#{acts_as.downcase}",
                workup: { sample_id: medium.id, acts_as: acts_as }.stringify_keys)
       end
 
