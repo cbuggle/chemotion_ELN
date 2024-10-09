@@ -21,7 +21,7 @@ module Entities
               value: method_label(method_csv),
               detectors: SelectOptions::Models::Detectors.instance.to_options(method_csv['Detectors']),
               mobile_phases: mobile_phases_options(method_csv['Mobile Phase']),
-              stationary_phases: stationary_phases_options(method_csv['Stationary Phase']),
+              stationary_phase: stationary_phase_option(method_csv['Stationary Phase']),
               default_volume: { value: method_csv['Def. Inj. Vol.'], unit: 'ml' },
               description: method_csv['Description'] }
           end
@@ -32,11 +32,7 @@ module Entities
             end
           end
 
-          def stationary_phases_options(phase_csv)
-            [stationary_phase_options(phase_csv)]
-          end
-
-          def stationary_phase_options(phase)
+          def stationary_phase_option(phase)
             phase_data = phase.match(REGEX_NAMES_AND_BRACKET_VALUES)
 
             label = phase_data[1].strip
