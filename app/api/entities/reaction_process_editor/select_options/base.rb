@@ -45,7 +45,7 @@ module Entities
         def sample_minimal_option(sample, acts_as)
           {
             id: sample.id,
-            value: sample.preferred_label || sample.short_label,
+            value: sample.id,
             # Can we unify this? Using preferred_labels as in most ELN which in turn is an attribute derived from
             # `external_label` but when a sample is saved it gets only it's "short_label" set. This is quite irritating.
             label: sample.preferred_label || sample.short_label,
