@@ -34,7 +34,8 @@ module Entities
 
             return {} unless analysis_type
 
-            { input_type: input_type,
+            { detector: detector_type,
+              input_type: input_type,
               analysis_type: analysis_type,
               label: label || analysis_type.titlecase,
               values: analysis_default_values(input_type: input_type, values: values, unit: unit) }

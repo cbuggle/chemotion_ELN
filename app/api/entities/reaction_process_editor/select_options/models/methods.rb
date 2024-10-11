@@ -41,10 +41,10 @@ module Entities
             options = { label: label, value: label }
             return options if analysis_default_value.blank?
 
-            options.merge(analysis_defaults(analysis_default_value))
+            options.merge(stationary_phase_analysis_defaults(analysis_default_value))
           end
 
-          def analysis_defaults(value)
+          def stationary_phase_analysis_defaults(value)
             { analysis_defaults: {
               TEMPERATURE: {
                 value: value,
