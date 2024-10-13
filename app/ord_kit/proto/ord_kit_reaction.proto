@@ -154,11 +154,10 @@ message ReactionProcessAction {
     ActionRemove removal = 9;
     ReactionConditions conditions = 10;
     ActionPurification purification = 11;
-    ActionPurification measurement = 12;
+    ActionAnalysis analysis = 12;
     ActionTransfer transfer = 13;
     ActionWait wait = 14;
     ActionSaveSample save_sample = 15;
-    Analysis analysis = 16;
   }
 
   message ActionAdd {
@@ -318,6 +317,21 @@ message ReactionProcessAction {
       ActionPurificationChromatography chromatography = 4;
     }
     Automation.AutomationMode automation = 5;
+  }
+
+  message ActionSpectroscopy {
+    string device = 1;
+  }
+  message ActionSpectrometry {
+    string device = 1;
+  }
+  message ActionAnalysis {
+    oneof type {
+      ActionSpectroscopy spectroscopy = 1;
+      ActionSpectrometry spectrometry = 2;
+      ActionPurificationChromatography chromatography = 3; // for now identical, AnalysisChromatography might diverge soon.
+    }
+    Automation.AutomationMode automation = 4;
   }
 
   message ActionTransfer {
