@@ -30,19 +30,21 @@ module Entities
           end
 
           def detector_analysis_defaults(detector_type, values)
-            input_type, analysis_type, unit, label = DETECTOR_ANALYSIS_TYPES[detector_type]
+            data_type, analysis_type, unit, label = DETECTOR_ANALYSIS_TYPES[detector_type]
 
-            return {} unless analysis_type
+            return [] unless analysis_type
 
-            { detector: detector_type,
-              input_type: input_type,
-              analysis_type: analysis_type,
-              label: label || analysis_type.titlecase,
-              values: analysis_default_values(input_type: input_type, values: values, unit: unit) }
+            # TODO: A detector might have multiple metrics (analysis_types). Adapt CSV parsing
+            # when suitable File format has been defined (therefore we return an array). cbuggle, 14.10.2024.
+            [{ detector: detector_type,
+               data_type: data_type,
+               analysis_type: analysis_type,
+               label: label || analysis_type.titlecase,
+               values: analysis_default_values(data_type: data_type, values: values, unit: unit) }]
           end
 
-          def analysis_default_values(input_type:, values:, unit:)
-            case input_type
+          def analysis_default_values(data_type:, values:, unit:)
+            case data_type
             when 'TEXT'
               "#{values} #{unit}"
             when 'METRIC'

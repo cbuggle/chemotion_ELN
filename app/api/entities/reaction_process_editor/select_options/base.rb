@@ -8,13 +8,13 @@ module Entities
 
         def options_for(values)
           Array(values).map do |value|
-            { value: value, label: value }
+            { value: value.strip, label: value.strip }
           end
         end
 
         def titlecase_options_for(values)
           Array(values).map do |string|
-            { value: string.to_s, label: string.to_s.titlecase }
+            { value: string.to_s.strip, label: string.to_s.strip.titlecase }
           end
         end
 
