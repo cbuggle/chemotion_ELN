@@ -34,8 +34,8 @@ module Entities
 
             return [] unless analysis_type
 
-            # TODO: A detector might have multiple metrics (analysis_types). Adapt CSV parsing
-            # when suitable File format has been defined (therefore we return an array). cbuggle, 14.10.2024.
+            # TODO: A detector might have multiple metrics /analysis_types (therefore we return an array).
+            # Current files have only one. Adapt CSV parsing once File format has been defined. cbuggle, 14.10.2024.
             [{ detector: detector_type,
                data_type: data_type,
                analysis_type: analysis_type,
