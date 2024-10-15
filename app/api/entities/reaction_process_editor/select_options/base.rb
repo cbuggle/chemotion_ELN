@@ -6,9 +6,13 @@ module Entities
       class Base
         include Singleton
 
+        def option_for(value)
+          { value: value.strip, label: value.strip }
+        end
+
         def options_for(values)
           Array(values).map do |value|
-            { value: value.strip, label: value.strip }
+            option_for(value)
           end
         end
 

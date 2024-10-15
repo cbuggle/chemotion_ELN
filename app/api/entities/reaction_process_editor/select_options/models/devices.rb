@@ -5,6 +5,10 @@ module Entities
     module SelectOptions
       module Models
         class Devices < Base
+          DETECTOR_ANALYSIS_TYPES = { PDA: ['WAVELENGTHLIST', 'WAVELENGTHS', 'NM', 'Wavelengths (nm)'],
+                                      ELSD: %w[METRIC TEMPERATURE CELSIUS],
+                                      MS: %w[TEXT MS_PARAMETER V Parameter] }.stringify_keys
+
           DEVICENAME_PREFIX = ENV.fetch('REACTION_PROCESS_EDITOR_DEVICENAME_PREFIX', '')
 
           def select_options_for(devices_csv:)
@@ -43,7 +47,9 @@ module Entities
           end
 
           def device_detector_options(device)
-            options_for(device['Detectors']&.split(', '))
+            device['Detectors']&.split(', ')&.map do |detector_name|
+              SelectOptions::Models::Detectors.instance.select_options_for(detector_name: detector_name)
+            end
           end
         end
       end

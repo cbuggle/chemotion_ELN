@@ -19,28 +19,29 @@ module Entities
           private
 
           def detector_options(detector_csv)
-            detector_type = detector_csv[0].strip
+            detector_name = detector_csv[0].strip
             analysis_default_values = detector_csv[1]
 
-            options = { label: detector_type, value: detector_type }
+            options = { label: detector_name, value: detector_name }
             return options if analysis_default_values.blank?
 
-            options.merge(analysis_defaults: detector_analysis_defaults(detector_type,
+            options.merge(analysis_defaults: detector_analysis_defaults(detector_name,
                                                                         analysis_default_values))
           end
 
-          def detector_analysis_defaults(detector_type, values)
-            data_type, analysis_type, unit, label = DETECTOR_ANALYSIS_TYPES[detector_type]
+          def detector_analysis_defaults(detector_name, values)
+            data_type, metric_name, unit, label = SelectOptions::Models::Devices::DETECTOR_ANALYSIS_TYPES[detector_name]
 
-            return [] unless analysis_type
+            return [] unless data_type
 
-            # TODO: A detector might have multiple metrics /analysis_types (therefore we return an array).
+            # TODO: A detector might have multiple metrics /metric_names (therefore we return an array).
             # Current files have only one. Adapt CSV parsing once File format has been defined. cbuggle, 14.10.2024.
-            [{ detector: detector_type,
-               data_type: data_type,
-               analysis_type: analysis_type,
-               label: label || analysis_type.titlecase,
-               values: analysis_default_values(data_type: data_type, values: values, unit: unit) }]
+            [{
+              label: label || metric_name&.titlecase,
+              data_type: data_type,
+              metric_name: metric_name,
+              values: analysis_default_values(data_type: data_type, values: values, unit: unit),
+            }]
           end
 
           def analysis_default_values(data_type:, values:, unit:)
