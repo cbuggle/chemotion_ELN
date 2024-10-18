@@ -5,7 +5,6 @@
 
 class SynchronizeAutomationDevicesFiles < ApplicationJob
   def perform
-    Rails.logger.info("SynchronizeAutomationDevicesFiles running at #{Time.zone.now}")
     Usecases::ReactionProcessEditor::SFTP::SynchronizeDevices.execute!
   end
 end
