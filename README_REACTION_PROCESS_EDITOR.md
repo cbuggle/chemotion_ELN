@@ -1,12 +1,11 @@
 # ReactionProcessEditor
 
-The Reaction Process Editor is a separate React project allowing to visually compose and edit the actual reaction processes.
+The Reaction Process Editor is a separate React project allowing to visually compose and edit the actual reaction processes
+which uses the ELN as API backend.
 
 The current version of the Reaction Process Editor (RPE) is still privately hosted on
 <https://github.com/cbuggle/eln-reaction-procedure-editor>
-Access on request to <christian@buggle.net>
-
-The Reaction Process Editor uses the ELN as API backend.
+Access on request with your github name to <christian@buggle.net>
 
 As this is work in progress we will keep this code in a separate branch until at least the database schema is reasonably established.
 
@@ -33,8 +32,6 @@ For the proper functioning of the Frontend Editor
 The devices and their characteristics that can be selected in certain actions (e.g. Purify/Chromatography) are defined in CSV files lying in a designated directory.
 We may either place these files manually (see below) or (preferably) have them synced from a designated SFTP server.
 
-REACTION_PROCESS_EDITOR_DATA_DIR='tmp/reaction-process-editor’
-
 The delayed job SynchronizeAutomationDevicesFilesJob will take care of syncing the actual equipment in the automation lab via SFTP. This jobs needs to be configured in `datacollector.yml` as such:
 
 ```json
@@ -53,29 +50,32 @@ REACTION_PROCESS_EDITOR_DEVICES_SFTP_PASSWORD=’sftp-password'
 REACTION_PROCESS_EDITOR_DEVICES_SFTP_DIR='./reaction-process-editor/‘  // remote directory, optional
 ```
 
-Additionally there's the required setting
-`REACTION_PROCESS_EDITOR_DATA_DIR='tmp/reaction-process-editor’`
+Additionally there are the required settings:
+
+```env
+REACTION_PROCESS_EDITOR_DATA_DIR='tmp/reaction-process-editor'
+REACTION_PROCESS_EDITOR_DEVICES_FILENAME="ChemASAP-Devices.csv"
+REACTION_PROCESS_EDITOR_DEVICENAME_PREFIX="ChemASAP_"
+REACTION_PROCESS_EDITOR_DEVICE_METHODS_SUFFIX='.lcm'
+```
+
+which are tailored to parsing the CSV files and should not be altered (except for maybe the DATA_DIR which was chosen to match the existing datacollector directories consistently).
 
 Explanations:
 `REACTION_PROCESS_EDITOR_DEVICES_SFTP_DIR` is the remote directory on the SFTP server where the files are located (root dir if not set).
 
-`REACTION_PROCESS_EDITOR_DATA_DIR` is the local directory where the files are stored. If / as long as the SFTP sync is not activated, we will need to place the CSV
+`REACTION_PROCESS_EDITOR_DATA_DIR` is the local directory where the files are stored. If / as long as the SFTP sync is not activated, we will need to place the CSV manually in the respective directory (else the select options in the UI will remain empty).
 
 The data needs to be structured as follows.
-`Devices.csv` with the index of the devices.
-a subdirectory “./devices” with the files of the individual devices.
-This data is created externally by the automation lab team and we do not have to cope with it.
+`Devices.csv` carrying the index of the devices and their characteristics.
+A subdirectory `./devices` with the files of the individual devices defining their individual methods.
+This data is created externally by the automation lab team and we do not have to cope with it here.
+For details contact Patrick Hodapp <patrick.hodapp@kit.edu>.
 
 ### Frontend
 
-The frontend is a plain React yarn app to be installed and started with `yarn install`, `yarn start`.
-It requires the hostname of the ELN backend to be set in `config.jsx`. For details see the README there.
-
-```javascript
-
-export const chemotionElnHostname = "http://192.168.178.157:3000"
-
-```
+The frontend is a plain React yarn app to be installed and can be started with `yarn install`, `yarn start`.
+It requires the hostname of the ELN backend along with some other configs to be set in its `config.jsx`. For details see the README there.
 
 ## Structure
 
