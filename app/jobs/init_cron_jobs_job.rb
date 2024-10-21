@@ -120,7 +120,7 @@ class InitCronJobsJob < ApplicationJob
     CollectDataFromSftpJob => 'folderwatchersftp',
     CollectFileFromLocalJob => 'filewatcherlocal',
     CollectFileFromSftpJob => 'filewatchersftp',
-    SynchronizeAutomationDevicesFiles => 'syncautomationdevicesfiles',
+    SynchronizeAutomationDevicesFilesJob => 'syncautomationdevicesfiles',
   }.freeze
 
   def datacollector_config

@@ -3,7 +3,7 @@
 # Job to sync with an SFTP server
 # Downloads Devices CSV files defining the Devices currently available in the automation lab.
 
-class SynchronizeAutomationDevicesFiles < ApplicationJob
+class SynchronizeAutomationDevicesFilesJob < ApplicationJob
   def perform
     Usecases::ReactionProcessEditor::SFTP::SynchronizeDevices.execute!
   end
