@@ -13,6 +13,8 @@ shared:
   #   :every: 2 # minutes
   # - :name: 'filewatcherlocal'
   #   :every: 2 # minutes
+  # - :name: 'syncautomationdevicesfiles'
+  #   :every: 1 # minutes
 
   # Email service configuration
   :mailcollector:
