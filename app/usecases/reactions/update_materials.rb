@@ -239,6 +239,7 @@ module Usecases
             coefficient: sample.coefficient,
             position: sample.position,
             type: reactions_sample_klass,
+            intermediate_type: sample.intermediate_type,
             gas_type: sample.gas_type,
             gas_phase_data: sample.gas_phase_data,
           )
