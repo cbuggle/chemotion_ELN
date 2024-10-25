@@ -233,7 +233,6 @@ class Material extends Component {
   // eslint-disable-next-line class-methods-use-this
   materialIntermediateType(material) {
     const options = [
-      { value: "-", label: '-' },
       { value: "CRUDE", label: 'Crude' },
       { value: "MIXTURE", label: 'Mixture' },
       { value: "INTERMEDIATE", label: 'Intermediate' },
