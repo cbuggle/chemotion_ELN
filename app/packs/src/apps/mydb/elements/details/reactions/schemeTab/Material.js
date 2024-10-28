@@ -232,32 +232,22 @@ class Material extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   materialIntermediateType(material) {
-    const options = [
-      { value: "CRUDE", label: 'Crude' },
-      { value: "MIXTURE", label: 'Mixture' },
-      { value: "INTERMEDIATE", label: 'Intermediate' },
-      { value: "PURE", label: 'Pure' }
-    ];
-
-    const customStyles = {
-      control: (provided) => ({
-        ...provided,
-        height: '27px',
-      }),
-      valueContainer: (provided) => ({
-        ...provided,
-        height: '15px',
-      }),
-    };
     return (
       <td>
-        <Select
-          options={options}
-          isClearable={false}
-          value={options.find(option => option.value === material.intermediate_type)}
-          onChange={e => this.handleintermediateTypeChange(e)}
-          styles={customStyles}
-          />
+        <Form.Select
+          placeholder="Pick one"
+          size="sm"
+          value={material.intermediate_type}
+          onChange={event => this.handleintermediateTypeChange(event.target.value)}
+          isInvalid={!material.intermediate_type}
+
+        >
+          <option disabled hidden>Unspecified</option>
+          <option value="CRUDE">Crude</option>
+          <option value="MIXTURE">Mixture</option>
+          <option value="INTERMEDIATE">Intermediate</option>
+          <option value="PURE">Pure</option>
+        </Form.Select>
       </td>
     );
   }
@@ -588,7 +578,6 @@ class Material extends Component {
 
   handleStepChange(e) {
     const reactionStep = e.value;
-    console.log(e.value);
     if (this.props.onChange) {
       const event = {
         reactionStep,
@@ -600,8 +589,7 @@ class Material extends Component {
     }
   }
 
-  handleintermediateTypeChange(e) {
-    const intermediateType = e.value;
+  handleintermediateTypeChange(intermediateType) {
     if (this.props.onChange) {
       const event = {
         intermediateType,
