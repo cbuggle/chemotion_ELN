@@ -111,7 +111,7 @@ module Entities
         end
 
         def saved_sample_with_solvents_option(action)
-          return {} unless action.sample?
+          return {} unless action.sample
 
           solvents = action.workup.dig('sample_origin_purification_step', 'solvents') || []
 

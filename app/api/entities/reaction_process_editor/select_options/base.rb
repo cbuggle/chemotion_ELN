@@ -35,6 +35,8 @@ module Entities
         end
 
         def sample_info_option(sample, acts_as)
+          return {} unless sample
+
           sample_minimal_option(sample, acts_as).merge(
             {
               amount: {
@@ -53,6 +55,8 @@ module Entities
         end
 
         def sample_minimal_option(sample, acts_as)
+          return {} unless sample
+
           {
             id: sample.id,
             value: sample.id,
