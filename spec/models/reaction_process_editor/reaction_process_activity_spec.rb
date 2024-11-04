@@ -36,7 +36,7 @@ RSpec.describe ReactionProcessEditor::ReactionProcessActivity do
     expect(process_activity.condition?).to be true
   end
 
-  describe '#adds_sample?' do
+  describe '#adds_compound?' do
     ACTIVITY_ADDS_SAMPLE_KEYS.each do |key|
       it "#{key} -> true" do
         process_activity.activity_name = key

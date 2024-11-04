@@ -20,12 +20,12 @@ module Entities
         end
 
         def added_materials(reaction_process_step)
-          add_activity_names = ['ADD']
           # For the ProcessStepHeader in the UI, in order of actions.
           reaction_process_step.reaction_process_activities.order(:position).filter_map do |action|
-            if add_activity_names.include?(action.activity_name)
-              added_material_option = sample_info_option(action.sample || action.medium,
-                                                         action.workup['acts_as'])
+            if action.adds_compound?
+              Rails.logger.info('added_materials in action')
+              Rails.logger.info(action)
+              added_material_option = sample_info_option(action.compound, action.workup['acts_as'])
               added_material_option.merge(amount: action.workup['target_amount'])
             end
           end.uniq
@@ -68,7 +68,8 @@ module Entities
 
         def save_sample_origins(reaction_process_step)
           reaction_process_step
-            .reaction_process_activities.includes([:reaction_process_vessel])
+            .reaction_process_activities
+            .includes([:reaction_process_vessel])
             .where(activity_name: 'PURIFICATION')
             .order(:position)
             .map do |purification|
@@ -98,14 +99,11 @@ module Entities
         end
 
         def saved_sample_with_solvents_options(reaction_process_step)
-          save_actions = reaction_process_step.reaction_process_activities
-                                              .includes([:reaction_process_vessel])
-                                              .order(:position)
-                                              .select do |activity|
-            activity.activity_name == 'SAVE'
-          end
-
-          save_actions.map do |action|
+          reaction_process_step.reaction_process_activities
+                               .includes([:reaction_process_vessel])
+                               .order(:position)
+                               .select(&:save_sample?)
+                               .map do |action|
             saved_sample_with_solvents_option(action)
           end
         end
@@ -117,6 +115,7 @@ module Entities
 
           sample_minimal_option(action.sample, 'SAMPLE').merge(
             {
+              # TODO: this needs to be converted with ELN metrics  quantifiers
               amount: { value: action.sample.target_amount_value, unit: action.sample.target_amount_unit },
               solvents: solvents,
               solvents_amount: action.workup['solvents_amount'],

@@ -8,7 +8,7 @@ module Usecases
           ActiveRecord::Base.transaction do
             activity.update(workup: activity_params['workup'])
 
-            if activity.activity_name == 'SAVE'
+            if activity.save_sample?
               SaveIntermediate.execute!(activity: activity,
                                         workup: activity_params['workup'])
             end
