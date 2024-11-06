@@ -68,7 +68,7 @@ FactoryBot.define do
 
       after :create do |activity|
         create(:intermediate_sample, sample: activity.sample,
-                                     reaction_process_step_id: activity.reaction_process_step_id)
+                                     reaction_process_activity_id: activity.id)
       end
     end
 
