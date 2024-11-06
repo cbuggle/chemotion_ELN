@@ -27,7 +27,7 @@ module ReactionProcessEditor
 
     def initialize(attr)
       super
-      @position ||= reaction_process_step.reaction_process_activities.count
+      @position ||= reaction_process_step ? reaction_process_step.reaction_process_activities&.count : 0
     end
 
     def siblings
