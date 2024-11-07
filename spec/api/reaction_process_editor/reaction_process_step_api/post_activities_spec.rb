@@ -23,7 +23,7 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.post /activities' do
                                                                                  }),
                                                     }) }
   end
-  let!(:create_activity_params) do
+  let(:create_activity_params) do
     { activity:
           { activity_name: 'ADD',
             workup: {

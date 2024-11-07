@@ -87,7 +87,7 @@ module Entities
         private
 
         def current_step_samples_options(reaction_process_step)
-          %w[SOLVENT MEDIUM ADDITIVE DIVERSE_SOLVENT].map do |material|
+          %w[SOLVENT MEDIUM ADDITIVE DIVERSE_SOLVENT MODIFIER].map do |material|
             added_samples_acting_as(reaction_process_step, material)
           end.flatten.uniq
         end
@@ -115,8 +115,7 @@ module Entities
 
           sample_minimal_option(action.sample, 'SAMPLE').merge(
             {
-              # TODO: this needs to be converted with ELN metrics  quantifiers
-              amount: { value: action.sample.target_amount_value, unit: action.sample.target_amount_unit },
+              amount: ::ReactionProcessEditor::SampleAmountsConverter.to_rpe(action.sample),
               solvents: solvents,
               solvents_amount: action.workup['solvents_amount'],
             },

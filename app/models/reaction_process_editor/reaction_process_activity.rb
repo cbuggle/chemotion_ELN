@@ -16,6 +16,8 @@ module ReactionProcessEditor
   class ReactionProcessActivity < ApplicationRecord
     acts_as_paranoid
 
+    before_save :assert_position
+
     belongs_to :reaction_process_step
     belongs_to :reaction_process_vessel, optional: true
 
@@ -24,11 +26,6 @@ module ReactionProcessEditor
     validate :validate_workup
 
     delegate :reaction, :reaction_process, :creator, to: :reaction_process_step
-
-    def initialize(attr)
-      super
-      @position ||= reaction_process_step ? reaction_process_step.reaction_process_activities&.count : 0
-    end
 
     def siblings
       reaction_process_step.reaction_process_activities.order(:position)
@@ -88,6 +85,10 @@ module ReactionProcessEditor
 
     def validate_workup_sample
       errors.add(:workup, 'Missing Sample') if workup['sample_id'].blank?
+    end
+
+    def assert_position
+      self.position ||= reaction_process_step.reaction_process_activities.count
     end
   end
 end
