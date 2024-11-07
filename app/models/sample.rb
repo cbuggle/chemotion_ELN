@@ -787,7 +787,6 @@ class Sample < ApplicationRecord
   end
 
   def update_intermediate_amounts_in_process_editor
-    Rails.logger.info('Update Materials UpdateIntermediateAmountsInWorkup')
     Usecases::ReactionProcessEditor::Samples::UpdateIntermediateAmountsInWorkup.execute!(sample: self)
   end
 end

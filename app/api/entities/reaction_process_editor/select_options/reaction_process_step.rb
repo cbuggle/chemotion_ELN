@@ -23,8 +23,6 @@ module Entities
           # For the ProcessStepHeader in the UI, in order of actions.
           reaction_process_step.reaction_process_activities.order(:position).filter_map do |action|
             if action.adds_compound?
-              Rails.logger.info('added_materials in action')
-              Rails.logger.info(action)
               added_material_option = sample_info_option(action.compound, action.workup['acts_as'])
               added_material_option.merge(amount: action.workup['target_amount'])
             end
