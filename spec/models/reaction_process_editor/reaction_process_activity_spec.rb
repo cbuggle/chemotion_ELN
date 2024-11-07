@@ -40,14 +40,14 @@ RSpec.describe ReactionProcessEditor::ReactionProcessActivity do
     ACTIVITY_ADDS_SAMPLE_KEYS.each do |key|
       it "#{key} -> true" do
         process_activity.activity_name = key
-        expect(process_activity).to be_adds_sample
+        expect(process_activity).to be_adds_compound
       end
     end
 
     ACTIVITY_ADDS_NO_SAMPLE_KEYS.each do |key|
       it "#{key} -> false" do
         process_activity.activity_name = key
-        expect(process_activity).not_to be_adds_sample
+        expect(process_activity).not_to be_adds_compound
       end
     end
   end
@@ -61,20 +61,12 @@ RSpec.describe ReactionProcessEditor::ReactionProcessActivity do
 
       let(:sample) { create(acts_as.downcase.to_sym) }
 
-      it 'sample?' do
-        expect(process_activity).to be_sample
-      end
-
       it 'acts_as_sample?' do
         expect(process_activity).to be_acts_as_sample
       end
 
       it 'returns Sample' do
         expect(process_activity.sample).to eq sample
-      end
-
-      it 'not medium?' do
-        expect(process_activity).not_to be_medium
       end
 
       it 'not acts_as_medium?' do

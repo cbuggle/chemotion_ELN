@@ -7,6 +7,6 @@ FactoryBot.define do
 
     intermediate_type { 'CRUDE' }
 
-    reaction { reaction_process_step.reaction }
+    reaction { reaction_process_activity.reaction }
   end
 end
