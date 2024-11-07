@@ -72,9 +72,8 @@ module ReactionProcessEditor
     end
 
     def acts_as_medium?
-      !removes_compound? && #  workup['acts_as'].present? &&
+      !removes_compound? &&
         %w[ADDITIVE MEDIUM DIVERSE_SOLVENT MODIFIER].include?(workup['acts_as'])
-      # Object.const_defined?("Medium::#{workup['acts_as'].delete('_').titlecase}")
     end
 
     private
