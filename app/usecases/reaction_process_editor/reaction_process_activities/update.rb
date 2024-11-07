@@ -6,7 +6,7 @@ module Usecases
       class Update
         def self.execute!(activity:, activity_params:)
           ActiveRecord::Base.transaction do
-            activity.update(workup: activity_params['workup'])
+            activity.update!(workup: activity_params['workup'])
 
             if activity.save_sample?
               SaveIntermediate.execute!(activity: activity,

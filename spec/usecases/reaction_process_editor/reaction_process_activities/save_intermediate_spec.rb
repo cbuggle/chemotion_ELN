@@ -32,7 +32,6 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessActivities::SaveI
       expect { usecase }.not_to change(Sample, :count)
     end
 
-
     it 'converts Sample amount' do
       expect { usecase }.to change {
         saved_sample.reload.target_amount_value
