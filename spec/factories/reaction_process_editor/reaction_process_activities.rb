@@ -47,6 +47,13 @@ FactoryBot.define do
       workup { { acts_as: 'MEDIUM' } }
     end
 
+    factory :reaction_process_activity_add_modifier do
+      with_medium
+      activity_name { 'ADD' }
+      medium { association :medium_sample }
+      workup { { acts_as: 'MODIFIER' } }
+    end
+
     factory :reaction_process_activity_add_diverse_solvent do
       with_medium
       medium { association :diverse_solvent }
