@@ -214,12 +214,12 @@ class Material extends Component {
     );
   }
 
-
   materialStep(material) {
     return (
       <OverlayTrigger placement="top" overlay={<Tooltip id="reactionStep">Reaction Step</Tooltip>}>
         <td>
           <NumeralInputWithUnitsCompo
+            disabled
             size="sm"
             precision={1}
             value={material.reaction_step}
@@ -230,17 +230,14 @@ class Material extends Component {
     );
   }
 
-  // eslint-disable-next-line class-methods-use-this
   materialIntermediateType(material) {
     return (
       <td>
         <Form.Select
-          placeholder="Pick one"
           size="sm"
           value={material.intermediate_type}
           onChange={event => this.handleintermediateTypeChange(event.target.value)}
           isInvalid={!material.intermediate_type}
-
         >
           <option disabled hidden>Unspecified</option>
           <option value="CRUDE">Crude</option>
@@ -782,7 +779,7 @@ class Material extends Component {
               precision={4}
               disabled={!permitOn(reaction)
                 || (this.props.materialGroup === 'products'
-                || (!material.reference && this.props.lockEquivColumn))}
+                  || (!material.reference && this.props.lockEquivColumn))}
               onChange={e => this.handleAmountUnitChange(e, material.amount_mol)}
               onMetricsChange={this.handleMetricsChange}
               variant={material.amount_unit === 'mol' ? 'success' : 'default'}
@@ -949,14 +946,14 @@ class Material extends Component {
               />
             </OverlayTrigger>
             <OverlayTrigger placement="bottom" overlay={refreshSvgTooltip}>
-                <Button
-                  disabled={!permitOn(reaction)}
-                  active
-                  onClick={e => this.handleExternalLabelCompleted(e)}
-                  size="sm"
-                >
-                  <i className="fa fa-refresh" />
-                </Button>
+              <Button
+                disabled={!permitOn(reaction)}
+                active
+                onClick={e => this.handleExternalLabelCompleted(e)}
+                size="sm"
+              >
+                <i className="fa fa-refresh" />
+              </Button>
             </OverlayTrigger>
           </InputGroup>
         </td>
