@@ -100,7 +100,7 @@ module Entities
           reaction_process_step.reaction_process_activities
                                .includes([:reaction_process_vessel])
                                .order(:position)
-                               .select(&:save_sample?)
+                               .select(&:saves_sample?)
                                .map do |action|
             saved_sample_with_solvents_option(action)
           end

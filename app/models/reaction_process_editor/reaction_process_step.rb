@@ -77,7 +77,7 @@ module ReactionProcessEditor
 
     def saved_sample_ids
       reaction_process_activities.filter_map do |activity|
-        activity.save_sample? && activity.workup['sample_id']
+        activity.saves_sample? && activity.workup['sample_id']
       end
     end
 

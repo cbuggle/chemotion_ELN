@@ -31,7 +31,7 @@ module ReactionProcessEditor
       reaction_process_step.reaction_process_activities.order(:position)
     end
 
-    def save_sample?
+    def saves_sample?
       %w[SAVE].include?(activity_name)
     end
 
@@ -87,7 +87,7 @@ module ReactionProcessEditor
     end
 
     def assert_position
-      self.position ||= reaction_process_step.reaction_process_activities.count
+      self.position ||= siblings.count
     end
   end
 end
