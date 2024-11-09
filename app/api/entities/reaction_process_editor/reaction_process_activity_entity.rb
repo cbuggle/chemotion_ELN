@@ -10,17 +10,11 @@ module Entities
 
       expose :preconditions
 
-      expose :intermediate_type, :transfer_source_step_name # supportive piggybacks required in TRANSFER only
+      expose :transfer_source_step_name # supportive piggyback required in TRANSFER only
 
       expose :reaction_process_vessel, using: 'Entities::ReactionProcessEditor::ReactionProcessVesselEntity'
 
       private
-
-      def intermediate_type
-        return unless object.transfer? && object.sample
-
-        ReactionsIntermediateSample.find_by(reaction: object.reaction, sample: object.sample)&.intermediate_type
-      end
 
       def transfer_source_step_name
         return unless object.transfer?
@@ -31,11 +25,7 @@ module Entities
       end
 
       def preconditions
-        reaction_process_step.activity_preconditions[object.position]
-      end
-
-      def reaction_process_step
-        @reaction_process_step ||= object.reaction_process_step
+        object.reaction_process_step.activity_preconditions[object.position]
       end
 
       def step_id
