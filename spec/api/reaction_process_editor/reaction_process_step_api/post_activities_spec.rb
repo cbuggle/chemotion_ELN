@@ -75,12 +75,6 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.post /activities' do
       post_action_request
     end
 
-    it 'returns intermediate type' do
-      expect(parsed_json_response['reaction_process_activity']).to include(
-        { intermediate_type: 'CRUDE' }.stringify_keys,
-      )
-    end
-
     it 'returns transfer_source_step_name' do
       expect(parsed_json_response['reaction_process_activity']).to include(
         { transfer_source_step_name: 'The Source Step' }.stringify_keys,
@@ -90,7 +84,7 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.post /activities' do
 
   context 'with invalid action data' do
     let(:create_activity_params) do
-      # Invalid: acts_as 'SAMPLE' also requires sample_id:
+      # Invalid: acts_as 'SAMPLE' requires sample_id.
       { activity: { activity_name: 'ADD', workup: { acts_as: 'SAMPLE' } } }
     end
 

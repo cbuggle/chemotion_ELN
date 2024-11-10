@@ -19,9 +19,10 @@ module Entities
       def transfer_source_step_name
         return unless object.transfer?
 
-        ris = ReactionsIntermediateSample.find_by(sample: object.sample, reaction: object.reaction)
-
-        ris&.reaction_process_step&.name
+        ReactionsIntermediateSample
+          .find_by(reaction_process_activity: object)
+          &.reaction_process_step
+          &.name
       end
 
       def preconditions
