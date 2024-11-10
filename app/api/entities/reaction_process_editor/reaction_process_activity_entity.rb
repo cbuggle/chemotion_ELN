@@ -20,7 +20,7 @@ module Entities
         return unless object.transfer?
 
         ReactionsIntermediateSample
-          .find_by(reaction_process_activity: object)
+          .find_by(reaction: object.reaction, sample: object.sample)
           &.reaction_process_step
           &.name
       end

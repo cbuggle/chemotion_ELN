@@ -63,12 +63,14 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.post /activities' do
     end
     let!(:action_save) { create(:reaction_process_activity_save, reaction_process_step: source_step) }
     let(:create_activity_params) do
-      { activity: { activity_name: 'TRANSFER', workup: {
-        transfer_source_step_id: source_step.id,
-        transfer_target_step_id: reaction_process_step.id,
-        sample_id: action_save.workup['sample_id'],
-        intermediate_type: 'CRUDE',
-      } } }
+      { activity:
+       { activity_name: 'TRANSFER',
+         workup: {
+           transfer_source_step_id: source_step.id,
+           transfer_target_step_id: reaction_process_step.id,
+           sample_id: action_save.workup['sample_id'],
+           intermediate_type: 'CRUDE',
+         } } }
     end
 
     before do
