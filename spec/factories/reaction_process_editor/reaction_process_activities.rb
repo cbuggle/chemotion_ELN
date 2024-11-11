@@ -74,7 +74,7 @@ FactoryBot.define do
       workup { { intermediate_type: 'INTERMEDIATE' } }
 
       after :create do |activity|
-        create(:intermediate_sample, sample: activity.sample,
+        create(:intermediate_sample, sample_id: activity.sample.id,
                                      reaction_process_activity_id: activity.id)
       end
     end
