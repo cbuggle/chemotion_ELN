@@ -12,12 +12,11 @@ module Usecases
               reaction_process_id: activity.reaction_process.id,
               reaction_process_vessel_params: activity_params['reaction_process_vessel'],
             )
+            ReactionProcessVessels::SweepUnused.execute!(reaction_process_id: activity.reaction_process.id)
 
             SaveIntermediate.execute!(activity: activity, workup: activity_params['workup']) if activity.saves_sample?
 
             activity.save
-
-            ReactionProcessVessels::SweepUnused.execute!(reaction_process_id: activity.reaction_process.id)
             activity
           end
         end

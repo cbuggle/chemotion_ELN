@@ -21,6 +21,7 @@ import Sample from 'src/models/Sample';
 import { permitCls, permitOn } from 'src/components/common/uis';
 import GasPhaseReactionStore from 'src/stores/alt/stores/GasPhaseReactionStore';
 import { calculateFeedstockMoles } from 'src/utilities/UnitsConversion';
+import { Select } from 'src/components/common/Select';
 
 const matSource = {
   beginDrag(props) {
