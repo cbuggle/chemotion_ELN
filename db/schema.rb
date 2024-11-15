@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_26_064022) do
+ActiveRecord::Schema.define(version: 2024_11_01_151844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -1051,7 +1051,7 @@ ActiveRecord::Schema.define(version: 2024_07_26_064022) do
     t.boolean "waste", default: false
     t.float "coefficient", default: 1.0
     t.boolean "show_label", default: false, null: false
-    t.uuid "reaction_process_step_id"
+    t.uuid "reaction_process_activity_id"
     t.string "intermediate_type"
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
