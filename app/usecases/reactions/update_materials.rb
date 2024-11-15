@@ -35,7 +35,7 @@ class OSample < OpenStruct
   end
 
   def to_boolean(string)
-    !!"#{string}".match(/^(true|t|yes|y|1)$/i)
+    !!string.to_s.match(/^(true|t|yes|y|1)$/i)
   end
 end
 
@@ -228,43 +228,26 @@ module Usecases
 
       def associate_sample_with_reaction(sample, modified_sample, material_group)
         reactions_sample_klass = "Reactions#{material_group.camelize}Sample"
-        existing_association = ReactionsSample.find_by(sample_id: modified_sample.id)
+        reactions_sample = ReactionsSample.find_or_initialize_by(sample_id: modified_sample.id,
+                                                                 reaction_id: @reaction.id)
+
         weight_percentage = sample.weight_percentage_reference ? 1 : sample.weight_percentage
-        if existing_association
-          existing_association.update!(
-            reaction_id: @reaction.id,
-            equivalent: sample.equivalent,
-            reference: sample.reference,
-            show_label: sample.show_label,
-            waste: sample.waste,
-            coefficient: sample.coefficient,
-            position: sample.position,
-            type: reactions_sample_klass,
-            gas_type: sample.gas_type,
-            gas_phase_data: sample.gas_phase_data,
-            conversion_rate: sample.conversion_rate,
-            weight_percentage_reference: sample.weight_percentage_reference,
-            weight_percentage: weight_percentage,
-          )
-        # sample was moved to other materialgroup
-        else
-          ReactionsSample.create!(
-            sample_id: modified_sample.id,
-            reaction_id: @reaction.id,
-            equivalent: sample.equivalent,
-            reference: sample.reference,
-            show_label: sample.show_label,
-            waste: sample.waste,
-            coefficient: sample.coefficient,
-            position: sample.position,
-            type: reactions_sample_klass,
-            gas_type: sample.gas_type,
-            gas_phase_data: sample.gas_phase_data,
-            conversion_rate: sample.conversion_rate,
-            weight_percentage_reference: sample.weight_percentage_reference,
-            weight_percentage: weight_percentage,
-          )
-        end
+
+        reactions_sample.update!(
+          equivalent: sample.equivalent,
+          reference: sample.reference,
+          show_label: sample.show_label,
+          waste: sample.waste,
+          coefficient: sample.coefficient,
+          position: sample.position,
+          type: reactions_sample_klass,
+          intermediate_type: sample.intermediate_type,
+          gas_type: sample.gas_type,
+          gas_phase_data: sample.gas_phase_data,
+          conversion_rate: sample.conversion_rate,
+          weight_percentage_reference: sample.weight_percentage_reference,
+          weight_percentage: weight_percentage,
+        )
       end
 
       def destroy_unused_samples(modified_sample_ids)
