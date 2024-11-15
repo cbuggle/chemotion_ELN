@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require Rails.root.join 'spec/concerns/taggable.rb'
 
 RSpec.describe Sample do
   describe 'save' do
@@ -10,7 +9,8 @@ RSpec.describe Sample do
     it 'triggers UpdateIntermediateAmountsInWorkup' do
       allow(Usecases::ReactionProcessEditor::Samples::UpdateIntermediateAmountsInWorkup).to receive(:execute!)
       sample.save
-      expect(Usecases::ReactionProcessEditor::Samples::UpdateIntermediateAmountsInWorkup).to have_received(:execute!) # .with(sample: sample)
+      expect(Usecases::ReactionProcessEditor::Samples::UpdateIntermediateAmountsInWorkup).to have_received(:execute!)
+        .with(sample: sample)
     end
   end
 end
