@@ -1,0 +1,19 @@
+Process Type;Category;Type;Sub-Type;Device Name;Mobile Phases / Solvents / Gases;Detectors
+Analysis;Chromatography;Liquid Chromatography (LC);HPLC/MS;ChemASAP_analyt-LC/MS;iPrOH, MeOH, ACN, THF, DCM, DMF, H2O;PDA, ELSD, MS
+Analysis;Chromatography;Liquid Chromatography (LC);HPLC-SFC/MS;ChemASAP_analyt-LC-SFC/MS;CO2, iPrOH, MeOH, ACN, THF, DCM, DMF, H2O;PDA, ELSD, MS
+Analysis;Chromatography;Gas Chromatography (GC);GC-FID/MS;ChemASAP_GC-FID/MS;H2, He, N2;FID, MS
+Analysis;Chromatography;Gas Chromatography (GC);GC-BID;ChemASAP_GC-BID;He;BID
+Analysis;Electrochemistry;Potentiometry;CV;ChemASAP_CV;ACN, THF, DCM, DMF, DMSO, H2O;Potentiostat
+Analysis;Spectrometry;Mass Spectrometry (MS);ESI;ChemASAP_MS;H2O, ACN, MeOH, THF;MS
+Analysis;Spectroscopy;Nucleic Magnetic Resonance;NMR;ChemASAP_NMR;CDCl3, MeOD, DMSO-d6, D2O;-
+Dosing;Analytical Sample Preparation;Analytical Preparation;-;ChemASAP_Analyt-Prep;iPrOH, MeOH, ACN, THF, DCM, DMF, H2O;-
+Dosing;Chemical Dosing;Solids;-;ChemASAP_Dosing-Solid;-;-
+Dosing;Chemical Dosing;Sovlents;-;ChemASAP_Dosing-Solv;iPrOH, MeOH, ACN, THF, DCM, DMF, H2O;-
+Dosing;Chemical Dosing;Absolute Sovlents;-;ChemASAP_Dosing-Solv-Abs;iPrOH, MeOH, ACN, THF, DCM, DMF, H2O;-
+Dosing;Chemical Dosing;Liquid Reagents;-;ChemASAP_Dosing-Liquids;-;-
+Dosing;Chemical Dosing;Gases;-;ChemASAP_Gas-Inj;Air, Ar, CO2, He;-
+Purification;Chromatography;Liquid Chromatography (LC);HPLC/MS;ChemASAP_prep-LC/MS;iPrOH, MeOH, ACN, THF, DCM, DMF, H2O;PDA, ELSD, MS
+Purification;Chromatography;Liquid Chromatography (LC);HPLC-SFC/MS;ChemASAP_prep-LC-SFC/MS;CO2, iPrOH, MeOH, ACN, THF, DCM, DMF, H2O;PDA, ELSD, MS
+Workup;Consumables Processing;Innertisation;-;ChemASAP_Inert;Ar;-
+Workup;Consumables Processing;Engraving;-;ChemASAP_Label;-;-
+Workup;Solvent Removal;Evaporation;-;ChemASAP_Evap;iPrOH, MeOH, ACN, THF, DCM, DMF, H2O;-
