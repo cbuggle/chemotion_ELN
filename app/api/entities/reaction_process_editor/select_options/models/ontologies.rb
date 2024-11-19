@@ -10,15 +10,16 @@ module Entities
           PARENT_SEPARATOR = ';'
           PARENT_DEPENDENCIES_SEPARATOR = ','
           PARENT_DELETE_CHARS = '=;'
-          DEPENDENCY_FORMAT = /(.*?)\((.*?)\)/.freeze
+          DEPENDENCY_FORMAT = /(.*?)\((.*?)\)\|?/.freeze
 
           TITLECASE_FIELDS = %w[label name].freeze
-          NAME_PREFIX = 'CHMO: '
 
           HEADERS = { 'Custom Name': 'label',
+                      'Ontology Name': 'name',
+                      'Own Name': 'label',
                       'Ontology ID': 'value',
-                      'Full Link': 'link',
-                      'Ontology Name': 'name' }.stringify_keys
+                      'Full Link': 'link' }
+                    .stringify_keys
 
           def all
             ontologies
@@ -54,7 +55,7 @@ module Entities
             HEADERS.each do |csv_header, option_key|
               value = csv[csv_header]
               # value = value&.split('-')&.map(&:titlecase)&.join('-') if needs_titlecase(option_key)
-              option[option_key] = value&.strip
+              option[option_key] = value.strip if value.present?
             end
             option
           end
@@ -65,7 +66,7 @@ module Entities
             option = {}
             dependencies.scan(DEPENDENCY_FORMAT).each do |chmo_id, dep_type|
               option[dep_type.strip] ||= []
-              option[dep_type.strip] << chmo_id.strip
+              option[dep_type.strip] << chmo_id.tr('_', ':').strip
             end
             option
           end
