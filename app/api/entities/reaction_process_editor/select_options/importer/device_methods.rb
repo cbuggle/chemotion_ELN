@@ -5,18 +5,31 @@ module Entities
     module SelectOptions
       module Importer
         class DeviceMethods
-          ROOT_DIR = ENV.fetch('REACTION_PROCESS_EDITOR_DATA_DIR', nil)
-          DEVICES_FILES = 'devices/*.csv'
-          DEVICES_FILENAME_PREFIX = ENV.fetch('REACTION_PROCESS_EDITOR_DEVICENAME_PREFIX', '')
+          DATA_DIR = ENV.fetch('REACTION_PROCESS_EDITOR_DATA_DIR', nil)
+          DEVICES_FILES = '*.csv'
+          DEVICENAME_PREFIX = ENV.fetch('REACTION_PROCESS_EDITOR_DEVICENAME_PREFIX', '')
 
-          def all
+          def by_devices
             all_with_device_name
+          end
+
+          def csv_for_device(device_name:)
+            return [] if sanitize_device_name(device_name).blank?
+
+            all_with_device_name[sanitize_device_name(device_name)] || []
           end
 
           private
 
           def all_with_device_name
-            @all_with_device_name ||= device_methods_files.map { |filename| read_csv_with_device_name(filename) }
+            return @all_with_device_name if @all_with_device_name
+
+            @all_with_device_name = {}
+
+            device_methods_files.each do |filename|
+              @all_with_device_name[parse_device_name(filename)] = read_csv(filename)
+            end
+            @all_with_device_name
           end
 
           def read_csv_with_device_name(filename)
@@ -24,7 +37,13 @@ module Entities
           end
 
           def parse_device_name(filename)
-            File.basename(filename, '.csv').delete_prefix(DEVICES_FILENAME_PREFIX)
+            sanitize_device_name(File.basename(filename, '.csv'))
+          end
+
+          def sanitize_device_name(name)
+            return unless name
+
+            name.delete_prefix(DEVICENAME_PREFIX).delete('/-_').upcase
           end
 
           def read_csv(filename)
@@ -32,7 +51,9 @@ module Entities
           end
 
           def device_methods_files
-            Rails.root.glob("#{ROOT_DIR}/#{DEVICES_FILES}")
+            Rails.logger.debug('READING DEVICE FILES')
+
+            Rails.root.glob("#{DATA_DIR}/devices/#{DEVICES_FILES}")
           end
         end
       end

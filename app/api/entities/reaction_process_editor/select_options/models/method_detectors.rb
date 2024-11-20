@@ -30,7 +30,8 @@ module Entities
           end
 
           def detector_analysis_defaults(detector_name, values)
-            data_type, metric_name, unit, label = SelectOptions::Models::Devices::DETECTOR_ANALYSIS_TYPES[detector_name]
+            # TODO: this is almost identical to detector_options in Detectors (except values)
+            data_type, metric_name, unit, label = SelectOptions::Models::Detectors::DETECTOR_ANALYSIS_TYPES[detector_name]
 
             return [] unless data_type
 

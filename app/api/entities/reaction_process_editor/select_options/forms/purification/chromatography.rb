@@ -8,12 +8,8 @@ module Entities
           class Chromatography < Base
             def select_options
               {
-                # automation_modes: automation_mode_options,
-                # chromatography_types: chromatography_type_options,
                 step_modes: step_modes,
                 prod_modes: prod_modes,
-                # material_engineering: material_engineering_options,
-                # solvents: solvent_options,
                 equipment: equipment_options,
                 ontologies: ontologie_options,
               }
@@ -22,14 +18,8 @@ module Entities
             private
 
             def ontologie_options
-              SelectOptions::Models::Ontologies.instance.all
+              SelectOptions::Models::Ontologies.new.all
             end
-
-            # def automation_mode_options
-            #   [{ value: 'MANUAL', label: 'Manual' },
-            #    { value: 'SEMI_AUTOMATED', label: 'Semi-Automated' },
-            #    { value: 'AUTOMATED', label: 'Automated' }]
-            # end
 
             def equipment_options
               titlecase_options_for(%w[FILTER SEPARATION_FILTER EXTRACTOR SPE_COLUMN FSPE_COLUMN
@@ -56,7 +46,7 @@ module Entities
             # end
 
             # def chromatography_type_options
-            #   SelectOptions::Models::DeviceTypes.instance.select_options(process_type: 'Purification',
+            #   SelectOptions::Models::DeviceTypes.new.select_options(process_type: 'Purification',
             #                                                              category: 'Chromatography')
             # end
           end
