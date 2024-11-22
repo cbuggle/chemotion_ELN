@@ -29,7 +29,7 @@ module Entities
             {
               label: method_label(method_csv: method_csv, device_name: device_name),
               value: method_label(method_csv: method_csv, device_name: device_name),
-              detectors: SelectOptions::Models::MethodDetectors.new.to_options(method_csv['Detectors']),
+              detectors: SelectOptions::Models::Detectors.new.to_options(method_csv['Detectors']),
               mobile_phases: mobile_phases_options(method_csv['Mobile Phase']),
               stationary_phases: [stationary_phase_option(method_csv['Stationary Phase'])],
               default_volume: { value: method_csv['Def. Inj. Vol.'], unit: 'ml' },

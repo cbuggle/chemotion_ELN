@@ -11,15 +11,12 @@ module Entities
                 step_modes: step_modes,
                 prod_modes: prod_modes,
                 equipment: equipment_options,
-                ontologies: ontologie_options,
               }
             end
 
             private
 
-            def ontologie_options
-              SelectOptions::Models::Ontologies.new.all
-            end
+            # end
 
             def equipment_options
               titlecase_options_for(%w[FILTER SEPARATION_FILTER EXTRACTOR SPE_COLUMN FSPE_COLUMN
