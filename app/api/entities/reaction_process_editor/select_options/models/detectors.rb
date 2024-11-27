@@ -12,34 +12,22 @@ module Entities
                              FID: %w[CHMO:0001719 METRIC WEIGTH g Weight],
                              BID: %w[CHMO:0001724 METRIC WEIGTH g Weight] }.stringify_keys
 
-          REGEX_NAMES_AND_BRACKET_VALUES = /(.*?) \((.*?)\),*/.freeze
+          def select_options_for(detector_ids)
+            detector_ids.map do |detector_id|
+              # detector_ontology = ::ReactionProcessEditor::Models::Ontology.find_by(chmo_id: detector_id)
 
-          def to_options(detectors_csv)
-            detectors_data = detectors_csv.scan(REGEX_NAMES_AND_BRACKET_VALUES)
-            detectors_data.map { |detector_csv| detector_options(detector_csv) }
+              label, detector_type = DETECTOR_TYPES.find { |_det_type, metrics| metrics[0] == detector_id }
+
+              { value: detector_id,
+                label: label || detector_id,
+                analysis_defaults: detector_analysis_defaults(detector_type) }
+            end
           end
 
           private
 
-          def detector_options(detector_csv)
-            detector_name = detector_csv[0].strip
-            analysis_default_values = detector_csv[1]
-
-            options = { label: detector_name, value: chmo_id(detector_name), source: 'method_detectors.rb' }
-
-            return options if analysis_default_values.blank?
-
-            options.merge(analysis_defaults: detector_analysis_defaults(detector_name,
-                                                                        analysis_default_values))
-          end
-
-          def chmo_id(detector_name)
-            DETECTOR_TYPES[detector_name].first
-          end
-
-          def detector_analysis_defaults(detector_name, values)
-            # TODO: this is almost identical to detector_options in Detectors (except values)
-            chmo_id, data_type, metric, unit, label = DETECTOR_TYPES[detector_name]
+          def detector_analysis_defaults(detector_type)
+            chmo_id, data_type, metric, _unit, label = detector_type
 
             return [] unless chmo_id
 
@@ -49,25 +37,7 @@ module Entities
               label: label,
               data_type: data_type,
               metric_name: metric,
-              values: analysis_default_values(data_type: data_type, values: values, unit: unit),
             }]
-          end
-
-          def analysis_default_values(data_type:, values:, unit:)
-            case data_type
-            when 'TEXT'
-              "#{values} #{unit}"
-            when 'METRIC'
-              { value: values, unit: unit }
-            when 'WAVELENGTHLIST'
-              { peaks: split_values(values: values, unit: unit) }
-            end
-          end
-
-          def split_values(values:, unit:)
-            values.split(',').map do |value|
-              { value: value, unit: unit }
-            end
           end
         end
       end

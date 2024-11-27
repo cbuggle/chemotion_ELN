@@ -12,7 +12,8 @@ module Entities
             materials: SelectOptions::Models::Materials.new.select_options_for(reaction_process: reaction_process),
             equipment: SelectOptions::Models::Equipment.new.all,
             FORMS: forms_options(reaction_process),
-            ONTOLOGIES: SelectOptions::Models::Ontologies.new.all,
+            ONTOLOGIES: SelectOptions::Models::Ontologies.new.group_by_role,
+            ontologies: SelectOptions::Models::Ontologies.new.all,
           }
         end
 

@@ -8,10 +8,8 @@ module Entities
           ROOT_DIR = ENV.fetch('REACTION_PROCESS_EDITOR_DATA_DIR', 'tmp/reaction-process-editor')
 
           FILENAMES = {
-            layout: 'ChemASAP_terms layout.csv',
             devices: 'ChemASAP-Devices.csv',
-            custom_terms: 'ChemASAP_custom terms.csv',
-          }
+          }.freeze
 
           def read(type)
             CSV.parse(
