@@ -1,10 +1,10 @@
-Ontology ID;Ontology Name;Custom Name;Full Link;Parent;
+Onthology ID;Ontology Name;Custom Name;Full Link;Parent;
 CHMO:0001000;CHMO:chromatography;Chromatography;http://purl.obolibrary.org/obo/CHMO_0001000;"=class,CHMO:0002231(action); =class,OBI:0000070(action)";
 CHMO:0002582;CHMO: flash chromatography;Flash Chromatography;http://purl.obolibrary.org/obo/CHMO_0002582;=subtype,CHMO:0001004(type)|ChemASAP:0000001(mode);
 CHMO:0001003;CHMO: supercritical-fluid chromatography;LC-SFC;http://purl.obolibrary.org/obo/CHMO_0001003;=subtype,CHMO:0001004(type)|ChemASAP:0000002(mode)|ChemASAP:0000003(mode);
 CHMO:0001009;CHMO: high-performance liquid chromatography;HPLC;http://purl.obolibrary.org/obo/CHMO_0001009;=subtype,CHMO:0001004(type)|ChemASAP:0000002(mode)|ChemASAP:0000003(mode);
 CHMO:0002882;CHMO: high-performance thin-layer chromatography;HP-TLC;http://purl.obolibrary.org/obo/CHMO_0002882;=subtype,CHMO:0001007(type)|ChemASAP:0000001(mode);
-CHMO:0001004;CHMO: liquid chromatography;LC;http://purl.obolibrary.org/obo/CHMO_0001004;=type,CHMO:0001000(class)|CHMO:0000228(class);
+CHMO:0001004;CHMO: liquid chromatography;LC;http://purl.obolibrary.org/obo/CHMO_0001004;=type,CHMO:0001000(class);
 CHMO:0001013;CHMO: size-exclusion chromatography;SEC;http://purl.obolibrary.org/obo/CHMO_0001013;=type,CHMO:0001000(class);
 CHMO:0001007;CHMO: thin-layer chromatography;TLC;http://purl.obolibrary.org/obo/CHMO_0001007;=type,CHMO:0001000(class);
 CHMO:0001002;CHMO: gas chromatography;GC;http://purl.obolibrary.org/obo/CHMO_0001002;"=type,CHMO:0001000(class);=subtype,CHMO:0001002(type)|ChemASAP:0000002(mode)|ChemASAP:0000003(mode)";

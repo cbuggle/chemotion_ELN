@@ -1,4 +1,4 @@
-Onthology ID;Ontology Name;Custom Name;Full Link;Parent
+Ontology ID;Ontology Name;Custom Name;Full Link;Parent
 CHMO:0002231;CHMO: purification;Separate/Purify;http://purl.obolibrary.org/obo/CHMO_0002231;"=action;"
 CHMO:0001640;CHMO: filtration;;http://purl.obolibrary.org/obo/CHMO_0001640;
 CHMO:0001641;CHMO: micro-filtration;;http://purl.obolibrary.org/obo/CHMO_0001641;
