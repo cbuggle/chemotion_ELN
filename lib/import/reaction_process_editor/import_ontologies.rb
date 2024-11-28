@@ -36,13 +36,12 @@ module Import
       end
 
       def create_from_csv(csv)
-        chmo_id = csv['Ontology ID'] || csv['CHMO']
+        chmo_id = csv['Ontology ID'] || csv['Onthology ID'] || csv['CHMO']
         return if chmo_id.blank?
 
         ontology = ::ReactionProcessEditor::Ontology.find_or_initialize_by(chmo_id: chmo_id)
 
         ontology.update!(
-          chmo_id: chmo_id,
           name: csv['Ontology Name'],
           label: csv['Custom Name'] || csv['Own Name'], # inconsistent in actual files.
           link: csv['Full Link'],
@@ -52,8 +51,7 @@ module Import
           active: true,
         )
       rescue StandardError => e
-        Rails.logger.error("Failed to import Ontology with CHMO_ID: #{ontology.chmo_id}")
-        Rails.logger.error(e.inspect)
+        Rails.logger.error("Failed to import Ontology with CHMO_ID: #{ontology.chmo_id}: \n #{e.inspect}")
         Rails.logger.error(ontology.errors.full_messages)
       end
 

@@ -11,7 +11,9 @@ module Entities
                       .slice(*%w[label chmo_id solvents link roles active detectors])
                       .merge({
                                value: ontology.chmo_id,
-                               methods: SelectOptions::Models::DeviceMethods.new.select_options_for(ontology.device_methods),
+                               methods: SelectOptions::Models::DeviceMethods.new.select_options_for(
+                                 ontology.device_methods,
+                               ),
                                detectors: SelectOptions::Models::Detectors.new.select_options_for(ontology.detectors),
                              })
             end

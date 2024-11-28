@@ -69,11 +69,6 @@ module Import
       end
 
       def method_label(method_csv:, device_name:)
-        Rails.logger.debug { "method_label for #{device_name}" }
-        Rails.logger.debug { "method_label #{DEVICENAME_PREFIX}" }
-        Rails.logger.debug { "method_label #{METHODNAME_SUFFIX}" }
-        Rails.logger.debug { "method_label #{method_csv}" }
-
         method_csv['Method Name']
           .delete_prefix(DEVICENAME_PREFIX)
           .delete_prefix(device_name)
@@ -117,12 +112,10 @@ module Import
       end
 
       def chmo_id(detector_name)
-        Rails.logger.error("detector_name #{detector_name}")
         DETECTOR_TYPES[detector_name]&.first || detector_name
       end
 
       def detector_analysis_defaults(detector_name, values)
-        # TODO: this is almost identical to detector_options in Detectors (except values)
         chmo_id, data_type, metric, unit, label = DETECTOR_TYPES[detector_name]
 
         return [] unless chmo_id
@@ -148,9 +141,6 @@ module Import
         analysis_default_value = phase_data[2]
 
         option = { label: label, value: label }
-
-        Rails.logger.error("analysis_default_values #{phase_data}")
-        Rails.logger.error("analysis_default_values #{analysis_default_value}")
 
         if analysis_default_value.present?
           option = option.merge(stationary_phase_analysis_defaults(analysis_default_value))
