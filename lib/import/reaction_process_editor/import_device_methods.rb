@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module Import
   module ReactionProcessEditor
     class ImportDeviceMethods
       DATA_DIR = ENV.fetch('REACTION_PROCESS_EDITOR_DATA_DIR', 'tmp/reaction_process_editor')
-      DEVICES_FILES = 'devices/*.csv'.freeze
+      DEVICES_FILES = 'devices/*.csv'
       DEVICENAME_PREFIX = ENV.fetch('REACTION_PROCESS_EDITOR_DEVICENAME_PREFIX', '')
       METHODNAME_SUFFIX = ENV.fetch('REACTION_PROCESS_EDITOR_DEVICE_METHODS_SUFFIX', '')
 
