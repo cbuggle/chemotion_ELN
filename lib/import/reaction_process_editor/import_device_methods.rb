@@ -111,7 +111,7 @@ module Import
       end
 
       def steps(method_csv)
-        method_csv['Steps'] ? JSON.parse(method_csv['Steps']) : []
+        JSON.parse(method_csv['Steps'].to_s)
       rescue JSON::ParserError
         []
       end

@@ -11,25 +11,10 @@ module Entities
                       .slice(*%w[label chmo_id solvents link roles active detectors])
                       .merge({
                                value: ontology.chmo_id,
-                               methods: device_methods_options(ontology.device_methods),
+                               methods: SelectOptions::Models::DeviceMethods.new.select_options_for(ontology.device_methods),
                                detectors: SelectOptions::Models::Detectors.new.select_options_for(ontology.detectors),
                              })
             end
-          end
-
-          def group_by_role
-            # Grouping for easy handling and filtering in Frontend.
-            options = {}
-            all.each do |ontology|
-              roles = ontology['roles'] || [{ UNUSED: [] }]
-
-              roles.each do |role, dependencies|
-                options[role] ||= []
-
-                options[role] << ontology.merge({ dependencies: dependencies, roles: nil })
-              end
-            end
-            options
           end
 
           private

@@ -22,6 +22,8 @@ module Import
             create_from_csv(row)
           end
         end
+
+        Import::ReactionProcessEditor::ImportDeviceMethods.new.execute
       end
 
       private
