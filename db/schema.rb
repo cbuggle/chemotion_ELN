@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_11_01_151844) do
+ActiveRecord::Schema.define(version: 2024_11_25_151311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -891,6 +891,35 @@ ActiveRecord::Schema.define(version: 2024_11_01_151844) do
     t.datetime "updated_at", null: false
     t.index ["ancestry"], name: "index_ols_terms_on_ancestry"
     t.index ["owl_name", "term_id"], name: "index_ols_terms_on_owl_name_and_term_id", unique: true
+  end
+
+  create_table "ontologies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "chmo_id"
+    t.string "device_code"
+    t.string "name"
+    t.string "label"
+    t.string "link"
+    t.jsonb "roles", default: {}
+    t.string "detectors", default: [], array: true
+    t.string "solvents", default: [], array: true
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "ontology_device_methods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "ontology_id"
+    t.string "label"
+    t.string "device_code"
+    t.jsonb "detectors"
+    t.jsonb "mobile_phases", default: [], array: true
+    t.jsonb "stationary_phases", default: [], array: true
+    t.jsonb "default_inject_volume"
+    t.string "description"
+    t.jsonb "steps"
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "pg_search_documents", id: :serial, force: :cascade do |t|
