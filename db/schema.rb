@@ -1060,7 +1060,7 @@ ActiveRecord::Schema.define(version: 202501151333346) do
     t.boolean "active", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "stationary_phase", array: true
+    t.string "stationary_phase", array:  true
   end
 
   create_table "ontology_device_methods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
