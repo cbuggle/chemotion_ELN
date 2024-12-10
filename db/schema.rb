@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_11_25_151311) do
+ActiveRecord::Schema.define(version: 2024_12_10_203947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -912,8 +912,8 @@ ActiveRecord::Schema.define(version: 2024_11_25_151311) do
     t.string "label"
     t.string "device_code"
     t.jsonb "detectors"
-    t.jsonb "mobile_phases", default: [], array: true
-    t.jsonb "stationary_phases", default: [], array: true
+    t.jsonb "mobile_phase", default: [], array: true
+    t.jsonb "stationary_phase", default: [], array: true
     t.jsonb "default_inject_volume"
     t.string "description"
     t.jsonb "steps"
