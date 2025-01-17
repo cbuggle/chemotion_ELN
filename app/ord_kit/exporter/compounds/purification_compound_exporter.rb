@@ -15,8 +15,8 @@ module OrdKit
             reaction_role: reaction_role, #   optional :reaction_role, :enum, 3, "ord.ReactionRole.ReactionRoleType"
             preparations: nil, #   repeated :preparations, :message, 5, "ord.CompoundPreparation"
             source: nil, #   optional :source, :message, 6, "ord.Compound.Source"
-            features: nil, #   map :features, :string, :message, 7, "ord.Data"
-            analyses: nil, #   map :analyses, :string, :message, 8, "ord.Analysis",
+            # features: nil, #   map :features, :string, :message, 7, "ord.Data"
+            # analyses: nil, #   map :analyses, :string, :message, 8, "ord.Analysis",
             purity: nil,
           )
         end

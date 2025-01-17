@@ -74,6 +74,16 @@ message ReactionStep {
 }
 
 /**
+ * An Ontology is a reference to a CHMO or a genericly defined Ontology
+ *
+ **/
+
+message Ontology {
+  string id = 1;
+  string name = 2;
+}
+
+/**
  * A reaction input is any pure substance, mixture, or solution that is
  * added to the reaction vessel.
  *
@@ -223,56 +233,33 @@ message ReactionProcessAction {
         NONE = 3;
       }
 
-      // Once specified by hardcoding here.
-      // Detectors are now parsed from CSV files as AnaylsisType. delete this?
-      // cbuggle, 11.10.2024 enum Detector {
-      //   DETECTOR_UNSPECIFIED = 0;
-      //   NO_DETECTOR = 1;
-      //   PHOTODIODE_ARRAY = 2;
-      //   VARIABLE_WAVELENGTH = 3;
-      //   REFRACTIVE_INDEX = 4;
-      //   FLUORESCENCE = 5;
-      //   EVAPORATIVE_LIGHT_SCATTERING = 6;
-      //   FLAME_IONIZATION = 7;
-      //   BARRIER_IONIZATION_DISCHARGE = 8;
-      //   THERMAL_CONDUCTIVIT = 9;
-      // }
-
       TimeSpan duration = 1;
-      repeated CompoundWithRatio solvents = 2;
+      repeated OntologySolventWithRatio solvents = 2;
       Amount amount = 3;
       FlowRate flow_rate = 4;
       Step step = 5;
       Prod prod = 6;
     }
 
-    message Manual {
-      Material material = 1;
-      Length diameter = 2;
-      Length height = 3;
-      Length filling_height = 4;
-    }
+    Ontology automation = 1;
+    Ontology type = 2;
+    Ontology subtype = 3;
+    Ontology device = 4;
+    repeated Ontology detectors = 6;
+    repeated Ontology mobile_phase = 7;
+    string method = 8;
+    string stationary_phase = 9;
+    TemperatureConditions stationary_phase_temperature = 10;
+    Volume volume = 11;
 
-    message Automated {
-      string chromatography_type = 2;
-      string chromatography_subtype = 3;
-      string device = 4;
-      // repeated Analysis.AnalysisType detectors = 5;
-      repeated Detector detectors = 6;
-      repeated string mobile_phase = 7;
-      string method = 8;
-      string stationary_phase = 9;
-      TemperatureConditions stationary_phase_temperature = 10;
-      Volume volume = 11;
-    }
+    Ontology material = 12;
+    Length diameter = 13;
+    Length height = 14;
+    Length filling_height = 15;
 
-    repeated ChromatographyStep steps = 1;
-    oneof automation {
-      Manual manual = 2;
-      Automated automated = 3;
-      Automated semi_automated = 4;
-    }
+    repeated ChromatographyStep steps = 16;
   }
+
 
   message ActionPurificationExtraction {
     message ExtractionStep {
@@ -437,14 +424,14 @@ message Compound {
     string lot = 3;
   }
   Source source = 6;
-  // Compounds can accommodate any number of features. These may include simple
-  // properties of the compound (e.g., molecular weight), heuristic estimates
-  // of physical properties (e.g., ClogP), optimized geometries (e.g., through
-  // DFT), and calculated stereoelectronic descriptors.
-  map<string, Data> features = 7;
-  // Compounds may be assayed for quality control; analytical data should be
-  // defined in the analyses map.
-  map<string, Analysis> analyses = 8;
+  // // Compounds can accommodate any number of features. These may include simple
+  // // properties of the compound (e.g., molecular weight), heuristic estimates
+  // // of physical properties (e.g., ClogP), optimized geometries (e.g., through
+  // // DFT), and calculated stereoelectronic descriptors.
+  // map<string, Data> features = 7;
+  // // Compounds may be assayed for quality control; analytical data should be
+  // // defined in the analyses map.
+  // map<string, Analysis> analyses = 8;
 
   // The purity of the compound.
   Percentage purity = 9;
@@ -457,6 +444,11 @@ message Compound {
 
 message CompoundWithRatio {
   Compound compound = 1;
+  string ratio = 2;
+}
+
+message OntologySolventWithRatio {
+  Ontology solvent = 1;
   string ratio = 2;
 }
 
@@ -1033,59 +1025,59 @@ message FlowConditions {
 
 message DateTime { string value = 1; }
 
-message Analysis {
-  // TODO(ccoley): Solicit more feedback from experimentalists
-  enum AnalysisType {
-    UNSPECIFIED = 0;
-    CUSTOM = 1;
-    LC = 2;        // Liquid chromatography, including HPLC and UPLC.
-    GC = 3;        // Gas chromatography.
-    IR = 4;        // Infrared spectroscopy, including ReactIR.
-    NMR_1H = 5;    // 1H NMR spectroscopy.
-    NMR_13C = 6;   // 13C NMR spectroscopy.
-    NMR_OTHER = 7; // Specify type and details in "details".
-    MP = 8;        // Melting point characterization.
-    UV = 9;        // Ultraviolet spectroscopy.
-    TLC = 10;      // Thin-layer chromatography.
-    MS = 11;       // Mass spectrometry.
-    HRMS = 12;     // High resolution mass spectrometry.
-    MSMS = 13;     // Two-dimensional mass spectrometry.
-    WEIGHT = 14;   // Weight of an isolated compound.
-    LCMS = 15;     // Combined LC/MS.
-    GCMS = 16;     // Combined GC/MS.
-    ELSD = 17;     // Evaporative light scattering detector.
-    CD = 18;       // Circular Dichroism.
-    SFC = 19;      // Supercritical fluid chromatography.
-    EPR = 20;      // Electron paramagnetic resonance spectroscopy.
-    XRD = 21;      // X-ray diffraction, including single-crystal XRD.
-    RAMAN = 22;    // Raman spectroscopy.
-    ED = 23;       // Electron diffraction, including MicroED.
-    PDA = 24;      // Photodiode Array (DAD or PDA)
-    VWD = 25;      // Variable Wavelength (VWD)
-    RID = 26;      // Refractive Index (RI)
-    FLD = 27;      // Fluorescence (FLD)
-  }
-  AnalysisType type = 1;
-  // Any details about analysis (e.g., NMR type, columns, gradients).
-  string details = 2;
-  // Whether this analysis is intended to be of an isolated species. If false
-  // RSC Chemical Methods Ontology ID to define the analytical method with
-  // greater specificity. Defined at https://github.com/rsc-ontologies/rsc-cmo.
-  int32 chmo_id = 3;
-  // or unspecified, the assumption is that it is of a crude product mixture
-  // (or a partially worked-up product mixture).
-  optional bool is_of_isolated_species = 4;
-  // Data values or files (raw, processed, or annotated).
-  map<string, Data> data = 5;
-  string instrument_manufacturer = 6;
-  DateTime instrument_last_calibrated = 7;
-  string number = 8;
-}
+// message Analysis {
+//   // TODO(ccoley): Solicit more feedback from experimentalists
+//   enum AnalysisType {
+//     UNSPECIFIED = 0;
+//     CUSTOM = 1;
+//     LC = 2;        // Liquid chromatography, including HPLC and UPLC.
+//     GC = 3;        // Gas chromatography.
+//     IR = 4;        // Infrared spectroscopy, including ReactIR.
+//     NMR_1H = 5;    // 1H NMR spectroscopy.
+//     NMR_13C = 6;   // 13C NMR spectroscopy.
+//     NMR_OTHER = 7; // Specify type and details in "details".
+//     MP = 8;        // Melting point characterization.
+//     UV = 9;        // Ultraviolet spectroscopy.
+//     TLC = 10;      // Thin-layer chromatography.
+//     MS = 11;       // Mass spectrometry.
+//     HRMS = 12;     // High resolution mass spectrometry.
+//     MSMS = 13;     // Two-dimensional mass spectrometry.
+//     WEIGHT = 14;   // Weight of an isolated compound.
+//     LCMS = 15;     // Combined LC/MS.
+//     GCMS = 16;     // Combined GC/MS.
+//     ELSD = 17;     // Evaporative light scattering detector.
+//     CD = 18;       // Circular Dichroism.
+//     SFC = 19;      // Supercritical fluid chromatography.
+//     EPR = 20;      // Electron paramagnetic resonance spectroscopy.
+//     XRD = 21;      // X-ray diffraction, including single-crystal XRD.
+//     RAMAN = 22;    // Raman spectroscopy.
+//     ED = 23;       // Electron diffraction, including MicroED.
+//     PDA = 24;      // Photodiode Array (DAD or PDA)
+//     VWD = 25;      // Variable Wavelength (VWD)
+//     RID = 26;      // Refractive Index (RI)
+//     FLD = 27;      // Fluorescence (FLD)
+//   }
+//   AnalysisType type = 1;
+//   // Any details about analysis (e.g., NMR type, columns, gradients).
+//   string details = 2;
+//   // Whether this analysis is intended to be of an isolated species. If false
+//   // RSC Chemical Methods Ontology ID to define the analytical method with
+//   // greater specificity. Defined at https://github.com/rsc-ontologies/rsc-cmo.
+//   int32 chmo_id = 3;
+//   // or unspecified, the assumption is that it is of a crude product mixture
+//   // (or a partially worked-up product mixture).
+//   optional bool is_of_isolated_species = 4;
+//   // Data values or files (raw, processed, or annotated).
+//   map<string, Data> data = 5;
+//   string instrument_manufacturer = 6;
+//   DateTime instrument_last_calibrated = 7;
+//   string number = 8;
+// }
 
-message Detector {
-  Analysis.AnalysisType type = 1;
-  ReactionConditions conditions = 2;
-}
+// message Detector {
+//   Analysis.AnalysisType type = 1;
+//   ReactionConditions conditions = 2;
+// }
 
 message ReactionProvenance {
   Person experimenter = 1;
