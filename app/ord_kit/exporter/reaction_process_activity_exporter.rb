@@ -17,6 +17,8 @@ module OrdKit
       def to_ord(starts_at:)
         return unless ACTION_EXPORTER[model.activity_name] # TODO: What to do with unknown activity_names?
 
+        Rails.logger.info("EXPORTING Activity #{model.id} #{model.activity_name}")
+
         ACTION_EXPORTER[model.activity_name].new(model).to_ord(starts_at: starts_at)
       end
     end

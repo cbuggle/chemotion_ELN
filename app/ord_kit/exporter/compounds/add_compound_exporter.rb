@@ -25,7 +25,7 @@ module OrdKit
         def value
           if action.sample
             action.sample.preferred_label || action.sample.short_label
-          elsif action.medium?
+          elsif action.medium
             action.medium.label
           end
         end

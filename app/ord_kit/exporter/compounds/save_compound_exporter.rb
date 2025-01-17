@@ -17,11 +17,11 @@ module OrdKit
         end
 
         def details
-          sample.name
+          sample&.name || 'Error: Save Sample not found, no details available'
         end
 
         def value
-          sample.preferred_label || sample.short_label
+          sample&.preferred_label || sample&.short_label || 'Error: Save Sample not found, name not available'
         end
 
         def reaction_role
