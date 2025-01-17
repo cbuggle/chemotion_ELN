@@ -87,7 +87,8 @@ module Import
         detector_name = name_and_defaults[0].strip
         analysis_default_values = name_and_defaults[1]
 
-        options = { label: detector_name, value: ontology_id(detector_name), source: 'ImportDeviceMethods.rb' }
+        # TODO: Remove debug_source attribute required for debug examinations only.
+        options = { label: detector_name, value: ontology_id(detector_name), debug_source: 'ImportDeviceMethods.rb' }
 
         return options if analysis_default_values.blank?
 

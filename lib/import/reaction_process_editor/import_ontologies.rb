@@ -74,9 +74,9 @@ module Import
 
       def role_dependencies(dependencies)
         options = {}
-        dependencies&.scan(VALUES_WITH_BRACKET)&.each do |ontology_id, dep_type|
-          options[dep_type.strip.tr(' ', '_')] ||= []
-          options[dep_type.strip.tr(' ', '_')] << ontology_id.strip
+        dependencies&.scan(VALUES_WITH_BRACKET)&.each do |ontology_id, dependency_type|
+          options[dependency_type.strip.tr(' ', '_')] ||= []
+          options[dependency_type.strip.tr(' ', '_')] << ontology_id.strip
         end
         options['automation_mode'] ||= options['mode'].presence if options['mode'].presence
         options.delete('mode')
