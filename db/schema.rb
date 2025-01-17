@@ -146,6 +146,8 @@ ActiveRecord::Schema.define(version: 2025_01_20_162008) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "short_label"
+    t.string "ancestry"
+    t.index ["ancestry"], name: "index_cellline_samples_on_ancestry"
   end
 
   create_table "channels", id: :serial, force: :cascade do |t|
@@ -995,7 +997,7 @@ ActiveRecord::Schema.define(version: 2025_01_20_162008) do
   end
 
   create_table "ontologies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "chmo_id"
+    t.string "ontology_id"
     t.string "device_code"
     t.string "name"
     t.string "label"
