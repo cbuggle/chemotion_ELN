@@ -33,11 +33,11 @@ module OrdKit
             OrdKit::Exporter::Models::OntologyExporter.new(ontology_id).to_ord
           end
 
-          # def automation
-          #   { AUTOMATED: { automated: automated_fields }.stringify_keys,
-          #     MANUAL: { manual: manual_fields },
-          #     SEMI_AUTOMATED: { semi_automated: automated_fields } }.stringify_keys
-          # end
+          def detectors
+            workup['detectors']&.map do |detector_ontology_id|
+              ontology_ord(detector_ontology_id)
+            end
+          end
 
           def steps
             Array(workup['purification_steps']).map do |chromatography_step|
@@ -51,22 +51,6 @@ module OrdKit
               )
             end
           end
-
-          # def manual_fields
-          #   OrdKit::ReactionProcessAction::ActionPurificationChromatography::Manual.new(
-          #   )
-          # end
-
-          # def automated_fields
-          #   OrdKit::ReactionProcessAction::ActionPurificationChromatography::Automated.new
-          # end
-
-          def detectors
-            # DetectorExporter.new(workup).to_ord
-          end
-
-          # def mobile_phase
-          # end
 
           def stationary_phase_temperature
             return unless workup['stationary_phase_temperature']

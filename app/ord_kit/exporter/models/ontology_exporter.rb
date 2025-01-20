@@ -9,16 +9,15 @@ module OrdKit
         end
 
         def to_ord
-          { id: @ontology_id,
-            name: name(@ontology_id) }
+          { id: @ontology_id || 'Export ERROR: Ontology without ontology_id',
+            label: ontology&.label,
+            name: ontology&.name }
         end
 
         private
 
-        def name(ontology_id)
-          ontology = ReactionProcessEditor::Ontology.find_by(ontology_id: ontology_id)
-
-          ontology&.name || ontology_id || 'Export ERROR: Ontology without ontology_id'
+        def ontology
+          ReactionProcessEditor::Ontology.find_by(ontology_id: @ontology_id)
         end
       end
     end

@@ -38,14 +38,6 @@ module OrdKit
         def preparations
           nil # n/a. Action SAVE has no preparations.
         end
-
-        def compound_source
-          OrdKit::Compound::Source.new(
-            vendor: nil, # TODO: hardcoded empty. clarify.
-            id: nil,
-            lot: nil,
-          )
-        end
       end
     end
   end
