@@ -8,26 +8,54 @@ module OrdKit
           def to_ord
             { chromatography: OrdKit::ReactionProcessAction::ActionPurificationChromatography.new(
               {
-                material: ontology_ord(workup['jar_material']),
-                diameter: Metrics::LengthExporter.new(workup['jar_diameter']).to_ord,
-                height: Metrics::LengthExporter.new(workup['jar_height']).to_ord,
-                filling_height: Metrics::LengthExporter.new(workup['jar_filling_height']).to_ord,
                 type: ontology_ord(workup['type']),
                 subtype: ontology_ord(workup['subtype']),
-                device: ontology_ord(workup['device']),
-                detectors: detectors,
-                method: workup['method'],
-                mobile_phase: workup['mobile_phase'],
                 stationary_phase: workup['stationary_phase'],
-                stationary_phase_temperature: stationary_phase_temperature,
-                volume: volume,
                 steps: steps,
-              },
+              }.merge(automation_specific_fields),
             ) }
           end
-          # TODO: avoid writing automation-dependent fields
 
           private
+
+          def manual?
+            %w[MANUAL].include?(automation_ontology_device_code)
+          end
+
+          def automated?
+            %w[AUTOMATED SEMIAUTOMATED].include?(automation_ontology_device_code)
+          end
+
+          def automation_ontology_device_code
+            ReactionProcessEditor::Ontology.find_by(ontology_id: workup['automation_mode'])&.device_code
+          end
+
+          def automation_specific_fields
+            return automation_manual_fields if manual?
+            return automation_automated_fields if automated?
+
+            {}
+          end
+
+          def automation_manual_fields
+            {
+              material: ontology_ord(workup['jar_material']),
+              diameter: Metrics::LengthExporter.new(workup['jar_diameter']).to_ord,
+              height: Metrics::LengthExporter.new(workup['jar_height']).to_ord,
+              filling_height: Metrics::LengthExporter.new(workup['jar_filling_height']).to_ord,
+            }
+          end
+
+          def automation_automated_fields
+            {
+              device: ontology_ord(workup['device']),
+              detectors: detectors,
+              method: workup['method'],
+              mobile_phase: workup['mobile_phase'],
+              stationary_phase_temperature: stationary_phase_temperature,
+              volume: volume,
+            }
+          end
 
           def ontology_ord(ontology_id)
             OrdKit::Exporter::Models::OntologyExporter.new(ontology_id).to_ord

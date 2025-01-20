@@ -697,12 +697,7 @@ message VesselPreparation {
 
 message ReactionSetup {
   Vessel vessel = 1;
-  // Specification of automated protocols.
-  optional bool is_automated = 2;
-  // Automated platform name, brand, or model number.
-  string automation_platform = 3;
-  // Raw automation code or synthetic recipe definition.
-  map<string, Data> automation_code = 4;
+
   message ReactionEnvironment {
     enum ReactionEnvironmentType {
       UNSPECIFIED = 0;
