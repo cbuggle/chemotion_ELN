@@ -24,18 +24,18 @@ module ReactionProcessEditor
     has_many :device_methods, class_name: '::ReactionProcessEditor::OntologyDeviceMethod',
                               inverse_of: :ontology, dependent: :nullify
 
-    before_validation :set_device_code
+    # before_validation :set_device_code
 
     scope :active, -> { where(active: true) }
 
-    def self.normalize_device_code(device_name:)
-      device_name&.upcase&.tr('^A-Za-z0-9', '')
-    end
+    # def self.normalize_device_code(device_name:)
+    #   device_name&.upcase&.tr('^A-Za-z0-9', '')
+    # end
 
-    private
+    # private
 
-    def set_device_code
-      self.device_code = Ontology.normalize_device_code(device_name: label)
-    end
+    # def set_device_code
+    #   self.device_code = Ontology.normalize_device_code(device_name: label)
+    # end
   end
 end
