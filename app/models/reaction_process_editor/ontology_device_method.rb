@@ -7,7 +7,6 @@
 #  id                    :uuid             not null, primary key
 #  ontology_id           :uuid
 #  label                 :string
-#  device_code           :string
 #  detectors             :jsonb
 #  mobile_phase          :jsonb            is an Array
 #  stationary_phase      :jsonb            is an Array
