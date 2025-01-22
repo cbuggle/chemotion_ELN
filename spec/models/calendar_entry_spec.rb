@@ -167,7 +167,7 @@ RSpec.describe 'CalendarEntry' do
 
       link = entry.link_to_element_for(creator)
 
-      expect(link).to include("http://localhost:3000/mydb/collection/#{collection.id}/reaction/#{reaction.id}")
+      expect(link).to include("http://localhost:9090/mydb/collection/#{collection.id}/reaction/#{reaction.id}")
     end
   end
 

@@ -8,7 +8,7 @@ working_directory '/home/deploy/www/chemotion/current' # available in 0.94.0+
 # If you are load-balancing multiple Unicorn masters, lower the backlog
 # setting to e.g. 64 for faster failover.
 listen '/home/deploy/www/chemotion/current/tmp/sockets/unicorn.socket', backlog: 1024
-listen '127.0.0.1:3000', tcp_nopush: true
+listen '127.0.0.1:9090', tcp_nopush: true
 
 timeout 60
 

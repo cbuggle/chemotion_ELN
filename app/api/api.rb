@@ -147,7 +147,7 @@ class API < Grape::API
     'elements' => %w[name short_label],
   }.freeze
 
-  TARGET = Rails.env.production? ? 'https://www.chemotion-repository.net/' : 'http://localhost:3000/'
+  TARGET = Rails.env.production? ? 'https://www.chemotion-repository.net/' : 'http://172.21.39.149:9090/'
 
   ELEMENTS = %w[research_plan screen wellplate reaction sample cell_line device_description].freeze
 

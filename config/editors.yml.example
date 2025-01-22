@@ -3,7 +3,7 @@ development:
     :enable: true
     :uri: 'http://localhost:5555/'
     :api: 'web-apps/apps/api/documents/api.js'
-    :callback_server: 'http://localhost:3000'
+    :callback_server: 'http://172.21.39.149:9090'
     :ext:
       :text:
         - 'doc'

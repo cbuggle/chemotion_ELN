@@ -48,7 +48,7 @@ describe('NumericInputUnit component', () => {
 
   it('calls the onInputChange function when the value is changed and updates state of value, then convert unit', () => {
     const wrapper = createWrapper('Amount', 'g', 1, 'chemical_amount_in_g', false);
-    wrapper.find('FormControl').simulate('change', { target: { value: 3 } });
+    wrapper.find('Form.Control').simulate('change', { target: { value: 3 } });
     expect(mockFn.calledWith(3, 'g')).toEqual(true);
     wrapper.find('Button').simulate('click');
     const inputComponent = wrapper.find('[name="chemical_amount_in_g"]');

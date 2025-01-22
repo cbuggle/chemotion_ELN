@@ -24,7 +24,7 @@ For the proper functioning of the Frontend Editor
 * The db seeds in `db/seeds/reaction_editor_seeds.rb` need to run (they are included in a `rake db:seed` run).
 
 * The Frontend Hostname needs to be set as ENV['REACTION_PROCESS_EDITOR_HOSTNAME'] which needs to be defined in `.env`
-* (`export REACTION_PROCESS_EDITOR_HOSTNAME="http://localhost:3000"` in your shell will also work).
+* (`export REACTION_PROCESS_EDITOR_HOSTNAME="http://172.21.39.149:3000"` in your shell will also work).
 
 #### SFTP Sync
 

@@ -63,9 +63,9 @@ module Chemotion
       puts message
     end
 
-    uri = URI.parse(ENV['PUBLIC_URL'] || 'http://localhost:3000')
+    uri = URI.parse(ENV['PUBLIC_URL'] || 'http://172.21.39.149:9090')
     scheme = uri.scheme || 'http'
-    host   = uri.host   || 'localhost'
+    host   = uri.host   || 'localhost'  || '172.21.39.149'
     port   = uri.port
     routes do
       default_url_options(host: host, protocol: scheme, port: port)

@@ -79,7 +79,7 @@ const productLink = (product) => (
   </span>
 );
 
-import ReactionEditorLink from 'src/components/reaction_editor/ReactionEditorLink';
+import ReactionEditorLink from 'src/components/ReactionEditorLink';
 export default class ReactionDetails extends Component {
   constructor(props) {
     super(props);
