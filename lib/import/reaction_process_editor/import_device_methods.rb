@@ -31,6 +31,9 @@ module Import
       private
 
       def create_from_csv(csv:, device_name:)
+        # TODO: Sort of works as labels are unique / still contain device_name (by mistake)
+        # Fix device_name calculation, determine associated ontology and use it to find_or_initialize
+
         method = ::ReactionProcessEditor::OntologyDeviceMethod
                  .find_or_initialize_by(label: method_label(method_csv: csv, device_name: device_name))
 
