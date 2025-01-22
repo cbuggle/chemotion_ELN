@@ -1051,7 +1051,6 @@ ActiveRecord::Schema.define(version: 202501151333346) do
 
   create_table "ontologies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "ontology_id"
-    t.string "device_code"
     t.string "name"
     t.string "label"
     t.string "link"
