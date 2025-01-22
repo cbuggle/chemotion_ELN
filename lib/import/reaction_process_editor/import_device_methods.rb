@@ -23,21 +23,24 @@ module Import
 
         device_methods_files.each do |filename|
           CSV.parse(filename.read, col_sep: ';', headers: true, return_headers: false).each do |row|
-            create_from_csv(csv: row, device_name: ontology_device_name(filename))
+            create_from_csv(method_csv: row, ontology: ontology_for_filename(filename))
           end
         end
       end
 
       private
 
-      def create_from_csv(csv:, device_name:)
+      def create_from_csv(method_csv:, ontology:)
         # TODO: Sort of works as labels are unique / still contain device_name (by mistake)
         # Fix device_name calculation, determine associated ontology and use it to find_or_initialize
 
         method = ::ReactionProcessEditor::OntologyDeviceMethod
-                 .find_or_initialize_by(label: method_label(method_csv: csv, device_name: device_name))
+                 .find_or_initialize_by(
+                   ontology: ontology,
+                   label: method_label(method_name: method_csv['Method Name'], ontology: ontology),
+                 )
 
-        method.update!(method_options(method_csv: csv, device_name: device_name))
+        method.update!(method_options(method_csv: method_csv))
       rescue StandardError => e
         Rails.logger.error("Failed to import Method named: #{csv['Method Name']}")
         Rails.logger.error(e)
@@ -51,13 +54,9 @@ module Import
         # rubocop:enable Rails/SkipsModelValidations
       end
 
-      def method_options(method_csv:, device_name:)
-        device = ::ReactionProcessEditor::Ontology.find_by(label: device_name)
-
+      def method_options(method_csv:)
         {
           active: true,
-          ontology: device,
-          label: method_label(method_csv: method_csv, device_name: device_name),
           detectors: detectors(method_csv['Detectors']),
           mobile_phase: mobile_phase_options(method_csv['Solvent']),
           stationary_phase: stationary_phase_options(method_csv['Stationary Phase']),
@@ -67,13 +66,13 @@ module Import
         }
       end
 
-      def method_label(method_csv:, device_name:)
-        method_csv['Method Name']
-          .delete_prefix(DEVICENAME_PREFIX)
-          .delete_prefix(device_name)
-          .delete_prefix('_')
-          .delete_suffix(METHODNAME_SUFFIX)
-          .strip
+      def method_label(method_name:, ontology:)
+        method_name.delete_prefix(DEVICENAME_PREFIX)
+                   .delete_prefix('_')
+                   .delete_prefix(ontology.label)
+                   .delete_prefix('_')
+                   .delete_suffix(METHODNAME_SUFFIX)
+                   .strip
       end
 
       def detectors(detectors_csv)
@@ -156,12 +155,14 @@ module Import
         } }
       end
 
-      def ontology_device_name(filename)
-        ontology_label(File.basename(filename, '.csv').tr('_', ':'))
+      def ontology_for_filename(filename)
+        ontology_id = File.basename(filename, '.csv').tr('_', ':')
+
+        ::ReactionProcessEditor::Ontology.find_by(ontology_id: ontology_id)
       end
 
       def ontology_label(ontology_id)
-        ::ReactionProcessEditor::Ontology.find_by(ontology_id: ontology_id)&.label || ontology_id
+        ::ReactionProcessEditor::Ontology.find_by(ontology_id: ontology_id)&.label
       end
 
       def device_methods_files
