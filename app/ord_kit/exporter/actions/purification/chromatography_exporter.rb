@@ -27,7 +27,7 @@ module OrdKit
           end
 
           def automation_ontology_label
-            ReactionProcessEditor::Ontology.find_by(ontology_id: workup['automation_mode'])&.device_code
+            ReactionProcessEditor::Ontology.find_by(ontology_id: workup['automation_mode'])&.label
           end
 
           def automation_specific_fields
