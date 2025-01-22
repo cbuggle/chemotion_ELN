@@ -49,7 +49,7 @@ services:
       - 'THOR_SILENCE_DEPRECATION=true'
       - RAKE_DB_MIGRATE=${RAKE_DB_MIGRATE:-never}
     ports: # expose default rails port to host machine
-      - "3000:3000"
+      - "9090:3000"
     volumes:
       - *vhome
       - *vapp
