@@ -11,6 +11,7 @@ module Entities
                       .slice(*%w[label ontology_id link roles active])
                       .merge({
                                value: ontology.ontology_id,
+                               inactive: !ontology.active,
                                methods: SelectOptions::Models::DeviceMethods.new.select_options_for(
                                  ontology.device_methods,
                                ),
