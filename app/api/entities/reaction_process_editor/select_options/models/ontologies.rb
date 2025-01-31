@@ -31,11 +31,13 @@ module Entities
               # for "stationary_phase" as preselection when the device is selected. Therefore it needs to resemble an
               # Ontology, i.e. be "active", have a proper ontology_id, and have their "role" defined
               # as "stationary_phase" with empty dependencies.
-              option_for(stationary_phase).merge(
-                { active: ontology.active,
-                  ontology_id: stationary_phase,
-                  roles: { stationary_phase: [{}] } },
-              )
+
+              ontology_field_option_for(base_ontology: ontology, role: 'stationary_phase', value: stationary_phase)
+              # option_for(stationary_phase).merge(
+              #   { active: ontology.active,
+              #     ontology_id: stationary_phase,
+              #     roles: { stationary_phase: [{}] } },
+              # )
             end
           end
         end

@@ -59,7 +59,7 @@ module Import
           active: true,
           detectors: detectors(method_csv['Detectors']),
           mobile_phase: mobile_phase_options(method_csv['Solvent']),
-          stationary_phase: stationary_phase_options(method_csv['Stationary Phase']),
+          stationary_phase: [method_csv['Stationary Phase']],
           default_inject_volume: { value: method_csv['Default Inj. Vol.'], unit: 'ml' },
           description: method_csv['Description'],
           steps: steps(method_csv),
@@ -140,10 +140,6 @@ module Import
             ontology_label(res[1].tr(' ()', ''))
           end
         end
-      end
-
-      def stationary_phase_options(phase)
-        [{ label: phase, value: phase }]
       end
 
       def stationary_phase_analysis_defaults(value)
