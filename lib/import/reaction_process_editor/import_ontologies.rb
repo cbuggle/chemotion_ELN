@@ -57,10 +57,10 @@ module Import
         Rails.logger.error(ontology.errors.full_messages)
       end
 
-      def stationary_phase(phase)
-        return [] unless phase
+      def stationary_phase(phases)
+        return [] unless phases
 
-        phase.split('; ')
+        phases.split(';').map(&:strip)
       end
 
       def roles(parents)

@@ -18,8 +18,24 @@ module Entities
                                detectors: SelectOptions::Models::Detectors.new.select_options_for(
                                  ontology.detectors,
                                ),
-                               is_new: ontology.detectors,
+                               stationary_phase: stationary_phase_options(ontology),
                              })
+            end
+          end
+
+          private
+
+          def stationary_phase_options(ontology)
+            ontology.stationary_phase.map do |stationary_phase|
+              # The stationary_phases (which only exist for device ontologies) will be feed into a OntologySelectForm
+              # for "stationary_phase" as preselection when the device is selected. Therefore it needs to resemble an
+              # Ontology, i.e. be "active", have a proper ontology_id, and have their "role" defined
+              # as "stationary_phase" with empty dependencies.
+              option_for(stationary_phase).merge(
+                { active: ontology.active,
+                  ontology_id: stationary_phase,
+                  roles: { stationary_phase: [{}] } },
+              )
             end
           end
         end
