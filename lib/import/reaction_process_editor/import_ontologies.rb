@@ -47,7 +47,7 @@ module Import
           label: csv['Custom Label'], # || csv['Custom Name'] || csv['Own Name'], # inconsistent in actual files.
           link: csv['Link'],
           detectors: detectors(csv['Detectors']),
-          solvents: csv['Solvents'],
+          solvents: solvents(csv['Solvents']),
           roles: roles(csv['Roles']),
           stationary_phase: stationary_phase(csv['Stationary Phase']),
           active: true,
@@ -55,6 +55,12 @@ module Import
       rescue StandardError => e
         Rails.logger.error("Failed to import Ontology with ONTOLOGY_ID: #{ontology.ontology_id}: \n #{e.inspect}")
         Rails.logger.error(ontology.errors.full_messages)
+      end
+
+      def solvents(solvent_ids)
+        return [] unless solvent_ids
+
+        solvent_ids.split(';').map(&:strip)
       end
 
       def stationary_phase(phases)

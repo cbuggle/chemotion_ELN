@@ -14,10 +14,10 @@ module Entities
           end
         end
 
-        def ontology_field_option_for(base_ontology:, role:, value:)
+        def pseudo_ontology_option_for(base_ontology:, role:, value:)
           # Some ontologies (e.g. devices) define specific fields as preselection when the selected.
           # Therefore they needs to resemble an actual Ontology, i.e. be "active", have a proper ontology_id,
-          # and have their "role" defined (without actual dependencies).
+          # and have their "role" defined (with no actual dependencies).
           option_for(value).merge(
             { active: base_ontology&.active,
               ontology_id: value,

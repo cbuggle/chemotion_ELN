@@ -8,10 +8,9 @@ module Entities
           def all
             ::ReactionProcessEditor::Ontology.includes([:device_methods]).order(:updated_at).map do |ontology|
               ontology.attributes
-                      .slice(*%w[label ontology_id solvents link roles active])
+                      .slice(*%w[label ontology_id link roles active])
                       .merge({
                                value: ontology.ontology_id,
-                               inactive: !ontology.active,
                                methods: SelectOptions::Models::DeviceMethods.new.select_options_for(
                                  ontology.device_methods,
                                ),
@@ -19,11 +18,24 @@ module Entities
                                  ontology.detectors,
                                ),
                                stationary_phase: stationary_phase_options(ontology),
+                               mobile_phase: mobile_phase_options(ontology),
                              })
             end
           end
 
           private
+
+          def mobile_phase_options(ontology)
+            ontology.solvents&.map do |solvent_ontology_id|
+              solvent_ontology = ::ReactionProcessEditor::Ontology.find_by(ontology_id: solvent_ontology_id)
+
+              { active: ontology&.active && solvent_ontology&.active,
+                ontology_id: solvent_ontology_id,
+                value: solvent_ontology_id,
+                label: solvent_ontology&.label || solvent_ontology_id,
+                roles: { mobile_phase: [{}] } }
+            end
+          end
 
           def stationary_phase_options(ontology)
             ontology.stationary_phase.map do |stationary_phase|
@@ -32,12 +44,7 @@ module Entities
               # Ontology, i.e. be "active", have a proper ontology_id, and have their "role" defined
               # as "stationary_phase" with empty dependencies.
 
-              ontology_field_option_for(base_ontology: ontology, role: 'stationary_phase', value: stationary_phase)
-              # option_for(stationary_phase).merge(
-              #   { active: ontology.active,
-              #     ontology_id: stationary_phase,
-              #     roles: { stationary_phase: [{}] } },
-              # )
+              pseudo_ontology_option_for(base_ontology: ontology, role: 'stationary_phase', value: stationary_phase)
             end
           end
         end
