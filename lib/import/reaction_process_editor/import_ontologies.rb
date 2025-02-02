@@ -31,12 +31,10 @@ module Import
       private
 
       def set_all_inactive
-        # rubocop:disable Rails/SkipsModelValidations
-        ::ReactionProcessEditor::Ontology.update_all(active: false)
-        # rubocop:enable Rails/SkipsModelValidations
+        ::ReactionProcessEditor::Ontology.update_all(active: false) # rubocop:disable Rails/SkipsModelValidations
       end
 
-      def create_from_csv(csv)
+      def create_from_csv(csv) # rubocop:disable Metrics/AbcSize
         ontology_id = csv['Ontology ID'] || csv['Onthology ID'] || csv['CHMO']
         return if ontology_id.blank?
 
@@ -44,7 +42,7 @@ module Import
 
         ontology.update!(
           name: csv['Ontology Name'],
-          label: csv['Custom Label'], # || csv['Custom Name'] || csv['Own Name'], # inconsistent in actual files.
+          label: csv['Custom Label'],
           link: csv['Link'],
           detectors: detectors(csv['Detectors']),
           solvents: solvents(csv['Solvents']),
