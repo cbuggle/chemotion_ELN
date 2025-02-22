@@ -17,7 +17,9 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.put' do
   let!(:vessel) { create(:vessel) }
   let!(:reaction_process) { create_default(:reaction_process) }
   let!(:reaction_process_step) { create(:reaction_process_step) }
-  let!(:reaction_process_vessel_params) { { vessel_id: vessel.id, preparations: ['DRIED'] } }
+  let!(:reaction_process_vessel_params) do
+    { vesselable_id: vessel.id, vesselable_type: 'Vessel', preparations: ['DRIED'] }
+  end
 
   let(:authorization_header) { authorized_header(reaction_process_step.creator) }
 
