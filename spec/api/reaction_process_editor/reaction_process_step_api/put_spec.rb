@@ -72,7 +72,7 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.put' do
 
   context 'when vessel used in a different step' do
     let!(:reaction_process_vessel) do
-      create(:reaction_process_vessel, reaction_process: reaction_process, vessel: vessel)
+      create(:reaction_process_vessel, reaction_process: reaction_process, vesselable: vessel)
     end
 
     before do

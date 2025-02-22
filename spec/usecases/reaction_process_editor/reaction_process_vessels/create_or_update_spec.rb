@@ -9,14 +9,14 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOr
   let!(:reaction_process) { create_default(:reaction_process) }
   let!(:vessel) { create(:vessel) }
 
-  let(:reaction_process_vessel_params) { { vessel_id: vessel.id, preparations: ['DRIED'] } }
+  let(:reaction_process_vessel_params) { { vesselable_id: vessel.id, preparations: ['DRIED'] } }
 
   it 'creates ReactionProcessVessel' do
     expect do
       create_or_update
     end.to change {
              ReactionProcessEditor::ReactionProcessVessel.find_by(reaction_process_id: reaction_process.id,
-                                                                  vessel_id: vessel.id)
+                                                                  vesselable_id: vessel.id)
            }.from(nil)
   end
 
@@ -25,19 +25,19 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOr
       create_or_update
     end.to change {
              ReactionProcessEditor::ReactionProcessVessel.find_by(reaction_process_id: reaction_process.id,
-                                                                  vessel_id: vessel.id)&.preparations
+                                                                  vesselable_id: vessel.id)&.preparations
            }.to(['DRIED'])
   end
 
   context 'with existing ReactionProcessVessel' do
-    let!(:reaction_process_vessel) { create(:reaction_process_vessel, vessel: vessel) }
+    let!(:reaction_process_vessel) { create(:reaction_process_vessel, vesselable: vessel) }
 
     it 'retains ReactionProcessVessel' do
       expect do
         create_or_update
       end.not_to(change do
                    ReactionProcessEditor::ReactionProcessVessel.find_by(reaction_process_id: reaction_process.id,
-                                                                        vessel_id: vessel.id).id
+                                                                        vesselable_id: vessel.id).id
                  end)
     end
 
