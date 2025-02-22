@@ -5,7 +5,7 @@ module Usecases
     module ReactionProcessVessels
       class CreateOrUpdate
         def self.execute!(reaction_process_id:, reaction_process_vessel_params:)
-          return unless reaction_process_id &&
+          return unless reaction_process_id && reaction_process_vessel_params &&
                         reaction_process_vessel_params[:vesselable_id] &&
                         reaction_process_vessel_params[:vesselable_type]
 
