@@ -19,7 +19,7 @@ describe ReactionProcessEditor::VesselAPI, '.index' do
 
   it 'returns vessels' do
     vessel_index_request
-    expect(parsed_json_response).to include({ vessels:
+    expect(parsed_json_response).to include({ vesselables:
       [
         hash_including({ id: vessels[0].id }.deep_stringify_keys),
         hash_including({ id: vessels[1].id  }.deep_stringify_keys),

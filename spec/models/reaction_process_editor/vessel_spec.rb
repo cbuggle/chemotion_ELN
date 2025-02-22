@@ -8,6 +8,7 @@ RSpec.describe Vessel do
   it {
     expect(vessel).to have_many(:reaction_process_vessels)
       .class_name('ReactionProcessEditor::ReactionProcessVessel')
+      .foreign_key(:vesselable_id)
       .dependent(:destroy)
   }
 
