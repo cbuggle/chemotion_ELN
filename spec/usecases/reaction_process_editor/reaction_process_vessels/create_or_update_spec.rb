@@ -9,7 +9,9 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOr
   let!(:reaction_process) { create_default(:reaction_process) }
   let!(:vessel) { create(:vessel) }
 
-  let(:reaction_process_vessel_params) { { vesselable_id: vessel.id, preparations: ['DRIED'] } }
+  let(:reaction_process_vessel_params) do
+    { vesselable_id: vessel.id, vesselable_type: 'Vessel', preparations: ['DRIED'] }
+  end
 
   it 'creates ReactionProcessVessel' do
     expect do
