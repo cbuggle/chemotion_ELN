@@ -14,15 +14,15 @@ module OrdKit
           OrdKit::Vessel.new(
             id: vessel.id,
             name: vessel.name,
-            label: vessel.try(:short_label),
-            description: vessel.try(:description),
+            label: short_label,
+            description: description,
             details: vessel.details,
             type: vessel_type,
             material: vessel_material,
             volume: volume,
             weight: weight,
-            bar_code: vessel.try(:bar_code),
-            qr_code: vessel.try(:qr_code),
+            bar_code: bar_code,
+            qr_code: qr_code,
             preparations: preparations,
             attachments: attachments,
             vessel_class: vessel.class.to_s,
@@ -30,6 +30,22 @@ module OrdKit
         end
 
         private
+
+        def description
+          vessel.try(:description)
+        end
+
+        def short_label
+          vessel.try(:short_label)
+        end
+
+        def bar_code
+          vessel.try(:bar_code)
+        end
+
+        def qr_code
+          vessel.try(:qr_code)
+        end
 
         def vessel_type
           VesselTypeExporter.new(vessel).to_ord
