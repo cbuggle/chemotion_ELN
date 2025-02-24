@@ -26,4 +26,6 @@ class VesselTemplate < ApplicationRecord
   acts_as_paranoid
 
   has_many :vessels, dependent: :destroy
+  has_many :reaction_process_vessels, dependent: :destroy, class_name: 'ReactionProcessEditor::ReactionProcessVessel',
+                                      inverse_of: :vesselable, foreign_key: :vesselable_id
 end
