@@ -1274,7 +1274,6 @@ ActiveRecord::Schema.define(version: 2026_03_30_152941) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "deleted_at"
     t.string "vesselable_type"
-    t.string "cleanup"
   end
 
   create_table "reaction_processes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -1569,8 +1568,8 @@ ActiveRecord::Schema.define(version: 2026_03_30_152941) do
     t.jsonb "sample_details"
     t.jsonb "log_data"
     t.boolean "dry_solvent", default: false
+    t.boolean "inventory_sample", default: false
     t.boolean "hide_in_eln"
-    t.index ["ancestry"], name: "index_samples_on_ancestry", opclass: :varchar_pattern_ops, where: "(deleted_at IS NULL)"
     t.index ["deleted_at"], name: "index_samples_on_deleted_at"
     t.index ["identifier"], name: "index_samples_on_identifier"
     t.index ["inventory_sample"], name: "index_samples_on_inventory_sample"
