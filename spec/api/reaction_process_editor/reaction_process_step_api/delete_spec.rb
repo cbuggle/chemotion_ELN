@@ -29,6 +29,6 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.delete' do
     delete_reaction_process_step_request
 
     expect(Usecases::ReactionProcessEditor::ReactionProcessVessels::SweepUnused)
-      .to have_received(:execute!).with(reaction_process_id: @reaction_process_step.reaction_process_id)
+      .to have_received(:execute!).with(reaction_process_id: reaction_process_step.reaction_process_id)
   end
 end
