@@ -30,6 +30,10 @@ module ReactionProcessEditor
       reaction_process.reaction_process_steps.order(:position)
     end
 
+    def predecessors
+      siblings.where(position: 0...position)
+    end
+
     def duration
       reaction_process_activities.reduce(0) { |sum, activity| sum + activity.workup['duration'].to_i }
     end
@@ -40,6 +44,10 @@ module ReactionProcessEditor
 
     def step_number
       position + 1
+    end
+
+    def halts_automation?
+      reaction_process_activities.any?(&:halts_automation?)
     end
 
     # We assemble an Array of activity_preconditions which the ReactionActionEntity then indexes by its position.

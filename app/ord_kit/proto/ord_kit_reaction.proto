@@ -71,6 +71,8 @@ message ReactionStep {
   ReactionSetup setup = 5;
   // The indivdual actions defining the ReactionStep.
   repeated ReactionProcessAction actions = 6;
+
+  AutomationStatus automation_status = 7;
 }
 
 /**
@@ -147,6 +149,15 @@ message ReactionInput {
   ReactionConditions conditions = 9;
 }
 
+enum AutomationStatus {
+  UNSPECIFIED = 0;
+  RUN = 1;
+  HALT = 2;
+  HALT_RESOLVED = 3;
+  HALT_BY_PRECEDING = 4;
+  MANUAL_PROCEED = 5;
+}
+
 /**
  * An individual Action defining the reaction workflow.
  * It is usually referenced within a ReactionStep.
@@ -170,6 +181,7 @@ message ReactionProcessAction {
     ActionWait wait = 14;
     ActionSaveSample save_sample = 15;
   }
+  optional AutomationStatus automation_status = 16;
 
   message ActionAdd {
     ReactionRole.ReactionRoleType reaction_role = 1;
@@ -321,7 +333,8 @@ message ReactionProcessAction {
     oneof type {
       ActionSpectroscopy spectroscopy = 1;
       ActionSpectrometry spectrometry = 2;
-      ActionPurificationChromatography chromatography = 3; // for now identical, AnalysisChr. might diverge soon.
+      ActionPurificationChromatography chromatography =
+          3; // for now identical, AnalysisChr. might diverge soon.
     }
   }
 

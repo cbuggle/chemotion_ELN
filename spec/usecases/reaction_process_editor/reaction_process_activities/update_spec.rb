@@ -7,6 +7,13 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessActivities::Updat
   let(:activity) { create(:reaction_process_activity) }
   let(:activity_params) { { workup: { NEW_WORKUP: 'SUCCESS' } }.deep_stringify_keys }
 
+  context "automation_status" do
+    let(:activity_params) { { workup: { NEW_WORKUP: 'SUCCESS', automation_status: 'new_automation_status' } }.deep_stringify_keys }
+    it "updates field automation status from workup" do
+      expect { update_activity }.to change(activity, :automation_status).to('new_automation_status')
+    end
+  end
+
   it 'updates activity' do
     expect { update_activity }.to change(activity, :workup).to(activity_params['workup'])
   end

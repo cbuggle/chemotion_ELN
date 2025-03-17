@@ -5,7 +5,7 @@ module Entities
     class ReactionProcessStepEntity < Grape::Entity
       expose(
         :id, :name, :position, :locked, :reaction_process_id, :reaction_id,
-        :label, :final_conditions, :select_options
+        :label, :final_conditions, :select_options, :automation_status
       )
 
       expose :activities, using: 'Entities::ReactionProcessEditor::ReactionProcessActivityEntity'
@@ -16,6 +16,12 @@ module Entities
 
       def select_options
         SelectOptions::ReactionProcessStep.new.select_options_for(reaction_process_step: object)
+      end
+
+      def automation_status
+        return "" unless object.predecessors.any?(&:halts_automation?)
+
+        object.automation_status || "HALT_BY_PRECEDING"
       end
 
       def reaction

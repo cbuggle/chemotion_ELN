@@ -53,6 +53,10 @@ module ReactionProcessEditor
       %w[REMOVE].include?(activity_name)
     end
 
+    def halts_automation?
+      workup['AUTOMATION_STATUS'] == "HALT"
+    end
+
     def compound
       sample || medium
     end

@@ -23,6 +23,7 @@ module OrdKit
               duration: duration,
               equipment: equipment,
               vessel: Vessels::ReactionProcessVesselExporter.new(@action.reaction_process_vessel).to_ord,
+              automation_status: automation_status
             }.merge(action_type_attributes),
           )
         end
@@ -32,6 +33,12 @@ module OrdKit
         # ORD attributes in order of ORD definition by convention (they are numbered).
         def description
           workup['description']
+        end
+
+        def automation_status
+          OrdKit::AutomationStatus.const_get workup['AUTOMATION_STATUS'].to_s
+        rescue NameError
+          OrdKit::AutomationStatus::UNSPECIFIED
         end
 
         def position
