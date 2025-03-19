@@ -35,12 +35,6 @@ module OrdKit
           workup['description']
         end
 
-        def automation_status
-          OrdKit::AutomationStatus.const_get workup['AUTOMATION_STATUS'].to_s
-        rescue NameError
-          OrdKit::AutomationStatus::UNSPECIFIED
-        end
-
         def position
           @action.position + 1
         end
@@ -70,9 +64,18 @@ module OrdKit
           OrdKit::Equipment::EquipmentType::UNSPECIFIED
         end
 
+        def automation_status
+          OrdKit::AutomationStatus.const_get workup['AUTOMATION_STATUS'].to_s
+        rescue NameError
+          OrdKit::AutomationStatus::UNSPECIFIED
+        end
+
+
         def action_type_attributes
           raise 'OrdKit::Exporter::Actions::Base is abstract. Please subclass and provide an implementation.'
         end
+
+
       end
     end
   end
