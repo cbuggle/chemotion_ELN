@@ -6,7 +6,7 @@ module ReactionProcessEditor
 
     helpers StrongParamsHelpers
 
-    rescue_from :all
+    # rescue_from :all
 
     namespace :reaction_process_activities do
       route_param :id do
@@ -40,6 +40,21 @@ module ReactionProcessEditor
         desc 'Delete a ReactionProcessActivity'
         delete do
           Usecases::ReactionProcessEditor::ReactionProcessActivities::Destroy.execute!(activity: @activity)
+        end
+      end
+
+      route_param :id do
+        put :automation_response do
+          raise "AUTHENTICATION FAILURE" unless current_user.is_a?(ReactionProcessEditor::ApiUser)
+
+           @activity = ::ReactionProcessEditor::ReactionProcessActivity.find_by(id: params[:id])
+
+          response_file = params[:response_csv].tempfile
+
+          Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationResponse.execute!(
+            activity: @activity,
+            response_csv: response_file,
+          )
         end
       end
     end
