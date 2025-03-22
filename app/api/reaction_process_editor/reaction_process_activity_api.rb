@@ -29,6 +29,25 @@ module ReactionProcessEditor
           ), with: Entities::ReactionProcessEditor::ReactionProcessActivityEntity, root: :reaction_process_activity
         end
 
+        desc 'Create an Evaporation appended to the ReactionProcessActivity.'
+        put :append_evaporation do
+          Rails.logger.info("evaporation_params")
+          Rails.logger.info(params)
+
+          evaporation_params = {
+            'activity_name': 'EVAPORATION',
+            'workup': { 'vials': params[:evaporation]['vials'], 'vessel': params[:evaporation]['vessel'],
+            'reaction_process_vessel': params[:evaporation][:vessel] }
+        }.stringify_keys
+
+          evaporation = Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendActivity
+                        .execute!(reaction_process_step: @activity.reaction_process_step,
+                                  activity_params: evaporation_params,
+                                  position: @activity.position + 1)
+
+          present evaporation, with: Entities::ReactionProcessEditor::ReactionProcessActivityEntity, root: :reaction_process_activity
+        end
+
         desc 'Update Position of a ReactionProcessActivity'
         put :update_position do
           Usecases::ReactionProcessEditor::ReactionProcessActivities::UpdatePosition.execute!(

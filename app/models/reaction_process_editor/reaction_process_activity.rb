@@ -50,7 +50,7 @@ module ReactionProcessEditor
     end
 
     def removes_compound?
-      %w[REMOVE].include?(activity_name)
+      %w[REMOVE EVAPORATION].include?(activity_name)
     end
 
     def halts_automation?
