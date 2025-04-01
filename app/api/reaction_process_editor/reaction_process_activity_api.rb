@@ -9,7 +9,7 @@ module ReactionProcessEditor
     # rescue_from :all
 
     namespace :reaction_process_activities do
-      route_param :id do
+      route_param :id, format: :uuid do
         before do
           @activity = ::ReactionProcessEditor::ReactionProcessActivity.find_by(id: params[:id])
           error!('404 Not Found', 404) unless @activity&.creator == current_user
@@ -29,23 +29,28 @@ module ReactionProcessEditor
           ), with: Entities::ReactionProcessEditor::ReactionProcessActivityEntity, root: :reaction_process_activity
         end
 
-        desc 'Create an Evaporation appended to the ReactionProcessActivity.'
-        put :append_evaporation do
-          Rails.logger.info("evaporation_params")
-          Rails.logger.info(params)
+        desc 'Create and append an action for the pooling groups.'
+        # params do
+        # #   # requires :activity, type: Hash do
+        #   requires :pooling_groups, type: Array, desc: 'The Pooling Groups that activities shall be created for.'
+        # #   # end
+        # end
+        put :append_pooling_groups do
 
-          evaporation_params = {
-            'activity_name': 'EVAPORATION',
-            'workup': { 'vials': params[:evaporation]['vials'], 'vessel': params[:evaporation]['vessel'],
-            'reaction_process_vessel': params[:evaporation][:vessel] }
-        }.stringify_keys
+          pooling_groups = params[:pooling_groups]
 
-          evaporation = Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendActivity
-                        .execute!(reaction_process_step: @activity.reaction_process_step,
-                                  activity_params: evaporation_params,
-                                  position: @activity.position + 1)
+          pooling_groups.each_with_index do |pooling_group, index|
 
-          present evaporation, with: Entities::ReactionProcessEditor::ReactionProcessActivityEntity, root: :reaction_process_activity
+            Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendPoolingGroupActivity
+              .execute!(reaction_process_step: @activity.reaction_process_step,
+                        pooling_group_params: pooling_group,
+                        position: @activity.position + 1 + index)
+          end
+
+          @activity.workup['AUTOMATION_STATUS'] = 'HALT_RESOLVED_NEEDS_CONFIRMATION'
+          @activity.save
+
+          # present evaporation, with: Entities::ReactionProcessEditor::ReactionProcessActivityEntity, root: :reaction_process_activity
         end
 
         desc 'Update Position of a ReactionProcessActivity'

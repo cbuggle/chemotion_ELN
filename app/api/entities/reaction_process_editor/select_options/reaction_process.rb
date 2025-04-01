@@ -30,6 +30,7 @@ module Entities
             SAVE: SelectOptions::Forms::SaveSample.new.select_options,
             TRANSFER: SelectOptions::Forms::Transfer.new.select_options,
             WAIT: SelectOptions::Forms::Wait.new.select_options,
+            POOLING_GROUP: SelectOptions::Forms::PoolingGroups.new.select_options,
           }
         end
 
