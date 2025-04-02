@@ -57,6 +57,10 @@ module ReactionProcessEditor
       workup['AUTOMATION_STATUS'] == "HALT"
     end
 
+    def automation_completed?
+      workup['AUTOMATION_STATUS'] == "COMPLETED"
+    end
+
     def compound
       sample || medium
     end
