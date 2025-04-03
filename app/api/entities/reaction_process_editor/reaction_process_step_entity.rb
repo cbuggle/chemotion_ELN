@@ -19,10 +19,10 @@ module Entities
       end
 
       def automation_status
-        return "STEP_COMPLETED" if object.reaction_process_activities.all?(&:automation_completed?)
-        return "STEP_RUNNING" unless object.predecessors.any?(&:halts_automation?)
+        return 'STEP_COMPLETED' if object.reaction_process_activities.all?(&:automation_completed?)
+        return 'STEP_RUNNING' unless object.predecessors.any?(&:halts_automation?)
 
-        object.automation_status || "STEP_HALT_BY_PRECEDING"
+        object.automation_status || 'STEP_HALT_BY_PRECEDING'
       end
 
       def reaction

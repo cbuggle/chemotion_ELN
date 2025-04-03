@@ -19,7 +19,6 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put /automation_re
   #  TODO change authorization, needs to be sent by technical user.
   it_behaves_like 'authorization restricted API call'
 
-
   it 'updates position' do
     allow(Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationResponse).to receive(:execute!)
 

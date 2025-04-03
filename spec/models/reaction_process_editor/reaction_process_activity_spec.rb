@@ -19,7 +19,6 @@ RSpec.describe ReactionProcessEditor::ReactionProcessActivity do
   it { is_expected.to delegate_method(:reaction_process).to(:reaction_process_step) }
   it { is_expected.to delegate_method(:reaction).to(:reaction_process_step) }
 
-
   describe '#siblings' do
     let!(:siblings) do
       [process_activity] + create_list(:reaction_process_activity, 2,
@@ -37,7 +36,7 @@ RSpec.describe ReactionProcessEditor::ReactionProcessActivity do
     expect(process_activity.condition?).to be true
   end
 
-  it "#halts_automation?" do
+  it '#halts_automation?' do
     expect(process_activity.halts_automation?).to be false
     process_activity.workup['AUTOMATION_STATUS'] = 'HALT'
     expect(process_activity.halts_automation?).to be true

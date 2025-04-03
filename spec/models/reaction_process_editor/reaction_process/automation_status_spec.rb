@@ -2,17 +2,16 @@
 
 require 'rails_helper'
 
-RSpec.describe "Automation Status" do
+RSpec.describe 'Automation Status' do
   let!(:reaction_process) { create_default(:reaction_process) }
 
-  let!(:process_steps) { create_list(:reaction_process_steps, 4)}
+  let!(:process_steps) { create_list(:reaction_process_steps, 4) }
 
   describe 'automation status' do
-
-    it "does not halts_automation?" do
+    it 'does not halts_automation?' do
     end
 
-    it "halts_automation when activity halts" do
+    it 'halts_automation when activity halts' do
     end
   end
 end

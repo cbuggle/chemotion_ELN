@@ -54,11 +54,11 @@ module ReactionProcessEditor
     end
 
     def halts_automation?
-      workup['AUTOMATION_STATUS'] == "HALT"
+      workup['AUTOMATION_STATUS'] == 'HALT'
     end
 
     def automation_completed?
-      workup['AUTOMATION_STATUS'] == "COMPLETED"
+      workup['AUTOMATION_STATUS'] == 'COMPLETED'
     end
 
     def compound

@@ -7,7 +7,6 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessActivities::Updat
   let(:activity) { create(:reaction_process_activity) }
   let(:activity_params) { { workup: { NEW_WORKUP: 'SUCCESS' } }.deep_stringify_keys }
 
-
   it 'updates activity' do
     expect { update_activity }.to change(activity, :workup).to(activity_params['workup'])
   end
@@ -43,11 +42,11 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessActivities::Updat
       update_activity
 
       expect(Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate)
-      .to have_received(:execute!).with(
-        reaction_process_id: reaction_process.id,
-        reaction_process_vessel_params: { vessel_id: vessel.id }.deep_stringify_keys,
+        .to have_received(:execute!).with(
+          reaction_process_id: reaction_process.id,
+          reaction_process_vessel_params: { vessel_id: vessel.id }.deep_stringify_keys,
         )
-      end
+    end
 
     it 'triggers ReactionProcessVessel::SweepUnused' do
       allow(Usecases::ReactionProcessEditor::ReactionProcessVessels::SweepUnused).to receive(:execute!)

@@ -36,11 +36,9 @@ module ReactionProcessEditor
         # #   # end
         # end
         put :append_pooling_groups do
-
           pooling_groups = params[:pooling_groups]
 
           pooling_groups.each_with_index do |pooling_group, index|
-
             Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendPoolingGroupActivity
               .execute!(reaction_process_step: @activity.reaction_process_step,
                         pooling_group_params: pooling_group,
@@ -69,9 +67,9 @@ module ReactionProcessEditor
 
       route_param :id do
         put :automation_response do
-          raise "AUTHENTICATION FAILURE" unless current_user.is_a?(ReactionProcessEditor::ApiUser)
+          raise 'AUTHENTICATION FAILURE' unless current_user.is_a?(ReactionProcessEditor::ApiUser)
 
-           @activity = ::ReactionProcessEditor::ReactionProcessActivity.find_by(id: params[:id])
+          @activity = ::ReactionProcessEditor::ReactionProcessActivity.find_by(id: params[:id])
 
           response_file = params[:response_csv].tempfile
 

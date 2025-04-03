@@ -6,8 +6,8 @@ module Entities
       module Forms
         class PoolingGroups < Base
           def select_options
-            activities_list = ['EVAPORATION', 'DISCARD', 'ADD', 'FILTRATION', 'EXTRACTION', 'CHROMATOGRAPHY',
-             'CRYSTALLIZATION', 'ANALYSIS_CHROMATOGRAPHY', 'ANALYSIS_SPECTROSCOPY', 'REMOVE', 'SAVE_SAMPLE']
+            activities_list = %w[EVAPORATION DISCARD ADD FILTRATION EXTRACTION CHROMATOGRAPHY
+                                 CRYSTALLIZATION ANALYSIS_CHROMATOGRAPHY ANALYSIS_SPECTROSCOPY REMOVE SAVE_SAMPLE]
             { followup_action_types: titlecase_options_for(activities_list) }
           end
         end
