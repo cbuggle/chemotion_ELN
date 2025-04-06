@@ -23,7 +23,8 @@ module OrdKit
               duration: duration,
               equipment: equipment,
               vessel: Vessels::ReactionProcessVesselExporter.new(@action.reaction_process_vessel).to_ord,
-              automation_status: automation_status
+              automation_status: automation_status,
+              vials: vials
             }.merge(action_type_attributes),
           )
         end
@@ -65,17 +66,18 @@ module OrdKit
         end
 
         def automation_status
-          OrdKit::AutomationStatus.const_get workup['AUTOMATION_STATUS'].to_s
+          OrdKit::AutomationStatus.const_get workup['AUTOMATION_STATUS'] || 'RUN'
         rescue NameError
           OrdKit::AutomationStatus::UNSPECIFIED
         end
 
+        def vials
+           @action.workup['vials']&.map(&:to_s) || []
+        end
 
         def action_type_attributes
           raise 'OrdKit::Exporter::Actions::Base is abstract. Please subclass and provide an implementation.'
         end
-
-
       end
     end
   end

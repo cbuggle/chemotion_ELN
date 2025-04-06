@@ -72,7 +72,7 @@ message ReactionStep {
   // The indivdual actions defining the ReactionStep.
   repeated ReactionProcessAction actions = 6;
 
-  AutomationStatus automation_status = 7;
+  StepAutomationStatus step_automation_status = 7;
 }
 
 /**
@@ -153,9 +153,18 @@ enum AutomationStatus {
   UNSPECIFIED = 0;
   RUN = 1;
   HALT = 2;
-  HALT_RESOLVED = 3;
-  HALT_BY_PRECEDING = 4;
-  MANUAL_PROCEED = 5;
+  AUTOMATION_RESPONDED = 3;
+  HALT_RESOLVED_NEEDS_CONFIRMATION = 4;
+  HALT_RESOLVED = 5;
+  COMPLETED = 6;
+}
+
+enum StepAutomationStatus {
+  STEP_UNSPECIFIED = 0;
+  STEP_RUNNING = 1;
+  STEP_HALT_BY_PRECEDING = 2;
+  STEP_MANUAL_PROCEED = 3;
+  STEP_COMPLETED = 4;
 }
 
 /**
@@ -180,8 +189,11 @@ message ReactionProcessAction {
     ActionTransfer transfer = 13;
     ActionWait wait = 14;
     ActionSaveSample save_sample = 15;
+    ActionDiscard discard = 16;
+    ActionEvaporation evaporation = 17;
   }
-  optional AutomationStatus automation_status = 16;
+  optional AutomationStatus automation_status = 18;
+  repeated string vials = 19;
 
   message ActionAdd {
     ReactionRole.ReactionRoleType reaction_role = 1;
@@ -347,6 +359,8 @@ message ReactionProcessAction {
     Percentage percentage = 6;
   }
 
+  message ActionDiscard { repeated string vials = 1; }
+  message ActionEvaporation { repeated string vials = 1; }
   message ActionWait { TimeSpan duration = 1; }
 
   message ActionSaveSample {

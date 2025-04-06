@@ -3,7 +3,19 @@
 module OrdKit
   module Exporter
     class ReactionProcessStepExporter < OrdKit::Exporter::Base
+
       def to_ord(starts_at:)
+
+      Rails.logger.info("ReactionProcessStepExporter ReactionProcessStepExporter")
+      Rails.logger.info({reaction_step_id: model.id,
+          position: model.position + 1,
+          start_time: start_time(starts_at),
+          duration: duration,
+          setup: setup,
+          actions: reaction_process_activities,
+          step_automation_status: step_automation_status})
+
+
         OrdKit::ReactionStep.new(
           reaction_step_id: model.id,
           position: model.position + 1,
@@ -11,16 +23,16 @@ module OrdKit
           duration: duration,
           setup: setup,
           actions: reaction_process_activities,
-          automation_status: automation_status,
+          step_automation_status: step_automation_status,
         )
       end
 
       private
 
-      def automation_status
-        OrdKit::AutomationStatus.const_get model.automation_status.to_s
+      def step_automation_status
+        OrdKit::StepAutomationStatus.const_get model.step_automation_status.to_s
       rescue NameError
-        OrdKit::AutomationStatus::UNSPECIFIED
+        OrdKit::StepAutomationStatus::STEP_UNSPECIFIED
       end
 
       def setup
