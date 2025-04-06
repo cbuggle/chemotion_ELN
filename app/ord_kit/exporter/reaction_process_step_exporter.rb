@@ -3,18 +3,15 @@
 module OrdKit
   module Exporter
     class ReactionProcessStepExporter < OrdKit::Exporter::Base
-
       def to_ord(starts_at:)
-
-      Rails.logger.info("ReactionProcessStepExporter ReactionProcessStepExporter")
-      Rails.logger.info({reaction_step_id: model.id,
-          position: model.position + 1,
-          start_time: start_time(starts_at),
-          duration: duration,
-          setup: setup,
-          actions: reaction_process_activities,
-          step_automation_status: step_automation_status})
-
+        Rails.logger.info('ReactionProcessStepExporter ReactionProcessStepExporter')
+        Rails.logger.info({ reaction_step_id: model.id,
+                            position: model.position + 1,
+                            start_time: start_time(starts_at),
+                            duration: duration,
+                            setup: setup,
+                            actions: reaction_process_activities,
+                            step_automation_status: step_automation_status })
 
         OrdKit::ReactionStep.new(
           reaction_step_id: model.id,

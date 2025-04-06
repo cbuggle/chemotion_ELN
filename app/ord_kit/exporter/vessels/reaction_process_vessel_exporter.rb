@@ -4,55 +4,57 @@ module OrdKit
   module Exporter
     module Vessels
       class ReactionProcessVesselExporter < OrdKit::Exporter::Base
-        attr_reader :vessel
+        attr_reader :vessel, :vessel_template
 
         def to_ord
-          return unless model
+          vesselable = model&.vesselable
+          return unless vesselable
 
-          @vessel = model.vesselable
+          @vessel_template = vesselable.is_a?(VesselTemplate) ? vesselable : vesselable.vessel_template
 
-          OrdKit::Vessel.new(
-            id: vessel.id,
-            name: vessel.name,
-            label: short_label,
-            description: description,
-            details: vessel.details,
+          @vessel = vesselable.is_a?(VesselTemplate) ? nil : vesselable
+
+          Rails.logger.info("+++++++++ ReactionProcessVesselExporter")
+          Rails.logger.info(vesselable)
+          Rails.logger.info("+++++++++ ReactionProcessVesselExporter")
+          Rails.logger.info(vessel_template)
+          Rails.logger.info(vessel)
+          Rails.logger.info("--------- ReactionProcessVesselExporter")
+
+          OrdKit::VesselTemplate.new(
+            id: vessel_template.id,
+            name: vessel_template.name,
+            details: vessel_template.details,
             type: vessel_type,
             material: vessel_material,
             volume: volume,
             weight: weight,
-            bar_code: bar_code,
-            qr_code: qr_code,
             preparations: preparations,
             attachments: attachments,
-            vessel_class: vessel.class.to_s,
+            vessel: vessel_instance(vessel),
           )
         end
 
         private
 
-        def description
-          vessel.try(:description)
-        end
+        def vessel_instance(vessel)
+          return unless vessel
 
-        def short_label
-          vessel.try(:short_label)
-        end
-
-        def bar_code
-          vessel.try(:bar_code)
-        end
-
-        def qr_code
-          vessel.try(:qr_code)
+          OrdKit::Vessel.new(
+            id: vessel.id,
+            label: vessel.short_label,
+            description: vessel.description,
+            bar_code: vessel.bar_code,
+            qr_code: vessel.qr_code,
+          )
         end
 
         def vessel_type
-          VesselTypeExporter.new(vessel).to_ord
+          VesselTypeExporter.new(vessel_template).to_ord
         end
 
         def vessel_material
-          VesselMaterialExporter.new(vessel).to_ord
+          VesselMaterialExporter.new(vessel_template).to_ord
         end
 
         def preparations
@@ -60,16 +62,20 @@ module OrdKit
         end
 
         def attachments
-          VesselAttachmentsExporter.new(vessel).to_ord
+          # NOT YET IMPLEMENTED. Depends on enhancements in ELN Vessel code.
+          # VesselAttachmentsExporter.new(vessel_template).to_ord
+          []
         end
 
         def volume
           Metrics::Amounts::VolumeExporter.new(
-            { value: vessel.volume_amount, unit: vessel.volume_unit }.stringify_keys,
+            { value: vessel_template.volume_amount, unit: vessel_template.volume_unit }.stringify_keys,
           ).to_ord
         end
 
         def weight
+          return unless vessel
+
           Metrics::Amounts::MassExporter.new(
             { value: vessel.weight_amount, unit: vessel.weight_unit }.stringify_keys,
           ).to_ord

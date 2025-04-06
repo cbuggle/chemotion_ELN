@@ -6,10 +6,10 @@ module Usecases
       class AppendPoolingGroupActivity
         def self.execute!(reaction_process_step:, pooling_group_params:, position:)
           ActiveRecord::Base.transaction do
-            Rails.logger.info('AppendPoolingGroupActivity vessel[id]')
+            # Rails.logger.info('AppendPoolingGroupActivity vessel[id]')
             # Rails.logger.info(pooling_group_params['vessel']['id'] )
-            Rails.logger.info('AppendPoolingGroupActivity reaction_process_id')
-            Rails.logger.info(reaction_process_step.reaction_process_id)
+            # Rails.logger.info('AppendPoolingGroupActivity reaction_process_id')
+            # Rails.logger.info(reaction_process_step.reaction_process_id)
 
             vessel = Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
               reaction_process_id: reaction_process_step.reaction_process_id,
@@ -38,7 +38,7 @@ module Usecases
           if %w[FILTRATION EXTRACTION CRYSTALLIZATION].include?(activity_name)
             { activity_name: 'PURIFICATION',
               workup: { purification_type: activity_name } }
-          elsif %w[ANALYIS_CHROMATOGRAPHY ANALYSIS_SPECTROSCOPY].include?(activity_name)
+          elsif %w[ANALYSIS_CHROMATOGRAPHY ANALYSIS_SPECTROSCOPY].include?(activity_name)
             { activity_name: 'ANALYSIS',
               workup: { analysis_type: activity_name.delete_prefix('ANALYSIS_') } }
 

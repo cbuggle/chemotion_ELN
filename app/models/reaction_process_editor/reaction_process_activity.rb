@@ -54,7 +54,7 @@ module ReactionProcessEditor
     end
 
     def halts_automation?
-      %w[HALT AUTOMATION_RESPONDED HALT_RESOLVED_NEEDS_CONFIRMATION].include?(workup['AUTOMATION_STATUS'] )
+      %w[HALT AUTOMATION_RESPONDED HALT_RESOLVED_NEEDS_CONFIRMATION].include?(workup['AUTOMATION_STATUS'])
     end
 
     def automation_completed?
