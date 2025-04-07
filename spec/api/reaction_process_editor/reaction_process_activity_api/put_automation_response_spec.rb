@@ -19,13 +19,14 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put /automation_re
   #  TODO change authorization, needs to be sent by technical user.
   it_behaves_like 'authorization restricted API call'
 
-  it 'updates position' do
-    allow(Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationResponse).to receive(:execute!)
+  it 'executes HandleAutomationResponse' do
+    allow(Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationResponse)
+      .to receive(:execute!)
 
     put_activity_request
 
-    expect(Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationResponse).to have_received(:execute!).with(
-      activity: activity, response_csv: response_csv,
-    )
+    expect(Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationResponse)
+      .to have_received(:execute!)
+      .with(activity: activity, response_csv: response_csv)
   end
 end

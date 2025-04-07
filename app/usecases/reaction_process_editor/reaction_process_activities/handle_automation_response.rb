@@ -9,8 +9,6 @@ module Usecases
             csv = CSV.parse(response_csv, headers: true, return_headers: false, col_sep: ';')
 
             automation_response = csv.map do |row|
-              # row = csv[0]
-
               tray_type = row[0]
               # TODO: Establish length (& width) from tray_type definitions.
               vial_columns = 5

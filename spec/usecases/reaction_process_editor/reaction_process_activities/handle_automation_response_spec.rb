@@ -3,13 +3,12 @@
 RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationResponse do
   subject(:handle_automation_response) { described_class.execute!(activity: activity, response_csv: response_csv) }
 
-  let(:response_csv) { file_fixture('reaction_process_editor/automation_responses/hs_15_response.csv').read }
+  let(:response_csv) { file_fixture('reaction_process_editor/automation_responses/hs-15-2-plates-response.csv').read }
 
   let(:expected_automation_response) do
     { tray_type: 'HS_15',
-      vials: [[11_568, 9646, nil, 16_165, 56_161],
-              [619_619, nil, 1196, nil, 196],
-              [nil, nil, nil, nil, 956_191]] }.stringify_keys
+      vial_columns: 5,
+      vials: [[11_568, 9646, nil, 16_165, 56_161,619_619, nil, 1196, nil, 196,nil, nil, nil, nil, 956_191]] }.stringify_keys
   end
 
   let(:activity) { create(:reaction_process_activity) }
