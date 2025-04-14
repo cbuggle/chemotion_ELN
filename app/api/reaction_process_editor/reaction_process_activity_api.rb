@@ -36,6 +36,9 @@ module ReactionProcessEditor
         # #   # end
         # end
         put :append_pooling_groups do
+          Rails.logger.info('append_pooling_groups')
+          Rails.logger.info(params)
+
           pooling_groups = params[:pooling_groups]
 
           pooling_groups.each_with_index do |pooling_group, index|
@@ -47,8 +50,6 @@ module ReactionProcessEditor
 
           @activity.workup['AUTOMATION_STATUS'] = 'HALT_RESOLVED_NEEDS_CONFIRMATION'
           @activity.save
-
-          # present evaporation, with: Entities::ReactionProcessEditor::ReactionProcessActivityEntity, root: :reaction_process_activity
         end
 
         desc 'Update Position of a ReactionProcessActivity'
@@ -67,7 +68,7 @@ module ReactionProcessEditor
 
       route_param :id do
         put :automation_response do
-          raise 'AUTHENTICATION FAILURE' unless current_user.is_a?(ReactionProcessEditor::ApiUser)
+          error!('404 Not Found', 404) unless current_user.is_a?(ReactionProcessEditor::ApiUser)
 
           @activity = ::ReactionProcessEditor::ReactionProcessActivity.find_by(id: params[:id])
 
@@ -76,6 +77,17 @@ module ReactionProcessEditor
           Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationResponse.execute!(
             activity: @activity,
             response_csv: response_file,
+          )
+        end
+
+        put :automation_status do
+          error!('404 Not Found', 404) unless current_user.is_a?(ReactionProcessEditor::ApiUser)
+
+          @activity = ::ReactionProcessEditor::ReactionProcessActivity.find_by(id: params[:id])
+
+          Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationStatus.execute!(
+            activity: @activity,
+            automation_status: params[:automation_status],
           )
         end
       end

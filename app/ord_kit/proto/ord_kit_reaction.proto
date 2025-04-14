@@ -160,8 +160,8 @@ enum AutomationStatus {
 }
 
 enum StepAutomationStatus {
-  STEP_UNSPECIFIED = 0;
-  STEP_RUNNING = 1;
+  STEP_STATUS_UNSPECIFIED = 0;
+  STEP_CAN_RUN = 1;
   STEP_HALT_BY_PRECEDING = 2;
   STEP_MANUAL_PROCEED = 3;
   STEP_COMPLETED = 4;

@@ -14,13 +14,6 @@ module OrdKit
 
           @vessel = vesselable.is_a?(VesselTemplate) ? nil : vesselable
 
-          Rails.logger.info('+++++++++ ReactionProcessVesselExporter')
-          Rails.logger.info(vesselable)
-          Rails.logger.info('+++++++++ ReactionProcessVesselExporter')
-          Rails.logger.info(vessel_template)
-          Rails.logger.info(vessel)
-          Rails.logger.info('--------- ReactionProcessVesselExporter')
-
           OrdKit::VesselTemplate.new(
             id: vessel_template.id,
             name: vessel_template.name,

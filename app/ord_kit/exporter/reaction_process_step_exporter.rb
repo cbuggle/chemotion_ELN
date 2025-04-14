@@ -29,7 +29,7 @@ module OrdKit
       def step_automation_status
         OrdKit::StepAutomationStatus.const_get model.step_automation_status.to_s
       rescue NameError
-        OrdKit::StepAutomationStatus::STEP_UNSPECIFIED
+        OrdKit::StepAutomationStatus::STEP_STATUS_UNSPECIFIED
       end
 
       def setup

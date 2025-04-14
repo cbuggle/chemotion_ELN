@@ -11,10 +11,12 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put /automation_re
         headers: authorization_header)
   end
 
-  let(:activity) { create(:reaction_process_activity) }
-  let(:response_csv) { 2 }
+  let(:api_user) { create(:user, type: 'ReactionProcessEditor::ApiUser') }
 
-  let(:authorization_header) { authorized_header(activity.creator) }
+  let(:activity) { create(:reaction_process_activity) }
+  let(:response_csv) { fixture_file_upload('reaction_process_editor/automation_responses/hs-15-2-plates-response.csv') }
+
+  let(:authorization_header) { authorized_header(api_user) }
 
   #  TODO change authorization, needs to be sent by technical user.
   it_behaves_like 'authorization restricted API call'
@@ -27,6 +29,6 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put /automation_re
 
     expect(Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationResponse)
       .to have_received(:execute!)
-      .with(activity: activity, response_csv: response_csv)
+      .with(activity: activity, response_csv: an_instance_of(File))
   end
 end

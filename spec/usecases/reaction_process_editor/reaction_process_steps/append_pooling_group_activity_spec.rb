@@ -9,35 +9,41 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendPool
 
   let!(:process_step) { create_default(:reaction_process_step) }
   let!(:existing_actions) { create_list(:reaction_process_activity, 3) }
-  let(:insert_before) { nil }
+  let(:insert_before) { 2 }
+  let(:vials_params) { [{ id: 1 }, { id: 2 }, { id: 3 }] }
+
+  let(:vessel) { create(:vessel) }
+  let(:vessel_params) { { vesselable_id: vessel.id, vesselable_type: vessel.class.to_s } }
 
   let(:pooling_group_params) do
-    [{ activity_name: 'DISCARD', workup: { SOME: 'WORKUP' } },
-     { activity_name: 'WAIT', workup: { SOME: 'WORKUP' } }].deep_stringify_keys
+    { followup_action: { value: 'DISCARD' },
+      workup: { SOME: 'WORKUP' },
+      vessel: vessel_params,
+      vials: vials_params }.deep_stringify_keys
   end
 
-  let(:created_action) { ReactionProcessEditor::ReactionProcess.order(:crated_at).last }
+  let(:created_action) { ReactionProcessEditor::ReactionProcessActivity.order(:created_at).last }
 
   it 'adds action' do
     expect { append_activity }.to change(process_step.reaction_process_activities, :length).by(1)
   end
 
-  it 'returns action' do
-    expect(append_activity.attributes).to include(activity_params)
-  end
-
-  it 'appends on last position' do
-    expect(append_activity.position).to eq existing_actions.length
-  end
-
-  it 'triggers ReactionProcessActivities::Update' do
-    allow(Usecases::ReactionProcessEditor::ReactionProcessActivities::Update).to receive(:execute!)
-
+  it 'sets action name' do
     append_activity
+    expect(created_action.activity_name).to eq 'DISCARD'
+  end
 
-    expect(Usecases::ReactionProcessEditor::ReactionProcessActivities::Update).to have_received(:execute!).with(
-      activity: instance_of(ReactionProcessEditor::ReactionProcessActivity),
-      activity_params: activity_params,
-    )
+  it 'sets vials' do
+    append_activity
+    expect(created_action.workup['vials']).to eq [1, 2, 3]
+  end
+
+  it 'sets vessel' do
+    append_activity
+    expect(created_action.reaction_process_vessel.vesselable).to eq vessel
+  end
+
+  it 'appends after parent activity' do
+    expect(append_activity.position).to eq 2
   end
 end

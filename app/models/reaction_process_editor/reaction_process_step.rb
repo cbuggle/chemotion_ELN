@@ -53,7 +53,7 @@ module ReactionProcessEditor
     def step_automation_status
       # mostly determined by external conditions, can be set to "STEP_MANUAL_PROCEED" / "STEP_HALT_BY_PRECEDING"
       return 'STEP_COMPLETED' if reaction_process_activities.all?(&:automation_completed?)
-      return 'STEP_RUNNING' if predecessors.none?(&:halts_automation?)
+      return 'STEP_CAN_RUN' if predecessors.none?(&:halts_automation?)
 
       automation_status || 'STEP_HALT_BY_PRECEDING'
     end
@@ -68,10 +68,6 @@ module ReactionProcessEditor
     end
 
     def added_materials(material_type)
-      # material_ids = reaction_process.reaction_process_steps.where(position: ..position).map do |process_step|
-      #   process_step.added_material_ids(material_type)
-      # end.flatten.uniq
-
       case material_type
       when 'ADDITIVE'
         Medium::Additive.find added_material_ids(material_type)
