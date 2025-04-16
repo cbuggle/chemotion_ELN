@@ -67,6 +67,10 @@ module ReactionProcessEditor
       end
 
       route_param :id do
+        params do
+          requires :response_csv
+        end
+
         put :automation_response do
           error!('404 Not Found', 404) unless current_user.is_a?(ReactionProcessEditor::ApiUser)
 
@@ -78,6 +82,9 @@ module ReactionProcessEditor
             activity: @activity,
             response_csv: response_file,
           )
+
+        rescue StandardError
+          error!('422 Unprocessable Entity', 422)
         end
 
         put :automation_status do

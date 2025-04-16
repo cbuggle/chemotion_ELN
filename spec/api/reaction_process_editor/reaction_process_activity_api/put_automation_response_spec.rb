@@ -28,6 +28,6 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put /automation_re
 
     expect(Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationResponse)
       .to have_received(:execute!)
-      .with(activity: activity, response_csv: an_instance_of(File))
+      .with(activity: activity, response_csv: an_instance_of(String))
   end
 end
