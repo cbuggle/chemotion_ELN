@@ -68,7 +68,7 @@ module ReactionProcessEditor
 
       route_param :id do
         params do
-          requires :response_csv
+          requires :response_json
         end
 
         put :automation_response do
@@ -76,13 +76,15 @@ module ReactionProcessEditor
 
           @activity = ::ReactionProcessEditor::ReactionProcessActivity.find_by(id: params[:id])
 
-          response_file = params[:response_csv].tempfile
+          response_file = params[:response_json].tempfile
 
           Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationResponse.execute!(
             activity: @activity,
-            response_csv: response_file,
+            response_json: response_file,
           )
-        rescue StandardError
+        rescue StandardError => e
+          Rails.logger.info("Unprocessable Entity")
+          Rails.logger.info(e.inspect)
           error!('422 Unprocessable Entity', 422)
         end
 

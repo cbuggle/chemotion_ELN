@@ -7,7 +7,7 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put /automation_st
 
   subject(:put_activity_request) do
     put("/api/v1/reaction_process_editor/reaction_process_activities/#{activity.id}/automation_status",
-        params: { automation_status: 'the_automation_status' }.to_json,
+        params: { status: 'the_automation_status' }.to_json,
         headers: authorization_header)
   end
 
@@ -15,7 +15,6 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put /automation_st
   let(:activity) { create(:reaction_process_activity) }
   let(:authorization_header) { authorized_header(api_user) }
 
-  #  TODO change authorization, needs to be sent by technical user.
   it_behaves_like 'authorization restricted API call'
 
   it 'executes HandleAutomationStatus' do

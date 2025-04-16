@@ -7,14 +7,14 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put /automation_re
 
   subject(:put_activity_request) do
     put("/api/v1/reaction_process_editor/reaction_process_activities/#{activity.id}/automation_response",
-        params: { response_csv: response_csv }.to_json,
+        params: { response_json: response_file }.to_json,
         headers: authorization_header)
   end
 
   let(:api_user) { create(:user, type: 'ReactionProcessEditor::ApiUser') }
 
   let(:activity) { create(:reaction_process_activity) }
-  let(:response_csv) { fixture_file_upload('reaction_process_editor/automation_responses/hs-15-2-plates-response.csv') }
+  let(:response_file) { fixture_file_upload('reaction_process_editor/automation_responses/hs-15-2-plates-response.json') }
 
   let(:authorization_header) { authorized_header(api_user) }
 
@@ -28,6 +28,6 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put /automation_re
 
     expect(Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationResponse)
       .to have_received(:execute!)
-      .with(activity: activity, response_csv: an_instance_of(String))
+      .with(activity: activity, response_json: an_instance_of(String))
   end
 end
