@@ -7,7 +7,7 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put /automation_re
 
   subject(:put_activity_request) do
     put("/api/v1/reaction_process_editor/reaction_process_activities/#{activity.id}/automation_response",
-        params: { response_json: response_file }.to_json,
+        params: { response_json: response_file },
         headers: authorization_header)
   end
 
@@ -30,6 +30,6 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put /automation_re
 
     expect(Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationResponse)
       .to have_received(:execute!)
-      .with(activity: activity, response_json: an_instance_of(String))
+      .with(activity: activity, response_json: an_instance_of(Tempfile))
   end
 end

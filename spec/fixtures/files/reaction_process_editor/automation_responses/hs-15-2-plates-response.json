@@ -2,7 +2,8 @@
 	"vialPlates": [
 		{
 			"trayType": "HS_15",
-			"trayColumns": "5",
+			"trayColumns": 5,
+			"trayRows": 3,
 			"vials": [
 				11568,
 				9646,
@@ -23,7 +24,8 @@
 		},
 		{
 			"trayType": "HS_15",
-			"trayColumns": "5",
+			"trayColumns": 5,
+			"trayRows": 3,
 			"vials": [
 				949456,
 				null,
