@@ -14,7 +14,9 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put /automation_re
   let(:api_user) { create(:user, type: 'ReactionProcessEditor::ApiUser') }
 
   let(:activity) { create(:reaction_process_activity) }
-  let(:response_file) { fixture_file_upload('reaction_process_editor/automation_responses/hs-15-2-plates-response.json') }
+  let(:response_file) do
+    fixture_file_upload('reaction_process_editor/automation_responses/hs-15-2-plates-response.json')
+  end
 
   let(:authorization_header) { authorized_header(api_user) }
 

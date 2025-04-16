@@ -83,7 +83,7 @@ module ReactionProcessEditor
             response_json: response_file,
           )
         rescue StandardError => e
-          Rails.logger.info("Unprocessable Entity")
+          Rails.logger.info('Unprocessable Entity')
           Rails.logger.info(e.inspect)
           error!('422 Unprocessable Entity', 422)
         end
