@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationResponse do
-  subject(:handle_automation_response) { described_class.execute!(activity: activity, response_csv: response_csv) }
+  subject(:handle_automation_response) do
+    described_class.execute!(activity: activity, response_csv: response_csv.tempfile)
+  end
 
-  let(:response_csv) { file_fixture('reaction_process_editor/automation_responses/hs-15-2-plates-response.csv') }
+  let(:response_csv) { fixture_file_upload('reaction_process_editor/automation_responses/hs-15-2-plates-response.csv') }
 
   let(:expected_automation_response) do
     [

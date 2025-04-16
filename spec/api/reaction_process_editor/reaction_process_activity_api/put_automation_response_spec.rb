@@ -18,7 +18,6 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put /automation_re
 
   let(:authorization_header) { authorized_header(api_user) }
 
-  #  TODO change authorization, needs to be sent by technical user.
   it_behaves_like 'authorization restricted API call'
 
   it 'executes HandleAutomationResponse' do

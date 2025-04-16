@@ -15,7 +15,7 @@ module Usecases
             vesselable_type: reaction_process_vessel_params['vesselable_type'],
           )
 
-          reaction_process_vessel.update(preparations: reaction_process_vessel_params[:preparations])
+          reaction_process_vessel.update(preparations: reaction_process_vessel_params['preparations'])
 
           reaction_process_vessel
         end

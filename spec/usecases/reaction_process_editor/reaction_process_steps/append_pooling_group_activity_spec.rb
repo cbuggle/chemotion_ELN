@@ -8,7 +8,9 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendPool
   end
 
   let!(:process_step) { create_default(:reaction_process_step) }
+  # rubocop:disable RSpec/LetSetup
   let!(:existing_actions) { create_list(:reaction_process_activity, 3) }
+  # rubocop:enable RSpec/LetSetup
   let(:insert_before) { 2 }
   let(:vials_params) { [{ id: 1 }, { id: 2 }, { id: 3 }] }
 
