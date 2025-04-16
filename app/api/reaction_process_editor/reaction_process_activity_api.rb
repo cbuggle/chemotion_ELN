@@ -82,9 +82,12 @@ module ReactionProcessEditor
             activity: @activity,
             response_csv: response_file,
           )
-
         rescue StandardError
           error!('422 Unprocessable Entity', 422)
+        end
+
+        params do
+          requires :status
         end
 
         put :automation_status do
@@ -94,7 +97,7 @@ module ReactionProcessEditor
 
           Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationStatus.execute!(
             activity: @activity,
-            automation_status: params[:automation_status],
+            automation_status: params[:status],
           )
         end
       end
