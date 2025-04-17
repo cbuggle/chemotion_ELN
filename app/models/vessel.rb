@@ -32,10 +32,18 @@ class Vessel < ApplicationRecord
   has_many :collections, through: :collections_vessels
 
   has_many :reaction_process_vessels, dependent: :destroy, class_name: 'ReactionProcessEditor::ReactionProcessVessel',
-                                      inverse_of: :vesselable, foreign_key: :vesselable_id
+  inverse_of: :vesselable, foreign_key: :vesselable_id
   has_many :reaction_processes, through: :reaction_process_vessels,
-                                class_name: 'ReactionProcessEditor::ReactionProcess'
+  class_name: 'ReactionProcessEditor::ReactionProcess'
 
-  delegate :details, :material_details, :material_type, :vessel_type, :volume_amount, :volume_unit,
-           :weight_amount, :weight_unit, to: :vessel_template
+  delegate :details, :material_details, :material_type, :vessel_type, :volume_amount, :volume_unit, to: :vessel_template
+
+  # TODO: temporary until weight is moved to Vessel-model in ELN migrations.
+  def weight_amount
+    vessel_template.weight_amount
+  end
+
+  def weight_unit
+    vessel_template.weight_unit
+  end
 end

@@ -577,29 +577,29 @@ message VesselTemplate {
   string id = 1;
   string name = 2;
 
-  string details = 5;
+  string details = 3;
 
-  VesselType type = 8;
+  VesselType type = 4;
   // Vessel material (glass, plastic, etc.).
-  Material material = 9;
+  Material material = 5;
   // Size (volume) of the vessel.
-  Volume volume = 10;
+  Volume volume = 6;
   // Weight (mass) of the vessel.
-  Mass weight = 11;
   // How the vessel was prepared for the reaction.
-  repeated VesselPreparation preparations = 12;
+  repeated VesselPreparation preparations = 7;
   // Vessel attachments (septum, cap, gas adapter, etc.).
-  repeated VesselAttachment attachments = 13;
+  repeated VesselAttachment attachments = 8;
 
-  optional Vessel vessel = 14;
+  optional Vessel vessel = 9;
 }
 
 message Vessel {
   string id = 1;
-  string label = 3;
-  string description = 4;
-  string bar_code = 6;
-  string qr_code = 7;
+  string label = 2;
+  string description = 3;
+  string bar_code = 4;
+  string qr_code = 5;
+  Mass weight = 6;
 }
 
 message Material {

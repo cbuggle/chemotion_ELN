@@ -21,7 +21,6 @@ module OrdKit
             type: vessel_type,
             material: vessel_material,
             volume: volume,
-            weight: weight,
             preparations: preparations,
             attachments: attachments,
             vessel: vessel_instance(vessel),
@@ -39,6 +38,7 @@ module OrdKit
             description: vessel.description,
             bar_code: vessel.bar_code,
             qr_code: vessel.qr_code,
+            weight: weight,
           )
         end
 
@@ -55,9 +55,7 @@ module OrdKit
         end
 
         def attachments
-          # NOT YET IMPLEMENTED. Depends on upcoming enhancements in ELN Vessel code.
-          # VesselAttachmentsExporter.new(vessel_template).to_ord
-          []
+          VesselAttachmentsExporter.new(vessel_template).to_ord
         end
 
         def volume
