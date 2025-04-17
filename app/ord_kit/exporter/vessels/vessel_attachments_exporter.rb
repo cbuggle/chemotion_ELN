@@ -19,13 +19,13 @@ module OrdKit
         # private
         #
         # def attachments
-          # Array(model.attachments)
+        # Array(model.attachments)
         # end
         #
         # def attachment_type(attachment)
-          # OrdKit::VesselPreparation::VesselAttachmentType.const_get(attachment)
+        # OrdKit::VesselPreparation::VesselAttachmentType.const_get(attachment)
         # rescue StandardError
-          # OrdKit::VesselPreparation::VesselAttachmentType.UNSPECIFIED
+        # OrdKit::VesselPreparation::VesselAttachmentType.UNSPECIFIED
         # end
       end
     end
