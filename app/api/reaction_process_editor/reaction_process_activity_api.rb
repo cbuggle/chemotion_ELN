@@ -6,7 +6,7 @@ module ReactionProcessEditor
 
     helpers StrongParamsHelpers
 
-    # rescue_from :all
+    rescue_from :all
 
     namespace :reaction_process_activities do
       route_param :id, format: :uuid do
@@ -30,15 +30,7 @@ module ReactionProcessEditor
         end
 
         desc 'Create and append an action for the pooling groups.'
-        # params do
-        # #   # requires :activity, type: Hash do
-        #   requires :pooling_groups, type: Array, desc: 'The Pooling Groups that activities shall be created for.'
-        # #   # end
-        # end
         put :append_pooling_groups do
-          Rails.logger.info('append_pooling_groups')
-          Rails.logger.info(params)
-
           pooling_groups = params[:pooling_groups]
 
           pooling_groups.each_with_index do |pooling_group, index|
@@ -82,9 +74,7 @@ module ReactionProcessEditor
             activity: @activity,
             response_json: response_file,
           )
-        rescue StandardError => e
-          Rails.logger.info('Unprocessable Entity')
-          Rails.logger.info(e.inspect)
+        rescue StandardError
           error!('422 Unprocessable Entity', 422)
         end
 

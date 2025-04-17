@@ -22,7 +22,7 @@ module OrdKit
               start_time: start_time(starts_at),
               duration: duration,
               equipment: equipment,
-              vessel_template: Vessels::ReactionProcessVesselExporter.new(@action.reaction_process_vessel).to_ord,
+              vessel_template: vessel_template,
               automation_status: automation_status,
               vials: vials,
             }.merge(action_type_attributes),
@@ -69,6 +69,10 @@ module OrdKit
           OrdKit::AutomationStatus.const_get workup['AUTOMATION_STATUS'] || 'RUN'
         rescue NameError
           OrdKit::AutomationStatus::UNSPECIFIED
+        end
+
+        def vessel_template
+          Vessels::ReactionProcessVesselableExporter.new(@action.reaction_process_vessel).to_ord
         end
 
         def vials

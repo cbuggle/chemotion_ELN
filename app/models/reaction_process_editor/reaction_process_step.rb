@@ -51,7 +51,8 @@ module ReactionProcessEditor
     end
 
     def step_automation_status
-      # mostly determined by external conditions, can be set to "STEP_MANUAL_PROCEED" / "STEP_HALT_BY_PRECEDING"
+      # step_automation_status mostly determined by external conditions
+      # can be set to "STEP_MANUAL_PROCEED" / "STEP_HALT_BY_PRECEDING" as fallback if no other condition fullfilled.
       return 'STEP_COMPLETED' if reaction_process_activities.all?(&:automation_completed?)
       return 'STEP_CAN_RUN' if predecessors.none?(&:halts_automation?)
 

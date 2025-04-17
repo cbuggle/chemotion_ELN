@@ -3,7 +3,7 @@
 module OrdKit
   module Exporter
     module Vessels
-      class ReactionProcessVesselExporter < OrdKit::Exporter::Base
+      class ReactionProcessVesselableExporter < OrdKit::Exporter::Base
         attr_reader :vessel, :vessel_template
 
         def to_ord
@@ -55,7 +55,7 @@ module OrdKit
         end
 
         def attachments
-          # NOT YET IMPLEMENTED. Depends on enhancements in ELN Vessel code.
+          # NOT YET IMPLEMENTED. Depends on upcoming enhancements in ELN Vessel code.
           # VesselAttachmentsExporter.new(vessel_template).to_ord
           []
         end

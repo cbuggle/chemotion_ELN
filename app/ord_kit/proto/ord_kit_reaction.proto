@@ -380,7 +380,6 @@ message ReactionProcessAction {
 
     Compound sample = 1;
     repeated Compound molecular_entities = 2;
-    VesselTemplate vessel_template = 3;
     OriginType sample_origin_type = 4;
     optional PurificationOrigin purification_origin = 5;
   }
@@ -728,7 +727,7 @@ message VesselPreparation {
 }
 
 message ReactionSetup {
-  VesselTemplate vessel_template = 1;
+  optional VesselTemplate vessel_template = 1;
 
   message ReactionEnvironment {
     enum ReactionEnvironmentType {
