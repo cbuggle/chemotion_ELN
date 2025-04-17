@@ -36,6 +36,8 @@ class Vessel < ApplicationRecord
   has_many :reaction_processes, through: :reaction_process_vessels,
                                 class_name: 'ReactionProcessEditor::ReactionProcess'
 
-  delegate :details, :material_details, :material_type, :vessel_type, :volume_amount, :volume_unit,
-           :weight_amount, :weight_unit, to: :vessel_template
+  delegate :details, :material_details, :material_type, :vessel_type, :volume_amount, :volume_unit, to: :vessel_template
+
+  # TODO: temporary until weight is moved to Vessel-model in ELN migrations.
+  delegate :weight_amount, :weight_unit, to: :vessel_template
 end
