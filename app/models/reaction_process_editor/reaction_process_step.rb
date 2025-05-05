@@ -31,7 +31,7 @@ module ReactionProcessEditor
     end
 
     def predecessors
-      siblings.where(position: 0...position)
+      siblings.where(position: 0..position)
     end
 
     def duration
