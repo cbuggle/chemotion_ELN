@@ -48,4 +48,22 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendPool
   it 'appends after parent activity' do
     expect(append_activity.position).to eq 2
   end
+
+  context 'action type SAVE' do
+    let(:pooling_group_params) do
+      { followup_action: { value: 'SAVE' },
+        workup: {},
+        vessel: vessel_params,
+        fractions: fractions_params }.deep_stringify_keys
+    end
+
+    it 'invokes SaveIntermediate' do
+      allow(Usecases::ReactionProcessEditor::ReactionProcessActivities::SaveIntermediate).to receive(:execute!)
+
+      append_activity
+
+      expect(Usecases::ReactionProcessEditor::ReactionProcessActivities::SaveIntermediate).to have_received(:execute!)
+      .with(activity: created_action)
+    end
+  end
 end
