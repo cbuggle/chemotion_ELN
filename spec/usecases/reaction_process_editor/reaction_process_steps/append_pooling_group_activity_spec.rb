@@ -49,7 +49,7 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendPool
     expect(append_activity.position).to eq 2
   end
 
-  context 'action type SAVE' do
+  context 'when followup_action SAVE' do
     let(:pooling_group_params) do
       { followup_action: { value: 'SAVE' },
         workup: {},
@@ -63,7 +63,7 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendPool
       append_activity
 
       expect(Usecases::ReactionProcessEditor::ReactionProcessActivities::SaveIntermediate).to have_received(:execute!)
-      .with(activity: created_action)
+        .with(activity: created_action)
     end
   end
 end

@@ -25,8 +25,8 @@ module Usecases
             activity.reaction_process_vessel = vessel
 
             activity.workup = { fractions: pooling_group_params['vials']&.pluck('id') || [] }
-            .merge(activity_setup[:workup])
-            .deep_stringify_keys
+                              .merge(activity_setup[:workup])
+                              .deep_stringify_keys
 
             if activity.saves_sample?
               ReactionProcessActivities::SaveIntermediate.execute!(activity: activity, workup: {})
@@ -41,7 +41,6 @@ module Usecases
           activity_name = follow_up_action['value']
 
           ontology = ONTOLOGY_IDS[activity_name]
-
 
           if %w[CHROMATOGRAPHY FILTRATION EXTRACTION CRYSTALLIZATION].include?(activity_name)
             { activity_name: 'PURIFICATION',

@@ -13,12 +13,12 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessActivities::Handl
         trayColumns: 5,
         trayRows: 3,
         fractions: [11_568, 9646, nil, 16_165, 56_161, 619_619, nil, 1196, nil, 196, nil, nil, nil, nil,
-                956_191] }.deep_stringify_keys,
+                    956_191] }.deep_stringify_keys,
       { trayType: 'HS_15',
         trayColumns: 5,
         trayRows: 3,
         fractions: [949_456, nil, 1616, 15_616, 616, nil, nil, nil, 1619, 6_511_960, 5196, 15_198, 1598, 964_949,
-                65_196] }.deep_stringify_keys,
+                    65_196] }.deep_stringify_keys,
     ] }.deep_stringify_keys
   end
 
