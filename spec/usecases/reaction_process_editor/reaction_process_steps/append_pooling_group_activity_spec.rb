@@ -54,7 +54,7 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendPool
       { followup_action: { value: 'SAVE' },
         workup: {},
         vessel: vessel_params,
-        fractions: fractions_params }.deep_stringify_keys
+        vials: vials_params }.deep_stringify_keys
     end
 
     it 'invokes SaveIntermediate' do
