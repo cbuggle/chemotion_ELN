@@ -12,7 +12,7 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendPool
   let!(:existing_actions) { create_list(:reaction_process_activity, 3) }
   # rubocop:enable RSpec/LetSetup
   let(:insert_before) { 2 }
-  let(:fractions_params) { [{ id: 1 }, { id: 2 }, { id: 3 }] }
+  let(:vials_params) { [{ id: 1 }, { id: 2 }, { id: 3 }] }
 
   let(:vessel) { create(:vessel) }
   let(:vessel_params) { { vesselable_id: vessel.id, vesselable_type: vessel.class.to_s } }
@@ -21,7 +21,7 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendPool
     { followup_action: { value: 'DISCARD' },
       workup: { SOME: 'WORKUP' },
       vessel: vessel_params,
-      fractions: fractions_params }.deep_stringify_keys
+      vials: vials_params }.deep_stringify_keys
   end
 
   let(:created_action) { ReactionProcessEditor::ReactionProcessActivity.order(:created_at).last }
