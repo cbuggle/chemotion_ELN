@@ -31,6 +31,7 @@ module Usecases
             if activity.saves_sample?
               ReactionProcessActivities::SaveIntermediate.execute!(activity: activity, workup: {})
             end
+
             ReactionProcessActivities::UpdatePosition.execute!(activity: activity, position: position)
 
             activity
