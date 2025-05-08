@@ -63,7 +63,7 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendPool
       append_activity
 
       expect(Usecases::ReactionProcessEditor::ReactionProcessActivities::SaveIntermediate).to have_received(:execute!)
-        .with(activity: created_action)
+        .with(activity: instance_of(ReactionProcessEditor::ReactionProcessActivity), workup: {})
     end
   end
 end
