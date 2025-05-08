@@ -7,10 +7,9 @@ module OrdKit
         attr_reader :vessel, :vessel_template
 
         def to_ord
-          vesselable = model&.vesselable
-          return unless vesselable
+          return unless model&.vesselable
 
-          if model.vesselable_type == "VesselTemplate"
+          if model.vesselable_type == 'VesselTemplate'
             @vessel_template = model.vesselable
             @vessel = nil
           else
