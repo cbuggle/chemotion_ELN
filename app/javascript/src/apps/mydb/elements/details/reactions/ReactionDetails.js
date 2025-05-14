@@ -475,9 +475,9 @@ export default class ReactionDetails extends Component {
                       <i className="fa fa-floppy-o " />
                     </Button>
                   </OverlayTrigger>
-                <ReactionEditorLink reaction={reaction} />
                 </>
               )}
+            <ReactionEditorLink reaction={reaction} />
             <CopyElementModal element={reaction} defCol={defCol} />
             <ConfirmClose el={reaction} />
           </ButtonToolbar>
