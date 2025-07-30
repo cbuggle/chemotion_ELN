@@ -1,0 +1,95 @@
+# marker comment
+# frozen_string_literal: true
+
+module Usecases
+  module ReactionProcessEditor
+    module ReactionProcessSteps
+      class AppendFractionActivity
+        ONTOLOGY_IDS = {
+          CHROMATOGRAPHY: { class: 'CHMO:0001000', action: 'CHMO:0002231', automated: 'NCIT:C70669' },
+          ANALYSIS_CHROMATOGRAPHY: { class: 'CHMO:0001000', action: 'OBI:0000070', automated: 'NCIT:C70669' },
+          ANALYSIS_SPECTROSCOPY: { class: 'CHMO:0000228', action: 'OBI:0000070', automated: 'NCIT:C70669' },
+        }.deep_stringify_keys.freeze
+
+        def self.execute!(parent_activity:, index:, fraction_params:)
+          ActiveRecord::Base.transaction do
+            vessel = Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
+              reaction_process_id: parent_activity.reaction_process.id,
+              reaction_process_vessel_params: fraction_params['vessel'],
+            )
+
+            if fraction_params['followup_activity_name'] == 'DEFINE_FRACTION'
+              return ::ReactionProcessEditor::Fraction.create(
+                position: fraction_params['position'],
+                reaction_process_activity: parent_activity,
+                followup_activity: nil,
+                vials: fraction_params['vials'] || [],
+              )
+            end
+
+            activity_setup = activity_setup_for_action_name(fraction_params['followup_activity_name'])
+
+            activity ||= parent_activity.reaction_process_step.reaction_process_activities
+                                        .new(activity_name: activity_setup[:activity_name])
+
+            activity.reaction_process_vessel = vessel
+
+            activity.workup = activity_setup[:workup].deep_stringify_keys
+
+            if activity.saves_sample?
+              ReactionProcessActivities::SaveIntermediate.execute!(activity: activity, workup: {})
+            end
+
+            fraction = ::ReactionProcessEditor::Fraction.create(
+              position: fraction_params['position'],
+              reaction_process_activity: parent_activity,
+              followup_activity: activity,
+              vials: fraction_params['vials'] || [],
+            )
+
+            if activity.remove?
+              label = "(#{(parent_activity&.position || 0) + 1}) Fraction ##{fraction&.position}"
+              activity.workup['samples'] = [{ id: fraction.id, value: fraction.id, label: label }]
+              activity.workup['origin_type'] = 'SOLVENT_FROM_FRACTION'
+              activity.workup['automation_mode'] = 'AUTOMATED'
+            end
+
+            ReactionProcessActivities::UpdatePosition.execute!(
+              activity: activity, position: parent_activity.position + index + 1,
+            )
+
+            activity
+          end
+        end
+
+        def self.activity_setup_for_action_name(activity_name)
+          ontology = ONTOLOGY_IDS[activity_name] || {}
+
+          # TODO: Enhance with all settings, eg. automation_status
+          # TODO Create Sample for ADD
+
+          if %w[CHROMATOGRAPHY FILTRATION EXTRACTION CRYSTALLIZATION].include?(activity_name)
+            { activity_name: 'PURIFICATION',
+              workup: { purification_type: activity_name,
+                        action: ontology['action'],
+                        class: ontology['class'],
+                        automated: ontology['automated'] } }
+          elsif %w[ANALYSIS_CHROMATOGRAPHY ANALYSIS_SPECTROSCOPY].include?(activity_name)
+            { activity_name: 'ANALYSIS',
+              workup: {
+                analysis_type: activity_name.delete_prefix('ANALYSIS_'),
+                action: ontology['action'],
+                class: ontology['class'],
+              } }
+          else
+            { activity_name: activity_name, workup: {} }
+          end
+        end
+      end
+    end
+  end
+end
+
+# TODO
+
+# "automation_mode"=>"AUTOMATED", "filtration_mode"=>"KEEP_PRECIPITATE"

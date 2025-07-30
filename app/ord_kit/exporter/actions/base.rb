@@ -11,6 +11,8 @@ module OrdKit
           @action = action
         end
 
+        attr_reader :action
+
         delegate :workup, to: :@action
 
         def to_ord(starts_at:)
@@ -76,8 +78,8 @@ module OrdKit
           Vessels::ReactionProcessVesselableExporter.new(@action.reaction_process_vessel).to_ord
         end
 
-        def fractions
-          @action.workup['fractions']&.map(&:to_s) || []
+        def fraction
+          OrdKit::Exporter::Samples::FractionExporter.new(@action.followup_fraction).to_ord
         end
 
         def action_type_attributes
