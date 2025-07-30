@@ -21,15 +21,15 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.append_pooling_gro
 
   it_behaves_like 'authorization restricted API call'
 
-  it 'Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendPoolingGroupActivity' do
-    allow(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendPoolingGroupActivity).to receive(:execute!)
+  it 'Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionActivity' do
+    allow(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionActivity).to receive(:execute!)
     put_append_pooling_groups_request
 
-    expect(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendPoolingGroupActivity)
+    expect(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionActivity)
       .to have_received(:execute!)
       .with({ reaction_process_step: anything, pooling_group_params: { followup_action: 'DISCARD' }, position: 4 })
 
-    expect(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendPoolingGroupActivity)
+    expect(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionActivity)
       .to have_received(:execute!)
       .with({ reaction_process_step: anything, pooling_group_params: { followup_action: 'EVAPORATE' }, position: 5 })
   end

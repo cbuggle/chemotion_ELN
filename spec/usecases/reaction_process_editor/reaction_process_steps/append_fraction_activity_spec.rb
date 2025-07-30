@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendPoolingGroupActivity do
+RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionActivity do
   subject(:append_activity) do
     described_class.execute!(reaction_process_step: process_step,
-                             pooling_group_params: pooling_group_params,
+                             fraction_params: fraction_params,
                              position: insert_before)
   end
 
@@ -17,9 +17,8 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendPool
   let(:vessel) { create(:vessel) }
   let(:vessel_params) { { vesselable_id: vessel.id, vesselable_type: vessel.class.to_s } }
 
-  let(:pooling_group_params) do
-    { followup_action: { value: 'DISCARD' },
-      workup: { SOME: 'WORKUP' },
+  let(:fraction_params) do
+    { followup_action: 'DISCARD',
       vessel: vessel_params,
       vials: vials_params }.deep_stringify_keys
   end
