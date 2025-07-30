@@ -10,7 +10,7 @@ module OrdKit
           {
             define_fraction: OrdKit::ReactionProcessAction::ActionDefineFraction.new(
               fraction: OrdKit::Exporter::Samples::FractionExporter.new(workup['fraction']).to_ord,
-            )
+            ),
           }
         end
       end
