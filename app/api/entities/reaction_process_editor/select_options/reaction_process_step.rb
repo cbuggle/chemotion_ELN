@@ -70,11 +70,13 @@ module Entities
             .reaction_process_activities
             .order(:position)
             .filter_map do |activity|
-            fraction = activity.followup_fraction
+            fraction = activity.consumed_fraction
 
-            origin_activity = fraction&.reaction_process_activity
+            parent_activity = fraction&.parent_activity
 
-            label = "(#{(origin_activity&.position || 0) + 1}) Fraction ##{fraction&.position}"
+            label = parent_activity && false ?
+            "(#{parent_activity.position + 1}) Fraction ##{fraction&.position}"
+            : "Parent Activity not found error"
             fraction && { value: fraction.id, id: fraction.id, label: label, acts_as: 'FRACTION' }
           end
         end

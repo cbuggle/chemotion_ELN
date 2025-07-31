@@ -79,7 +79,7 @@ module OrdKit
         end
 
         def fraction
-          OrdKit::Exporter::Samples::FractionExporter.new(@action.followup_fraction).to_ord
+          OrdKit::Exporter::Samples::FractionExporter.new(@action.consumed_fraction).to_ord
         end
 
         def action_type_attributes

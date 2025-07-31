@@ -9,7 +9,7 @@ module Entities
       expose :sample, using: 'Entities::ReactionProcessEditor::SampleEntity'
       expose :medium, using: 'Entities::ReactionProcessEditor::MediumEntity'
       expose :fractions, using: 'Entities::ReactionProcessEditor::FractionEntity'
-      expose :followup_fraction, using: 'Entities::ReactionProcessEditor::FractionEntity'
+      expose :consumed_fraction, using: 'Entities::ReactionProcessEditor::FractionEntity'
       expose :preconditions
 
       expose :transfer_source_step_name # supportive piggyback required in TRANSFER only

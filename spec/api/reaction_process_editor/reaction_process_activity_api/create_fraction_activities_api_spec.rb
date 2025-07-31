@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-describe ReactionProcessEditor::ReactionProcessActivityAPI, '.append_pooling_groups' do
+describe ReactionProcessEditor::ReactionProcessActivityAPI, '.create_fraction_activities' do
   include RequestSpecHelper
 
-  subject(:put_append_pooling_groups_request) do
+  subject(:put_append_fraction_request) do
     put("/api/v1/reaction_process_editor/reaction_process_activities/#{activity.id}/create_fraction_activities",
         params: pooling_group_params.to_json,
         headers: authorization_header)
@@ -14,7 +14,9 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.append_pooling_gro
   let!(:activity) { create(:reaction_process_activity_add_sample, position: 3) }
 
   let(:pooling_group_params) do
-    { pooling_groups: [{ followup_action: 'DISCARD' }, { followup_action: 'EVAPORATE' }] }
+    { fractions: [
+      { consuming_activity_name: 'DISCARD', vials: %w[1 2] },
+     { consuming_activity_name: 'EVAPORATE', vials: %w[3] }] }
   end
 
   let(:authorization_header) { authorized_header(activity.creator) }
@@ -23,7 +25,7 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.append_pooling_gro
 
   it 'Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionActivity' do
     allow(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionActivity).to receive(:execute!)
-    put_append_pooling_groups_request
+    put_append_fraction_request
 
     expect(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionActivity)
       .to have_received(:execute!)
@@ -35,7 +37,7 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.append_pooling_gro
   end
 
   it 'updates activity AUTOMATION_STATUS' do
-    expect { put_append_pooling_groups_request }.to change {
+    expect { put_append_fraction_request }.to change {
       activity.reload.workup['AUTOMATION_STATUS']
     }.to('HALT_RESOLVED_NEEDS_CONFIRMATION')
   end

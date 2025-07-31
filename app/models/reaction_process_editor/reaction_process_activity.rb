@@ -26,13 +26,14 @@ module ReactionProcessEditor
     has_one :reactions_intermediate_sample, dependent: :nullify
     has_many :fractions,
              class_name: 'ReactionProcessEditor::Fraction',
-             inverse_of: :reaction_process_activity,
+             inverse_of: :parent_activity,
+             foreign_key: :parent_activity_id,
              dependent: :destroy
 
-    has_one :followup_fraction,
+    has_one :consumed_fraction,
             class_name: 'ReactionProcessEditor::Fraction',
-            inverse_of: :followup_activity,
-            foreign_key: :followup_activity_id,
+            inverse_of: :consuming_activity,
+            foreign_key: :consuming_activity_id,
             dependent: :nullify
 
     validate :validate_workup

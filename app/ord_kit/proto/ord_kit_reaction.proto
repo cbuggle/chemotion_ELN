@@ -170,7 +170,7 @@ enum StepAutomationStatus {
 message PoolingFraction {
   string parent_activity_id = 1;
   int32 position = 2;
-  string followup_activity_id = 3;
+  string consuming_activity_id = 3;
   repeated string vials = 4;
 }
 
