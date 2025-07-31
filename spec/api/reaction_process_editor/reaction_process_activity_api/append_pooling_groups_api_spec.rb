@@ -6,7 +6,7 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.append_pooling_gro
   include RequestSpecHelper
 
   subject(:put_append_pooling_groups_request) do
-    put("/api/v1/reaction_process_editor/reaction_process_activities/#{activity.id}/append_pooling_groups",
+    put("/api/v1/reaction_process_editor/reaction_process_activities/#{activity.id}/create_fraction_activities",
         params: pooling_group_params.to_json,
         headers: authorization_header)
   end

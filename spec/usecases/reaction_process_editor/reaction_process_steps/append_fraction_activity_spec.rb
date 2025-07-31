@@ -2,15 +2,15 @@
 
 RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionActivity do
   subject(:append_activity) do
-    described_class.execute!(reaction_process_step: process_step,
+    described_class.execute!(parent_activity: existing_actions.first,
                              fraction_params: fraction_params,
-                             position: insert_before)
+                             index: 1)
   end
 
   let!(:process_step) { create_default(:reaction_process_step) }
-  # rubocop:disable RSpec/LetSetup
+
   let!(:existing_actions) { create_list(:reaction_process_activity, 3) }
-  # rubocop:enable RSpec/LetSetup
+
   let(:insert_before) { 2 }
   let(:vials_params) { [{ id: 1 }, { id: 2 }, { id: 3 }] }
 
