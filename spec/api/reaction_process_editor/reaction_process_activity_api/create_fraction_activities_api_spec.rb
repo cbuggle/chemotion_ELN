@@ -29,11 +29,15 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.create_fraction_ac
 
     expect(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionActivity)
       .to have_received(:execute!)
-      .with({ reaction_process_step: anything, pooling_group_params: { followup_action: 'DISCARD' }, position: 4 })
+      .with({ parent_activity: anything,
+              fraction_params: { consuming_activity_name: 'DISCARD', vials: %w[1 2] },
+              index: 0 })
 
     expect(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionActivity)
       .to have_received(:execute!)
-      .with({ reaction_process_step: anything, pooling_group_params: { followup_action: 'EVAPORATE' }, position: 5 })
+      .with({ parent_activity: anything,
+              fraction_params: { consuming_activity_name: 'EVAPORATE', vials: %w[3] },
+              index: 1 })
   end
 
   it 'updates activity AUTOMATION_STATUS' do
