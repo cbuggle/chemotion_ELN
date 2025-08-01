@@ -16,7 +16,8 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.create_fraction_ac
   let(:pooling_group_params) do
     { fractions: [
       { consuming_activity_name: 'DISCARD', vials: %w[1 2] },
-     { consuming_activity_name: 'EVAPORATE', vials: %w[3] }] }
+      { consuming_activity_name: 'EVAPORATE', vials: %w[3] },
+    ] }
   end
 
   let(:authorization_header) { authorized_header(activity.creator) }

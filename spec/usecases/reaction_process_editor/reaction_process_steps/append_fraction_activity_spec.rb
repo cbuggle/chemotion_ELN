@@ -52,7 +52,7 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFrac
       { consuming_activity_name: 'SAVE',
         workup: {},
         vessel: vessel_params,
-        vials:  %w[1 2 3] }.deep_stringify_keys
+        vials: %w[1 2 3] }.deep_stringify_keys
     end
 
     it 'invokes SaveIntermediate' do

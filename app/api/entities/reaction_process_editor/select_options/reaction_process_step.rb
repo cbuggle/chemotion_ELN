@@ -69,16 +69,14 @@ module Entities
           reaction_process_step
             .reaction_process_activities
             .order(:position)
-            .filter_map do |activity|
-            fraction = activity.consumed_fraction
+            .map do |parent_activity|
+              parent_activity.fractions.map do |fraction|
+                      label = "(#{parent_activity.position + 1}) Fraction ##{fraction.position}"
 
-            parent_activity = fraction&.parent_activity
-
-            label = parent_activity && false ?
-            "(#{parent_activity.position + 1}) Fraction ##{fraction&.position}"
-            : "Parent Activity not found error"
-            fraction && { value: fraction.id, id: fraction.id, label: label, acts_as: 'FRACTION' }
-          end
+                      { value: fraction.id, id: fraction.id, label: label, acts_as: 'FRACTION' }
+              end
+            end .flatten
+            .compact
         end
 
         def save_sample_origins(reaction_process_step)

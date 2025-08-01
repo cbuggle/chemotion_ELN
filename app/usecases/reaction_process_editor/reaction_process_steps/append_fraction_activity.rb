@@ -19,7 +19,13 @@ module Usecases
             )
 
             if fraction_params['consuming_activity_name'] == 'DEFINE_FRACTION'
-              consuming_activity = nil
+
+              ::ReactionProcessEditor::Fraction.create(
+                position: fraction_params['position'],
+                parent_activity: parent_activity,
+                consuming_activity: nil,
+                vials: fraction_params['vials'] || [],
+              )
             else
 
               activity_setup = activity_setup_for_action_name(fraction_params['consuming_activity_name'])
@@ -30,29 +36,30 @@ module Usecases
               consuming_activity.reaction_process_vessel = vessel
 
               consuming_activity.workup = activity_setup[:workup].deep_stringify_keys
+
+              if consuming_activity.saves_sample?
+                ReactionProcessActivities::SaveIntermediate.execute!(activity: consuming_activity, workup: {})
+              end
+
+              fraction = ::ReactionProcessEditor::Fraction.create(
+                position: fraction_params['position'],
+                parent_activity: parent_activity,
+                consuming_activity: consuming_activity,
+                vials: fraction_params['vials'] || [],
+              )
+
+              if consuming_activity&.remove?
+                label = "(#{parent_activity.position + 1}) Fraction ##{fraction&.position}"
+                consuming_activity.workup['samples'] = [{ id: fraction.id, value: fraction.id, label: label }]
+                consuming_activity.workup['origin_type'] = 'SOLVENT_FROM_FRACTION'
+                consuming_activity.workup['automation_mode'] = 'AUTOMATED'
+              end
+
+
+                ReactionProcessActivities::UpdatePosition.execute!(
+                  activity: consuming_activity, position: parent_activity.position + index + 1,
+                )
             end
-
-            if consuming_activity.saves_sample?
-              ReactionProcessActivities::SaveIntermediate.execute!(activity: consuming_activity, workup: {})
-            end
-
-            fraction = ::ReactionProcessEditor::Fraction.create(
-              position: fraction_params['position'],
-              parent_activity: parent_activity,
-              consuming_activity: consuming_activity,
-              vials: fraction_params['vials'] || [],
-            )
-
-            if consuming_activity.remove?
-              label = "(#{(parent_activity&.position || 0) + 1}) Fraction ##{fraction&.position}"
-              consuming_activity.workup['samples'] = [{ id: fraction.id, value: fraction.id, label: label }]
-              consuming_activity.workup['origin_type'] = 'SOLVENT_FROM_FRACTION'
-              consuming_activity.workup['automation_mode'] = 'AUTOMATED'
-            end
-
-            ReactionProcessActivities::UpdatePosition.execute!(
-              activity: consuming_activity, position: parent_activity.position + index + 1,
-            )
 
             consuming_activity
           end
@@ -86,4 +93,3 @@ module Usecases
     end
   end
 end
-
