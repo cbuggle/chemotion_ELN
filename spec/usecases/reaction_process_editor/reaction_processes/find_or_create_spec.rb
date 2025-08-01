@@ -32,7 +32,7 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcesses::FindOrCreate 
     end
 
     it 'retains automation_ordinal' do
-      expect { usecase }.not_to change { reaction.reaction_process&.automation_ordinal }
+      expect { usecase }.not_to(change { reaction.reaction_process&.automation_ordinal })
     end
   end
 end

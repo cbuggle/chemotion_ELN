@@ -47,7 +47,7 @@ module ReactionProcessEditor
 
     def next_automation_ordinal
       next_ordinal = (automation_ordinal || 0) + 1
-      update({automation_ordinal: next_ordinal})
+      update({ automation_ordinal: next_ordinal })
       next_ordinal
     end
   end

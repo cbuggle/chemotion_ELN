@@ -18,7 +18,8 @@ module Usecases
 
             activity = target_step.reaction_process_activities.new(
               activity_name: activity_params['activity_name'],
-              automation_ordinal: automation_ordinal)
+              automation_ordinal: automation_ordinal,
+            )
 
             ReactionProcessActivities::Update.execute!(activity: activity, activity_params: activity_params)
 
