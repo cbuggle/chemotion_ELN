@@ -28,6 +28,9 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendActi
   it 'appends on last position' do
     expect(append_activity.position).to eq existing_actions.length
   end
+  it 'increases reaction_process automation_ordinal' do
+    expect { append_activity }.to change(process_step.reaction_process, :automation_ordinal).to(1)
+  end
 
   it 'triggers ReactionProcessActivities::Update' do
     allow(Usecases::ReactionProcessEditor::ReactionProcessActivities::Update).to receive(:execute!)
