@@ -13,52 +13,31 @@ module Usecases
 
         def self.execute!(parent_activity:, index:, fraction_params:)
           ActiveRecord::Base.transaction do
-            vessel = Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
+            Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
               reaction_process_id: parent_activity.reaction_process.id,
               reaction_process_vessel_params: fraction_params['vessel'],
             )
 
-            if fraction_params['consuming_activity_name'] == 'DEFINE_FRACTION'
+            consuming_activity = consuming_activity_for_activity_name(fraction_params['consuming_activity_name'])
 
-              ::ReactionProcessEditor::Fraction.create(
-                position: fraction_params['position'],
-                parent_activity: parent_activity,
-                consuming_activity: nil,
-                vials: fraction_params['vials'] || [],
-              )
-            else
+            fraction = ::ReactionProcessEditor::Fraction.create(
+              position: fraction_params['position'],
+              parent_activity: parent_activity,
+              consuming_activity: consuming_activity,
+              vials: fraction_params['vials'] || [],
+            )
 
-              activity_setup = activity_setup_for_action_name(fraction_params['consuming_activity_name'])
-
-              consuming_activity = parent_activity.reaction_process_step.reaction_process_activities
-                                                  .new(activity_name: activity_setup[:activity_name])
-
-              consuming_activity.reaction_process_vessel = vessel
-
-              consuming_activity.workup = activity_setup[:workup].deep_stringify_keys
-
-              if consuming_activity.saves_sample?
-                ReactionProcessActivities::SaveIntermediate.execute!(activity: consuming_activity, workup: {})
-              end
-
-              fraction = ::ReactionProcessEditor::Fraction.create(
-                position: fraction_params['position'],
-                parent_activity: parent_activity,
-                consuming_activity: consuming_activity,
-                vials: fraction_params['vials'] || [],
-              )
-
-              if consuming_activity&.remove?
-                label = "(#{parent_activity.position + 1}) Fraction ##{fraction&.position}"
-                consuming_activity.workup['samples'] = [{ id: fraction.id, value: fraction.id, label: label }]
-                consuming_activity.workup['origin_type'] = 'SOLVENT_FROM_FRACTION'
-                consuming_activity.workup['automation_mode'] = 'AUTOMATED'
-              end
-
-              ReactionProcessActivities::UpdatePosition.execute!(
-                activity: consuming_activity, position: parent_activity.position + index + 1,
-              )
+            if consuming_activity.saves_sample?
+              ReactionProcessActivities::SaveIntermediate.execute!(activity: consuming_activity, workup: {})
             end
+
+            if consuming_activity.remove?
+              consuming_activity = assign_remove_workup(fraction: fraction, consuming_activity: consuming_activity)
+            end
+
+            ReactionProcessActivities::UpdatePosition.execute!(
+              activity: consuming_activity, position: parent_activity.position + index + 1,
+            )
 
             consuming_activity
           end
@@ -67,9 +46,10 @@ module Usecases
         def self.activity_setup_for_action_name(activity_name)
           ontology = ONTOLOGY_IDS[activity_name] || {}
 
-          # TODO: Enhance with all applicable settings, eg. automation_mode, filtration_mode
+          # TODO: Enhance with all applicable   settings, eg. automation_mode, filtration_mode
           # "automation_mode"=>"AUTOMATED", "filtration_mode"=>"KEEP_PRECIPITATE"
-          # TODO Create Sample for ADD
+
+          # TODO: Create Sample for ADD
 
           if %w[CHROMATOGRAPHY FILTRATION EXTRACTION CRYSTALLIZATION].include?(activity_name)
             { activity_name: 'PURIFICATION',
@@ -87,6 +67,28 @@ module Usecases
           else
             { activity_name: activity_name, workup: {} }
           end
+        end
+
+        def self.assign_remove_workup(fraction:, consuming_activity:)
+          label = "(#{(fraction.parent_activity&.position || 0) + 1}) Fraction ##{fraction&.position}"
+          consuming_activity.workup['samples'] = [{ id: fraction.id, value: fraction.id, label: label }]
+          consuming_activity.workup['origin_type'] = 'SOLVENT_FROM_FRACTION'
+          consuming_activity.workup['automation_mode'] = 'AUTOMATED'
+          consuming_activity
+        end
+
+        def self.consuming_activity_for_activity_name(activity_name)
+          return if activity_name == 'DEFINE_FRACTION'
+
+          activity_setup = activity_setup_for_action_name(fraction_params['consuming_activity_name'])
+
+          consuming_activity = parent_activity.reaction_process_step.reaction_process_activities
+                                              .new(activity_name: activity_setup[:activity_name])
+
+          consuming_activity.reaction_process_vessel = vessel
+
+          consuming_activity.workup = activity_setup[:workup].deep_stringify_keys
+          consuming_activity
         end
       end
     end
