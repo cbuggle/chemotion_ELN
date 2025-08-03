@@ -13,7 +13,7 @@ module OrdKit
                 stationary_phase: workup['stationary_phase'],
                 steps: steps,
                 automation_mode: ontology_ord(workup['automation_mode']),
-                fractions: fractions
+                fractions: fractions,
               }.merge(automation_specific_fields),
             ) }
           end
@@ -22,7 +22,7 @@ module OrdKit
 
           def fractions
             action.fractions.map do |fraction|
-             OrdKit::Exporter::Samples::FractionExporter.new(fraction).to_ord
+              OrdKit::Exporter::Samples::FractionExporter.new(fraction).to_ord
             end
           end
 
