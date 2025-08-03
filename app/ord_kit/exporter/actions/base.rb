@@ -26,7 +26,7 @@ module OrdKit
               equipment: equipment,
               vessel_template: vessel_template,
               automation_status: automation_status,
-              fraction: fraction,
+              consumed_fraction: consumed_fraction,
               automation_ordinal: @action.automation_ordinal,
             }.merge(action_type_attributes),
           )
@@ -78,7 +78,7 @@ module OrdKit
           Vessels::ReactionProcessVesselableExporter.new(@action.reaction_process_vessel).to_ord
         end
 
-        def fraction
+        def consumed_fraction
           OrdKit::Exporter::Samples::FractionExporter.new(@action.consumed_fraction).to_ord
         end
 

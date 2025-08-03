@@ -36,7 +36,7 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessActivities::Updat
         workup: {
           origin_type: 'SOLVENT_FROM_FRACTION',
           samples: [{ id: fraction.id }],
-        }
+        },
       }.deep_stringify_keys
     end
 

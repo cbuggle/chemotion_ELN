@@ -200,7 +200,7 @@ message ReactionProcessAction {
     ActionDefineFraction define_fraction = 17;
   }
   optional AutomationStatus automation_status = 18;
-  optional PoolingFraction fraction = 19;
+  optional PoolingFraction consumed_fraction = 19;
 
   int32 automation_ordinal = 20;
 

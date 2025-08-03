@@ -71,12 +71,12 @@ module Entities
             .order(:position)
             .map do |parent_activity|
               parent_activity.fractions.map do |fraction|
-                      label = "(#{parent_activity.position + 1}) Fraction ##{fraction.position}"
+                label = "(#{parent_activity.position + 1}) Fraction ##{fraction.position}"
 
-                      { value: fraction.id, id: fraction.id, label: label, acts_as: 'FRACTION' }
+                { value: fraction.id, id: fraction.id, label: label, acts_as: 'FRACTION' }
               end
-            end .flatten
-            .compact
+            end.flatten
+               .compact
         end
 
         def save_sample_origins(reaction_process_step)

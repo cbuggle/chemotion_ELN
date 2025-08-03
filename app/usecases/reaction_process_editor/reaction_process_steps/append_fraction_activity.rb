@@ -55,10 +55,9 @@ module Usecases
                 consuming_activity.workup['automation_mode'] = 'AUTOMATED'
               end
 
-
-                ReactionProcessActivities::UpdatePosition.execute!(
-                  activity: consuming_activity, position: parent_activity.position + index + 1,
-                )
+              ReactionProcessActivities::UpdatePosition.execute!(
+                activity: consuming_activity, position: parent_activity.position + index + 1,
+              )
             end
 
             consuming_activity
