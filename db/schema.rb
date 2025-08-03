@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 2026_03_30_152941) do
     t.jsonb "attachment_data"
     t.integer "con_state"
     t.jsonb "log_data"
+    t.datetime "deleted_at"
     t.string "created_by_type"
     t.integer "edit_state", default: 0
     t.index ["attachable_type", "attachable_id"], name: "index_attachments_on_attachable_type_and_attachable_id"
@@ -786,8 +787,8 @@ ActiveRecord::Schema.define(version: 2026_03_30_152941) do
 
   create_table "fractions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "position"
-    t.uuid "parent_action_id"
-    t.uuid "consuming_action_id"
+    t.uuid "parent_activity_id"
+    t.uuid "consuming_activity_id"
     t.string "vials", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -1242,6 +1243,7 @@ ActiveRecord::Schema.define(version: 2026_03_30_152941) do
     t.datetime "deleted_at"
     t.uuid "reaction_process_vessel_id"
     t.jsonb "automation_response"
+    t.integer "automation_ordinal"
   end
 
   create_table "reaction_process_defaults", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -1280,10 +1282,6 @@ ActiveRecord::Schema.define(version: 2026_03_30_152941) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "deleted_at"
     t.integer "automation_ordinal"
-    t.integer "sample_id"
-    t.integer "user_id"
-    t.jsonb "sample_setup", default: {}
-    t.uuid "reaction_process_vessel_id"
   end
 
   create_table "reactions", id: :serial, force: :cascade do |t|
