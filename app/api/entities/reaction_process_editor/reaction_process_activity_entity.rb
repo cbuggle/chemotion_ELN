@@ -16,6 +16,10 @@ module Entities
 
       private
 
+      def fractions
+        object.fractions.order(:position)
+      end
+
       def transfer_source_step_name
         return unless object.transfer?
 
