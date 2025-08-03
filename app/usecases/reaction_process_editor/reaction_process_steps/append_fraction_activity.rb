@@ -11,14 +11,13 @@ module Usecases
           ANALYSIS_SPECTROSCOPY: { class: 'CHMO:0000228', action: 'OBI:0000070', automated: 'NCIT:C70669' },
         }.deep_stringify_keys.freeze
 
+        # rubocop:disable  Metrics/BlockLength
         def self.execute!(parent_activity:, index:, fraction_params:)
           ActiveRecord::Base.transaction do
-            Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
-              reaction_process_id: parent_activity.reaction_process.id,
-              reaction_process_vessel_params: fraction_params['vessel'],
+            consuming_activity = build_consuming_activity_for_activity_name(
+              reaction_process_step: parent_activity.reaction_process_step,
+              activity_name: fraction_params['consuming_activity_name'],
             )
-
-            consuming_activity = consuming_activity_for_activity_name(fraction_params['consuming_activity_name'])
 
             fraction = ::ReactionProcessEditor::Fraction.create(
               position: fraction_params['position'],
@@ -27,21 +26,28 @@ module Usecases
               vials: fraction_params['vials'] || [],
             )
 
-            if consuming_activity.saves_sample?
-              ReactionProcessActivities::SaveIntermediate.execute!(activity: consuming_activity, workup: {})
+            if consuming_activity
+              consuming_activity.reaction_process_vessel =
+                Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
+                  reaction_process_id: parent_activity.reaction_process.id,
+                  reaction_process_vessel_params: fraction_params['vessel'],
+                )
+
+              if consuming_activity.saves_sample?
+                ReactionProcessActivities::SaveIntermediate.execute!(activity: consuming_activity, workup: {})
+              end
+
+              if consuming_activity.remove?
+                consuming_activity = assign_remove_workup(fraction: fraction, consuming_activity: consuming_activity)
+              end
+
+              ReactionProcessActivities::UpdatePosition.execute!(activity: consuming_activity,
+                                                                 position: parent_activity.position + index + 1)
             end
-
-            if consuming_activity.remove?
-              consuming_activity = assign_remove_workup(fraction: fraction, consuming_activity: consuming_activity)
-            end
-
-            ReactionProcessActivities::UpdatePosition.execute!(
-              activity: consuming_activity, position: parent_activity.position + index + 1,
-            )
-
             consuming_activity
           end
         end
+        # rubocop:enable  Metrics/BlockLength
 
         def self.activity_setup_for_action_name(activity_name)
           ontology = ONTOLOGY_IDS[activity_name] || {}
@@ -49,7 +55,7 @@ module Usecases
           # TODO: Enhance with all applicable   settings, eg. automation_mode, filtration_mode
           # "automation_mode"=>"AUTOMATED", "filtration_mode"=>"KEEP_PRECIPITATE"
 
-          # TODO: Create Sample for ADD
+          # TODO: Create Sample for ADD, allow ADD
 
           if %w[CHROMATOGRAPHY FILTRATION EXTRACTION CRYSTALLIZATION].include?(activity_name)
             { activity_name: 'PURIFICATION',
@@ -77,15 +83,13 @@ module Usecases
           consuming_activity
         end
 
-        def self.consuming_activity_for_activity_name(activity_name)
+        def self.build_consuming_activity_for_activity_name(reaction_process_step:, activity_name:)
           return if activity_name == 'DEFINE_FRACTION'
 
-          activity_setup = activity_setup_for_action_name(fraction_params['consuming_activity_name'])
+          activity_setup = activity_setup_for_action_name(activity_name)
 
-          consuming_activity = parent_activity.reaction_process_step.reaction_process_activities
-                                              .new(activity_name: activity_setup[:activity_name])
-
-          consuming_activity.reaction_process_vessel = vessel
+          consuming_activity = reaction_process_step.reaction_process_activities
+                                                    .new(activity_name: activity_setup[:activity_name])
 
           consuming_activity.workup = activity_setup[:workup].deep_stringify_keys
           consuming_activity
