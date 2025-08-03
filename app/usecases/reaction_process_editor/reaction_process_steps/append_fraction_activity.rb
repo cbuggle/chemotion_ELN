@@ -55,7 +55,7 @@ module Usecases
           # TODO: Enhance with all applicable   settings, eg. automation_mode, filtration_mode
           # "automation_mode"=>"AUTOMATED", "filtration_mode"=>"KEEP_PRECIPITATE"
 
-          # TODO: Create Sample for ADD, allow ADD
+          # TODO: Create Sample for ADD, allow ADD.
 
           if %w[CHROMATOGRAPHY FILTRATION EXTRACTION CRYSTALLIZATION].include?(activity_name)
             { activity_name: 'PURIFICATION',
