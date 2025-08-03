@@ -9,7 +9,7 @@ module OrdKit
         def action_type_attributes
           {
             define_fraction: OrdKit::ReactionProcessAction::ActionDefineFraction.new(
-              fraction: OrdKit::Exporter::Samples::FractionExporter.new(workup['fraction']).to_ord,
+              fraction: OrdKit::Exporter::Samples::FractionExporter.new(action.consumed_fraction).to_ord,
             ),
           }
         end
