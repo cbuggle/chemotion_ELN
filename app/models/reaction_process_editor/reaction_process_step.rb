@@ -5,14 +5,17 @@
 # Table name: reaction_process_steps
 #
 #  id                         :uuid             not null, primary key
-#  reaction_process_id        :uuid
-#  reaction_process_vessel_id :uuid
+#  automation_control         :jsonb
+#  automation_dependencies    :jsonb
+#  automation_mode            :string
+#  deleted_at                 :datetime
+#  locked                     :boolean
 #  name                       :string
 #  position                   :integer
-#  locked                     :boolean
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
-#  deleted_at                 :datetime
+#  reaction_process_id        :uuid
+#  reaction_process_vessel_id :uuid
 #
 module ReactionProcessEditor
   class ReactionProcessStep < ApplicationRecord

@@ -20,6 +20,7 @@
 #  encrypted_password        :string           default(""), not null
 #  failed_attempts           :integer          default(0), not null
 #  first_name                :string           not null
+#  jti                       :string
 #  last_name                 :string           not null
 #  last_sign_in_at           :datetime
 #  last_sign_in_ip           :inet
