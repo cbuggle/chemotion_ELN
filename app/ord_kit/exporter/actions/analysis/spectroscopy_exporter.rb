@@ -7,8 +7,9 @@ module OrdKit
         class SpectroscopyExporter < Purification::Base
           def to_ord
             { spectroscopy: ReactionProcessAction::ActionAnalysisSpectroscopy.new({
-              device: workup['device'],
-              molecular_entities: molecular_entities }) }
+                                                                                    device: workup['device'],
+                                                                                    molecular_entities: molecular_entities,
+                                                                                  }) }
           end
 
           def molecular_entities
