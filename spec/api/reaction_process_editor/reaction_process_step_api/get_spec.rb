@@ -31,7 +31,6 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.get' do
 
   it 'returns reaction_process_step' do
     get_process_step_request
-    puts(parsed_json_response['reaction_process_step'])
     expect(parsed_json_response['reaction_process_step']).to include expected_process_step_hash
   end
 
@@ -92,11 +91,11 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.get' do
       equipment_options.deep_stringify_keys
     end
 
-    it 'transferable_samples' do
+    it 'saved_samples' do
       expected_samples = { id: saved_sample.id }.deep_stringify_keys
 
       expect(
-        parsed_select_options.dig('FORMS', 'TRANSFER', 'transferable_samples'),
+        parsed_select_options.dig('FORMS', 'TRANSFER', 'saved_samples'),
       ).to include(hash_including(expected_samples))
     end
 
