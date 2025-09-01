@@ -106,7 +106,7 @@ RSpec.describe ReactionProcessEditor::ReactionProcessActivity do
       let(:sample) { create(acts_as.downcase.to_sym) }
 
       it 'can_carry_sample?' do
-        expect(process_activity).to be_acts_as_sample
+        expect(process_activity).to be_can_carry_sample
       end
 
       it 'returns Sample' do
@@ -114,7 +114,7 @@ RSpec.describe ReactionProcessEditor::ReactionProcessActivity do
       end
 
       it 'not can_carry_medium?' do
-        expect(process_activity).not_to be_acts_as_medium
+        expect(process_activity).not_to be_can_carry_medium
       end
 
       it 'returns no Medium' do
@@ -133,7 +133,7 @@ RSpec.describe ReactionProcessEditor::ReactionProcessActivity do
       let(:medium) { create(acts_as.downcase.to_sym) }
 
       it 'not can_carry_sample?' do
-        expect(process_activity).not_to be_acts_as_sample
+        expect(process_activity).not_to be_can_carry_sample
       end
 
       it 'returns no Sample' do
@@ -141,7 +141,7 @@ RSpec.describe ReactionProcessEditor::ReactionProcessActivity do
       end
 
       it 'can_carry_medium?' do
-        expect(process_activity).to be_acts_as_medium
+        expect(process_activity).to be_can_carry_medium
       end
 
       it 'returns Medium' do
