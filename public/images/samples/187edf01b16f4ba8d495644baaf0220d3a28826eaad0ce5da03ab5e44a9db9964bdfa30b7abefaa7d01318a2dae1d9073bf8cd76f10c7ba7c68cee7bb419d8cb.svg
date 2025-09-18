@@ -1,0 +1,18 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="overflow:hidden;" viewBox="0 0 108 56" width="88.1281" height="36.66666667">
+  <g transform="translate(-39, -37)">
+    
+    
+    <path fill="none" stroke="#ff0000" d="M10.67187023,14.30000668L29.32812977,14.30000668" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,87,54)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <text x="-20" y="0" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,87,54)">
+      <tspan dy="8.500004768371582">C</tspan>
+    </text>
+    <text x="-20" y="0" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,68.8719,54)">
+      <tspan dy="8.500004768371582">H</tspan>
+    </text>
+    <text x="20" y="0" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,87,54)">
+      <tspan dy="8.500004768371582">O</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M-8.13593369,0L7.47186832,0M-8.13593369,6.66666667L7.47186832,6.66666667M-8.13593369,-6.66666667L7.47186832,-6.66666667" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,87,54)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+  </g>
+</svg>

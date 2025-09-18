@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="68.0415594487364" version="1.1" width="100.5030659300158" style="overflow: hidden; position: relative;" viewBox="0 0 120 88">
+  <g transform="translate(-314, -227)">
+    <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"/>
+    <text x="20.00018260591863" y="-30.778462832090057" text-anchor="middle" font="30px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,356.1078,267.7592)">
+      <tspan dy="8.494974667909943" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">N</tspan>
+    </text>
+    <text x="20.00018260591863" y="-30.778462832090057" text-anchor="middle" font="30px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,374.2516,267.7592)">
+      <tspan dy="8.494974667909943" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">H</tspan>
+    </text>
+    <text x="32.3590833240972" y="7.2630966166463296" text-anchor="middle" font="30px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,356.1078,267.7592)">
+      <tspan dy="8.50528411664633" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">N</tspan>
+    </text>
+    <text x="-32.3590833240972" y="7.2630966166463296" text-anchor="middle" font="30px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,356.1078,267.7592)">
+      <tspan dy="8.50528411664633" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">N</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M25.37388465,-14.23783268L26.9852972,-9.27779232" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,356.1078,267.7592)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+    <path fill="none" stroke="#000000" d="M17.17971386,10.0528812L0,22.53739007M21.09884025,15.44592234L0,30.77846283" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,356.1078,267.7592)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+    <path fill="none" stroke="#000000" d="M0,30.77846283L-21.09884025,15.44592234" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,356.1078,267.7592)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+    <path fill="none" stroke="#000000" d="M-20.64484445,-7.21791288L-15.15637791,-24.11179617M-26.9852972,-9.27779232L-20.00018261,-30.77846283" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,356.1078,267.7592)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+    <path fill="none" stroke="#000000" d="M8.128125,-30.77846283L-20.00018261,-30.77846283" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,356.1078,267.7592)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+  </g>
+</svg>

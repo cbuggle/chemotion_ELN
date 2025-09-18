@@ -1,0 +1,13 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="35.400000000000006" version="1.1" width="43.80000000000001" style="overflow:hidden;" viewBox="0 0 63 55">
+  <g transform="translate(-394, -199)">
+    <defs></defs>
+    <circle cx="364" cy="169.00000000000003" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="display:none;"></circle>
+    <text x="364" y="169.00000000000003" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="7.500000000000028">H</tspan>
+    </text>
+    <text x="364" y="169.00000000000003" text-anchor="middle" stroke="none" fill="#000000" style="font:17px Arial;" font-size="17px" transform="matrix(1,0,0,1,53.8,45.4)">
+      <tspan dy="5.500000000000028">2</tspan>
+    </text>
+  </g>
+</svg>

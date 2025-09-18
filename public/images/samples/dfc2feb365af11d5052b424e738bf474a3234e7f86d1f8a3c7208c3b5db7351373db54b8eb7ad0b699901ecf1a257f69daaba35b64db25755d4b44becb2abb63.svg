@@ -1,0 +1,21 @@
+
+<svg version="1.1" id="topsvg" xmlns="http://www.w3.org/2000/svg" x="0" y="0" width="200px" height="200px" viewBox="0 0 100 100" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title> - Open Babel Depiction</title>
+<rect x="0" y="0" width="100" height="100" fill="white"></rect>
+<g transform="translate(0,0)">
+<svg width="100" height="100" x="0" y="0" viewBox="0 0 200.002 149.281" font-family="sans-serif" stroke="#000000" stroke-width="2" stroke-linecap="round">
+<line x1="147.0" y1="74.6" x2="120.0" y2="74.6" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="100.0" y1="109.3" x2="60.0" y2="109.3" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="60.0" y1="109.3" x2="40.0" y2="74.6" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="63.2" y1="100.5" x2="49.2" y2="76.2" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="40.0" y1="74.6" x2="60.0" y2="40.0" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="60.0" y1="40.0" x2="100.0" y2="40.0" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="66.0" y1="47.2" x2="94.0" y2="47.2" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="100.0" y1="40.0" x2="120.0" y2="74.6" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="120.0" y1="74.6" x2="100.0" y2="109.3" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="110.8" y1="76.2" x2="96.8" y2="100.5" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<text x="156.001509" y="82.640435" fill="#000000" stroke="#000000" stroke-width="1" font-size="16">CH</text>
+<text x="180.001509" y="86.320435" fill="#000000" stroke="#000000" stroke-width="1" font-size="13">3</text>
+</svg>
+</g>
+</svg>

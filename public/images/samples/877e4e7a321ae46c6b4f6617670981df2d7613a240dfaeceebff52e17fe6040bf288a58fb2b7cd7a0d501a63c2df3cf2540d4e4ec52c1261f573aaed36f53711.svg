@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="70.0" version="1.1" width="170.8433484541326" style="overflow: hidden; position: relative;" viewBox="0 0 190 90">
+  <g transform="translate(-205, -195)">
+    <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"/>
+    <circle cx="193.03847577293368" cy="205" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"/>
+    <text x="193.03847577293368" y="205" text-anchor="middle" font="30px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 24px; line-height: normal; font-family: Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">C</tspan>
+    </text>
+    <text x="193.03847577293368" y="205" text-anchor="middle" font="30px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 24px; line-height: normal; font-family: Arial;" font-size="24px" transform="matrix(1,0,0,1,21.8719,40)">
+      <tspan dy="8.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">H</tspan>
+    </text>
+    <text x="296.9615242270663" y="185.00000000000003" text-anchor="middle" font="30px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 24px; line-height: normal; font-family: Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8.500000000000028" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">O</tspan>
+    </text>
+    <text x="296.9615242270663" y="185.00000000000003" text-anchor="middle" font="30px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 24px; line-height: normal; font-family: Arial;" font-size="24px" transform="matrix(1,0,0,1,58.7922,40)">
+      <tspan dy="8.500000000000028" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">H</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M227.67949192,185L262.32050808,165" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+    <path fill="none" stroke="#000000" d="M262.32050808,165L284.85371871,178.00955522" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+    <path fill="none" stroke="#000000" d="M227.67949192,185L204.45878129,198.40648353M224.34615859,179.22649731L201.12544796,192.63298084M231.01282526,190.77350269L207.79211463,204.17998623" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+  </g>
+</svg>

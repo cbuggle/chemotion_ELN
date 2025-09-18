@@ -1,0 +1,19 @@
+
+<svg version="1.1" id="topsvg" xmlns="http://www.w3.org/2000/svg" x="0" y="0" width="200px" height="200px" viewBox="0 0 100 100" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title> - Open Babel Depiction</title>
+<rect x="0" y="0" width="100" height="100" fill="white"></rect>
+<g transform="translate(0,0)">
+<svg width="100" height="100" x="0" y="0" viewBox="0 0 90.3523 142.638" font-family="sans-serif" stroke-width="2" stroke-linecap="round">
+<line x1="47.0" y1="76.6" x2="43.4" y2="90.1" opacity="1.0" stroke-width="2.0"></line>
+<text x="44.352250" y="48.000000" stroke-width="1" font-size="16">CH</text>
+<text x="68.352250" y="51.680000" stroke-width="1" font-size="13">4</text>
+<text x="45.352279" y="60.000359" stroke-width="1" font-size="16">CH</text>
+<text x="69.352279" y="63.680359" stroke-width="1" font-size="13">4</text>
+<text x="46.352309" y="72.000717" stroke-width="1" font-size="16">CH</text>
+<text x="70.352309" y="75.680717" stroke-width="1" font-size="13">3</text>
+<text x="14.000000" y="110.637871" stroke-width="1" font-size="16">H</text>
+<text x="26.000000" y="114.317871" stroke-width="1" font-size="13">3</text>
+<text x="32.500000" y="110.637871" stroke-width="1" font-size="16">C</text>
+</svg>
+</g>
+</svg>

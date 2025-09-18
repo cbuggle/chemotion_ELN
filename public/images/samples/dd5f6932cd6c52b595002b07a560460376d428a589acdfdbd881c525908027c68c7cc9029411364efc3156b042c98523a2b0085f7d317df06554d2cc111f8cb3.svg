@@ -1,0 +1,13 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="30.0" version="1.1" width="70.0" style="overflow:hidden;" viewBox="0 0 90 50">
+  <g transform="translate(-569, -276)">
+    <defs></defs>
+    <text x="539" y="246" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8.5">Cu</tspan>
+    </text>
+    <text x="579" y="246" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8.5">I</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M557.54375,246L572.4640625,246" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+  </g>
+</svg>

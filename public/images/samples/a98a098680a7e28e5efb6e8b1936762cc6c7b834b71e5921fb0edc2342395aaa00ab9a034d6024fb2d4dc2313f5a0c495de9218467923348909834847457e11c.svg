@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="80.00117336000002" version="1.1" width="69.28101614000002" style="overflow: hidden; position: relative; left: -0.799999px; top: -0.799999px;" viewBox="0 0 89 100">
+  <g transform="translate(-317, -210)">
+    <defs/>
+    <circle cx="287.35949193362626" cy="199.99970665913753" r="24" fill="none" stroke="#00cc00" style="display: none;" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)"/>
+    <path style="stroke-linecap: round; stroke-linejoin: round;" fill="none" stroke="#000000" d="M322,179.99941332L356.64050807,199.99970666" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)"/>
+    <path style="stroke-linecap: round; stroke-linejoin: round;" fill="none" stroke="#000000" d="M349.9738414,203.848652L349.9738414,236.151348M356.64050807,199.99970666L356.64050807,240.00029334" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)"/>
+    <path style="stroke-linecap: round; stroke-linejoin: round;" fill="none" stroke="#000000" d="M356.64050807,240.00029334L322,260.00058668" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)"/>
+    <path style="stroke-linecap: round; stroke-linejoin: round;" fill="none" stroke="#000000" d="M322,252.30252664L294.0261586,236.151348M322,260.00058668L287.35949193,240.00029334" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)"/>
+    <path style="stroke-linecap: round; stroke-linejoin: round;" fill="none" stroke="#000000" d="M287.35949193,240.00029334L287.35949193,199.99970666" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)"/>
+    <path style="stroke-linecap: round; stroke-linejoin: round;" fill="none" stroke="#000000" d="M294.0261586,203.848652L322,187.69747336M287.35949193,199.99970666L322,179.99941332" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)"/>
+  </g>
+</svg>

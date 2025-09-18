@@ -1,0 +1,44 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:cml="http://www.xml-cml.org/schema"
+  width="1560" height="440" >
+  <rect  width="1560" height="440" stroke-width="1" stroke="white" fill="none"/>
+  <svg width="100%"  viewBox="0 0 787 217" >
+  <title>Reaction 1</title> <g transform='translate(50, 0)'><g transform='scale(1)'> <g transform='translate(10, 17)'> 
+  <g transform="translate(-200, -185)">
+    <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs>
+    <text x="0" y="-10.608582396147701" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,356.1506,276.5469)">
+      <tspan dy="8.492980103852299" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">N</tspan>
+    </text>
+    <text x="-20.000183904985953" y="50.94349873689392" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,356.1506,276.5469)">
+      <tspan dy="8.498186236893922" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">O</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M-32.35908543,12.90193682L-70.40549587,0.5430353" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="none" stroke="#000000" d="M-77.72663395,-1.83604321L-101.73231296,19.77729036M-70.40549587,0.5430353L-100.13182982,27.30691776" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="none" stroke="#000000" d="M-100.13182982,27.30691776L-138.17339174,14.94801624" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="none" stroke="#000000" d="M-132.45252818,9.79694005L-139.16748164,-21.80053777M-138.17339174,14.94801624L-146.48861971,-24.17961627" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="none" stroke="#000000" d="M-146.48861971,-24.17961627L-116.76228577,-50.94349874" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="none" stroke="#000000" d="M-115.16180263,-43.41387134L-84.44158741,-33.43352103M-116.76228577,-50.94349874L-78.72072385,-38.58459722" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="none" stroke="#000000" d="M-70.40549587,0.5430353L-78.72072385,-38.58459722" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="none" stroke="#000000" d="M-24.52210921,15.4484611L-7.34212168,2.96632751M-32.35908543,12.90193682L-11.26071921,-2.42709791" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="none" stroke="#000000" d="M11.26071921,-2.42709791L32.35908543,12.90193682" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="#000000" stroke="#000000" d="M32.35908543,12.90193682L71.84724527,4.98140622L68.96374648,-3.89533563Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="none" stroke="#000000" d="M77.72663395,-1.83604321L84.44158741,-33.43352103M70.40549587,0.5430353L78.72072385,-38.58459722" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="none" stroke="#000000" d="M78.72072385,-38.58459722L116.76228577,-50.94349874" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="none" stroke="#000000" d="M115.16180263,-43.41387134L139.16748164,-21.80053777M116.76228577,-50.94349874L146.48861971,-24.17961627" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="none" stroke="#000000" d="M146.48861971,-24.17961627L138.17339174,14.94801624" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="none" stroke="#000000" d="M132.45252818,9.79694005L101.73231296,19.77729036M138.17339174,14.94801624L100.13182982,27.30691776" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="none" stroke="#000000" d="M70.40549587,0.5430353L100.13182982,27.30691776" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="none" stroke="#000000" d="M32.35908543,12.90193682L20.0001839,50.94349874" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="none" stroke="#000000" d="M20.0001839,50.94349874L-7.471875,50.94349874" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <path fill="none" stroke="#000000" d="M-32.35908543,12.90193682L-25.37674031,34.39408268" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.1506,276.5469)"></path>
+    <text x="120.852" y="-82.02799999999999" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,356.1506,276.5469)">
+      <tspan dy="8.495437500000008" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Chiral</tspan>
+    </text>
+  </g>
+</g> </g></g><g transform='translate(607, 0)'><g transform='scale(0.75)'>  </g></g><g transform='translate(577, 108)'> <svg stroke="black" stroke-width="1">
+  <line x1="0" y1="4" x2="170" y2="4" stroke="black"/>
+  <polygon points="162,4 160,7 170,4 160,1"/>
+</svg>
+ </g> <g transform='translate(577, 108)'> <svg font-family="sans-serif">
+  <text text-anchor="middle" x="85" y="30" font-size="19.4">rt °C</text>
+</svg>
+ </g><g transform='translate(787, 0)'><g transform='scale(1)'>  </g></g> </svg></svg>

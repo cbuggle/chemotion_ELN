@@ -1,0 +1,40 @@
+
+<svg version="1.1" id="topsvg" xmlns="http://www.w3.org/2000/svg" x="0" y="0" width="200px" height="200px" viewBox="0 0 100 100" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title> - Open Babel Depiction</title>
+<rect x="0" y="0" width="100" height="100" fill="white"></rect>
+<g transform="translate(0,0)">
+<svg width="100" height="100" x="0" y="0" viewBox="0 0 287.851 260.075" font-family="sans-serif" stroke="#000000" stroke-width="2" stroke-linecap="round">
+<line x1="213.3" y1="160.0" x2="178.4" y2="140.3" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<polygon points="109.205023 140.277483 134.374472 150.051872 130.405620 156.997965 " stroke-width="2.000000" fill="#000000" stroke="#000000"></polygon>
+<line x1="210.3" y1="187.3" x2="210.3" y2="160.0" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="216.3" y1="187.3" x2="216.3" y2="160.0" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="178.4" y1="140.3" x2="155.1" y2="153.6" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="75.4" y1="168.1" x2="73.8" y2="168.1" opacity="1.0" stroke="#000000" stroke-width="1.0"></line>
+<line x1="76.0" y1="174.5" x2="73.2" y2="174.5" opacity="1.0" stroke="#000000" stroke-width="1.0"></line>
+<line x1="76.7" y1="181.0" x2="72.5" y2="181.0" opacity="1.0" stroke="#000000" stroke-width="1.0"></line>
+<line x1="77.3" y1="187.4" x2="71.9" y2="187.4" opacity="1.0" stroke="#000000" stroke-width="1.0"></line>
+<line x1="78.0" y1="193.9" x2="71.2" y2="193.9" opacity="1.0" stroke="#000000" stroke-width="1.0"></line>
+<line x1="78.6" y1="200.3" x2="70.6" y2="200.3" opacity="1.0" stroke="#000000" stroke-width="1.0"></line>
+<line x1="236.6" y1="146.7" x2="213.3" y2="160.0" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="97.9" y1="213.6" x2="74.6" y2="200.3" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="51.3" y1="213.6" x2="74.6" y2="200.3" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<polygon points="74.600512 80.248595 70.600512 53.282036 78.600512 53.282036 " stroke-width="2.000000" fill="#000000" stroke="#000000"></polygon>
+<line x1="74.6" y1="160.0" x2="40.0" y2="140.3" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="40.0" y1="140.3" x2="40.0" y2="100.0" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="40.0" y1="100.0" x2="74.6" y2="80.2" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="74.6" y1="80.2" x2="109.2" y2="100.0" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="109.2" y1="100.0" x2="109.2" y2="140.3" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="109.2" y1="140.3" x2="74.6" y2="160.0" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<text x="137.809535" y="168.049775" fill="#000000" stroke="#000000" stroke-width="1" font-size="16">O</text>
+<text x="207.250562" y="208.302370" fill="#000000" stroke="#000000" stroke-width="1" font-size="16">O</text>
+<text x="241.851074" y="148.277483" fill="#000000" stroke="#000000" stroke-width="1" font-size="16">Cl</text>
+<text x="105.205023" y="228.074663" fill="#000000" stroke="#000000" stroke-width="1" font-size="16">CH</text>
+<text x="129.205023" y="231.754663" fill="#000000" stroke="#000000" stroke-width="1" font-size="13">3</text>
+<text x="14.000000" y="228.074663" fill="#000000" stroke="#000000" stroke-width="1" font-size="16">H</text>
+<text x="26.000000" y="231.754663" fill="#000000" stroke="#000000" stroke-width="1" font-size="13">3</text>
+<text x="32.500000" y="228.074663" fill="#000000" stroke="#000000" stroke-width="1" font-size="16">C</text>
+<text x="70.600512" y="48.000000" fill="#000000" stroke="#000000" stroke-width="1" font-size="16">CH</text>
+<text x="94.600512" y="51.680000" fill="#000000" stroke="#000000" stroke-width="1" font-size="13">3</text>
+</svg>
+</g>
+</svg>

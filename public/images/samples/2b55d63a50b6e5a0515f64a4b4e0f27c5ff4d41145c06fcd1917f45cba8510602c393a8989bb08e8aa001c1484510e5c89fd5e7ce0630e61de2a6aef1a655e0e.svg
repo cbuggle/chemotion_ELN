@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="55.400000000000006" version="1.1" width="261.5863807568877" style="overflow: hidden; position: relative;" viewBox="0 0 281 75">
+  <g transform="translate(-200, -165)">
+    <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"/>
+    <circle cx="371.88457268119896" cy="135.00000000000009" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"/>
+    <circle cx="302.6025403784439" cy="135.00000000000006" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"/>
+    <circle cx="233.3205080756888" cy="135" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"/>
+    <circle cx="198.67949192431124" cy="155" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"/>
+    <circle cx="267.9615242270663" cy="155.00000000000003" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"/>
+    <circle cx="337.2435565298214" cy="155.00000000000006" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"/>
+    <text x="198.67949192431124" y="155" text-anchor="middle" font="30px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 24px; line-height: normal; font-family: Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">C</tspan>
+    </text>
+    <text x="198.67949192431124" y="155" text-anchor="middle" font="30px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 24px; line-height: normal; font-family: Arial;" font-size="24px" transform="matrix(1,0,0,1,11.6187,40)">
+      <tspan dy="8.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">H</tspan>
+    </text>
+    <text x="198.67949192431124" y="155" text-anchor="middle" font="30px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 17px; line-height: normal; font-family: Arial;" font-size="17px" transform="matrix(1,0,0,1,25.8094,45.4)">
+      <tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">3</tspan>
+    </text>
+    <text x="371.88457268119896" y="135.00000000000009" text-anchor="middle" font="30px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 24px; line-height: normal; font-family: Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8.500000000000085" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Br</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M210.09940629,148.40670937L233.32050808,135" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+    <path fill="none" stroke="#000000" d="M233.32050808,135L267.96152423,155" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+    <path fill="none" stroke="#000000" d="M267.96152423,155L302.60254038,135" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+    <path fill="none" stroke="#000000" d="M302.60254038,135L337.24355653,155" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+    <path fill="none" stroke="#000000" d="M337.24355653,155L357.10371871,143.53373002" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+  </g>
+</svg>

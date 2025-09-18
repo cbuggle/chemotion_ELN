@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="49.995753638469154" version="1.1" width="129.28693488648116" style="overflow: hidden; position: relative;" viewBox="0 0 149 69">
+  <g transform="translate(-314, -234)">
+    <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"/>
+    <text x="-34.64346744324057" y="9.997876818469145" text-anchor="middle" font="30px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,359,254.2411)">
+      <tspan dy="8.505689318469145" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Cl</tspan>
+    </text>
+    <text x="34.64346744324057" y="9.997876818469145" text-anchor="middle" font="30px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,359,254.2411)">
+      <tspan dy="8.505689318469145" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Cl</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M-20.5253976,1.84911265L0,-9.99787682" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,359,254.2411)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+    <path fill="none" stroke="#000000" d="M0,-9.99787682L20.5253976,1.84911265" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,359,254.2411)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+  </g>
+</svg>

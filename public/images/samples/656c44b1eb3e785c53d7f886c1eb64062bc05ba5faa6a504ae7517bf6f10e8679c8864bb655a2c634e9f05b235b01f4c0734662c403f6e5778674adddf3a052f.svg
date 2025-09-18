@@ -1,0 +1,13 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="50.000440014520535" version="1.1" width="94.64076210514955" style="overflow:hidden;" viewBox="0 0 114 70">
+  <g transform="translate(-205, -160)">
+    <defs></defs>
+    <text x="209.68461311223334" y="190.00418013794513" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,5.327,0)">
+      <tspan dy="8.499999229742002">H</tspan>
+    </text>
+    <text x="244.32537521738288" y="170.0037401234246" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,5.327,0)">
+      <tspan dy="8.50000172010428">Br</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M221.12775206,183.39728698L229.55411745,178.53217994" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,5.327,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+  </g>
+</svg>

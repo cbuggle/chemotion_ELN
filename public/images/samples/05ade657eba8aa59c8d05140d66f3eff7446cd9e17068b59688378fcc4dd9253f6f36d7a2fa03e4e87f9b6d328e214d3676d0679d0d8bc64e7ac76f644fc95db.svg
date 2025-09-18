@@ -1,0 +1,43 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="189.8602383516665" version="1.1" width="237.7193817130642" style="overflow:hidden;" viewBox="0 0 257 209">
+  <g transform="translate(-683, -267)">
+    <defs></defs>
+    <circle cx="551.4458552727972" cy="376.86952475553426" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,141.5234,0)" style="display:none;"></circle>
+    <circle cx="672.641323484243" cy="386.9130665956146" r="19.200000000000003" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,141.5234,0)" style="display:none;"></circle>
+    <circle cx="655.2906856784984" cy="396.9311333771279" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,141.5234,0)" style="display:none;"></circle>
+    <circle cx="585.9772971605055" cy="436.7783708191717" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,141.5234,0)" style="display:none;"></circle>
+    <text x="724.5785991379245" y="276.9181324675052" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,141.5234,0)">
+      <tspan dy="8.504069967505188">O</tspan>
+    </text>
+    <text x="759.1652369858614" y="336.82697853114263" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,141.5234,0)">
+      <tspan dy="8.506666031142629">H</tspan>
+    </text>
+    <text x="551.4458552727972" y="376.86952475553426" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,141.5234,0)">
+      <tspan dy="8.502337255534258">O</tspan>
+    </text>
+    <text x="585.9772971605055" y="436.7783708191717" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,141.5234,0)">
+      <tspan dy="8.504933319171698">O</tspan>
+    </text>
+    <text x="585.9772971605055" y="436.7783708191717" text-anchor="middle" stroke="none" fill="#000000" style="font:17px Arial;" font-size="17px" transform="matrix(1,0,0,1,157.1594,-8.1047)">
+      <tspan dy="5.504933319171698">–</tspan>
+    </text>
+    <text x="586.0070180621672" y="396.84621651523753" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,141.5234,0)">
+      <tspan dy="8.49465401523753">N</tspan>
+    </text>
+    <text x="586.0070180621672" y="396.84621651523753" text-anchor="middle" stroke="none" fill="#000000" style="font:17px Arial;" font-size="17px" transform="matrix(1,0,0,1,155.9953,-8.1047)">
+      <tspan dy="5.494654015237529">+</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M620.59365591,336.82697853L620.59365591,376.89499981M627.26032258,340.67602373L627.26032258,373.04636249" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,141.5234,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M620.59365591,376.89499981L655.29068568,396.93113338" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,141.5234,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M655.29068568,396.93113338L689.99196129,376.89499981M655.29088963,389.23288304L683.32529462,373.046127" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,141.5234,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M689.99196129,376.89499981L689.99196129,336.82697853" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,141.5234,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M689.99196129,336.82697853L655.29068568,316.79509081M683.32529462,340.67625921L655.2908896,324.49293327" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,141.5234,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M655.29068568,316.79509081L620.59365591,336.82697853" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,141.5234,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M689.99196129,336.82697853L724.57859914,316.87576183" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,141.5234,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M727.91193247,316.87576183L727.91193247,293.6375M721.2452658,316.87576183L721.2452658,293.6375" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,141.5234,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M724.57859914,316.87576183L747.71249049,330.22048997" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,141.5234,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M620.59365591,376.89499981L608.29063451,383.99196735" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,141.5234,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M576.24135433,387.35146537L565.21983375,380.98091816M572.90516625,393.12331893L561.88364567,386.75277172" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,141.5234,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M585.99459034,413.54374911L585.98972458,420.08125089" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,141.5234,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+  </g>
+</svg>

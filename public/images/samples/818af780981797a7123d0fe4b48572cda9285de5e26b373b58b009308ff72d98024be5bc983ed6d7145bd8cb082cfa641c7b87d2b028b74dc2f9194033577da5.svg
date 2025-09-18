@@ -1,0 +1,14 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="69.28101614000002" version="1.1" width="80.00117336" style="overflow:hidden;" viewBox="0 0 100 89">
+  <g transform="translate(-162, -164)">
+    <defs></defs>
+    <circle cx="172" cy="203.6405080663738" r="19.200000000000003" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="display:none;"></circle>
+    <circle cx="192.00029334086247" cy="203.6405080663738" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="display:none;"></circle>
+    <path fill="none" stroke="#000000" d="M212.00058668,169L192.00029334,203.64050807" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M188.151348,196.9738414L155.848652,196.9738414M192.00029334,203.64050807L151.99970666,203.64050807" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M151.99970666,203.64050807L131.99941332,169" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M139.69747336,169L155.848652,141.0261586M131.99941332,169L151.99970666,134.35949193" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M151.99970666,134.35949193L192.00029334,134.35949193" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M188.151348,141.0261586L204.30252664,169M192.00029334,134.35949193L212.00058668,169" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+  </g>
+</svg>

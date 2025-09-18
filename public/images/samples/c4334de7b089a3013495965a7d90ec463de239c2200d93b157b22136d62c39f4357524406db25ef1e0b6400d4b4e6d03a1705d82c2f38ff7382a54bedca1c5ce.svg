@@ -1,0 +1,12 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="30.0" version="1.1" width="82.13329999999996" style="overflow:hidden;" viewBox="0 0 102 50">
+  <g transform="translate(-588, -311)">
+    <defs></defs>
+    <text style='font:24px "Arial";' x="580" y="281" text-anchor="middle" stroke="none" fill="#000000" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8">Br</tspan>
+    </text>
+    <text style='font:24px "Arial";' x="580" y="281" text-anchor="middle" stroke="none" fill="#000000" font-size="24px" transform="matrix(1,0,0,1,17.8667,40)">
+      <tspan dy="8">H</tspan>
+    </text>
+  </g>
+</svg>

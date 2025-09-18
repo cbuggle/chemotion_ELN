@@ -1,0 +1,242 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:cml="http://www.xml-cml.org/schema"
+  width="1560" height="440" >
+  <rect  width="1560" height="440" stroke-width="1" stroke="white" fill="none"/>
+  <svg width="100%"  viewBox="0 0 1459 545.0" >
+  <title>Reaction 1</title> <g transform='translate(50, 0)'><g transform='scale(1)'> <g transform='translate(10, 162)'> 
+  <g transform="translate(-225, -164)">
+    <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs>
+    <text x="29.280429442059432" y="-20.00029333474005" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,372.8703,262.3508)">
+      <tspan dy="8.50751916525995" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">C</tspan>
+    </text>
+    <text x="29.280429442059432" y="-20.00029333474005" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,391.0141,262.3508)">
+      <tspan dy="8.50751916525995" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">H</tspan>
+    </text>
+    <text x="29.280429442059432" y="-20.00029333474005" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 17px Arial;" font-size="17px" transform="matrix(1,0,0,1,405.2203,267.7539)">
+      <tspan dy="5.50751916525995" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">3</tspan>
+    </text>
+    <text x="-74.64351900322984" y="-80.0011733389602" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,372.8703,262.3508)">
+      <tspan dy="8.5066391610398" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">O</tspan>
+    </text>
+    <text x="-74.64351900322984" y="-80.0011733389602" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 17px Arial;" font-size="17px" transform="matrix(1,0,0,1,388.0141,254.2461)">
+      <tspan dy="5.5066391610398" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">&#x2013;</tspan>
+    </text>
+    <text x="-109.28160278101961" y="-20.00029333474005" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,372.8703,262.3508)">
+      <tspan dy="8.50751916525995" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">C</tspan>
+    </text>
+    <text x="-109.28160278101961" y="-20.00029333474005" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,344.4578,262.3508)">
+      <tspan dy="8.50751916525995" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">H</tspan>
+    </text>
+    <text x="-109.28160278101961" y="-20.00029333474005" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 17px Arial;" font-size="17px" transform="matrix(1,0,0,1,358.6641,267.7539)">
+      <tspan dy="5.50751916525995" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">3</tspan>
+    </text>
+    <text x="-5.357654335730365" y="-80.0011733389602" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,372.8703,262.3508)">
+      <tspan dy="8.5066391610398" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">O</tspan>
+    </text>
+    <text x="29.280429442059432" y="80.0011733389602" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,372.8703,262.3508)">
+      <tspan dy="8.4933608389602" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">C</tspan>
+    </text>
+    <text x="29.280429442059432" y="80.0011733389602" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,391.0141,262.3508)">
+      <tspan dy="8.4933608389602" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">H</tspan>
+    </text>
+    <text x="29.280429442059432" y="80.0011733389602" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 17px Arial;" font-size="17px" transform="matrix(1,0,0,1,405.2203,267.7539)">
+      <tspan dy="5.4933608389602" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">3</tspan>
+    </text>
+    <text x="-74.64351900322984" y="20.00029333474005" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,372.8703,262.3508)">
+      <tspan dy="8.49248083474005" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">O</tspan>
+    </text>
+    <text x="-74.64351900322984" y="20.00029333474005" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 17px Arial;" font-size="17px" transform="matrix(1,0,0,1,388.0141,254.2461)">
+      <tspan dy="5.49248083474005" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">&#x2013;</tspan>
+    </text>
+    <text x="-109.28160278101961" y="80.0011733389602" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,372.8703,262.3508)">
+      <tspan dy="8.4933608389602" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">C</tspan>
+    </text>
+    <text x="-109.28160278101961" y="80.0011733389602" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,344.4578,262.3508)">
+      <tspan dy="8.4933608389602" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">H</tspan>
+    </text>
+    <text x="-109.28160278101961" y="80.0011733389602" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 17px Arial;" font-size="17px" transform="matrix(1,0,0,1,358.6641,267.7539)">
+      <tspan dy="5.4933608389602" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">3</tspan>
+    </text>
+    <text x="-5.357654335730365" y="20.00029333474005" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,372.8703,262.3508)">
+      <tspan dy="8.49248083474005" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">O</tspan>
+    </text>
+    <text x="69.28101611153953" y="0" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,372.8703,262.3508)">
+      <tspan dy="8.5078125" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Mn</tspan>
+    </text>
+    <text x="69.28101611153953" y="0" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 17px Arial;" font-size="17px" transform="matrix(1,0,0,1,400.0688,254.2461)">
+      <tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2+</tspan>
+    </text>
+    <text x="109.28160278101961" y="-40.0005866694801" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,372.8703,262.3508)">
+      <tspan dy="8.5072258305199" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">O</tspan>
+    </text>
+    <text x="109.28160278101961" y="-40.0005866694801" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,343.7938,262.3508)">
+      <tspan dy="8.5072258305199" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">H</tspan>
+    </text>
+    <text x="109.28160278101961" y="-40.0005866694801" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 17px Arial;" font-size="17px" transform="matrix(1,0,0,1,358,267.7539)">
+      <tspan dy="5.5072258305199" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2</tspan>
+    </text>
+    <text x="109.28160278101961" y="0" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,372.8703,262.3508)">
+      <tspan dy="8.5078125" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">O</tspan>
+    </text>
+    <text x="109.28160278101961" y="0" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,343.7938,262.3508)">
+      <tspan dy="8.5078125" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">H</tspan>
+    </text>
+    <text x="109.28160278101961" y="0" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 17px Arial;" font-size="17px" transform="matrix(1,0,0,1,358,267.7539)">
+      <tspan dy="5.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M17.83816252,-26.60714538L-5.35765434,-40.00058667" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,372.8703,262.3508)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"></path>
+    <path fill="none" stroke="#000000" d="M-5.35765434,-40.00058667L-40.00058667,-20.00029333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,372.8703,262.3508)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"></path>
+    <path fill="none" stroke="#000000" d="M-40.00058667,-27.6982187L-67.97685234,-43.84966669M-40.00058667,-20.00029333L-74.643519,-40.00058667" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,372.8703,262.3508)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"></path>
+    <path fill="none" stroke="#000000" d="M-74.643519,-40.00058667L-74.643519,-63.284375" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,372.8703,262.3508)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"></path>
+    <path fill="none" stroke="#000000" d="M-74.643519,-40.00058667L-97.83816252,-26.60782288" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,372.8703,262.3508)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"></path>
+    <path fill="none" stroke="#000000" d="M-2.024321,-40.00058667L-2.024321,-63.284375M-8.69098767,-40.00058667L-8.69098767,-63.284375" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,372.8703,262.3508)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"></path>
+    <path fill="none" stroke="#000000" d="M17.83816252,73.39432129L-5.35765434,60.00088" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,372.8703,262.3508)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"></path>
+    <path fill="none" stroke="#000000" d="M-5.35765434,60.00088L-40.00058667,80.00117334" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,372.8703,262.3508)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"></path>
+    <path fill="none" stroke="#000000" d="M-40.00058667,72.30324797L-67.97685234,56.15179998M-40.00058667,80.00117334L-74.643519,60.00088" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,372.8703,262.3508)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"></path>
+    <path fill="none" stroke="#000000" d="M-74.643519,60.00088L-74.643519,36.7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,372.8703,262.3508)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"></path>
+    <path fill="none" stroke="#000000" d="M-74.643519,60.00088L-97.83816252,73.39364379" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,372.8703,262.3508)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"></path>
+    <path fill="none" stroke="#000000" d="M-2.024321,60.00088L-2.024321,36.7M-8.69098767,60.00088L-8.69098767,36.7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,372.8703,262.3508)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"></path>
+  </g>
+</g> </g></g><g transform='translate(454, 0)'><g transform='scale(0.75)'> <g transform='translate(10, 101)'> 
+  <g transform="translate(-198, -174)">
+    <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs>
+    <text x="22.06077341860304" y="39.19060033902602" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,356.337,275.5078)">
+      <tspan dy="8.49528783902602" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">N</tspan>
+    </text>
+    <text x="-30.29841166875833" y="1.149099626419543" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,356.337,275.5078)">
+      <tspan dy="8.500662126419543" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">N</tspan>
+    </text>
+    <text x="-50.29856339441494" y="62.70108172513726" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,356.337,275.5078)">
+      <tspan dy="8.505769225137257" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">S</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M-17.93953003,39.19060034L10.190625,39.19060034M-13.09572533,32.52393367L10.190625,32.52393367" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M27.44353828,22.62857168L34.42450358,1.14909963" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M34.4872178,1.3420627L34.36178935,0.95613655M38.088256,0.59839353L37.71197063,-0.55938491M41.6892942,-0.14527564L41.06215192,-2.07490637M45.2903324,-0.88894481L44.41233321,-3.59042783M48.8913706,-1.63261398L47.76251449,-5.10594929M52.4924088,-2.37628315L51.11269578,-6.62147075M56.093447,-3.11995232L54.46287706,-8.13699221M59.6944852,-3.86362149L57.81305835,-9.65251367M63.2955234,-4.60729066L61.16323964,-11.16803513M66.8965616,-5.35095983L64.51342092,-12.68355659M70.4975998,-6.094629L67.86360221,-14.19907805M74.098638,-6.83829817L71.21378349,-15.71459952" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M79.78714236,-13.59370904L86.50208245,-45.1911239M72.46600429,-11.21463053L80.78121889,-50.34220009" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M80.78121889,-50.34220009L118.8227196,-62.70108173" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M117.22223645,-55.17145433L141.22786764,-33.55816382M118.8227196,-62.70108173L148.54900571,-35.93724232" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M148.54900571,-35.93724232L140.23379112,3.19032723" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M134.51292755,-1.96074896L103.79277355,8.01958147M140.23379112,3.19032723L102.19229041,15.54920887" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M72.46600429,-11.21463053L102.19229041,15.54920887" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M34.42450358,1.14909963L2.06062169,-22.36623028" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M2.06062169,-22.36623028L-19.03634025,-7.03505476" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M-17.93953003,39.19060034L-24.92148112,17.69966732" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M-42.16875,1.14909963L-70.29871512,1.14909963" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M-70.29871512,1.14909963L-97.06255452,-28.57718649M-77.82834252,2.74958277L-99.44163303,-21.25604841" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M-97.06255452,-28.57718649L-136.19012408,-20.26197189" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M-136.19012408,-20.26197189L-148.54900571,17.77952882M-131.03904789,-14.54110833L-141.01937832,16.17904568" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M-148.54900571,17.77952882L-121.78516631,47.50581494" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M-121.78516631,47.50581494L-82.65759676,39.19060034M-119.40608781,40.18467686L-87.80867295,33.46973677" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M-70.29871512,1.14909963L-82.65759676,39.19060034" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M-82.65759676,39.19060034L-60.90134421,54.99762291" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <path fill="none" stroke="#000000" d="M-17.93953003,39.19060034L-39.70803079,55.00652185" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,356.337,275.5078)"></path>
+    <text x="122.552" y="-91.72799999999998" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,356.337,275.5078)">
+      <tspan dy="8.49856250000002" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Chiral</tspan>
+    </text>
+  </g>
+</g> </g></g><g transform='translate(424, 273)'> <svg stroke="black" stroke-width="1">
+  <line x1="0" y1="4" x2="441" y2="4" stroke="black"/>
+  <polygon points="433,4 431,7 441,4 431,1"/>
+</svg>
+ </g> <g transform='translate(424, 273)'> <svg font-family="sans-serif">
+  <text text-anchor="middle" x="220" y="55" font-size="19.1">CU1-Elisha</text>
+</svg>
+ </g> <g transform='translate(424, 273)'> <svg font-family="sans-serif">
+  <text text-anchor="middle" x="220" y="30" font-size="21.1">0 °C</text>
+</svg>
+ </g><g transform='translate(905, 0)'><g transform='scale(1)'> <g transform='translate(10, 125)'> 
+  <g transform="translate(-165, -130)">
+    <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs>
+    <text x="34.642379938541545" y="70.0023347169577" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,377.0344,270.6734)">
+      <tspan dy="8.494522216957705" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">C</tspan>
+    </text>
+    <text x="34.642379938541545" y="70.0023347169577" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,395.1781,270.6734)">
+      <tspan dy="8.494522216957705" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">H</tspan>
+    </text>
+    <text x="34.642379938541545" y="70.0023347169577" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 17px Arial;" font-size="17px" transform="matrix(1,0,0,1,409.3844,276.0766)">
+      <tspan dy="5.494522216957705" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">3</tspan>
+    </text>
+    <text x="0" y="9.997562971766643" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,377.0344,270.6734)">
+      <tspan dy="8.505375471766643" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">N</tspan>
+    </text>
+    <text x="-34.642379938541545" y="30.002385872595532" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,377.0344,270.6734)">
+      <tspan dy="8.494573372595532" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">S</tspan>
+    </text>
+    <text x="-14.642405516360455" y="64.63991733248928" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,377.0344,270.6734)">
+      <tspan dy="8.507104832489276" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">O</tspan>
+    </text>
+    <text x="-103.92229133697684" y="-9.997562971766643" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,377.0344,270.6734)">
+      <tspan dy="8.494624528233357" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">C</tspan>
+    </text>
+    <text x="-103.92229133697684" y="-9.997562971766643" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,395.1781,270.6734)">
+      <tspan dy="8.494624528233357" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">H</tspan>
+    </text>
+    <text x="-103.92229133697684" y="-9.997562971766643" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 17px Arial;" font-size="17px" transform="matrix(1,0,0,1,409.3844,276.0766)">
+      <tspan dy="5.4946245282333575" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">3</tspan>
+    </text>
+    <text x="-173.20705121405993" y="109.99743508267208" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,377.0344,270.6734)">
+      <tspan dy="8.505247582672084" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">C</tspan>
+    </text>
+    <text x="-173.20705121405993" y="109.99743508267208" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,348.6219,270.6734)">
+      <tspan dy="8.505247582672084" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">H</tspan>
+    </text>
+    <text x="-173.20705121405993" y="109.99743508267208" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 17px Arial;" font-size="17px" transform="matrix(1,0,0,1,362.8281,276.0766)">
+      <tspan dy="5.505247582672084" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">3</tspan>
+    </text>
+    <text x="-34.642379938541545" y="109.99743508267208" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,377.0344,270.6734)">
+      <tspan dy="8.505247582672084" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">C</tspan>
+    </text>
+    <text x="-34.642379938541545" y="109.99743508267208" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,395.1781,270.6734)">
+      <tspan dy="8.505247582672084" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">H</tspan>
+    </text>
+    <text x="-34.642379938541545" y="109.99743508267208" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 17px Arial;" font-size="17px" transform="matrix(1,0,0,1,409.3844,276.0766)">
+      <tspan dy="5.505247582672084" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">3</tspan>
+    </text>
+    <text x="-54.642354360722635" y="-4.639994065946012" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,377.0344,270.6734)">
+      <tspan dy="8.492818434053987" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">O</tspan>
+    </text>
+    <text x="69.27991139843529" y="-30.002385872595532" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,377.0344,270.6734)">
+      <tspan dy="8.505426627404468" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">O</tspan>
+    </text>
+    <text x="69.27991139843529" y="-30.002385872595532" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,395.8422,270.6734)">
+      <tspan dy="8.505426627404468" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">H</tspan>
+    </text>
+    <path fill="#000000" stroke="#000000" d="M34.64237994,30.00238587L29.97571327,53.284375L39.30904661,53.284375Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M34.64237994,30.00238587L11.4430165,16.60552463" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M0,-6.7L0,-30.00238587" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M0,-30.00238587L-34.64237994,-50.00236029" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-34.64237994,-50.00236029L-34.64237994,-90.00230914M-41.30904661,-53.85117094L-41.30904661,-86.15303189" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-34.64237994,-90.00230914L-69.2799114,-109.99743508" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-69.2799114,-109.99743508L-103.92229134,-90.00230914M-69.28014464,-102.29984156L-97.25562467,-86.15276254" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-103.92229134,-90.00230914L-103.92229134,-50.00236029" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-103.92229134,-50.00236029L-69.2799114,-30.00238587M-97.25562467,-53.85144031L-69.28014468,-37.70044592" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-34.64237994,-50.00236029L-69.2799114,-30.00238587" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-11.4430165,16.60552463L-23.8694835,23.78139627" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-28.13531524,47.9380033L-26.92379855,50.03620334M-22.36195591,44.60442166L-21.15043923,46.7026217" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-45.42746248,36.22977466L-69.2799114,50.00236029" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-69.2799114,50.00236029L-103.92229134,30.00238587" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-103.92229134,30.00238587L-103.92229134,6.7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-103.92229134,30.00238587L-138.56467128,50.00236029M-103.92229134,37.70031124L-131.89800461,53.85144031" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-138.56467128,50.00236029L-138.56467128,90.00230914" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-138.56467128,90.00230914L-161.7597726,103.39021647" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-138.56467128,90.00230914L-103.92229134,109.99743508M-131.89800461,86.15276254L-103.92229134,102.29997619" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-75.94657807,53.85144031L-75.94657807,86.15276254M-69.2799114,50.00236029L-69.2799114,90.00230914" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-103.92229134,109.99743508L-69.2799114,90.00230914" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-69.2799114,90.00230914L-46.08388045,103.39262712" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M-41.15986047,12.04644969L-42.36207489,9.96406859M-46.93342183,15.37968141L-48.13563625,13.29730031" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M34.64237994,30.00238587L69.2799114,9.99756297" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M69.2799114,9.99756297L103.92229134,30.00238587" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M103.92229134,30.00238587L103.92229134,70.00233472M110.588958,33.85099939L110.588958,66.1532547" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M103.92229134,70.00233472L138.56467128,90.00230914" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M138.56467128,90.00230914L173.20705121,70.00233472M138.56467128,82.30438377L166.54038455,66.1532547" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M173.20705121,70.00233472L173.20705121,30.00238587" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M173.20705121,30.00238587L138.56467128,9.99756297M166.54038455,33.85099939L138.56467128,17.69595489" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="none" stroke="#000000" d="M103.92229134,30.00238587L138.56467128,9.99756297" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <path fill="#000000" stroke="#000000" d="M69.2799114,9.99756297L73.94657807,-13.284375L64.61324473,-13.284375Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(1,0,0,1,377.0344,270.6734)"></path>
+    <text x="142.89600000000002" y="-130.748" text-anchor="middle"  stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 24px Arial;" font-size="24px" transform="matrix(1,0,0,1,377.0344,270.6734)">
+      <tspan dy="8.49418750000001" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Chiral</tspan>
+    </text>
+  </g>
+<svg font-family="sans-serif">
+  <text text-anchor="middle" font-size="20.1" y="306.0" x="272">20%</text>
+</svg>
+</g> </g></g> </svg></svg>

@@ -1,0 +1,22 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="50.0032065770924" version="1.1" width="203.53171106793127" style="overflow:hidden;" viewBox="0 0 223 70">
+  <g transform="translate(-138, -69)">
+    <defs></defs>
+    <text x="-22.003527235794774" y="98.6814189470924" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,187.2188,0)">
+      <tspan dy="8.501731447092396">S</tspan>
+    </text>
+    <text x="-22.003527235794774" y="98.6814189470924" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,169.7312,0)">
+      <tspan dy="8.501731447092396">H</tspan>
+    </text>
+    <text x="116.5530838321365" y="98.6814189470924" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,187.2188,0)">
+      <tspan dy="8.501731447092396">S</tspan>
+    </text>
+    <text x="116.5530838321365" y="98.6814189470924" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,204.7063,0)">
+      <tspan dy="8.501731447092396">H</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M-11.21523343,92.43356533L12.53640963,78.67821237" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,187.2188,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M12.53640963,78.67821237L47.20756752,98.68141895" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,187.2188,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M47.20756752,98.68141895L81.87872542,78.67821237" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,187.2188,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M81.87872542,78.67821237L105.77503853,92.46369852" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,187.2188,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+  </g>
+</svg>

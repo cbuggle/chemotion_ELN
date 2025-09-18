@@ -1,0 +1,37 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="98.39999999999998" version="1.1" width="291.70180807568875" style="overflow:hidden;" viewBox="0 0 311 118">
+  <g transform="translate(-476, -182)">
+    <defs></defs>
+    <circle cx="543.9615242270663" cy="215" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="display:none;"></circle>
+    <circle cx="678" cy="152" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="display:none;"></circle>
+    <text x="474.67949192431126" y="215" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8.5">C</tspan>
+    </text>
+    <text x="474.67949192431126" y="215" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,11.6187,40)">
+      <tspan dy="8.5">H</tspan>
+    </text>
+    <text x="474.67949192431126" y="215" text-anchor="middle" stroke="none" fill="#000000" style="font:17px Arial;" font-size="17px" transform="matrix(1,0,0,1,25.8094,45.4)">
+      <tspan dy="5.5">3</tspan>
+    </text>
+    <text x="509.3205080756888" y="195" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8.5">O</tspan>
+    </text>
+    <text x="543.9615242270663" y="215" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8.5">N</tspan>
+    </text>
+    <text x="543.9615242270663" y="215" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,58.1281,40)">
+      <tspan dy="8.5">H</tspan>
+    </text>
+    <text x="543.9615242270663" y="215" text-anchor="middle" stroke="none" fill="#000000" style="font:17px Arial;" font-size="17px" transform="matrix(1,0,0,1,72.3187,45.4)">
+      <tspan dy="5.5">2</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M486.09940629,208.40670937L497.21309371,201.99021894" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M521.41190629,201.98097202L532.50996871,208.38844134" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <text x="678" y="152" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8.5">Cl</tspan>
+    </text>
+    <text x="678" y="152" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,19.2078,40)">
+      <tspan dy="8.5">H</tspan>
+    </text>
+  </g>
+</svg>

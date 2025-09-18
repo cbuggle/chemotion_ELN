@@ -1,0 +1,17 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="30.0" version="1.1" width="88.79219999999998" style="overflow:hidden;" viewBox="0 0 108 50">
+  <g transform="translate(-618, -306)">
+    <defs></defs>
+    <circle cx="628" cy="276" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="display:none;"></circle>
+    <text x="588" y="276" text-anchor="middle" stroke="none" fill="#000000" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:24px;line-height:normal;font-family:Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8.5">Na</tspan>
+    </text>
+    <text x="628" y="276" text-anchor="middle" stroke="none" fill="#000000" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:24px;line-height:normal;font-family:Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8.5">O</tspan>
+    </text>
+    <text x="628" y="276" text-anchor="middle" stroke="none" fill="#000000" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:24px;line-height:normal;font-family:Arial;" font-size="24px" transform="matrix(1,0,0,1,58.7922,40)">
+      <tspan dy="8.5">H</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M606.528125,276L615.45625,276" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+  </g>
+</svg>

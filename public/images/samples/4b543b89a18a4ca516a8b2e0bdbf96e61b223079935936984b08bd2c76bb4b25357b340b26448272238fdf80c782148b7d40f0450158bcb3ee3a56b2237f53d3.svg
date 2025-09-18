@@ -1,0 +1,21 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="38.10000000000002" version="1.1" width="98.51254999999992" style="overflow:hidden;" viewBox="0 0 118 58">
+  <g transform="translate(-777, -289)">
+    <defs></defs>
+    <circle cx="384.55625000000003" cy="260" r="24" fill="#77ff77" stroke="none" transform="matrix(1,0,0,1,456.4437,47)" style="display:none;"></circle>
+    <circle cx="302" cy="254" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,485.4437,53)" style="display:none;"></circle>
+    <circle cx="384.55625000000003" cy="260" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,456.4437,47)" style="display:none;"></circle>
+    <text x="302" y="254" text-anchor="middle" stroke="none" fill="#000000" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:24px;line-height:normal;font-family:Arial;" font-size="24px" transform="matrix(1,0,0,1,485.4437,53)">
+      <tspan dy="8.5">Na</tspan>
+    </text>
+    <text x="302" y="254" text-anchor="middle" stroke="none" fill="#000000" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:17px;line-height:normal;font-family:Arial;" font-size="17px" transform="matrix(1,0,0,1,506.5719,44.9)">
+      <tspan dy="5.5">+</tspan>
+    </text>
+    <text x="384.55625000000003" y="260" text-anchor="middle" stroke="none" fill="#000000" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:24px;line-height:normal;font-family:Arial;" font-size="24px" transform="matrix(1,0,0,1,456.4437,47)">
+      <tspan dy="8.5">H</tspan>
+    </text>
+    <text x="384.55625000000003" y="260" text-anchor="middle" stroke="none" fill="#000000" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:17px;line-height:normal;font-family:Arial;" font-size="17px" transform="matrix(1,0,0,1,471.4,38.9)">
+      <tspan dy="5.5">–</tspan>
+    </text>
+  </g>
+</svg>

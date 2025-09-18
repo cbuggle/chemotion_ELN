@@ -1,0 +1,26 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="150.00506594718289" version="1.1" width="203.19606526094378" style="overflow:hidden;" viewBox="0 0 223 170">
+  <g transform="translate(-794, -244)">
+    <defs></defs>
+    <circle cx="345.841104152393" cy="346.260731926085" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,527.1641,27.7422)" style="display:none;"></circle>
+    <text x="415.12207345539883" y="226.25566597890213" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,527.1641,27.7422)">
+      <tspan dy="8.33379097890213">O</tspan>
+    </text>
+    <text x="449.7604387747115" y="286.25819895249356" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,527.1641,27.7422)">
+      <tspan dy="8.336323952493558">H</tspan>
+    </text>
+    <text x="276.5643735137677" y="346.260731926085" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,527.1641,27.7422)">
+      <tspan dy="8.331044426084986">F</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M311.20273883,286.25819895L311.20273883,326.25847471M317.8694055,290.10683628L317.8694055,322.40983739" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,527.1641,27.7422)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M311.20273883,326.25847471L345.84110415,346.26073193" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,527.1641,27.7422)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M345.84110415,346.26073193L380.48370814,326.25847471M345.84130811,338.56248159L373.81704147,322.4096019" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,527.1641,27.7422)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M380.48370814,326.25847471L380.48370814,286.25819895" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,527.1641,27.7422)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M380.48370814,286.25819895L345.84110415,266.25594174M373.81704147,290.10707177L345.84130811,273.95419208" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,527.1641,27.7422)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M345.84110415,266.25594174L311.20273883,286.25819895" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,527.1641,27.7422)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M311.20273883,326.25847471L286.67740007,340.42086747" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,527.1641,27.7422)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M380.48370814,286.25819895L415.12207346,266.25594174" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,527.1641,27.7422)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M418.45540679,266.25594174L418.45540679,242.79375M411.78874012,266.25594174L411.78874012,242.79375" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,527.1641,27.7422)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M415.12207346,266.25594174L438.32259993,279.6533089" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,527.1641,27.7422)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+  </g>
+</svg>

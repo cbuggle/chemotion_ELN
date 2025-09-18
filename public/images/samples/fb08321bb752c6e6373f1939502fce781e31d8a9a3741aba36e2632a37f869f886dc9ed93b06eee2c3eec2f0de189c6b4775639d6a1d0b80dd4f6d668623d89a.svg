@@ -1,0 +1,18 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="38.10000000000002" version="1.1" width="100.0" style="overflow:hidden;" viewBox="0 0 120 58">
+  <g transform="translate(-743, -300)">
+    <defs></defs>
+    <text x="40" y="0" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,752.6,318.55)">
+      <tspan dy="7.5">Br</tspan>
+    </text>
+    <text x="40" y="0" text-anchor="middle" stroke="none" fill="#000000" style="font:17px Arial;" font-size="17px" transform="matrix(1,0,0,1,769.9,310.45)">
+      <tspan dy="5.5">–</tspan>
+    </text>
+    <text x="0" y="0" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,752.6,318.55)">
+      <tspan dy="7.5">K</tspan>
+    </text>
+    <text x="0" y="0" text-anchor="middle" stroke="none" fill="#000000" style="font:17px Arial;" font-size="17px" transform="matrix(1,0,0,1,766.4,310.45)">
+      <tspan dy="5.5">+</tspan>
+    </text>
+  </g>
+</svg>

@@ -1,0 +1,25 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="55.39013425310782" version="1.1" width="125.41105637919031" style="overflow:hidden;" viewBox="0 0 145 75">
+  <g transform="translate(-1101, -295)">
+    <defs></defs>
+    <text x="1139.2935334248657" y="237.32942552046364" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,0,67.4859)">
+      <tspan dy="8.493488020463644">C</tspan>
+    </text>
+    <text x="1139.2935334248657" y="237.32942552046364" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,-28.4125,67.4859)">
+      <tspan dy="8.493488020463644">H</tspan>
+    </text>
+    <text x="1139.2935334248657" y="237.32942552046364" text-anchor="middle" stroke="none" fill="#000000" style="font:17px Arial;" font-size="17px" transform="matrix(1,0,0,1,-14.2063,72.8891)">
+      <tspan dy="5.493488020463644">3</tspan>
+    </text>
+    <text x="1173.9420898040562" y="257.3163597735715" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,0,67.4859)">
+      <tspan dy="8.496047273571492">N</tspan>
+    </text>
+    <text x="1173.9420898040562" y="257.3163597735715" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,18.1438,67.4859)">
+      <tspan dy="8.496047273571492">H</tspan>
+    </text>
+    <text x="1173.9420898040562" y="257.3163597735715" text-anchor="middle" stroke="none" fill="#000000" style="font:17px Arial;" font-size="17px" transform="matrix(1,0,0,1,32.35,72.8891)">
+      <tspan dy="5.496047273571492">2</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M1150.74063451,243.93265754L1162.49374049,250.71240772" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,0,67.4859)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+  </g>
+</svg>

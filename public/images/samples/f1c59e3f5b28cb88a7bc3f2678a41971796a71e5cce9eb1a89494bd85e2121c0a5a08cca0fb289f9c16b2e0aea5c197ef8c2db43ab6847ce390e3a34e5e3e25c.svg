@@ -1,0 +1,13 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="38.099999999999994" version="1.1" width="116.30000000000001" style="overflow:hidden;" viewBox="0 0 136 58">
+  <g transform="translate(-325, -228)">
+    <defs></defs>
+    <circle cx="295" cy="206" r="24" fill="#77ff77" stroke="none" transform="matrix(1,0,0,1,40,40)" style="display:none;"></circle>
+    <text x="295" y="206" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="7.5">Na</tspan>
+    </text>
+    <text x="295" y="206" text-anchor="middle" stroke="none" fill="#000000" style="font:17px Arial;" font-size="17px" transform="matrix(1,0,0,1,66.3,31.9)">
+      <tspan dy="5.5">(0)</tspan>
+    </text>
+  </g>
+</svg>

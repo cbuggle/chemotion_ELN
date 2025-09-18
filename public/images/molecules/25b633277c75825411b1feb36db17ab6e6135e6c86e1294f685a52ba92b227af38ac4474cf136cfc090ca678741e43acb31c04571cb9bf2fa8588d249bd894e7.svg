@@ -1,0 +1,25 @@
+
+<svg version="1.1" id="topsvg" xmlns="http://www.w3.org/2000/svg" x="0" y="0" width="200px" height="200px" viewBox="0 0 100 100" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title> - Open Babel Depiction</title>
+<rect x="0" y="0" width="100" height="100" fill="white"></rect>
+<g transform="translate(0,0)">
+<svg width="100" height="100" x="0" y="0" viewBox="0 0 322.487 140" font-family="sans-serif" stroke="#000000" stroke-width="2" stroke-linecap="round">
+<line x1="51.3" y1="86.5" x2="74.6" y2="100.0" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="74.6" y1="100.0" x2="109.3" y2="80.0" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="109.3" y1="80.0" x2="143.9" y2="100.0" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="143.9" y1="100.0" x2="178.6" y2="80.0" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="180.1" y1="77.4" x2="214.7" y2="97.4" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="177.1" y1="82.6" x2="211.7" y2="102.6" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="213.2" y1="100.0" x2="247.8" y2="80.0" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="247.8" y1="80.0" x2="271.2" y2="93.5" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="244.8" y1="80.0" x2="244.8" y2="53.0" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="250.8" y1="80.0" x2="250.8" y2="53.0" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<text x="14.000000" y="87.999904" fill="#000000" stroke="#000000" stroke-width="1" font-size="16">H</text>
+<text x="26.000000" y="91.679904" fill="#000000" stroke="#000000" stroke-width="1" font-size="13">3</text>
+<text x="32.500000" y="87.999904" fill="#000000" stroke="#000000" stroke-width="1" font-size="16">C</text>
+<text x="278.487418" y="107.999856" fill="#000000" stroke="#000000" stroke-width="1" font-size="16">CH</text>
+<text x="302.487418" y="111.679856" fill="#000000" stroke="#000000" stroke-width="1" font-size="13">3</text>
+<text x="241.847501" y="48.000000" fill="#000000" stroke="#000000" stroke-width="1" font-size="16">O</text>
+</svg>
+</g>
+</svg>

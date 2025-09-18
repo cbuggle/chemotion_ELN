@@ -1,0 +1,31 @@
+
+<svg version="1.1" id="topsvg" xmlns="http://www.w3.org/2000/svg" x="0" y="0" width="200px" height="200px" viewBox="0 0 100 100" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title> - Open Babel Depiction</title>
+<rect x="0" y="0" width="100" height="100" fill="white"></rect>
+<g transform="translate(0,0)">
+<svg width="100" height="100" x="0" y="0" viewBox="0 0 204.697 198.481" font-family="sans-serif" stroke-width="2" stroke-linecap="round">
+<line x1="83.8" y1="82.6" x2="97.8" y2="95.4" opacity="1.0" stroke-width="2.0"></line>
+<line x1="67.7" y1="62.6" x2="61.2" y2="51.3" opacity="1.0" stroke-width="2.0"></line>
+<line x1="62.5" y1="79.4" x2="51.7" y2="84.5" opacity="1.0" stroke-width="2.0"></line>
+<line x1="80.7" y1="62.6" x2="87.3" y2="51.3" opacity="1.0" stroke-width="2.0"></line>
+<line x1="118.8" y1="111.2" x2="128.0" y2="120.5" opacity="1.0" stroke-width="2.0"></line>
+<line x1="114.5" y1="115.5" x2="123.8" y2="124.7" opacity="1.0" stroke-width="2.0"></line>
+<line x1="146.8" y1="138.3" x2="157.0" y2="147.6" opacity="1.0" stroke-width="2.0"></line>
+<line x1="142.7" y1="142.7" x2="153.0" y2="152.0" opacity="1.0" stroke-width="2.0"></line>
+<text x="68.212415" y="81.860516" stroke-width="1" font-size="16">Si</text>
+<text x="101.447333" y="112.162941" stroke-width="1" font-size="16">N</text>
+<text x="28.662464" y="48.000000" stroke-width="1" font-size="16">H</text>
+<text x="40.662464" y="51.680000" stroke-width="1" font-size="13">3</text>
+<text x="47.162464" y="48.000000" stroke-width="1" font-size="16">C</text>
+<text x="14.000000" y="98.126076" stroke-width="1" font-size="16">H</text>
+<text x="26.000000" y="101.806076" stroke-width="1" font-size="13">3</text>
+<text x="32.500000" y="98.126076" stroke-width="1" font-size="16">C</text>
+<text x="89.762367" y="48.000000" stroke-width="1" font-size="16">CH</text>
+<text x="113.762367" y="51.680000" stroke-width="1" font-size="13">3</text>
+<text x="138.994875" y="128.534483" stroke-width="1" font-size="13">+</text>
+<text x="129.094875" y="139.810483" stroke-width="1" font-size="16">N</text>
+<text x="169.497411" y="144.368527" stroke-width="1" font-size="16">_</text>
+<text x="158.697411" y="166.480527" stroke-width="1" font-size="16">N</text>
+</svg>
+</g>
+</svg>

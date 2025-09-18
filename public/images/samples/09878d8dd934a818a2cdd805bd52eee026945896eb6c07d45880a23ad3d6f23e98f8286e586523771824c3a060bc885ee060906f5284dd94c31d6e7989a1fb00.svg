@@ -1,0 +1,19 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="64.64101615137753" version="1.1" width="90.0" style="overflow:hidden;" viewBox="0 0 110 84">
+  <g transform="translate(-602, -219)">
+    <defs></defs>
+    <circle cx="632" cy="224.00000000000003" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="display:none;"></circle>
+    <circle cx="572" cy="189.35898384862247" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="display:none;"></circle>
+    <text x="632" y="224.00000000000003" text-anchor="middle" stroke="none" fill="#000000" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:24px;line-height:normal;font-family:Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8.500000000000028">O</tspan>
+    </text>
+    <text x="592" y="224.00000000000003" text-anchor="middle" stroke="none" fill="#000000" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:24px;line-height:normal;font-family:Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8.500000000000028">Si</tspan>
+    </text>
+    <text x="572" y="189.35898384862247" text-anchor="middle" stroke="none" fill="#000000" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:24px;line-height:normal;font-family:Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8.515233848622472">O</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M605.85625,224L619.45625,224M605.85625,217.33333333L619.45625,217.33333333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M588.37927406,204.39538537L587.16795716,202.29732296M582.60577137,207.72871871L581.39445447,205.63065629" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+  </g>
+</svg>

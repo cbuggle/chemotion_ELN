@@ -1,0 +1,17 @@
+
+<svg version="1.1" id="topsvg" xmlns="http://www.w3.org/2000/svg" x="0" y="0" width="200px" height="200px" viewBox="0 0 100 100" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title> - Open Babel Depiction</title>
+<rect x="0" y="0" width="100" height="100" fill="white"></rect>
+<g transform="translate(0,0)">
+<svg width="100" height="100" x="0" y="0" viewBox="0 0 183.923 99.9999" font-family="sans-serif" stroke="#000000" stroke-width="2" stroke-linecap="round">
+<line x1="85.9" y1="53.5" x2="98.0" y2="46.5" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="61.9" y1="56.1" x2="49.8" y2="49.1" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="64.9" y1="50.9" x2="52.8" y2="43.9" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<line x1="120.5" y1="46.5" x2="132.7" y2="53.5" opacity="1.0" stroke="#000000" stroke-width="2.0"></line>
+<text x="68.639762" y="67.999863" fill="#000000" stroke="#000000" stroke-width="1" font-size="16">N</text>
+<text x="103.283524" y="48.000000" fill="#000000" stroke="#000000" stroke-width="1" font-size="16">O</text>
+<text x="34.000000" y="48.000000" fill="#000000" stroke="#000000" stroke-width="1" font-size="16">O</text>
+<text x="137.923286" y="67.999863" fill="#000000" stroke="#000000" stroke-width="1" font-size="16">Na</text>
+</svg>
+</g>
+</svg>

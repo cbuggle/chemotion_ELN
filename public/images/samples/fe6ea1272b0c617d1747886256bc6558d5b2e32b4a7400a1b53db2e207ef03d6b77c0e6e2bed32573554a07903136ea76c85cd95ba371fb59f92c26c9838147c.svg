@@ -1,0 +1,24 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="99.28203230275508" version="1.1" width="120.0" style="overflow:hidden;" viewBox="0 0 140 119">
+  <g transform="translate(-270, -163)">
+    <defs></defs>
+    <circle cx="300" cy="168" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="display:none;"></circle>
+    <circle cx="240" cy="133.35898384862244" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="display:none;"></circle>
+    <circle cx="240" cy="202.64101615137753" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="display:none;"></circle>
+    <text x="300" y="168" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="7.5">Cl</tspan>
+    </text>
+    <text x="240" y="133.35898384862244" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="7.507421348622444">Cl</tspan>
+    </text>
+    <text x="260" y="168" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="7.5">Fe</tspan>
+    </text>
+    <text x="240" y="202.64101615137753" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="7.492578651377528">Cl</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M277.2,168L285.3,168" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M250.60577137,151.72871871L249.40347556,149.64628129" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M250.60577137,184.27128129L249.40347556,186.35371871" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+  </g>
+</svg>

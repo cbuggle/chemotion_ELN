@@ -1,0 +1,14 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="68.63703305156275" version="1.1" width="70.35276180410074" style="overflow:hidden;" viewBox="0 0 90 88">
+  <g transform="translate(-984, -188)">
+    <defs></defs>
+    <circle cx="964.3527618041009" cy="196.63703305156275" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,40,40)" style="display:none;"></circle>
+    <text x="954" y="158" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8.5">Cl</tspan>
+    </text>
+    <text x="964.3527618041009" y="196.63703305156275" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,40,40)">
+      <tspan dy="8.504220551562753">Cl</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M958.44553504,174.59096264L959.90818922,180.04966236" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,40,40)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+  </g>
+</svg>

@@ -1,0 +1,38 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="103.56104877258741" version="1.1" width="170.04829556637367" style="overflow:hidden;" viewBox="0 0 190 123">
+  <g transform="translate(-674, -270)">
+    <defs></defs>
+    <circle cx="0" cy="-20.000293340862456" r="19.200000000000003" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,774.5922,348.5445)" style="display:none;"></circle>
+    <circle cx="-90.59218750000002" cy="5.455468750000023" r="24" fill="none" stroke="#00cc00" stroke-width="0.96" transform="matrix(1,0,0,1,774.5922,348.5445)" style="display:none;"></circle>
+    <text x="0" y="-40.00058668172491" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,774.5922,348.5445)">
+      <tspan dy="7.507225818275089">N</tspan>
+    </text>
+    <text x="0" y="-40.00058668172491" text-anchor="middle" stroke="none" fill="#000000" style="font:17px Arial;" font-size="17px" transform="matrix(1,0,0,1,788.9234,340.4398)">
+      <tspan dy="5.507225818275089">+</tspan>
+    </text>
+    <text x="34.64050806637377" y="-60.00088002258736" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,774.5922,348.5445)">
+      <tspan dy="7.50693247741264">O</tspan>
+    </text>
+    <text x="34.64050806637377" y="-60.00088002258736" text-anchor="middle" stroke="none" fill="#000000" style="font:17px Arial;" font-size="17px" transform="matrix(1,0,0,1,789.4078,340.4398)">
+      <tspan dy="5.50693247741264">–</tspan>
+    </text>
+    <text x="-34.64050806637377" y="-60.00088002258736" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,774.5922,348.5445)">
+      <tspan dy="7.50693247741264">O</tspan>
+    </text>
+    <text x="-34.64050806637377" y="-60.00088002258736" text-anchor="middle" stroke="none" fill="#000000" style="font:17px Arial;" font-size="17px" transform="matrix(1,0,0,1,789.4078,340.4398)">
+      <tspan dy="5.50693247741264">–</tspan>
+    </text>
+    <text x="0" y="0" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,774.5922,348.5445)">
+      <tspan dy="7.5">O</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M22.11813597,-52.77087304L22.35373903,-52.90690252" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,774.5922,348.5445)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M-11.28688597,-46.51726449L-22.35373903,-52.90690252" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,774.5922,348.5445)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#000000" d="M-3.33333333,-23.284375L-3.33333333,-16.715625M3.33333333,-23.284375L3.33333333,-16.715625" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,774.5922,348.5445)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <text x="-90.59218750000002" y="5.455468750000023" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,774.5922,348.5445)">
+      <tspan dy="7.494531250000023">Ag</tspan>
+    </text>
+    <text x="-90.59218750000002" y="5.455468750000023" text-anchor="middle" stroke="none" fill="#000000" style="font:17px Arial;" font-size="17px" transform="matrix(1,0,0,1,794.9078,340.4398)">
+      <tspan dy="5.494531250000023">+</tspan>
+    </text>
+  </g>
+</svg>

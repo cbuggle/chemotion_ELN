@@ -1,0 +1,20 @@
+
+<svg version="1.1" id="topsvg" xmlns="http://www.w3.org/2000/svg" x="0" y="0" width="200px" height="200px" viewBox="0 0 100 100" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title> - Open Babel Depiction</title>
+<rect x="0" y="0" width="100" height="100" fill="white"></rect>
+<g transform="translate(0,0)">
+<svg width="100" height="100" x="0" y="0" viewBox="0 0 149.281 140.001" font-family="sans-serif" stroke="rgb(0,0,0)" stroke-width="2" stroke-linecap="round">
+<line x1="84.4" y1="50.9" x2="96.5" y2="43.9" stroke="rgb(0,0,0)" stroke-width="2.0"></line>
+<line x1="87.4" y1="56.1" x2="99.5" y2="49.1" stroke="rgb(0,0,0)" stroke-width="2.0"></line>
+<line x1="63.4" y1="53.5" x2="51.3" y2="46.5" stroke="rgb(0,0,0)" stroke-width="2.0"></line>
+<line x1="74.6" y1="73.0" x2="74.6" y2="87.0" stroke="rgb(0,0,0)" stroke-width="2.0"></line>
+<text x="68.641812" y="68.001398" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" stroke-width="1" font-size="16">S</text>
+<text x="103.280638" y="48.000000" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" stroke-width="1" font-size="16">O</text>
+<text x="14.000000" y="48.000000" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" stroke-width="1" font-size="16">H</text>
+<text x="26.000000" y="51.680000" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" stroke-width="1" font-size="13">3</text>
+<text x="32.500000" y="48.000000" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" stroke-width="1" font-size="16">C</text>
+<text x="70.641812" y="108.001208" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" stroke-width="1" font-size="16">CH</text>
+<text x="94.641812" y="111.681208" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" stroke-width="1" font-size="13">3</text>
+</svg>
+</g>
+</svg>

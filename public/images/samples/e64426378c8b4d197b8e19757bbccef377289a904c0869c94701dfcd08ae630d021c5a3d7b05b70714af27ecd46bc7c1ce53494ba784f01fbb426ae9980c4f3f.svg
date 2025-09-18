@@ -1,0 +1,13 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="38.10000000000002" version="1.1" width="115.79999999999995" style="overflow:hidden;" viewBox="0 0 135 58">
+  <g transform="translate(-770, -298)">
+    <defs></defs>
+    <circle cx="40" cy="0" r="24" fill="#77ff77" stroke="none" transform="matrix(1,0,0,1,739.5,316.5)" style="display:none;"></circle>
+    <text x="40" y="0" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,739.5,316.5)">
+      <tspan dy="7.5">Ag</tspan>
+    </text>
+    <text x="40" y="0" text-anchor="middle" stroke="none" fill="#000000" style="font:17px Arial;" font-size="17px" transform="matrix(1,0,0,1,765.3,308.4)">
+      <tspan dy="5.5">(0)</tspan>
+    </text>
+  </g>
+</svg>

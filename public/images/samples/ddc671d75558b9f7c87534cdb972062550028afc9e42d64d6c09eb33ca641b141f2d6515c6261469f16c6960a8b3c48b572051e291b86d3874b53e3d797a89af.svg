@@ -1,0 +1,19 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" height="98.06400000000008" version="1.1" width="131.20799999999997" style="overflow:hidden;" viewBox="0 0 151 118">
+  <g transform="translate(-676, -992)">
+    <defs></defs>
+    <text x="745.488" y="1064.664" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,5.3058,0)">
+      <tspan dy="8.500059570312487">C</tspan>
+    </text>
+    <text x="745.488" y="1064.664" text-anchor="middle" stroke="none" fill="#000000" style="font:24px Arial;" font-size="24px" transform="matrix(1,0,0,1,23.4495,0)">
+      <tspan dy="8.500059570312487">H</tspan>
+    </text>
+    <text x="745.488" y="1064.664" text-anchor="middle" stroke="none" fill="#000000" style="font:17px Arial;" font-size="17px" transform="matrix(1,0,0,1,37.6558,5.4)">
+      <tspan dy="5.500059570312487">3</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M745.488,1024.664L745.488,1047.96394043" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,5.3058,0)" style="stroke-linecap:round;stroke-linejoin:round;"></path>
+    <path fill="none" stroke="#f1807e" d="M680.488,1024.664L810.488,1024.664" stroke-width="16" transform="matrix(1,0,0,1,5.3058,0)"></path>
+    <path fill="none" stroke="#000000" d="M680.956,1015L810.956,1015" stroke-width="10" transform="matrix(1,0,0,1,5.3058,0)"></path>
+    <path fill="none" stroke="#008000" d="M681.696,1002L811.696,1002" stroke-width="13" transform="matrix(1,0,0,1,5.3058,0)"></path>
+  </g>
+</svg>
