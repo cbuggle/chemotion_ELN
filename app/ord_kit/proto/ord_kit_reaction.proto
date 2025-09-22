@@ -227,7 +227,9 @@ message ReactionProcessAction {
       ReactionConditions starter_conditions = 1;
       repeated ReactionConditionLimits limits = 2;
     }
-    message FromFraction { repeated PoolingFraction fraction = 1; }
+    message FromFraction {
+      repeated PoolingFraction fraction = 1;
+    }
 
     Automation.AutomationMode automation_mode = 1;
     oneof origin {
@@ -367,8 +369,7 @@ message ReactionProcessAction {
     oneof type {
       ActionAnalysisSpectroscopy spectroscopy = 1;
       ActionAnalysisSpectrometry spectrometry = 2;
-      ActionPurificationChromatography chromatography =
-          3; // for now identical, ActionAnalysisChr. might diverge soon.
+      ActionPurificationChromatography chromatography = 3; // for now identical, ActionAnalysisChr. might diverge soon.
     }
   }
 
@@ -381,7 +382,7 @@ message ReactionProcessAction {
     Percentage percentage = 6;
   }
 
-  message ActionDiscard { PoolingFraction fraction = 1; }
+  message ActionDiscard {  PoolingFraction fraction = 1;  }
   message ActionDefineFraction { PoolingFraction fraction = 1; }
   message ActionWait { TimeSpan duration = 1; }
 
@@ -570,7 +571,7 @@ message CompoundIdentifier {
 }
 
 /**
- * The VesVesselTemplatesel defines the primary container within which the
+ * The VesselTemplate defines the primary container within which the
  * reaction was performed, including the type of vessel, its primary material,
  * any preparation steps or vessel attachments, and its volume.
  */
