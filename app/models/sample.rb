@@ -279,6 +279,10 @@ class Sample < ApplicationRecord
   belongs_to :creator, foreign_key: :created_by, class_name: 'User'
   belongs_to :molecule, optional: true
 
+  has_one :reaction_process,
+        class_name: 'ReactionProcessEditor::ReactionProcess',
+        inverse_of: :sample, dependent: :destroy
+
   accepts_nested_attributes_for :molecule_name
   accepts_nested_attributes_for :collections_samples
   accepts_nested_attributes_for :molecule, update_only: true

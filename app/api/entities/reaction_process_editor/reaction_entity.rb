@@ -9,6 +9,10 @@ module Entities
 
       private
 
+      def reaction_svg_link
+        object.reaction_svg_file
+      end
+
       def value
         object.id
       end

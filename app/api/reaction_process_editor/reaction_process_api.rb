@@ -74,6 +74,25 @@ module ReactionProcessEditor
           end
         end
 
+        namespace :sample_initial_info do
+          desc 'Update the Initial Sample Info of the ReactionProcess.'
+          params do
+            requires :sample_initial_info, type: Hash, desc: 'Initial Sample Info of the ReactionProcess.'
+          end
+          put do
+            @reaction_process.update permitted_params
+
+            Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
+                reaction_process_id: @reaction_process.id,
+                reaction_process_vessel_params: params[:sample_initial_info][:reaction_process_vessel],
+              )
+
+            # Usecases::ReactionProcessEditor::ReactionProcessVessels::SweepUnused.execute!(
+            #   reaction_process_id: @reaction_process.id,
+            # )
+          end
+        end
+
         namespace :samples_preparations do
           desc 'Create or Update a Sample Preparation'
           params do

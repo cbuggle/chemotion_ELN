@@ -10,9 +10,11 @@ module Entities
             # It's a hodgepodge of samples of different origin merged assigned to certain keys, where the differing
             # materials also have differing attributes to cope with.
 
-            reaction = reaction_process.reaction
+            reaction = reaction_process.reaction || reaction_process.sample_reaction
 
-            samples = reaction.starting_materials + reaction.reactants
+            return [reaction_process.sample] unless reaction
+
+            samples = reaction.starting_materials + reaction.reactants + reaction.products
             solvents = (reaction.solvents + reaction.purification_solvents).uniq
             diverse_solvents = Medium::DiverseSolvent.all
 
