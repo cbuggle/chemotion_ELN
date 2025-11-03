@@ -40,10 +40,10 @@ describe ReactionProcessEditor::ReactionAPI, '.get /reaction_process' do
     end
 
     it 'triggers UseCase ReactionProcess::FindOrCreate' do
-      allow(Usecases::ReactionProcessEditor::ReactionProcesses::FindOrCreate).to receive(:execute!)
+      allow(Usecases::ReactionProcessEditor::ReactionProcesses::FindOrCreateByReaction).to receive(:execute!)
       get_reaction_process_request
 
-      expect(Usecases::ReactionProcessEditor::ReactionProcesses::FindOrCreate).to have_received(:execute!).with(
+      expect(Usecases::ReactionProcessEditor:ByReaction).to have_received(:execute!).with(
         reaction: reaction,
       )
     end
