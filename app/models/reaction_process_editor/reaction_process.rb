@@ -36,7 +36,7 @@ module ReactionProcessEditor
     before_save :set_initial_automation_ordinal
 
     def creator
-      user || sample&.user || reaction&.creator
+      user || sample&.creator || reaction&.creator
     end
 
     def sample_reaction
