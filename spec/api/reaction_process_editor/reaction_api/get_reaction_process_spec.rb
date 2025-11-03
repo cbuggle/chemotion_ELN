@@ -20,11 +20,11 @@ describe ReactionProcessEditor::ReactionAPI, '.get /reaction_process' do
       reaction_default_conditions: { 'reaction_process_id' => reaction_process.id },
       reaction_process_steps: [],
       samples_preparations: [],
-      user_default_conditions: Hash,
+      user_reaction_default_conditions: Hash,
       select_options: Hash }.deep_stringify_keys
   end
 
-  let(:authorization_header) { authorized_header(reaction.creator) }
+  let(:authorization_header) { authorized_header(reaction_process.creator) }
 
   it_behaves_like 'authorization restricted API call'
 
