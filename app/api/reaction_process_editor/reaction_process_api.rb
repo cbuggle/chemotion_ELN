@@ -83,9 +83,9 @@ module ReactionProcessEditor
             @reaction_process.update permitted_params
 
             Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
-                reaction_process_id: @reaction_process.id,
-                reaction_process_vessel_params: params[:sample_initial_info][:reaction_process_vessel],
-              )
+              reaction_process_id: @reaction_process.id,
+              reaction_process_vessel_params: params[:sample_initial_info][:reaction_process_vessel],
+            )
 
             # Usecases::ReactionProcessEditor::ReactionProcessVessels::SweepUnused.execute!(
             #   reaction_process_id: @reaction_process.id,

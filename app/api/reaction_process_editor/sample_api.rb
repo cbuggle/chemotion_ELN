@@ -33,8 +33,10 @@ module ReactionProcessEditor
 
         desc 'Create associated reaction procedure unless existant'
         get :reaction_process do
-          present Usecases::ReactionProcessEditor::ReactionProcesses::FindOrCreateBySample.execute!(sample: @sample,
-                                                                                                    current_user: current_user),
+          present Usecases::ReactionProcessEditor::ReactionProcesses::FindOrCreateBySample.execute!(
+            sample: @sample,
+            current_user: current_user,
+          ),
                   with: Entities::ReactionProcessEditor::SampleProcessEntity,
                   root: :reaction_process
         end
