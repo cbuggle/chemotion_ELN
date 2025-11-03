@@ -509,7 +509,7 @@ class Sample < ApplicationRecord
   def get_svg_path
     if sample_svg_file.present?
       "/images/samples/#{sample_svg_file}"
-    elsif molecule&.molecule_svg_file&.present?
+    elsif molecule&.molecule_svg_file.present?
       "/images/molecules/#{molecule.molecule_svg_file}"
     end
   end

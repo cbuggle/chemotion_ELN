@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 RSpec.describe Usecases::ReactionProcessEditor::ReactionProcesses::FindOrCreateBySample do
-  subject(:usecase) { described_class.execute!(sample: sample) }
+  subject(:usecase) { described_class.execute!(sample: sample, current_user: user) }
 
-  let!(:sample) { create_default(:sample) }
+  let!(:sample) { create_default(:sample, user: user) }
+  let(:user){ create :user}
 
   context 'without ReactionProcess' do
     it 'creates ReactionProcess' do
