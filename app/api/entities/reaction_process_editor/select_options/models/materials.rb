@@ -20,6 +20,7 @@ module Entities
 
             intermediates = reaction.intermediate_samples
             {
+              MOLECULAR_ENTITIES: samples_info_options(samples, 'MOLECULAR_ENTITY'),
               ADDITIVE: samples_info_options(Medium::Additive.all, 'ADDITIVE'),
               DIVERSE_SOLVENT: samples_info_options(diverse_solvents, 'DIVERSE_SOLVENT'),
               INTERMEDIATE: samples_info_options(intermediates, 'SAMPLE'),
@@ -29,6 +30,12 @@ module Entities
                                             'SOLVENT') + samples_info_options(diverse_solvents,
                                                                               'DIVERSE_SOLVENT'),
             }
+          end
+
+          def sample_options_for_user(user:)
+            return [] unless user&.samples
+
+            sample_minimal_options(user.samples, 'SAMPLE')
           end
         end
       end
