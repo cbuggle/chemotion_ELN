@@ -4,7 +4,7 @@ module ReactionProcessEditor
   class ReactionProcessAPI < Grape::API
     helpers StrongParamsHelpers
 
-    rescue_from :all
+   # rescue_from :all
 
     namespace :reaction_processes do
       route_param :id do
@@ -80,7 +80,12 @@ module ReactionProcessEditor
             @reaction_process.update permitted_params
 
             # TODO: The Vessel is nested in the sample_initial_info
-            # When we create an actual ReactionProcessVessel out of it, we need to keep them in sync (changes on this ReactionProcessVessel in the Vessel preparation UI will not reflect in the @reaction_process.sample_initial_info.vessel naturally. This would need to be implemented. Also the ReactionProcessVessel is sweeped away by the SweepUnused usecase whenever ANY ReactionProcessActivity changes, as only Step vessels and Activity Vessels are currently recognised as "in use". )
+            # When we create an actual ReactionProcessVessel out of it, we need to keep them in sync (changes on this
+            # ReactionProcessVessel in the Vessel preparation UI will not reflect in the
+            # @reaction_process.sample_initial_info.vessel naturally. This would need to be implemented. Also the
+            # ReactionProcessVessel is sweeped away by the SweepUnused usecase whenever ANY ReactionProcessActivity
+            # changes, as only Step vessels and Activity Vessels are currently recognised as "in use". )
+            #
             # Need to discuss with NJung then either delete or implement missing.
             # cbuggle, 03.11.2025.
 

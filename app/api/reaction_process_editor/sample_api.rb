@@ -4,7 +4,7 @@ module ReactionProcessEditor
   class SampleAPI < Grape::API
     helpers StrongParamsHelpers
 
-    # rescue_from :all
+    rescue_from :all
 
     namespace :samples do
       get do
