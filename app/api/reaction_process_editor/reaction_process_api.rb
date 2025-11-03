@@ -82,10 +82,15 @@ module ReactionProcessEditor
           put do
             @reaction_process.update permitted_params
 
-            Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
-              reaction_process_id: @reaction_process.id,
-              reaction_process_vessel_params: params[:sample_initial_info][:reaction_process_vessel],
-            )
+            # TODO: The Vessel is nested in the sample_initial_info
+            # When we create an actual ReactionProcessVessel out of it, we need to keep them in sync (changes on this ReactionProcessVessel in the Vessel preparation UI will not reflect in the @reaction_process.sample_initial_info.vessel naturally. This would need to be implemented. Also the ReactionProcessVessel is sweeped away by the SweepUnused usecase whenever ANY ReactionProcessActivity changes, as only Step vessels and Activity Vessels are currently recognised as "in use". )
+            # Need to discuss with NJung then either delete or implement missing.
+            # cbuggle, 03.11.2025.
+
+            # Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
+            #   reaction_process_id: @reaction_process.id,
+            #   reaction_process_vessel_params: params[:sample_initial_info][:reaction_process_vessel],
+            # )
 
             # Usecases::ReactionProcessEditor::ReactionProcessVessels::SweepUnused.execute!(
             #   reaction_process_id: @reaction_process.id,
