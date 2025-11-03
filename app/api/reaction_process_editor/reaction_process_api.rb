@@ -26,15 +26,12 @@ module ReactionProcessEditor
         end
 
         get :ord do
-          reaction = @reaction_process.reaction
-
-          filename = "#{Time.zone.today.iso8601}-Reaction-#{reaction.id}-#{reaction.short_label}.kit-ord.json"
-          header 'Content-Disposition', "attachment; filename*=UTF-8''#{filename}"
+          header 'Content-Disposition', "attachment; filename*=UTF-8''#{@reaction_process.ord_filename}"
           content_type('application/json')
 
-          present OrdKit::Exporter::ReactionExporter.new(reaction).to_ord
+          present OrdKit::Exporter::ReactionProcessExporter.new(@reaction_process).to_ord
         rescue StandardError => e
-          header 'Content-Disposition', "attachment; filename*=UTF-8''OrdExportError-#{filename}"
+          header 'Content-Disposition', "attachment; filename*=UTF-8''OrdExportError-#{@reaction_process.ord_filename}"
           content_type 'text/plain'
           present "#{e.message} #{e.backtrace}"
         end

@@ -70,5 +70,11 @@ module ReactionProcessEditor
     def set_initial_automation_ordinal
       update({ automation_ordinal: 0 }) unless automation_ordinal
     end
+
+    def ord_filename
+        model = reaction || sample
+
+       "#{Time.zone.today.iso8601}-#{model.class}-#{model.id}-#{model.short_label}.kit-ord.json"
+    end
   end
 end
