@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Usecases::ReactionProcessEditor::ReactionProcesses::FindOrCreate do
+RSpec.describe Usecases::ReactionProcessEditor::ReactionProcesses::FindOrCreateByReaction do
   subject(:usecase) { described_class.execute!(reaction: reaction) }
 
   let!(:reaction) { create_default(:valid_reaction) }
