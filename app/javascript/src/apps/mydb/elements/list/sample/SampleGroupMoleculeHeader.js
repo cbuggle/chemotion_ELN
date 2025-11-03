@@ -10,6 +10,8 @@ import ChemrepoLabels from 'src/apps/mydb/elements/labels/ChemrepoLabels';
 import PubchemLabels from 'src/components/pubchem/PubchemLabels';
 import ComputedPropLabel from 'src/apps/mydb/elements/labels/ComputedPropLabel';
 
+import SampleEditorLink from 'src/apps/mydb/elements/details/reactions/reactionProcessEditor/SampleEditorLink';
+
 function MoleculeHeader({ sample, onClick }) {
   const [showPreviews, setShowPreviews] = useState(UIStore.getState().showPreviews);
 
@@ -51,6 +53,7 @@ function MoleculeHeader({ sample, onClick }) {
               )}
               <PubchemLabels element={sample} />
               <ComputedPropLabel cprops={sample.molecule_computed_props} />
+              <SampleEditorLink sample={sample} />
             </div>
           </div>
         )}
