@@ -24,7 +24,7 @@ describe ReactionProcessEditor::ReactionAPI, '.get /reaction_process' do
       select_options: Hash }.deep_stringify_keys
   end
 
-  let(:authorization_header) { authorized_header(reaction_process.creator) }
+  let(:authorization_header) { authorized_header(reaction.creator) }
 
   it_behaves_like 'authorization restricted API call'
 
@@ -43,8 +43,9 @@ describe ReactionProcessEditor::ReactionAPI, '.get /reaction_process' do
       allow(Usecases::ReactionProcessEditor::ReactionProcesses::FindOrCreateByReaction).to receive(:execute!)
       get_reaction_process_request
 
-      expect(Usecases::ReactionProcessEditor:ByReaction).to have_received(:execute!).with(
+      expect(Usecases::ReactionProcessEditor::ReactionProcesses::FindOrCreateByReaction).to have_received(:execute!).with(
         reaction: reaction,
+        current_user: reaction.creator,
       )
     end
   end

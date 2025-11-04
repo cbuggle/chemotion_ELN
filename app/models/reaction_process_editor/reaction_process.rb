@@ -72,9 +72,9 @@ module ReactionProcessEditor
     end
 
     def ord_filename
-        model = reaction || sample
+      model = reaction || sample
 
-       "#{Time.zone.today.iso8601}-#{model.class}-#{model.id}-#{model.short_label}.kit-ord.json"
+      "#{Time.zone.today.iso8601}-#{model.class}-#{model.id}-#{model.short_label}.kit-ord.json"
     end
   end
 end

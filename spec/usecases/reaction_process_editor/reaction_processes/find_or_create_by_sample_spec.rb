@@ -4,36 +4,36 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcesses::FindOrCreateB
   subject(:usecase) { described_class.execute!(sample: sample, current_user: user) }
 
   let!(:sample) { create_default(:sample, creator: user) }
-  let(:user){ create :user}
+  let(:user) { create :user }
 
   context 'without ReactionProcess' do
     it 'creates ReactionProcess' do
-      expect { usecase }.to change(reaction, :reaction_process).from(nil)
+      expect { usecase }.to change(sample, :reaction_process).from(nil)
     end
 
     it 'creates Provenance' do
-      expect { usecase }.to change { reaction.reaction_process&.provenance }.from(nil)
+      expect { usecase }.to change { sample.reaction_process&.provenance }.from(nil)
     end
 
     it 'sets automation_ordinal' do
-      expect { usecase }.to change { reaction.reaction_process&.automation_ordinal }.to(0)
+      expect { usecase }.to change { sample.reaction_process&.automation_ordinal }.to(0)
     end
   end
 
   context 'with ReactionProcess' do
-    let!(:reaction_process) { create_default(:reaction_process, automation_ordinal: 5) }
-    let!(:provenance) { create(:provenance) }
+    let!(:sample_process) { create_default(:sample_process, automation_ordinal: 5) }
+    let!(:provenance) { create(:provenance, reaction_process: sample_process) }
 
     it 'keeps ReactionProcess' do
-      expect { usecase }.not_to change(reaction, :reaction_process).from(reaction_process)
+      expect { usecase }.not_to change(sample, :reaction_process).from(sample_process)
     end
 
     it 'keeps Provenance' do
-      expect { usecase }.not_to change(reaction_process, :provenance).from(provenance)
+      expect { usecase }.not_to change(sample_process, :provenance).from(provenance)
     end
 
     it 'retains automation_ordinal' do
-      expect { usecase }.not_to(change { reaction.reaction_process&.automation_ordinal })
+      expect { usecase }.not_to(change { sample_process&.automation_ordinal })
     end
   end
 end

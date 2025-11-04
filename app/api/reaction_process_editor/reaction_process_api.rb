@@ -4,7 +4,7 @@ module ReactionProcessEditor
   class ReactionProcessAPI < Grape::API
     helpers StrongParamsHelpers
 
-   # rescue_from :all
+    # rescue_from :all
 
     namespace :reaction_processes do
       route_param :id do
@@ -14,7 +14,6 @@ module ReactionProcessEditor
                                                                                  [reaction_process_activities:
                                                                                   [:reaction_process_vessel]] }])
                                                                       .find(params[:id])
-
           error!('404 Not Found', 404) unless @reaction_process&.creator == current_user
         end
 
@@ -122,7 +121,7 @@ module ReactionProcessEditor
             desc 'Delete a Sample preparation'
             delete do
               @sample_preparation = @reaction_process.samples_preparations.find_by(id: params[:sample_preparation_id])
-              error!('401 Unauthorized', 401) unless @reaction_process.reaction.creator == current_user
+              error!('401 Unauthorized', 401) unless @reaction_process.creator == current_user
               error!('404 Not Found', 404) unless @sample_preparation
 
               @sample_preparation.destroy
