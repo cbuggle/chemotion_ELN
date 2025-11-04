@@ -43,10 +43,11 @@ describe ReactionProcessEditor::ReactionAPI, '.get /reaction_process' do
       allow(Usecases::ReactionProcessEditor::ReactionProcesses::FindOrCreateByReaction).to receive(:execute!)
       get_reaction_process_request
 
-      expect(Usecases::ReactionProcessEditor::ReactionProcesses::FindOrCreateByReaction).to have_received(:execute!).with(
-        reaction: reaction,
-        current_user: reaction.creator,
-      )
+      expect(Usecases::ReactionProcessEditor::ReactionProcesses::FindOrCreateByReaction).to have_received(:execute!)
+        .with(
+          reaction: reaction,
+          current_user: reaction.creator,
+        )
     end
   end
 

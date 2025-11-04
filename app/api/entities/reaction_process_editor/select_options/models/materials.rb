@@ -14,6 +14,18 @@ module Entities
 
             return [reaction_process.sample] unless reaction
 
+            samples_options_for_reaction(reaction)
+          end
+
+          def sample_options_for_user(user:)
+            return [] unless user&.samples
+
+            sample_minimal_options(user.samples, 'SAMPLE')
+          end
+
+          private
+
+          def samples_options_for_reaction(reaction)
             samples = reaction.starting_materials + reaction.reactants + reaction.products
             solvents = (reaction.solvents + reaction.purification_solvents).uniq
             diverse_solvents = Medium::DiverseSolvent.all
@@ -30,12 +42,6 @@ module Entities
                                             'SOLVENT') + samples_info_options(diverse_solvents,
                                                                               'DIVERSE_SOLVENT'),
             }
-          end
-
-          def sample_options_for_user(user:)
-            return [] unless user&.samples
-
-            sample_minimal_options(user.samples, 'SAMPLE')
           end
         end
       end
