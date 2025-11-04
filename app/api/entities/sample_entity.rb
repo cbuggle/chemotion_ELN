@@ -2,7 +2,7 @@
 
 module Entities
   class SampleEntity < ApplicationEntity
-    # rubocop:disable Layout/LineLength, Layout/ExtraSpacing
+    # rubocop:disable Layout/ExtraSpacing
     # Level 0 attributes and relations
     with_options(anonymize_below: 0) do
       expose! :can_copy,        unless: :displayed_in_list
@@ -25,6 +25,7 @@ module Entities
       expose! :gas_type
       expose! :gas_phase_data
       expose! :user_labels
+      expose! :editor_link_target
     end
 
     # Level 1 attributes
@@ -77,7 +78,7 @@ module Entities
       expose! :sample_details,          unless: :displayed_in_list
       expose! :reaction_step
     end
-    # rubocop:enable Layout/LineLength, Layout/ExtraSpacing, Metrics/BlockLength
+    # rubocop:enable Layout/ExtraSpacing, Metrics/BlockLength
 
     expose_timestamps
 
@@ -99,7 +100,7 @@ module Entities
       object.new_record? ? 0 : object.children.count.to_i
     end
 
-    def is_restricted # rubocop:disable Naming/PredicateName
+    def is_restricted
       detail_levels[Sample] < 10
     end
 
@@ -153,6 +154,11 @@ module Entities
       intermediate = ReactionsIntermediateSample.find_by(sample_id: object.id)
 
       intermediate&.reaction_process_step&.step_number
+    end
+
+    def editor_link_target
+      # The link to the Reaction Process Editor (external to the ELN).
+      "#{ENV.fetch('REACTION_PROCESS_EDITOR_HOSTNAME')}/samples/#{object.id}?auth=#{object.creator.jti_auth_token}"
     end
   end
 end
