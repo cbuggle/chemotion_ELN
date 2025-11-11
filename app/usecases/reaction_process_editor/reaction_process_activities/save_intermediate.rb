@@ -10,7 +10,9 @@ module Usecases
                                                                          creator: activity.creator,
                                                                          molecule: Molecule.find_or_create_dummy)
 
-          sample.collections << (activity.reaction.collections - sample.collections)
+          parent = activity.reaction_process.reaction || activity.reaction_process.sample
+
+          sample.collections << (parent.collections - sample.collections)
 
           sample.hide_in_eln = workup['hide_in_eln']
 
@@ -38,7 +40,7 @@ module Usecases
           activity.workup['sample_id'] = sample.id
 
           ris = ReactionsIntermediateSample.find_or_create_by(
-            reaction: activity.reaction,
+            reaction: activity.reaction || activity.reaction_process.sample.reactions.first,
             sample: sample,
             reaction_process_activity: activity,
           )

@@ -70,18 +70,18 @@ module ReactionProcessEditor
           end
         end
 
-        namespace :sample_initial_info do
+        namespace :sample_setup do
           desc 'Update the Initial Sample Info of the ReactionProcess.'
           params do
-            requires :sample_initial_info, type: Hash, desc: 'Initial Sample Info of the ReactionProcess.'
+            requires :sample_setup, type: Hash, desc: 'Initial Sample Info of the ReactionProcess.'
           end
           put do
             @reaction_process.update permitted_params
 
-            # TODO: The Vessel is nested in the sample_initial_info
+            # TODO: The Vessel is nested in the sample_setup
             # When we create an actual ReactionProcessVessel out of it, we need to keep them in sync (changes on this
             # ReactionProcessVessel in the Vessel preparation UI will not reflect in the
-            # @reaction_process.sample_initial_info.vessel naturally. This would need to be implemented. Also the
+            # @reaction_process.sample_setup.vessel naturally. This would need to be implemented. Also the
             # ReactionProcessVessel is sweeped away by the SweepUnused usecase whenever ANY ReactionProcessActivity
             # changes, as only Step vessels and Activity Vessels are currently recognised as "in use". )
             #
@@ -90,7 +90,7 @@ module ReactionProcessEditor
 
             # Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
             #   reaction_process_id: @reaction_process.id,
-            #   reaction_process_vessel_params: params[:sample_initial_info][:reaction_process_vessel],
+            #   reaction_process_vessel_params: params[:sample_setup][:reaction_process_vessel],
             # )
 
             # Usecases::ReactionProcessEditor::ReactionProcessVessels::SweepUnused.execute!(
