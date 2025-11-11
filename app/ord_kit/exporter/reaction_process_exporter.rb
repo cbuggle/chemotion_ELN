@@ -14,7 +14,7 @@ module OrdKit
             model.provenance,
           ).to_ord,
           reaction_steps: OrdKit::Exporter::Reactions::ReactionProcessStepsExporter.new(model).to_ord,
-          sample_setup: OrdKit::Exporter::Reactions::SampleSetupExporter.new(model).to_ord
+          sample_setup: OrdKit::Exporter::Reactions::SampleSetupExporter.new(model).to_ord,
         )
       end
 

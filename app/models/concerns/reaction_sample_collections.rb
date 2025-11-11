@@ -8,7 +8,7 @@ module ReactionSampleCollections
 private
 
   def assign_sample_to_collections
-    return unless self.reaction
+    return unless reaction
 
     self.reaction.collections.each do |c|
       CollectionsSample.where(sample: self.sample, collection: c).first_or_create
