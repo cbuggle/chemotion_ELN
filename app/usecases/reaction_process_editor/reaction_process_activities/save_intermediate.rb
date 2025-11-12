@@ -9,7 +9,7 @@ module Usecases
           sample = Sample.find_by(id: workup['sample_id']) || Sample.new(decoupled: true,
                                                                          creator: activity.creator,
                                                                          molecule: Molecule.find_or_create_dummy)
-          sample.collections << (parent(activity).collections - sample.collections)
+          sample.collections << (process_parent(activity).collections - sample.collections)
 
           sample.hide_in_eln = workup['hide_in_eln']
 
@@ -45,9 +45,9 @@ module Usecases
           sample
         end
         # rubocop:enable Metrics/AbcSize
-        #
 
-        def self.parent(activity)
+
+        def self.process_parent(activity)
           activity.reaction_process.reaction || activity.reaction_process.sample
         end
       end
