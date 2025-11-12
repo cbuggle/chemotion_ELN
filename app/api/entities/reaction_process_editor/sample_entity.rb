@@ -12,7 +12,7 @@ module Entities
 
       expose :target_amount
       expose :amounts
-      expose :icon
+      expose :svg_file
 
       expose :intermediate_type
 
@@ -36,7 +36,7 @@ module Entities
         }
       end
 
-      def icon
+      def svg_file
         object.sample_svg_file
       end
     end
