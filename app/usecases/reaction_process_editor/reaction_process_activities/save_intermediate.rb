@@ -46,7 +46,6 @@ module Usecases
         end
         # rubocop:enable Metrics/AbcSize
 
-
         def self.process_parent(activity)
           activity.reaction_process.reaction || activity.reaction_process.sample
         end

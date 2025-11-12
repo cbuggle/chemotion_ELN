@@ -4,16 +4,17 @@
 #
 # Table name: reaction_processes
 #
-#  id                 :uuid             not null, primary key
-#  automation_ordinal :integer
-#  default_conditions :jsonb
-#  deleted_at         :datetime
-#  sample_setup       :jsonb
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  reaction_id        :integer
-#  sample_id          :integer
-#  user_id            :integer
+#  id                         :uuid             not null, primary key
+#  automation_ordinal         :integer
+#  default_conditions         :jsonb
+#  deleted_at                 :datetime
+#  sample_setup               :jsonb
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  reaction_id                :integer
+#  reaction_process_vessel_id :uuid
+#  sample_id                  :integer
+#  user_id                    :integer
 #
 
 module ReactionProcessEditor
@@ -30,6 +31,8 @@ module ReactionProcessEditor
     has_many :samples_preparations, dependent: :destroy
 
     has_many :reaction_process_vessels, dependent: :destroy
+
+    belongs_to :reaction_process_vessel, optional: true # relevant in SampleSetup for sample process (not reaction pr.)
 
     delegate :reaction_svg_file, :short_label, :collections, to: :reaction, allow_nil: true
 

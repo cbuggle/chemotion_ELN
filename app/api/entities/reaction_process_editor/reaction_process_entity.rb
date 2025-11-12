@@ -13,6 +13,8 @@ module Entities
       expose :provenance, using: 'Entities::ReactionProcessEditor::ProvenanceEntity'
       expose :sample, using: 'Entities::ReactionProcessEditor::SampleEntity'
 
+      expose :reaction_process_vessel, using: 'Entities::ReactionProcessEditor::ReactionProcessVesselEntity'
+
       expose :reaction_svg_file
       expose :reaction_default_conditions, :user_reaction_default_conditions
 
