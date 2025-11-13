@@ -1189,7 +1189,8 @@ ActiveRecord::Schema.define(version: 2026_02_20_000002) do
     t.integer "automation_ordinal"
     t.integer "sample_id"
     t.integer "user_id"
-    t.jsonb "sample_initial_info", default: {}
+    t.jsonb "sample_setup", default: {}
+    t.uuid "reaction_process_vessel_id"
   end
 
   create_table "reactions", id: :serial, force: :cascade do |t|
