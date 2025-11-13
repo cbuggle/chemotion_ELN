@@ -9,7 +9,7 @@ module OrdKit
 
           OrdKit::SampleSetup.new(
             vessel_template: Vessels::ReactionProcessVesselableExporter.new(model.reaction_process_vessel).to_ord,
-            sample: Samples::SampleExporter.new(model.sample).to_ord
+            sample: Samples::SampleExporter.new(model.sample).to_ord,
           )
         end
       end

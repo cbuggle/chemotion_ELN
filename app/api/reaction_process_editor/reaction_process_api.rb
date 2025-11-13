@@ -25,9 +25,6 @@ module ReactionProcessEditor
         end
 
         desc 'Update the Initial Sample Info of the ReactionProcess.'
-        # params do
-        #   requires :sample_setup, type: Hash, desc: 'Initial Sample Info of the ReactionProcess.'
-        # end
         put do
           @reaction_process.update(reaction_process_vessel:
             Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
