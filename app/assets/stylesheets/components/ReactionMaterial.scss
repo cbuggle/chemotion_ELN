@@ -139,6 +139,18 @@ $rm-columns: (
   &__reaction-step {
     @include align-header-input(map-get($rm-columns, "reaction-step"));
   }
+  &__label-structure {
+    @include align-header-input(map-get($rm-columns, "label-structure"));
+  }
+  &__intermediate-label {
+    @include align-header-input(map-get($rm-columns, "intermediate-label"));
+  }
+  &__intermediate-type {
+    @include align-header-input(map-get($rm-columns, "intermediate-type"));
+  }
+  &__reaction-step {
+    @include align-header-input(map-get($rm-columns, "reaction-step"));
+  }
   &__gaseous-fields {
     &-input {
       @extend .d-flex;
