@@ -1,4 +1,5 @@
 @mixin align-header-data($width) {
+
   &-header,
   &-data {
     min-width: $width;
@@ -39,6 +40,7 @@
 
 @mixin optional-scheme-column($min-width) {
   @container material-group (width < #{$min-width}) {
+
     &-header,
     &-data {
       display: none !important;
@@ -80,204 +82,244 @@ $rm-columns: (
   "ref": map-get($rm-sizes, "square"),
   "target": map-get($rm-sizes, "square"),
   "dry-solvent": map-get($rm-sizes, "square"),
+  "label-structure": map-get($rm-sizes, "square"),
+  "intermediate-label": calc(#{map-get($rm-sizes, "large-numeral-with-units")} + #{gap(0)}),
+  "intermediate-type": map-get($rm-sizes, "large-numeral-with-units"),
+  "reaction-step": map-get($rm-sizes, "square"),
   "delete": map-get($rm-sizes, "square"),
-  "gaseous-fields":
-    calc(
-      #{3 * map-get($rm-sizes, "square")} + #{map-get(
-          $rm-sizes,
-          "large-numeral-with-units"
-        )} + #{map-get($rm-sizes, "numeral")} + #{gap(4)}
-    ),
-  // ref, target, amount, coefficient, concentration, equivalence + gaps
+  "gaseous-fields": calc(#{3 * map-get($rm-sizes, "square")} + #{map-get(
+ $rm-sizes,
+    "large-numeral-with-units"
+  )
+}
+
++#{map-get($rm-sizes, "numeral")}+#{gap(4)}),
+// ref, target, amount, coefficient, concentration, equivalence + gaps
 );
 
 .reaction-material {
   @include draggable-list-item();
+
   &.pseudo-table__row {
     @extend .ps-0;
   }
+
   &__link {
     @extend .align-middle;
     @extend .d-inline-block;
     @extend .text-truncate;
     @extend .flex-grow-1;
+
     a {
       @extend .link;
     }
   }
+
   &__iupac-name {
     @extend .text-truncate;
   }
+
   &__volume-ratio {
     @include align-header-data(map-get($rm-columns, "ratio"));
   }
+
   &__equivalent {
     @include align-header-data(map-get($rm-columns, "equivalent"));
   }
+
   &__yield {
     @include align-header-data(map-get($rm-columns, "yield"));
   }
+
   &__volume {
     @include align-header-data(map-get($rm-columns, "volume"));
   }
+
   &__mass {
     @include align-header-data(map-get($rm-columns, "mass"));
   }
+
   &__molarity {
     @include align-header-data(map-get($rm-columns, "molarity"));
   }
+
   &__loading {
     @include align-header-data(map-get($rm-columns, "loading"));
   }
+
   &__amount {
     @include align-header-data(map-get($rm-columns, "amount"));
+
     &-data {
       @extend .d-flex;
       @extend .gap-2;
     }
   }
+
   &__molar-mass {
     @include align-header-data(map-get($rm-columns, "molar-mass"));
     @include static-scheme-data;
     @include optional-scheme-column(60rem);
   }
+
   &__density {
     @include align-header-data(map-get($rm-columns, "density"));
     @include static-scheme-data;
     @include optional-scheme-column(64.5rem);
   }
+
   &__purity {
     @include align-header-data(map-get($rm-columns, "purity"));
     @include static-scheme-data;
     @include optional-scheme-column(69rem);
   }
+
   &__solvent-label {
-    @include align-header-data(
-      calc(
-        #{map-get($rm-columns, "amount")} + #{map-get(
-            $rm-columns,
-            "solvent-label"
-          )}
+    @include align-header-data(calc(#{map-get($rm-columns, "amount")} + #{map-get(
+ $rm-columns,
+        "solvent-label"
       )
-    );
-  }
-  &__concentration {
-    @include align-header-data(map-get($rm-columns, "concentration"));
-  }
-  &__solvent-volume {
-    @include align-header-data(map-get($rm-columns, "solvent-volume"));
-  }
-  &__coefficient {
-    @include align-header-data(map-get($rm-columns, "coefficient"));
-  }
-  &__delete {
-    @include align-header-data(map-get($rm-columns, "delete"));
-  }
-  &__ref {
-    @include align-header-data(map-get($rm-columns, "ref"));
-  }
-  &__target {
-    @include align-header-data(map-get($rm-columns, "target"));
-  }
-  &__dry-solvent {
-    @include align-header-data(map-get($rm-columns, "dry-solvent"));
-  }
-  &__gaseous-fields {
-    &-data {
-      @extend .d-flex;
-      @extend .gap-2;
-    }
-    @include align-header-data(
-      calc(
-        #{map-get($rm-columns, "amount")} + #{map-get(
-            $rm-columns,
-            "gaseous-fields"
-          )}
-      )
-    );
+    }));
+}
+
+&__concentration {
+  @include align-header-data(map-get($rm-columns, "concentration"));
+}
+
+&__solvent-volume {
+  @include align-header-data(map-get($rm-columns, "solvent-volume"));
+}
+
+&__coefficient {
+  @include align-header-data(map-get($rm-columns, "coefficient"));
+}
+
+&__delete {
+  @include align-header-data(map-get($rm-columns, "delete"));
+}
+
+&__ref {
+  @include align-header-data(map-get($rm-columns, "ref"));
+}
+
+&__target {
+  @include align-header-data(map-get($rm-columns, "target"));
+}
+
+&__dry-solvent {
+  @include align-header-data(map-get($rm-columns, "dry-solvent"));
+}
+
+&__label-structure {
+  @include align-header-input(map-get($rm-columns, "label-structure"));
+}
+
+&__intermediate-label {
+  @include align-header-input(map-get($rm-columns, "intermediate-label"));
+}
+
+&__intermediate-type {
+  @include align-header-input(map-get($rm-columns, "intermediate-type"));
+}
+
+&__reaction-step {
+  @include align-header-input(map-get($rm-columns, "reaction-step"));
+}
+
+&__gaseous-fields {
+  &-data {
+    @extend .d-flex;
+    @extend .gap-2;
   }
 
-  // Radio button styling for weight percentage feature
-  &__custom-radio .form-check-input:checked {
-    background-color: green;
+  @include align-header-data(calc(#{map-get($rm-columns, "amount")} + #{map-get(
+ $rm-columns,
+      "gaseous-fields"
+    )
+  }));
+}
+
+// Radio button styling for weight percentage feature
+&__custom-radio .form-check-input:checked {
+  background-color: green;
+  border-color: green;
+}
+
+&__nested-radio-container {
+  position: relative;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+}
+
+&__nested-radio-outer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 3px solid #dee2e6;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+
+  &:hover {
+    border-color: #86b7fe;
+  }
+
+  &:focus {
+    border-color: rgb(0, 123, 255);
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(134, 183, 254, 1);
+  }
+
+  &.checked {
     border-color: green;
+    border-width: 6px;
   }
 
-  &__nested-radio-container {
-    position: relative;
-    display: inline-block;
-    width: 22px;
-    height: 22px;
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+&__nested-radio-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid #dee2e6;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  z-index: 2;
+
+  &:hover {
+    border-color: #86b7fe;
   }
 
-  &__nested-radio-outer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    border: 3px solid #dee2e6;
-    background-color: transparent;
-    cursor: pointer;
-    transition: all 0.15s ease-in-out;
-
-    &:hover {
-      border-color: #86b7fe;
-    }
-
-    &:focus {
-      border-color: rgb(0, 123, 255);
-      outline: 0;
-      box-shadow: 0 0 0 0.25rem rgba(134, 183, 254, 1);
-    }
-
-    &.checked {
-      border-color: green;
-      border-width: 6px;
-    }
-
-    &.disabled {
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
+  &:focus {
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(134, 183, 254, 1);
   }
 
-  &__nested-radio-inner {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 2px solid #dee2e6;
-    background-color: white;
-    cursor: pointer;
-    transition: all 0.15s ease-in-out;
-    z-index: 2;
-
-    &:hover {
-      border-color: #86b7fe;
-    }
-
-    &:focus {
-      border-color: #86b7fe;
-      outline: 0;
-      box-shadow: 0 0 0 0.25rem rgba(134, 183, 254, 1);
-    }
-
-    &.checked {
-      background-color: #0d6efd;
-      border-color: #0d6efd;
-      border: 1px solid white;
-    }
-
-    &.disabled {
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
+  &.checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    border: 1px solid white;
   }
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
 }
 
 @container material-group (width < 49.25rem) {
@@ -286,32 +328,30 @@ $rm-columns: (
       flex-direction: column; // not extending bootstrap utilities in this context to avoid side effects
       padding-bottom: 0.5rem; // not extending bootstrap utilities in this context to avoid side effects
     }
+
     &__amount {
       @include align-header-data(map-get($rm-sizes, "numeral-with-units"));
     }
+
     &__solvent-label {
-      @include align-header-data(
-        calc(
-          #{map-get($rm-sizes, "numeral-with-units")} + #{map-get(
-              $rm-columns,
-              "solvent-label"
-            )}
+      @include align-header-data(calc(#{map-get($rm-sizes, "numeral-with-units")} + #{map-get(
+ $rm-columns,
+          "solvent-label"
         )
-      ); // amount, coefficient + gap
-    }
-    &__gaseous-fields {
-      @include align-header-data(
-        calc(
-          #{map-get($rm-sizes, "numeral-with-units")} + #{map-get(
-              $rm-columns,
-              "gaseous-fields"
-            )}
-        )
-      );
-      // ref, target, amount, coefficient, concentration, equivalence + gaps
-      &-data .reaction-material__ref-data {
-        display: none;
-      }
-    }
+      })); // amount, coefficient + gap
   }
+
+  &__gaseous-fields {
+    @include align-header-data(calc(#{map-get($rm-sizes, "numeral-with-units")} + #{map-get(
+ $rm-columns,
+        "gaseous-fields"
+      )
+    }));
+
+  // ref, target, amount, coefficient, concentration, equivalence + gaps
+  &-data .reaction-material__ref-data {
+    display: none;
+  }
+}
+}
 }
