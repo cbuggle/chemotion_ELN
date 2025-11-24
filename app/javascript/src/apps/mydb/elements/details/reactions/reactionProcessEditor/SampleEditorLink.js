@@ -6,9 +6,9 @@ const SampleEditorLink = ({ sample }) => {
 		<>
 			<OverlayTrigger
 				placement="bottom"
-				overlay={<Tooltip id="editReaction">Edit Sample</Tooltip>}
+				overlay={<Tooltip id="editSampleProcess">Edit Sample Process</Tooltip>}
 			>
-				<a href={sample.editor_link_target} target="_blank" className="btn btn-xxsm btn-success button-right">
+				<a href={sample.editor_link_target} target="_blank" className="btn btn-xxsm btn-light button-right">
 					<i className="fa fa-edit" />
 				</a>
 			</OverlayTrigger>

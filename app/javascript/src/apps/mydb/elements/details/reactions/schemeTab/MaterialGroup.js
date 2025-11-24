@@ -334,8 +334,6 @@ function GeneralMaterialGroup({
                 {"Intermediates"}
               </div>
             </div>
-            <div className="reaction-material__target-header">L/S</div>
-            <div className="reaction-material__intermediate-label-header">Ext.Label</div>
             <div className="reaction-material__reaction-step-header">Step</div>
 
             <div className="reaction-material__intermediate-type-header">Type</div>

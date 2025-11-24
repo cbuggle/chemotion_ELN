@@ -205,20 +205,6 @@ class Material extends Component {
     );
   }
 
-  materialShowLabel(material) {
-    return (
-      <Button
-        className="reaction-material__label-structure-input"
-        onClick={e => this.handleShowLabelChange(e)}
-        variant={material.show_label ? 'primary' : 'light'}
-        size="sm"
-        title={material.show_label ? 'Switch to structure' : 'Switch to label'}
-      >
-        {material.show_label ? 'L' : 'S'}
-      </Button>
-    );
-  }
-
   // eslint-disable-next-line class-methods-use-this
   recalculateYieldForGasProduct(material, reaction) {
     const vesselVolume = GasPhaseReactionStore.getState().reactionVesselSizeValue;
@@ -932,10 +918,6 @@ class Material extends Component {
         {this.dragHandle()}
         {this.materialNameWithIupac(material)}
         <div className="d-flex gap-2 py-1 align-items-start">
-          {this.materialShowLabel(material)}
-          <div className="reaction-material__intermediate-label-input">
-            {material.external_label}
-          </div>
           <div className="reaction-material__reaction-step-input">
             {this.materialStep(material)}
           </div>
