@@ -37,7 +37,7 @@ module Entities
 
         reaction_process_steps.map do |process_step|
           process_step.reaction_process_activities.select do |activity|
-            activity.transfer?(sample_id: object.sample_id )
+            activity.transfer?(sample_id: object.sample_id)
           end
         end.flatten
       end

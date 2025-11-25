@@ -56,7 +56,7 @@ module ReactionProcessEditor
 
     def transfer?(sample_id: nil)
       %w[TRANSFER].include?(activity_name) &&
-      (sample_id.nil? || workup['sample_id'] == sample_id)
+        (sample_id.nil? || workup['sample_id'] == sample_id)
     end
 
     def condition?
