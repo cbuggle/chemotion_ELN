@@ -319,6 +319,27 @@ $rm-columns: (
     cursor: not-allowed;
     opacity: 0.6;
   }
+
+  &__intermediate-type {
+    @include align-header-input(map-get($rm-columns, "intermediate-type"));
+  }
+  &__reaction-step {
+    @include align-header-input(map-get($rm-columns, "reaction-step"));
+  }
+  &__gaseous-fields {
+    &-data {
+      @extend .d-flex;
+      @extend .gap-2;
+    }
+    @include align-header-data(
+      calc(
+        #{map-get($rm-columns, "amount")} + #{map-get(
+            $rm-columns,
+            "gaseous-fields"
+          )}
+      )
+    );
+  }
 }
 }
 
