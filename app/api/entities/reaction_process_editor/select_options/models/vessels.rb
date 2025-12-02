@@ -15,8 +15,8 @@ module Entities
           end
 
           def cleanup_types
-            titlecase_options_for ['WASTE', 'REMOVE', 'STORAGE']
             # Subset of OrdKit::VesselCleanup::VesselCleanupType.constants
+            titlecase_options_for ['WASTE', 'REMOVE', 'STORAGE']
           end
         end
       end

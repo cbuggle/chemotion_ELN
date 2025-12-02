@@ -37,7 +37,7 @@ module Entities
       end
 
       def label
-        is_vessel_template ?  object.name : object.short_label
+        is_vessel_template ? object.name : object.short_label
       end
 
       def vesselable_type
