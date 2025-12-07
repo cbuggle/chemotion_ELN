@@ -1,5 +1,5 @@
 Ontology ID;Ontology Name;Custom Label;Link;Roles
-OBI:0000070;assay;assay;http://purl.obolibrary.org/obo/OBI_0000070;"=action;"
+OBI:0000070;assay;Assay/Analysis;http://purl.obolibrary.org/obo/OBI_0000070;"=action;"
 CHMO:0000228;spectroscopy;spectroscopy;http://purl.obolibrary.org/obo/CHMO_0000228;"=class,OBI:0000070(action);"
 CHMO:0000591;nuclear magnetic resonance spectroscopy;NMR;http://purl.obolibrary.org/obo/CHMO_0000591;"=type,CHMO:0000228(class);"
 CHMO:0000594;11B nuclear magnetic resonance spectroscopy;11B-NMR;http://purl.obolibrary.org/obo/CHMO_0000594;"=subtype,CHMO:0000591(type);"
@@ -7,18 +7,20 @@ CHMO:0000595;13C nuclear magnetic resonance spectroscopy;13C-NMR;http://purl.obo
 CHMO:0000567;15N nuclear magnetic resonance spectroscopy;15N-NMR;http://purl.obolibrary.org/obo/CHMO_0000567;"=subtype,CHMO:0000591(type);"
 CHMO:0000597;19F nuclear magnetic resonance spectroscopy;19F-NMR;http://purl.obolibrary.org/obo/CHMO_0000597;"=subtype,CHMO:0000591(type);"
 CHMO:0000593;1H nuclear magnetic resonance spectroscopy;1H-NMR;http://purl.obolibrary.org/obo/CHMO_0000593;"=subtype,CHMO:0000591(type);"
-CHMO:0002231;purification;Purification;http://purl.obolibrary.org/obo/CHMO_0002231;"=action;"
+CHMO:0002231;purification;Purification/Separation;http://purl.obolibrary.org/obo/CHMO_0002231;"=action;"
 OBI:0302886;centrifugation;Centrifugation;http://purl.obolibrary.org/obo/OBI_0302886;"=class,CHMO:0002231(action);"
 CHMO:0001577;extraction;Extraction;http://purl.obolibrary.org/obo/CHMO_0001577;"=class,CHMO:0002231(action);"
 CHMO:0001477;crystallisation;Crystallisation;http://purl.obolibrary.org/obo/CHMO_0001477;"=class,CHMO:0002231(action);"
 CHMO:0001640;filtration;Filtration;http://purl.obolibrary.org/obo/CHMO_0001640;"=class,CHMO:0002231(action);"
 OBI:0000274;adding a material entity into a target;Add;http://purl.obolibrary.org/obo/OBI_0000274;"=class,CPOKIT:0000006(action);"
 OBI:0000383;transfer function;Transfer;http://purl.obolibrary.org/obo/OBI_0000383;"=class,CPOKIT:0000006(action);"
-OBI:0000073;sample preparation for assay;Analyt. Sample Prep.;http://purl.obolibrary.org/obo/OBI_0000073;"=type,OBI:0000274(class);=type,OBI:0000383(class);"
-OBI:0400112;liquid handler;Liquid;http://purl.obolibrary.org/obo/OBI_0400112;"=type,OBI:0000274(class);=type,OBI:0000383(class);"
-OBI:0002488;pipette;Pipette;http://purl.obolibrary.org/obo/OBI_0002488;"=subtype,OBI:0400112(type)|NCIT:C172484(mode)|NCIT:C70669(mode);"
-OBI:0005246;inject function;Canula / Injection;http://purl.obolibrary.org/obo/OBI_0005246;"=subtype,OBI:0400112(type)|NCIT:C172484(mode)|NCIT:C70669(mode);"
-OBI:0002785;aspiration specimen collection;Aspiration;http://purl.obolibrary.org/obo/OBI_0002785;"=subtype,CPOKIT:0000007(type)|NCIT:C172484(mode)|NCIT:C70669(mode);"
+PATO:0001735;liquid configuration;Liquid;http://purl.obolibrary.org/obo/PATO_0001735;"=type,OBI:0000274(class);=type,OBI:0000383(class);"
+PATO:0001737;gaseus configuration;Gas;http://purl.obolibrary.org/obo/PATO_0001737;"=type,OBI:0000274(class);=type,OBI:0000383(class);"
+PATO:0001736;solid configuration;Solid;http://purl.obolibrary.org/obo/PATO_0001736;"=type,OBI:0000274(class);=type,OBI:0000383(class);"
+OBI:0002488;pipette;Pipette;http://purl.obolibrary.org/obo/OBI_0002488;"=subtype,PATO:0001735(type)|NCIT:C172484(mode)|NCIT:C70669(mode);"
+OBI:0005246;inject function;Canula / Injection;http://purl.obolibrary.org/obo/OBI_0005246;"=subtype,PATO:0001735(type)|NCIT:C172484(mode)|NCIT:C70669(mode);=subtype,PATO:0001737(type)|NCIT:C172484(mode)|NCIT:C70669(mode);"
+PATO:0000998;viscous;Visocus;http://purl.obolibrary.org/obo/PATO_0000998;"=type,OBI:0000274(class)|NCIT:C172484(mode)|NCIT:C70669(mode);=type,OBI:0000383(class)|NCIT:C172484(mode)|NCIT:C70669(mode);"
+OBI:0002785;aspiration specimen collection;Aspiration;http://purl.obolibrary.org/obo/OBI_0002785;"=subtype,PATO:0001736(type)|NCIT:C172484(mode)|NCIT:C70669(mode);"
 CHMO:0001000;chromatography;Chromatography;http://purl.obolibrary.org/obo/CHMO_0001000;"=class,CHMO:0002231(action); =class,OBI:0000070(action);"
 CHMO:0001002;gas chromatography;GC;http://purl.obolibrary.org/obo/CHMO_0001002;"=type,CHMO:0001000(class);"
 CHMO:0001004;liquid chromatography;LC;http://purl.obolibrary.org/obo/CHMO_0001004;"=type,CHMO:0001000(class);"
@@ -1681,6 +1683,7 @@ CHMO:0002924;graphitized carbon liquid chromatography;;http://purl.obolibrary.or
 CHMO:0002925;Fourier transform mass spectrometry;;http://purl.obolibrary.org/obo/CHMO_0002925;
 CHMO:0002926;Orbitrap mass spectrometry;;http://purl.obolibrary.org/obo/CHMO_0002926;
 CHMO:0002928;temperature-programmed surface reaction spectroscopy;;http://purl.obolibrary.org/obo/CHMO_0002928;
+OBI:0000073;sample preparation for assay;;http://purl.obolibrary.org/obo/OBI_0000073;
 OBI:0000094;material processing;;http://purl.obolibrary.org/obo/OBI_0000094;
 OBI:0000453;measure function;;http://purl.obolibrary.org/obo/OBI_0000453;
 OBI:0000652;material combination;;http://purl.obolibrary.org/obo/OBI_0000652;
