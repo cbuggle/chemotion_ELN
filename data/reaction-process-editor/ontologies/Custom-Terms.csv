@@ -3,6 +3,7 @@ CPOKIT:0000004;gas chromatography-helium discharge ionisation detection;GC-BID;;
 CPOKIT:0000005;supercritical-fluid chromatography-tandem mass spectrometry;HPLC-SFC/MS;;"=subtype,CHMO:0001004(type)|NCIT:C70669(mode)|NCIT:C70669(mode);";;;;;;;;;;;;;;;;;;;;;;;;
 CPOKIT:0000006;Dosing;Dosing;;"=action;";;;;;;;;;;;;;;;;;;;;;;;;
 CPOKIT:0000007;solid transfer by pouring/tipping;Solids pouring;;"=subtype,PATO:0001736(type)|NCIT:C70669(mode)|NCIT:C70669(mode);";;;;;;;;;;;;;;;;;;;;;;;;
+CPOKIT:0000008;Exchange/Remove;Exchange/Remove;;"=action;";;;;;;;;;;;;;;;;;;;;;;;;
 CHEBI:15347;acetone;Acetone;http://purl.obolibrary.org/obo/CHEBI_15347;"=solvent; =mobile phase, CHMO:0001004(type);";;;;;;;;;;;;;;;;;;;;;;;;
 CHEBI:15377;water;H2O;http://purl.obolibrary.org/obo/CHEBI_15377;"=solvent; =mobile phase, CHMO:0001004(type);";;;;;;;;;;;;;;;;;;;;;;;;
 CHEBI:156265;Deuterated methanol;CD3OD;http://purl.obolibrary.org/obo/CHEBI_156265;"=solvent;";;;;;;;;;;;;;;;;;;;;;;;;

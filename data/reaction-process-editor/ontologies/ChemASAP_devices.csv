@@ -10,9 +10,9 @@ ChemASAP:0000008;;Solid Dosing;;"=device,OBI:0002785(subtype);=device,PATO:00001
 ChemASAP:0000009;;Sovlent Dosing;;"=device,OBI:0005246(subtype);=device,PATO:0000146(class);=device,AFP:0000254(type);=device,AFP:0003802(class);";;"CHEBI:28262; CHEBI:17790; CHEBI:17824; CHEBI:16236; CHEBI:15347; CHEBI:15377; CHEBI:38472; CHEBI:35255;";;;;;;;;;;;;;;;;;;;
 ChemASAP:0000010;;Abs. Solvent Dosing;;"=device,OBI:0005246(subtype);=device,PATO:0000146(class);=device,AFP:0000254(type);=device,AFP:0003802(class);";;"CHEBI:27750; CHEBI:29005; CHEBI:26911; CHEBI:17741; CHEBI:15767;";;;;;;;;;;;;;;;;;;;
 ChemASAP:0000011;;Liquid Dosing;;"=device,OBI:0002488(subtype);=device,PATO:0000146(class);=device,OBI:0005246(subtype);=device,AFP:0000254(type);=device,AFP:0003802(class);=device,PATO:0001693(type);";;;;;;;;;;;;;;;;;;;;;
-ChemASAP:0000012;;Gas Injection;;"=device,OBI:0005246(subtype);";;"CHEBI:16526; CHEBI:17997; CHEBI:18276; CHEBI:33681;";;;;;;;;;;;;;;;;;;;
-ChemASAP:0000013;high performance liquid chromatography-tandem mass spectrometry;Prep_LC-MS;;"=device,CHMO:0002876(subtype);";"CHMO:0001728;CHMO:0002866;CHMO:0002585";"CHEBI:15377; CHEBI:38472; CHEBI:17790; CHEBI:26911;";"Interchim, US5C18HQ-250/212, C18 5um 250x21.2mm; Interchim, US10C18HQ-250/500, C18 10um 250x50mm; VDS Optilab, VDSpher, 5 um C18-E 100, 250x20mm;";;;;;;;;;;;;;;;;;;
-ChemASAP:0000014;supercritical-fluid chromatography-tandem mass spectrometry;Prep_LC-SFC-MS;;"=device,CPOKIT:0000005(subtype);";"CHMO:0001728;CHMO:0002866;CHMO:0002585";"CHEBI:16526; CHEBI:17790; CHEBI:15377; ";"VDS, VDSpher 100 Diol, OH 10um 250x20mm; VDS, VDSpher 100 Diol, OH 10um 250x50mm;";;;;;;;;;;;;;;;;;;
-ChemASAP:0000015;;Inertization;;;;"CHEBI:49474;";;;;;;;;;;;;;;;;;;;
+ChemASAP:0000012;;Gas Injection;;"=device,NCIT:C171981(class);";;"CHEBI:16526; CHEBI:17997; CHEBI:18276; CHEBI:33681;";;;;;;;;;;;;;;;;;;;
+ChemASAP:0000013;high performance liquid chromatography-tandem mass spectrometry;Prep_LC-MS;;"=device,CHMO:0002876(subtype);=device,CHMO:0001009(subtype);";"CHMO:0001728;CHMO:0002866;CHMO:0002585";"CHEBI:15377; CHEBI:38472; CHEBI:17790; CHEBI:26911;";"Interchim, US5C18HQ-250/212, C18 5um 250x21.2mm; Interchim, US10C18HQ-250/500, C18 10um 250x50mm; VDS Optilab, VDSpher, 5 um C18-E 100, 250x20mm;";;;;;;;;;;;;;;;;;;
+ChemASAP:0000014;supercritical-fluid chromatography-tandem mass spectrometry;Prep_LC-SFC-MS;;"=device,CPOKIT:0000005(subtype);=device,CHMO:0001003(subtype);";"CHMO:0001728;CHMO:0002866;CHMO:0002585";"CHEBI:16526; CHEBI:17790; CHEBI:15377; ";"VDS, VDSpher 100 Diol, OH 10um 250x20mm; VDS, VDSpher 100 Diol, OH 10um 250x50mm;";;;;;;;;;;;;;;;;;;
+ChemASAP:0000015;;Inertization;;"=device,NCIT:C171981(class);";;"CHEBI:49474;";;;;;;;;;;;;;;;;;;;
 ChemASAP:0000016;;Labeling;;;;;;;;;;;;;;;;;;;;;;;
-ChemASAP:0000017;;Evaporation;;;;;;;;;;;;;;;;;;;;;;;
+ChemASAP:0000017;;Evaporation;;"=device,CHMO:0001574(class);";;;;;;;;;;;;;;;;;;;;;
