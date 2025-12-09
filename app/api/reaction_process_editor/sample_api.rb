@@ -9,12 +9,10 @@ module ReactionProcessEditor
 
     namespace :samples do
       get do
-
         collection_ids = [params[:collection_id]] if params[:collection_id]
         collection_ids ||= Collection.belongs_to_or_shared_by(current_user.id, current_user.group_ids).map(&:id)
         samples = Sample.joins(:collections_samples)
-                          .where(collections_samples: { collection_id: collection_ids }).uniq
-
+                        .where(collections_samples: { collection_id: collection_ids }).uniq
 
         present samples, with: Entities::ReactionProcessEditor::SampleEntity, root: :samples
       end
