@@ -4,7 +4,7 @@ module Entities
   module ReactionProcessEditor
     module SelectOptions
       module Forms
-       module Purification
+        module Purification
           class Crystallization < Base
             def select_options
               {
