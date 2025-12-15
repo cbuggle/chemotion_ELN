@@ -43,6 +43,7 @@ module Import
           material_type: csv['Material'],
           volume_amount: amount,
           volume_unit: unit,
+          automation_modes: csv['Mode'].split(MODE_SEPARATOR)
         )
 
         if csv['Vessel/Template'] == 'Vessel'
@@ -54,8 +55,8 @@ module Import
         end
       rescue StandardError => e
         Rails.logger.error("Failed to import Vessel with short_label: #{short_label}: \n #{e.inspect}")
-        Rails.logger.error(vessel.errors.full_messages)
-        Rails.logger.error(vessel_template.errors.full_messages)
+        Rails.logger.error(vessel && vessel.errors.full_messages)
+        Rails.logger.error(vessel_template && vessel_template.errors.full_messages)
       end
 
       def ontology_files
