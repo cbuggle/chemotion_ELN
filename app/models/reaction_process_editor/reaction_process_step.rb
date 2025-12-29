@@ -74,11 +74,13 @@ module ReactionProcessEditor
       case material_type
       when 'ADDITIVE'
         Medium::Additive.find added_material_ids(material_type)
-      when 'DIVERSE_SOLVENT'
+      when 'DIVERSE_SOLVENT', 'SOLVENT'
         Medium::DiverseSolvent.find added_material_ids(material_type)
       when 'MEDIUM'
         Medium::Medium.find added_material_ids(material_type)
-      when 'SOLVENT'
+      when 'MODIFIER'
+        Medium::Modifier.find added_material_ids(material_type)
+      when 'SAMPLE'
         Sample.find added_material_ids(material_type)
       else
         Medium::Medium.find added_material_ids(material_type)
@@ -87,7 +89,7 @@ module ReactionProcessEditor
     end
 
     def added_material_ids(material_type)
-      activities_adding_sample_acting_as(material_type).map { |activity| activity.workup['sample_id'] }
+      activities_adding_compound_acting_as(material_type).map { |activity| activity.workup['sample_id'] }
     end
 
     def saved_sample_ids
@@ -108,12 +110,14 @@ module ReactionProcessEditor
 
     private
 
-    def activities_adding_sample_acting_as(material_type)
-      reaction_process_activities
-        .select(&:adds_compound?)
-        .select do |activity|
+    def activities_adding_compound_acting_as(material_type)
+      activities_adding_compounds.select do |activity|
         activity.workup['acts_as'] == material_type
       end
+    end
+
+    def activities_adding_compounds
+      @activities_adding_compounds ||= reaction_process_activities.select(&:adds_compound?)
     end
 
     def calculate_activity_post_conditions
