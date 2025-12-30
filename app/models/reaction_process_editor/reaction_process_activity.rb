@@ -105,7 +105,7 @@ module ReactionProcessEditor
 
     def carries_medium?
       carries_compound? &&
-        %w[ADDITIVE MEDIUM DIVERSE_SOLVENT SOLVENT MODIFIER].include?(workup['acts_as'])
+        %w[ADDITIVE MEDIUM DIVERSE_SOLVENT MODIFIER].include?(workup['acts_as'])
     end
 
     private

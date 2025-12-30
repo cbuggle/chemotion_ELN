@@ -53,15 +53,16 @@ module ReactionProcessEditor
     end
 
     def actual_automation_status
-      # actual_automation_status mostly determined by external conditions
-      # can be set to "STEP_MANUAL_PROCEED" / "STEP_HALT_BY_PRECEDING" as fallback if no other condition fullfilled.
+      # actual_automation_status is mostly determined by external conditions
+      # It can manually be set to "STEP_MANUAL_PROCEED" / "STEP_HALT_BY_PRECEDING", which serves as fallback if no other condition already fullfilled.
+      # (Maybe rename automation_status to manual_automation_status)
       return 'STEP_COMPLETED' if reaction_process_activities.all?(&:automation_completed?)
       return 'STEP_CAN_RUN' if predecessors.none?(&:halts_automation?)
 
       automation_status.presence || 'STEP_HALT_BY_PRECEDING'
     end
 
-    # We assemble an Array of activity_preconditions which the ReactionActionEntity then indexes by its position.
+    # We precalculate the Array of activity preconditions which the ReactionActionEntity then indexes by its position.
     def activity_preconditions
       @activity_preconditions ||= [reaction_process.initial_conditions] + calculate_activity_post_conditions
     end
@@ -74,13 +75,13 @@ module ReactionProcessEditor
       case material_type
       when 'ADDITIVE'
         Medium::Additive.find added_material_ids(material_type)
-      when 'DIVERSE_SOLVENT', 'SOLVENT'
+      when 'DIVERSE_SOLVENT'
         Medium::DiverseSolvent.find added_material_ids(material_type)
       when 'MEDIUM'
         Medium::Medium.find added_material_ids(material_type)
       when 'MODIFIER'
         Medium::Modifier.find added_material_ids(material_type)
-      when 'SAMPLE'
+      when 'SAMPLE', 'SOLVENT'
         Sample.find added_material_ids(material_type)
       else
         Medium::Medium.find added_material_ids(material_type)
