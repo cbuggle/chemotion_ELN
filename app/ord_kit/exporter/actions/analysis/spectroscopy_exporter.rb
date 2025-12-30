@@ -4,17 +4,17 @@ module OrdKit
   module Exporter
     module Actions
       module Analysis
-        class SpectroscopyExporter < Purification::Base
-          def to_ord
-            { spectroscopy:
+        class SpectroscopyExporter < Actions::Base
+          private
+
+          def action_type_attributes
+            { analysis_spectroscopy:
             ReactionProcessAction::ActionAnalysisSpectroscopy.new({
-                                                                    device: workup['device'],
+
                                                                     molecular_entities: molecular_entities,
                                                                     sample: sample,
                                                                   }) }
           end
-
-          private
 
           def sample
             OrdKit::Exporter::Compounds::SaveCompoundExporter.new(@action).to_ord if @action.sample
