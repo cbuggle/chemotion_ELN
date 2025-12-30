@@ -8,11 +8,10 @@ module OrdKit
           private
 
           def action_type_attributes
-            { analysis_elemental: ReactionProcessAction::ActionAnalysisElemental.new({
-                                                                                       device: workup['device'],
-                                                                                       molecular_entities: molecular_entities,
-                                                                                       sample: sample,
-                                                                                     }) }
+            { analysis_elemental:
+            ReactionProcessAction::ActionAnalysisElemental.new({ device: workup['device'],
+                                                                 molecular_entities: molecular_entities,
+                                                                 sample: sample }) }
           end
 
           def sample

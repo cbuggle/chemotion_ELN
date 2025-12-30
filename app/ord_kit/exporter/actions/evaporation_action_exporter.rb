@@ -12,6 +12,7 @@ module OrdKit
           }
         end
 
+        # rubocop:disable Metrics/CyclomaticComplexity
         def evaporation_fields_per_origin
           case workup['origin_type']
           when 'FROM_REACTION'
@@ -32,6 +33,7 @@ module OrdKit
             {}
           end
         end
+        # rubocop:enable Metrics/CyclomaticComplexity
 
         def from_reaction_fields
           OrdKit::ReactionProcessAction::ActionEvaporation::FromReaction.new(
