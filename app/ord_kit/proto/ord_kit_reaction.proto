@@ -378,19 +378,11 @@ message ReactionProcessAction {
   }
 
   message ActionAnalysisElemental {
-    string device = 2;
     repeated Compound molecular_entities = 3;
     Compound sample = 4;
   }
 
   message ActionAnalysisSpectroscopy {
-    string device = 2;
-    repeated Compound molecular_entities = 3;
-    Compound sample = 4;
-  }
-
-  message ActionAnalysisSpectrometry {
-    string device = 2;
     repeated Compound molecular_entities = 3;
     Compound sample = 4;
   }
