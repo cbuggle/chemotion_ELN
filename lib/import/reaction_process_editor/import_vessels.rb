@@ -7,14 +7,14 @@ module Import
       FILES = 'vessels/*.csv'
 
       # CSV file constants as discussed and defined with PHodapp, NJung, cbuggle.
-      VESSEL_TEMPLATE_KEY = "Vessel/Template"
-      SHORT_LABEL_KEY = "ID (short-label)"
-      NAME_KEY = "Short-Description (Name)"
-      VESSEL_TYPE_KEY = "Type"
-      DESCRIPTION_KEY = "Description (Details)"
-      MATERIAL_KEY="Material"
-      VOLUME_KEY="Vol."
-      MODE_KEY="Mode"
+      VESSEL_TEMPLATE_KEY = 'Vessel/Template'
+      SHORT_LABEL_KEY = 'ID (short-label)'
+      NAME_KEY = 'Short-Description (Name)'
+      VESSEL_TYPE_KEY = 'Type'
+      DESCRIPTION_KEY = 'Description (Details)'
+      MATERIAL_KEY = 'Material'
+      VOLUME_KEY = 'Vol.'
+      MODE_KEY = 'Mode'
       MODE_SEPARATOR = ';'
 
       def execute
@@ -32,11 +32,7 @@ module Import
 
       private
 
-      # def set_all_inactive
-      #   ::ReactionProcessEditor::Ontology.update_all(active: false)
-      # end
-
-      def create_from_csv(csv, current_user) # rubocop:disable Metrics/AbcSize
+      def create_from_csv(csv, current_user) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize
         name = csv[NAME_KEY]
         return if name.blank?
 
@@ -50,15 +46,14 @@ module Import
           volume_amount: amount,
           volume_unit: unit,
           automation_modes: csv[MODE_KEY].split(MODE_SEPARATOR),
-          details: csv[DESCRIPTION_KEY]
+          details: csv[DESCRIPTION_KEY],
         )
 
         if csv[VESSEL_TEMPLATE_KEY] == 'Vessel'
           short_label = csv[SHORT_LABEL_KEY]
           vessel = Vessel.find_or_initialize_by(vessel_template: vessel_template, short_label: short_label,
-                                              creator: current_user)
+                                                creator: current_user)
 
-          Rails.logger.info("importing #{}")
           vessel.name = name
           vessel.creator = current_user
           vessel.save!
