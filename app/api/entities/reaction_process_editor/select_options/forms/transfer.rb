@@ -32,6 +32,7 @@ module Entities
             reaction_process.reaction_process_steps.map do |process_step|
               { value: process_step.id,
                 label: process_step.label,
+                automation_mode: process_step.automation_mode,
                 saved_sample_ids: process_step.saved_sample_ids }
             end
           end
