@@ -735,6 +735,7 @@ export default class ReactionDetails extends Component {
     const {
       reaction, visible, activeTab, showSchemeChangeConfirm
     } = this.state;
+    this.updateReactionVesselSize(reaction);
     let schemeType = 'Default';
     let documentationLink;
     let documentComponent = null;
