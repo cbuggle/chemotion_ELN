@@ -13,16 +13,7 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.post /activities' do
 
   let!(:reaction_process_step) { create_default(:reaction_process_step) }
   let(:insert_before) { 2 }
-  let!(:expected_create_action_hash) do
-    { 'reaction_process_activity' => hash_including({
-                                                      'activity_name' => 'ADD',
-                                                      'position' => anything,
-                                                      'workup' => hash_including({
-                                                                                   'acts_as' => 'SAMPLE',
-                                                                                   'sample_id' => sample.id.to_s,
-                                                                                 }),
-                                                    }) }
-  end
+
   let(:create_activity_params) do
     { activity:
           { activity_name: 'ADD',
