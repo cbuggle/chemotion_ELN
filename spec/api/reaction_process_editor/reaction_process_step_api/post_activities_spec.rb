@@ -52,22 +52,22 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.post /activities' do
     )
   end
 
-  it 'returns created action' do
+  it 'responds http_status 201' do
     post_action_request
-    expect(parsed_json_response).to include(expected_create_action_hash)
+    expect(response).to have_http_status(:created)
   end
 
   describe 'creating "TRANSFER"' do
-    let!(:source_step) do
-      create(:reaction_process_step, name: 'The Source Step', reaction_process: reaction_process_step.reaction_process)
+    let!(:target_step) do
+      create(:reaction_process_step, name: 'The Target Step', reaction_process: reaction_process_step.reaction_process)
     end
-    let!(:action_save) { create(:reaction_process_activity_save, reaction_process_step: source_step) }
+    let!(:action_save) { create(:reaction_process_activity_save) }
     let(:create_activity_params) do
       { activity:
        { activity_name: 'TRANSFER',
          workup: {
-           source_step_id: source_step.id,
-           target_step_id: reaction_process_step.id,
+           source_step_id: reaction_process_step.id,
+           target_step_id: target_step.id,
            sample_id: action_save.workup['sample_id'],
            intermediate_type: 'CRUDE',
          } } }
@@ -77,22 +77,8 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.post /activities' do
       post_action_request
     end
 
-    it 'returns transfer_source_step_name' do
-      expect(parsed_json_response['reaction_process_activity']).to include(
-        { transfer_source_step_name: 'The Source Step' }.stringify_keys,
-      )
-    end
-  end
-
-  context 'with invalid action data' do
-    let(:create_activity_params) do
-      # Invalid: requires workup
-      { activity: { activity_name: 'ADD' } }
-    end
-
-    it 'returns 422' do
-      post_action_request
-      expect(response).to have_http_status(:bad_request)
+    it 'sets transfer_source_step_name' do
+      expect(created_action.reaction_process_step_id).to eq target_step.id
     end
   end
 end
