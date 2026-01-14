@@ -40,6 +40,7 @@ module ReactionProcessEditor
           Usecases::ReactionProcessEditor::ReactionProcessVessels::SweepUnused.execute!(
             reaction_process_id: @reaction_process_step.reaction_process_id,
           )
+
           status 204
         end
 

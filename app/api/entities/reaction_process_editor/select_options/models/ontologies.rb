@@ -43,7 +43,9 @@ module Entities
             return [] unless ontology.stationary_phase
 
             ontology.stationary_phase.map do |stationary_phase|
-              # The stationary_phases (which only exist for device ontologies) will be treated like any Ontology in the Frontend (e.g. in Selects, OntologySelectForm, ...). => It needs to resemble an Ontology, i.e. be "active", have a proper ontology_id, and have their "role" as "stationary_phase" with empty dependencies.
+              # The stationary_phases (which only exist for device ontologies) will be treated like any Ontology in the
+              # Frontend (e.g. in Selects, OntologySelectForm, ...). => It needs to resemble an Ontology, i.e. be
+              # "active", have a proper ontology_id, and their "role" as "stationary_phase" (with empty dependencies).
 
               pseudo_ontology_option_for(active: ontology.active, role: 'stationary_phase', value: stationary_phase)
             end

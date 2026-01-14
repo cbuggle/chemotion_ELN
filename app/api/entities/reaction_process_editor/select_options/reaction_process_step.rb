@@ -93,16 +93,16 @@ module Entities
 
         def all_reaction_samples_options(reaction_process)
           @all_reaction_samples_options ||=
-          reaction_process.reaction_process_steps.order(:position).map do |current_step|
-            current_step_samples_options(current_step)
-          end.flatten.uniq
+            reaction_process.reaction_process_steps.order(:position).map do |current_step|
+              current_step_samples_options(current_step)
+            end.flatten.uniq
         end
 
         def saved_sample_with_solvents_options(reaction_process_step)
           reaction_process_step.reaction_process_activities
-                               .includes([:reaction_process_vessel,
-                                          :fractions,
-                                          :consumed_fraction])
+                               .includes(%i[reaction_process_vessel
+                                            fractions
+                                            consumed_fraction])
                                .order(:position)
                                .select(&:saves_sample?)
                                .map do |action|
