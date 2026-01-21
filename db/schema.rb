@@ -1625,6 +1625,8 @@ ActiveRecord::Schema.define(version: 202501151333346) do
     t.jsonb "admin_ids", default: {}
     t.jsonb "user_ids", default: {}
     t.string "version"
+    t.jsonb "metadata", default: {}, null: false
+    t.check_constraint "jsonb_typeof(metadata) = 'object'::text", name: "chk_segment_klasses_metadata"
   end
 
   create_table "segment_klasses_revisions", id: :serial, force: :cascade do |t|
@@ -1638,7 +1640,10 @@ ActiveRecord::Schema.define(version: 202501151333346) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.string "version"
+    t.integer "submitted", default: 0, null: false
+    t.jsonb "metadata", default: {}, null: false
     t.index ["segment_klass_id"], name: "index_segment_klasses_revisions_on_segment_klass_id"
+    t.check_constraint "jsonb_typeof(metadata) = 'object'::text", name: "chk_segment_klasses_revisions_metadata"
   end
 
   create_table "segments", id: :serial, force: :cascade do |t|
@@ -1653,6 +1658,8 @@ ActiveRecord::Schema.define(version: 202501151333346) do
     t.string "uuid"
     t.string "klass_uuid"
     t.jsonb "properties_release"
+    t.jsonb "metadata", default: {}, null: false
+    t.check_constraint "jsonb_typeof(metadata) = 'object'::text", name: "chk_segments_metadata"
   end
 
   create_table "segments_revisions", id: :serial, force: :cascade do |t|
@@ -1665,7 +1672,9 @@ ActiveRecord::Schema.define(version: 202501151333346) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.jsonb "properties_release"
+    t.jsonb "metadata", default: {}, null: false
     t.index ["segment_id"], name: "index_segments_revisions_on_segment_id"
+    t.check_constraint "jsonb_typeof(metadata) = 'object'::text", name: "chk_segments_revisions_metadata"
   end
 
   create_table "sequence_based_macromolecule_samples", force: :cascade do |t|
