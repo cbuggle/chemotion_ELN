@@ -292,9 +292,9 @@ export default class ReactionDetailsScheme extends React.Component {
     // only when reaction.referenceMaterial not exist triggers updatedReactionForReferenceChange
     const referenceRelatedGroup = ['starting_materials', 'reactants'];
     if (referenceRelatedGroup.includes(materialGroup) && (!reaction.referenceMaterial)) {
-      if (reaction[materialGroup].length === 0) {
+      if (reaction[materialGroup]?.length === 0) {
         const refMaterialGroup = materialGroup === 'starting_materials' ? 'reactants' : 'starting_materials';
-        if (reaction[refMaterialGroup].length > 0) {
+        if (reaction[refMaterialGroup]?.length > 0) {
           const event = {
             type: 'referenceChanged',
             refMaterialGroup,
