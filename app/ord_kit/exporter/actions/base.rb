@@ -25,7 +25,7 @@ module OrdKit
               duration: duration,
               equipment: equipment,
               vessel_template: vessel_template,
-              automation_status: automation_status,
+              automation_control: automation_control,
               consumed_fraction: consumed_fraction,
               automation_ordinal: @action.automation_ordinal,
               type: ontology_ord(workup['type']),
@@ -40,6 +40,10 @@ module OrdKit
 
         def ontology_ord(ontology_id)
           OrdKit::Exporter::Models::OntologyExporter.new(ontology_id).to_ord
+        end
+
+        def automation_control
+          OrdKit::Exporter::Models::AutomationControlExporter.new(action.workup['automation_control']).to_ord
         end
 
         # ORD attributes in order of ORD definition by convention (they are numbered).
