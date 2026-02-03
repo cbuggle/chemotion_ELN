@@ -49,10 +49,6 @@ module ReactionProcessEditor
       position + 1
     end
 
-    def halts_automation?
-      reaction_process_activities.any?(&:halts_automation?)
-    end
-
     # We precalculate the Array of activity preconditions which the ReactionActionEntity then indexes by its position.
     def activity_preconditions
       @activity_preconditions ||= [reaction_process.initial_conditions] + calculate_activity_post_conditions
