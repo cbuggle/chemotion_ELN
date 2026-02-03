@@ -13,7 +13,7 @@ module Entities
             equipment: SelectOptions::Models::Equipment.new.all,
             FORMS: forms_options(reaction_process),
             ontologies: SelectOptions::Models::Ontologies.new.all,
-            automation_control: automation_control_options(reaction_process)
+            automation_control: automation_control_options(reaction_process),
           }
         end
 
@@ -91,11 +91,12 @@ module Entities
 
           {
             activities:
-              reaction_process.reaction_process_steps.order(:position).map{ |process_step|
-                process_step.reaction_process_activities.order(:position).map{ |activity|
-                 {id: activity.id, value: activity.id, label: "#{process_step.step_number}/#{step_count}: #{activity.position} #{activity.activity_name}", saved_sample_id: activity.workup['sample_id'] }
-              }
-            }.flatten
+              reaction_process.reaction_process_steps.order(:position).map do |process_step|
+                process_step.reaction_process_activities.order(:position).map do |activity|
+                  { id: activity.id, value: activity.id,
+                    label: "#{process_step.step_number}/#{step_count}: #{activity.position} #{activity.activity_name}", saved_sample_id: activity.workup['sample_id'] }
+                end
+              end.flatten,
           }
         end
       end

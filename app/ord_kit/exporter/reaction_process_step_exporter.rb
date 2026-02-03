@@ -12,12 +12,11 @@ module OrdKit
           setup: setup,
           actions: reaction_process_activities,
           automation_mode: ontology_ord(model.automation_mode),
-          automation_control: automation_control
+          automation_control: automation_control,
         )
       end
 
       private
-
 
       def ontology_ord(ontology_id)
         OrdKit::Exporter::Models::OntologyExporter.new(ontology_id).to_ord
