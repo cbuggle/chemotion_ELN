@@ -48,20 +48,6 @@ module ReactionProcessEditor
       position + 1
     end
 
-    def halts_automation?
-      reaction_process_activities.any?(&:halts_automation?)
-    end
-
-    def actual_automation_status
-      # actual_automation_status is mostly determined by external conditions. When no other condition precedes, fallback
-      # to `automation_status` which can manually be set to "STEP_MANUAL_PROCEED" / "STEP_HALT_BY_PRECEDING"
-      # (Maybe rename `automation_status` to 'manual_automation_status'?)
-      return 'STEP_COMPLETED' if reaction_process_activities.all?(&:automation_completed?)
-      return 'STEP_CAN_RUN' if predecessors.none?(&:halts_automation?)
-
-      automation_status.presence || 'STEP_HALT_BY_PRECEDING'
-    end
-
     # We precalculate the Array of activity preconditions which the ReactionActionEntity then indexes by its position.
     def activity_preconditions
       @activity_preconditions ||= [reaction_process.initial_conditions] + calculate_activity_post_conditions
