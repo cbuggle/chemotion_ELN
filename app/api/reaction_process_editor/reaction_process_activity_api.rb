@@ -90,6 +90,19 @@ module ReactionProcessEditor
           requires :status
         end
       end
+
+      put :automation_status do
+        error!('404 Not Found', 404) unless current_user.is_a?(ReactionProcessEditor::ApiUser)
+
+        @activity = ::ReactionProcessEditor::ReactionProcessActivity.find_by(id: params[:id])
+
+        Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationStatus.execute!(
+          activity: @activity,
+          automation_status: params[:status],
+        )
+
+        status 204
+      end
     end
   end
 end

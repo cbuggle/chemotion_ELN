@@ -10,7 +10,9 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessActivities::Handl
   let!(:activity) { create(:reaction_process_activity) }
 
   it "updates workup['automation_control']" do
-    expect { handle_automation_status }.to change { activity.workup.dig('automation_control', 'status') }.to('COMPLETED')
+    expect { handle_automation_status }.to change {
+      activity.workup.dig('automation_control', 'status')
+    }.to('COMPLETED')
   end
 
   context 'with disallowed status' do
