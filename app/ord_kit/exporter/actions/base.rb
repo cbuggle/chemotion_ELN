@@ -80,11 +80,6 @@ module OrdKit
           OrdKit::Equipment::EquipmentType::UNSPECIFIED
         end
 
-        def automation_status
-          OrdKit::AutomationStatus.const_get workup['AUTOMATION_STATUS'] || 'RUN'
-        rescue NameError
-          OrdKit::AutomationStatus::UNSPECIFIED
-        end
 
         def vessel_template
           Vessels::ReactionProcessVesselableExporter.new(@action.reaction_process_vessel).to_ord

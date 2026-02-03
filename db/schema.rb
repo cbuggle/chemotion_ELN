@@ -1253,7 +1253,6 @@ ActiveRecord::Schema.define(version: 2026_01_27_192814) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "deleted_at"
     t.string "automation_mode"
-    t.string "automation_status"
     t.jsonb "automation_dependencies"
     t.jsonb "automation_control"
   end

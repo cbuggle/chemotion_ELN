@@ -8,7 +8,6 @@
 #  automation_control         :jsonb
 #  automation_dependencies    :jsonb
 #  automation_mode            :string
-#  automation_status          :string
 #  deleted_at                 :datetime
 #  locked                     :boolean
 #  name                       :string
