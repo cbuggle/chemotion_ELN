@@ -80,7 +80,6 @@ module OrdKit
           OrdKit::Equipment::EquipmentType::UNSPECIFIED
         end
 
-
         def vessel_template
           Vessels::ReactionProcessVesselableExporter.new(@action.reaction_process_vessel).to_ord
         end

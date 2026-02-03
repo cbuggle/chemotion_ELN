@@ -94,7 +94,8 @@ module Entities
               reaction_process.reaction_process_steps.order(:position).map do |process_step|
                 process_step.reaction_process_activities.order(:position).map do |activity|
                   { id: activity.id, value: activity.id,
-                    label: "#{process_step.step_number}/#{step_count}: #{activity.position} #{activity.activity_name}", saved_sample_id: activity.workup['sample_id'] }
+                    label: "#{process_step.step_number}/#{step_count}: #{activity.position} #{activity.activity_name}",
+                    saved_sample_id: activity.workup['sample_id'] }
                 end
               end.flatten,
           }

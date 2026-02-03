@@ -41,7 +41,6 @@ module ReactionProcessEditor
               .execute!(parent_activity: @activity, index: index, fraction_params: fraction_params)
           end
 
-
           @activity.workup['automation_control'] ||= {}
           @activity.workup['automation_control']['status'] = 'HALT_RESOLVED_NEEDS_CONFIRMATION'
           @activity.save
