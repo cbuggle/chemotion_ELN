@@ -174,8 +174,8 @@ message AutomationControl {
   }
 
   oneof automation_status {
-    AutomationStatus value = 1;
-    StepAutomationStatus step_value = 2;
+    AutomationStatus status = 1;
+    StepAutomationStatus step_status = 2;
   }
   optional string depends_on_action_id = 3;
   optional string depends_on_step_id = 4;

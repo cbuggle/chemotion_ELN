@@ -11,8 +11,8 @@ module OrdKit
         def to_ord
           return unless @automation_control && @automation_control['status']
 
-          { value: status,
-					  step_value: step_status,
+          { status: status,
+					  step_status: step_status,
 						depends_on_action_id: @automation_control['depends_on_action_id'],
 						depends_on_step_id: @automation_control['depends_on_step_id'],
 					}
