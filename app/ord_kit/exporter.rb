@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'proto/ord_kit_reaction_pb'
+require 'proto/calf_reaction_pb'
 
 module OrdKit
   module Exporter

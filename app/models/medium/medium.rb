@@ -23,18 +23,11 @@ module Medium
     # be used in the process editor.
     # We alias them in Medium as well because we do not want to distinguish models all the time.
 
-    # TODO use alias_method
-    def label
-      name
-    end
 
-    def short_label
-      name
-    end
-
-    def preferred_label
-      name
-    end
+    # TODO: Align attribute "name" to "label" as in Ontolgies?
+    alias_attribute :preferred_label, :name
+    alias_attribute :short_label, :name
+    alias_attribute :external_label, :name
 
     # Todo extract to Concern (in Ontology as well)
     def target_amount_value; end
