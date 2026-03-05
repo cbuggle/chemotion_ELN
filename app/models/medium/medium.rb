@@ -5,12 +5,12 @@
 # Table name: media
 #
 #  id            :uuid             not null, primary key
-#  sum_formula   :string
-#  sample_name   :string
 #  molecule_name :string
+#  name          :string
+#  sum_formula   :string
+#  type          :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  type          :string
 #
 
 module Medium
@@ -23,18 +23,20 @@ module Medium
     # be used in the process editor.
     # We alias them in Medium as well because we do not want to distinguish models all the time.
 
+    # TODO use alias_method
+    def label
+      name
+    end
+
     def short_label
-      label
+      name
     end
 
     def preferred_label
-      label
+      name
     end
 
-    def name
-      label
-    end
-
+    # Todo extract to Concern (in Ontology as well)
     def target_amount_value; end
     def target_amount_unit; end
     def amount_mg; end
