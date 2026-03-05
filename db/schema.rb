@@ -786,8 +786,8 @@ ActiveRecord::Schema.define(version: 2026_02_20_000002) do
 
   create_table "fractions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "position"
-    t.uuid "parent_activity_id"
-    t.uuid "consuming_activity_id"
+    t.uuid "parent_action_id"
+    t.uuid "consuming_action_id"
     t.string "vials", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -987,7 +987,7 @@ ActiveRecord::Schema.define(version: 2026_02_20_000002) do
   create_table "media", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type"
     t.string "sum_formula"
-    t.string "sample_name"
+    t.string "name"
     t.string "molecule_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
