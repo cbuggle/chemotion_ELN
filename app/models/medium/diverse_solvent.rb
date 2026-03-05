@@ -15,8 +15,5 @@
 
 module Medium
   class DiverseSolvent < ::Medium::Medium
-    def label
-      sample_name || sum_formula
-    end
   end
 end

@@ -14,9 +14,9 @@
 #
 module ReactionProcessEditor
   class Fraction < ApplicationRecord
-    belongs_to :parent_activity, class_name: '::ReactionProcessEditor::ReactionProcessActivity',
-                                 inverse_of: :fractions
-    belongs_to :consuming_activity, class_name: '::ReactionProcessEditor::ReactionProcessActivity', optional: true,
-                                    dependent: :destroy, inverse_of: :consumed_fraction
+    belongs_to :parent_action, class_name: '::ReactionProcessEditor::ReactionProcessActivity',
+                               inverse_of: :fractions
+    belongs_to :consuming_action, class_name: '::ReactionProcessEditor::ReactionProcessActivity', optional: true,
+                                  dependent: :destroy, inverse_of: :consumed_fraction
   end
 end

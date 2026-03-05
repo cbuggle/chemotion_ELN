@@ -15,8 +15,5 @@
 
 module Medium
   class Modifier < ::Medium::Medium
-    def label
-      sample_name
-    end
   end
 end
