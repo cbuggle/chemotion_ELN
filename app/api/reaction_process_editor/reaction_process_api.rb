@@ -43,7 +43,7 @@ module ReactionProcessEditor
           header 'Content-Disposition', "attachment; filename*=UTF-8''#{@reaction_process.ord_filename}"
           content_type('application/json')
 
-          present OrdKit::Exporter::ReactionProcessExporter.new(@reaction_process).to_ord
+          present Clap::Exporter::ReactionProcessExporter.new(@reaction_process).to_clap
         rescue StandardError => e
           header 'Content-Disposition', "attachment; filename*=UTF-8''OrdExportError-#{@reaction_process.ord_filename}"
           content_type 'text/plain'
