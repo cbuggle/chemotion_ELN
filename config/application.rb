@@ -5,7 +5,7 @@ require_relative 'boot'
 require 'rails/all'
 require 'dotenv'
 
-require './app/clap/proto/clap_kit_reaction_pb'
+require './app/clap/proto/clap_reaction_pb'
 
 Dotenv.load
 
