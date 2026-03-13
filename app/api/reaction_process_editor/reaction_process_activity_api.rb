@@ -6,7 +6,7 @@ module ReactionProcessEditor
 
     helpers StrongParamsHelpers
 
-    rescue_from :all
+    # rescue_from :all
 
     namespace :reaction_process_activities do
       route_param :id, format: :uuid do
@@ -29,6 +29,11 @@ module ReactionProcessEditor
           )
 
           status 204
+        rescue StandardError => e
+          Rails.logger.info("Error in Update Activit")
+          Rails.logger.info(e.inspect)
+
+          status 418
         end
 
         desc 'Create and append an action for the fractions of a chromatography automation result.'

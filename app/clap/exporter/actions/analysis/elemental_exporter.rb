@@ -10,18 +10,18 @@ module Clap
           def action_type_attributes
             { analysis_elemental:
             ReactionProcessAction::ActionAnalysisElemental.new({ molecular_entities: molecular_entities,
-                                                                 sample: sample }) }
+                                                                 samples: samples}) }
           end
 
-          def sample
-            Clap::Exporter::Compounds::SaveCompoundExporter.new(@action).to_clap if @action.sample
+          def samples
+            Array(workup['samples']).map do |sample|
+              Clap::Sample.new(label: sample['label'])
+            end
           end
 
           def molecular_entities
             Array(workup['molecular_entities']).map do |sample|
-              Clap::Sample.new(
-                label: sample['label'],
-              )
+              Clap::Sample.new(label: sample['label'])
             end
           end
         end

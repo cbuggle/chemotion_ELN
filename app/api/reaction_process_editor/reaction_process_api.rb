@@ -45,7 +45,7 @@ module ReactionProcessEditor
 
           present Clap::Exporter::ReactionProcessExporter.new(@reaction_process).to_clap
         rescue StandardError => e
-          header 'Content-Disposition', "attachment; filename*=UTF-8''Clap-ExportError-#{@reaction_process.clap_filename}.dump"
+          header 'Content-Disposition', "attachment; filename*=UTF-8''Clap-ExportError-#{@reaction_process.clap_filename}.dump.txt"
           content_type 'text/plain'
           present "#{e.message} #{e.backtrace}"
         end

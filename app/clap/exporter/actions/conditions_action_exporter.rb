@@ -11,8 +11,7 @@ module Clap
 
           workup['EQUIPMENT']['value'].map do |equipment|
             Clap::Equipment.new(
-              type: equipment_type(equipment),
-              details: '', # Currently n/a in ELN.
+              type: equipment_type(equipment)
             )
           end
         end

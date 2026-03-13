@@ -9,9 +9,7 @@ module Clap
 
           model.map do |preparation|
             VesselPreparation.new(
-              type: preparation_type(preparation),
-              medium: nil,
-              details: nil,
+              type: preparation_type(preparation)
             )
           end
         end
