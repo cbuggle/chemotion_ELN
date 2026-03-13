@@ -9,7 +9,7 @@ module Clap
         end
 
         def to_clap
-          Rails.logger.info("EXPORT AUTOMATION_CONTROL")
+          Rails.logger.info('EXPORT AUTOMATION_CONTROL')
           Rails.logger.info(automation_control)
           return unless automation_control && automation_control['status']
 

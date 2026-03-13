@@ -11,7 +11,7 @@ module Clap
 
           workup['EQUIPMENT']['value'].map do |equipment|
             Clap::Equipment.new(
-              type: equipment_type(equipment)
+              type: equipment_type(equipment),
             )
           end
         end

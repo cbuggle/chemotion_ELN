@@ -27,7 +27,6 @@ module Clap
           Exporter::Metrics::WavelengthExporter.new(workup).to_clap
         end
 
-
         def power
           return if workup['power'].blank?
 

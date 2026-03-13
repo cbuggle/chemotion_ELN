@@ -84,7 +84,9 @@ module Clap
           def detectors
             workup['detector']&.map do |detector_ontology_id|
               Clap::Exporter::Models::DetectorExporter.new(detector_ontology_id: detector_ontology_id,
-              conditions: workup.dig('detector_conditions', detector_ontology_id)).to_clap
+                                                           conditions: workup.dig(
+                                                             'detector_conditions', detector_ontology_id
+                                                           )).to_clap
             end
           end
 

@@ -10,7 +10,7 @@ module Clap
           def action_type_attributes
             { analysis_elemental:
             ReactionProcessAction::ActionAnalysisElemental.new({ molecular_entities: molecular_entities,
-                                                                 samples: samples}) }
+                                                                 samples: samples }) }
           end
 
           def samples

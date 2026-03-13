@@ -30,7 +30,7 @@ module ReactionProcessEditor
 
           status 204
         rescue StandardError => e
-          Rails.logger.info("Error in Update Activit")
+          Rails.logger.info('Error in Update Activit')
           Rails.logger.info(e.inspect)
 
           status 418

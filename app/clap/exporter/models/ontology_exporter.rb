@@ -19,15 +19,19 @@ module Clap
         private
 
         def ontology_name
-          ontology ?
-          ontology.name
-          : 'Error: Ontology specified but non-existant'
+          if ontology
+            ontology.name
+          else
+            'Error: Ontology specified but non-existant'
+          end
         end
 
         def ontology_label
-          ontology ?
-          ontology.label
-          : 'Error: Ontology specified but non-existant'
+          if ontology
+            ontology.label
+          else
+            'Error: Ontology specified but non-existant'
+          end
         end
 
         def ontology

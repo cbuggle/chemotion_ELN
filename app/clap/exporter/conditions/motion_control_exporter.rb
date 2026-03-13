@@ -8,7 +8,7 @@ module Clap
           MotionControl.new(
             type: motion_method_type,
             speed: speed,
-            motion_mode: motion_mode
+            motion_mode: motion_mode,
           )
         end
 

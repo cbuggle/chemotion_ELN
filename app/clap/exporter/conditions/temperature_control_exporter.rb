@@ -9,7 +9,7 @@ module Clap
         def to_clap
           TemperatureControl.new(
             temperature_control_type: temperature_control_type,
-            temperature: temperature
+            temperature: temperature,
           )
         end
 

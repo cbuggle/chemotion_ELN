@@ -8,7 +8,7 @@ module Clap
 
         def to_clap
           Clap::PressureControl.new(
-            pressure: pressure
+            pressure: pressure,
           )
         end
 

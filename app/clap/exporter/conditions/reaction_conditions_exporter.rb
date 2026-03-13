@@ -5,8 +5,7 @@ module Clap
     module Conditions
       class ReactionConditionsExporter < Clap::Exporter::Conditions::Base
         def to_clap
-
-          Rails.logger.info('ReactionConditionsExporter.to_clap WORKUP' )
+          Rails.logger.info('ReactionConditionsExporter.to_clap WORKUP')
           Rails.logger.error(workup)
           return unless workup
 
@@ -17,7 +16,7 @@ module Clap
             motion_control: motion_control,
             irradiation_control: irradiation_control,
             wavelengths: wavelengths,
-            generic: generic_conditions
+            generic: generic_conditions,
           )
         rescue StandardError => e
           Rails.logger.error('ReactionConditionsExporter: WORKUP ERROR')
@@ -35,7 +34,7 @@ module Clap
         def pressure_control
           return if workup['PRESSURE'].blank?
 
-           Conditions::PressureControlExporter.new(workup['PRESSURE']).to_clap
+          Conditions::PressureControlExporter.new(workup['PRESSURE']).to_clap
         end
 
         def motion_control

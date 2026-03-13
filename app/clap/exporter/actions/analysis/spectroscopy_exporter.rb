@@ -13,7 +13,7 @@ module Clap
 
                                                                     molecular_entities: molecular_entities,
                                                                     samples: samples,
-                                                                    solvents: solvents
+                                                                    solvents: solvents,
                                                                   }) }
           end
 
@@ -34,7 +34,6 @@ module Clap
           def solvents
             Clap::Exporter::Samples::SolventsWithRatioExporter.new(workup['solvents']).to_clap
           end
-
         end
       end
     end
