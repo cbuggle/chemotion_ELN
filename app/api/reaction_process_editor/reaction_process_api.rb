@@ -147,8 +147,6 @@ module ReactionProcessEditor
             )
 
             status 201
-            # present new_step, with: Entities::ReactionProcessEditor::ReactionProcessStepEntity,
-            #                   root: :reaction_process_step
           end
         end
       end
