@@ -18,7 +18,8 @@ module ReactionProcessEditor
     get :default_conditions do
       { default_conditions: {
         global: SELECT_OPTIONS::Forms::Condition::GLOBAL_DEFAULTS,
-        user: current_user.reaction_process_defaults&.default_conditions.to_h,
+        user: current_user.reaction_process_defaults&.default_conditions.to_h
+          .merge(user_is_admin: current_user.is_a?(Admin)),
         select_options: {
           FORMS: { CONDITION: SELECT_OPTIONS::Forms::Condition.new.select_options },
           samples: SELECT_OPTIONS::Models::Materials.new.sample_options_for_user(user: current_user),
