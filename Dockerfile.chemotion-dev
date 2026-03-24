@@ -4,7 +4,7 @@
 # and write some documentation meanwhile ;)
 
 
-ARG source_image=ubuntu:26.04
+ARG source_image=ubuntu:24.04
 
 FROM ${source_image} AS chemotion_dev_base
 ARG DEBIAN_FRONTEND=noninteractive
@@ -12,7 +12,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN set -xe  && apt-get update -yqqq --fix-missing && apt-get upgrade -y
 RUN apt update && apt-get install -yqq --fix-missing bash ca-certificates wget apt-transport-https git gpg \
       build-essential sudo postgresql-common swig cmake \
-      libnspr4 libnss3 libxss1 xdg-utils tzdata libicu-dev
+      libnspr4 libnss3 libxss1 xdg-utils tzdata
 
 RUN apt-get install -yqq --fix-missing  \
       libyaml-dev \
