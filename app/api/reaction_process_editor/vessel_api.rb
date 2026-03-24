@@ -2,7 +2,7 @@
 
 module ReactionProcessEditor
   class VesselAPI < Grape::API
-    # rescue_from :all
+    rescue_from :all
 
     namespace :vessels do
       get do

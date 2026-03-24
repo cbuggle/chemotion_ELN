@@ -5,7 +5,7 @@ module ReactionProcessEditor
     helpers StrongParamsHelpers
     helpers CollectionHelpers
 
-    # rescue_from :all
+    rescue_from :all
 
     namespace :samples do
       get do

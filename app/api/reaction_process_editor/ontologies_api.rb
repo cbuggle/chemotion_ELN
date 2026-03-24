@@ -5,7 +5,7 @@ module ReactionProcessEditor
 
     helpers StrongParamsHelpers
 
-    # # rescue_from :all
+    # rescue_from :all
 
     desc 'get Ontologies'
     get :ontologies do
