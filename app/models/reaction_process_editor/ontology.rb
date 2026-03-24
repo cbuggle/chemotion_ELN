@@ -27,7 +27,6 @@ module ReactionProcessEditor
 
     scope :active, -> { where(active: true) }
 
-    # alias_attribute :preferred_label, :label
     alias_attribute :short_label, :label
     alias_attribute :external_label, :label
 
