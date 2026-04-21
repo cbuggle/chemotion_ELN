@@ -27,7 +27,7 @@ module ReactionProcessEditor
 
     has_many :reaction_process_activities, dependent: :destroy
 
-    delegate :reaction, :creator, to: :reaction_process
+    delegate :reaction, :creator, :initial_conditions, to: :reaction_process
 
     def siblings
       reaction_process.reaction_process_steps.order(:position)

@@ -12,6 +12,7 @@ module Entities
             IRRADIATION: {},
             MOTION: {},
             EQUIPMENT: {},
+            automation_mode: Constants::Ontologies::DEFAULT_AUTOMATION_MODE,
           }.deep_stringify_keys
 
           def select_options
