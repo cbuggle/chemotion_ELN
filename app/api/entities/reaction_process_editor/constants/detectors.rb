@@ -49,9 +49,9 @@ module Entities
         }.deep_stringify_keys.freeze
 
         def self.detector_settings(detector_id)
-        	DETECTOR_SETTINGS[detector_id] ||
-						{ value: detector_id,
-						label: detector_id, analysis_defaults: [{label: 'none'}] }
+          DETECTOR_SETTINGS[detector_id] ||
+            { value: detector_id,
+              label: detector_id, analysis_defaults: [{ label: 'none' }] }
         end
       end
     end
