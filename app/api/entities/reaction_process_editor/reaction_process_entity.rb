@@ -5,7 +5,7 @@ module Entities
     class ReactionProcessEntity < Grape::Entity
       SELECT_OPTIONS = SelectOptions::Models::Custom
 
-      expose :id, :short_label, :sample_setup
+      expose :id, :short_label, :sample_setup, :initial_conditions
 
       expose :reaction_process_steps, using: 'Entities::ReactionProcessEditor::ReactionProcessStepEntity'
       expose :samples_preparations, using: 'Entities::ReactionProcessEditor::SamplePreparationEntity'
