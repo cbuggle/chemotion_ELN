@@ -5,12 +5,6 @@ module Usecases
   module ReactionProcessEditor
     module ReactionProcessSteps
       class AppendFractionActivity
-        ONTOLOGY_IDS = {
-          CHROMATOGRAPHY: { class: 'CHMO:0001000', action: 'CHMO:0002231', automated: 'NCIT:C70669' },
-          ANALYSIS_CHROMATOGRAPHY: { class: 'CHMO:0001000', action: 'OBI:0000070', automated: 'NCIT:C70669' },
-          ANALYSIS_SPECTROSCOPY: { class: 'CHMO:0000228', action: 'OBI:0000070', automated: 'NCIT:C70669' },
-        }.deep_stringify_keys.freeze
-
         # rubocop:disable  Metrics/BlockLength
         def self.execute!(parent_action:, index:, fraction_params:)
           ActiveRecord::Base.transaction do
@@ -50,13 +44,8 @@ module Usecases
         # rubocop:enable  Metrics/BlockLength
 
         def self.activity_setup_for_action_name(activity_name)
-          ontology = ONTOLOGY_IDS[activity_name] || {}
-
           { activity_name: activity_name,
-            workup: {
-              action: ontology['action'],
-              class: ontology['class'],
-            } }
+            workup: Entities::ReactionProcessEditor::Constants::Ontologies.action_ontology_workup(activity_name) }
         end
 
         def self.assign_remove_workup(fraction:, consuming_action:)
