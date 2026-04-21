@@ -40,7 +40,7 @@ module ReactionProcessEditor
 
     validate :validate_workup
 
-    delegate :reaction, :reaction_process, :creator, to: :reaction_process_step
+    delegate :reaction, :reaction_process, :automation_mode, :creator, to: :reaction_process_step
 
     def siblings
       reaction_process_step.reaction_process_activities.order(:position)
