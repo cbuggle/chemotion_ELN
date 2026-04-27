@@ -1,16 +1,21 @@
 import React from 'react'
-import { Tooltip, OverlayTrigger, Nav } from 'react-bootstrap';
+import { Button, Tooltip, OverlayTrigger, Nav } from 'react-bootstrap';
 
-const ReactionEditorLink = ({ reaction }) => {
+const ReactionEditorLink = ({ reaction, size="sm" }) => {
 	return (
 		<>
 			<OverlayTrigger
 				placement="bottom"
-				overlay={<Tooltip id="editReaction">Edit Reaction</Tooltip>}
+				overlay={<Tooltip id="editReaction">Edit Reaction Process</Tooltip>}
 			>
-				<Nav.Link href={reaction.editor_link_target} target="_blank" className="btn btn-xs btn-success button-right">
+				<Button
+					size={size}
+					variant="secondary"
+					href={reaction.editor_link_target}
+					target={"_blank"}
+				>
 					<i className="fa fa-edit" />
-				</Nav.Link>
+				</Button>
 			</OverlayTrigger>
 		</>
 	)
