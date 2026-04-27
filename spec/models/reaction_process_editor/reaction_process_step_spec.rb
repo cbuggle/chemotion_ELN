@@ -67,7 +67,8 @@ RSpec.describe ReactionProcessEditor::ReactionProcessStep do
       { 'EQUIPMENT' => {}, 'IRRADIATION' => {}, 'MOTION' => {},
         'PH' => { 'unit' => 'PH', 'value' => 7 },
         'PRESSURE' => { 'unit' => 'MBAR', 'value' => '1013' },
-        'TEMPERATURE' => { 'unit' => 'CELSIUS', 'value' => '21' }.deep_stringify_keys }
+        'TEMPERATURE' => { 'unit' => 'CELSIUS', 'value' => '21' },
+        "automation_mode"=>"NCIT:C70669" }
     end
 
     let(:expected_final_conditions) do
@@ -76,6 +77,7 @@ RSpec.describe ReactionProcessEditor::ReactionProcessStep do
         PRESSURE: { value: '1013', unit: 'MBAR' },
         'EQUIPMENT' => {}, 'IRRADIATION' => {}, 'MOTION' => {} }.deep_stringify_keys
     end
+
     let(:expected_activity_preconditions) do
       [{ TEMPERATURE: { value: '1000', unit: 'CELSIUS' },
          PH: { value: '5', unit: 'PH' },

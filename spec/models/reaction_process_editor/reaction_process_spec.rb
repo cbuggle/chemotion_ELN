@@ -42,7 +42,8 @@ RSpec.describe ReactionProcessEditor::ReactionProcess do
       { 'EQUIPMENT' => {}, 'IRRADIATION' => {}, 'MOTION' => {},
         'PH' => { 'unit' => 'PH', 'value' => 7 },
         'PRESSURE' => { 'unit' => 'MBAR', 'value' => '1013' },
-        'TEMPERATURE' => { 'unit' => 'CELSIUS', 'value' => '21' }.deep_stringify_keys }
+        'TEMPERATURE' => { 'unit' => 'CELSIUS', 'value' => '21' },
+        "automation_mode"=>"NCIT:C70669" }
     end
 
     describe '#user_default_conditions' do
