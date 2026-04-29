@@ -43,7 +43,7 @@ RSpec.describe ReactionProcessEditor::ReactionProcess do
         'PH' => { 'unit' => 'PH', 'value' => 7 },
         'PRESSURE' => { 'unit' => 'MBAR', 'value' => '1013' },
         'TEMPERATURE' => { 'unit' => 'CELSIUS', 'value' => '21' },
-        "automation_mode"=>"NCIT:C70669" }
+        'automation_mode' => 'NCIT:C70669' }
     end
 
     describe '#user_default_conditions' do
