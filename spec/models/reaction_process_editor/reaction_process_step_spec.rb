@@ -75,6 +75,7 @@ RSpec.describe ReactionProcessEditor::ReactionProcessStep do
       { TEMPERATURE: { value: '200', unit: 'KELVIN' },
         PH: { value: '5', unit: 'PH' },
         PRESSURE: { value: '1013', unit: 'MBAR' },
+        'automation_mode' => 'NCIT:C70669',
         'EQUIPMENT' => {}, 'IRRADIATION' => {}, 'MOTION' => {} }.deep_stringify_keys
     end
 
