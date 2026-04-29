@@ -15,7 +15,7 @@ describe ReactionProcessEditor::EditorAPI, '.get /default_conditions' do
   let(:expected_default_conditions) do
     { default_conditions: {
       global: select_options::Forms::Condition::GLOBAL_DEFAULTS,
-      user: {},
+      user: { user_is_admin: false },
       select_options: { FORMS: { CONDITION: select_options::Forms::Condition.new.select_options },
                         samples: Array },
     } }.deep_stringify_keys
