@@ -154,6 +154,7 @@ class Reaction < ApplicationRecord
 
   has_many :reactions_intermediate_samples, -> { includes(:sample).order(position: :asc) }, dependent: :destroy
   has_many :intermediate_samples, through: :reactions_intermediate_samples, source: :sample
+  has_many :sample_merges, dependent: :destroy
 
   has_many :literals, as: :element, dependent: :destroy
   has_many :literatures, through: :literals
