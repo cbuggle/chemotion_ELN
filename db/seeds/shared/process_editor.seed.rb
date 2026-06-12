@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
-Medium::MediumSample.find_or_create_by(sample_name: 'Oxygen', molecule_name: 'Molecular Oxygen', sum_formula: 'O2')
-Medium::MediumSample.find_or_create_by(sample_name: 'Nitrogen', molecule_name: 'Molecular Nitrogen', sum_formula: 'N2')
-Medium::MediumSample.find_or_create_by(sample_name: 'Hydrogen', molecule_name: '', sum_formula: 'H2')
-Medium::MediumSample.find_or_create_by(sample_name: 'Carbon Dioxide', molecule_name: '', sum_formula: 'CO2')
+Medium::MediumSample.find_or_create_by(name: 'Oxygen', molecule_name: 'Molecular Oxygen', sum_formula: 'O2')
+Medium::MediumSample.find_or_create_by(name: 'Nitrogen', molecule_name: 'Molecular Nitrogen', sum_formula: 'N2')
+Medium::MediumSample.find_or_create_by(name: 'Hydrogen', molecule_name: '', sum_formula: 'H2')
+Medium::MediumSample.find_or_create_by(name: 'Carbon Dioxide', molecule_name: '', sum_formula: 'CO2')
 
-Medium::Additive.find_or_create_by(sample_name: 'Brine', molecule_name: 'sodium;chloride')
-Medium::Additive.find_or_create_by(molecule_name: 'dipotassium;sulfate').update(sample_name: 'dipotassium;sulfate')
-Medium::Additive.find_or_create_by(sample_name: 'Silica Gel', molecule_name: '')
-Medium::Additive.find_or_create_by(molecule_name: 'disodium;sulfate').update(sample_name: 'disodium;sulfate')
-Medium::Additive.find_or_create_by(sample_name: 'Celite', molecule_name: '')
-Medium::Additive.find_or_create_by(sample_name: 'sat. NaHCO3 solution', molecule_name: '')
-Medium::Additive.find_or_create_by(sample_name: 'sat. NH4Cl solution', molecule_name: '')
-Medium::Additive.find_or_create_by(sample_name: 'Sodium sulfate (Na2SO4)', molecule_name: '')
-Medium::Additive.find_or_create_by(sample_name: 'Magnesium sulfate (MgSO4)', molecule_name: '')
-Medium::Additive.find_or_create_by(sample_name: 'Activated charcoal', molecule_name: '')
-Medium::Additive.find_or_create_by(sample_name: 'Molecular sieves', molecule_name: '')
+Medium::Additive.find_or_create_by(name: 'Brine', molecule_name: 'sodium;chloride')
+Medium::Additive.find_or_create_by(molecule_name: 'dipotassium;sulfate').update(name: 'dipotassium;sulfate')
+Medium::Additive.find_or_create_by(name: 'Silica Gel', molecule_name: '')
+Medium::Additive.find_or_create_by(molecule_name: 'disodium;sulfate').update(name: 'disodium;sulfate')
+Medium::Additive.find_or_create_by(name: 'Celite', molecule_name: '')
+Medium::Additive.find_or_create_by(name: 'sat. NaHCO3 solution', molecule_name: '')
+Medium::Additive.find_or_create_by(name: 'sat. NH4Cl solution', molecule_name: '')
+Medium::Additive.find_or_create_by(name: 'Sodium sulfate (Na2SO4)', molecule_name: '')
+Medium::Additive.find_or_create_by(name: 'Magnesium sulfate (MgSO4)', molecule_name: '')
+Medium::Additive.find_or_create_by(name: 'Activated charcoal', molecule_name: '')
+Medium::Additive.find_or_create_by(name: 'Molecular sieves', molecule_name: '')
 
 [{
   label: 'Acetic acid',
@@ -110,7 +110,7 @@ Medium::Additive.find_or_create_by(sample_name: 'Molecular sieves', molecule_nam
 }, {
   label: 'D2O',
   value: 'D2O',
-}].each { |solvent| Medium::DiverseSolvent.find_or_create_by(sample_name: solvent[:label]) }
+}].each { |solvent| Medium::DiverseSolvent.find_or_create_by(name: solvent[:label]) }
 
 
 ['Formic Acid (FA)',
@@ -120,4 +120,4 @@ Medium::Additive.find_or_create_by(sample_name: 'Molecular sieves', molecule_nam
 'Potassium Phosphate Dibasic',
 'Sodium Acetate',
 'Ammonium Dihydrogen Phosphate',
-'Ammonium Formate'].each { |name| Medium::Modifier.find_or_create_by(sample_name: name)}
+'Ammonium Formate'].each { |name| Medium::Modifier.find_or_create_by(name: name)}
