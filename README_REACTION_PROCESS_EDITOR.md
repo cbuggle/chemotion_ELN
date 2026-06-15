@@ -2,7 +2,7 @@
 
 The Reaction Process Editor is a separate React project allowing to visually compose and edit the actual reaction processes. It uses and requires a running ELN instance as API backend.
 
-The Reaction Process Editor (RPE) is op0en source (MIT license) hosted on
+The Reaction Process Editor (RPE) is open source (MIT license) hosted on
 <https://github.com/ComPlat/reaction-process-editor>
 
 As this is still work in progress we will keep the enhancements to the code in a separate branch until at least the database schema is reasonably established.
@@ -16,11 +16,11 @@ The ELN version required for the RPE can be found in the ELN repository in branc
 
 It is based on the Chemotion ELN editor on the most recent `main`. I try to keep it as up to date as possible.
 
-It adds some ActiveRecord models, API access points, Grape Entity Serializing and last not least the definition of and the export to the generic KIT-ORD reaction database format.
+It adds some ActiveRecord models, API access points, Grape Entity Serializing and last not least the definition of and the export to the generic Chemical Lab Automation Process Protocol (CLAP) reaction database format.
 
 For the proper functioning of the Frontend Editor
 
-* The db seeds in `db/seeds/reaction_editor_seeds.rb` need to run (they are included in a regular `rake db:seed` run).
+* The db seeds in `db/seeds/reaction_editor_seeds.rb` need to run (they are included in the regular `rake db:seed` run).
 
 * The RPE Frontend Hostname needs to be set as ENV['REACTION_PROCESS_EDITOR_HOSTNAME'] which needs to be defined in `.env`
 * (`export REACTION_PROCESS_EDITOR_HOSTNAME="http://localhost:4000"` in your shell will also work).
