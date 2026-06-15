@@ -136,7 +136,6 @@ GEM
     base64 (0.3.0)
     bcrypt (3.1.22)
     bcrypt_pbkdf (1.1.1)
-    bcrypt_pbkdf (1.1.1-arm64-darwin)
     benchmark (0.4.1)
     better_errors (2.10.1)
       erubi (>= 1.0.0)
@@ -450,8 +449,6 @@ GEM
     net-ssh (6.1.0)
     nio4r (2.7.4)
     nokogiri (1.15.7-aarch64-linux)
-      racc (~> 1.4)
-    nokogiri (1.15.7-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.15.7-x86_64-linux)
       racc (~> 1.4)
@@ -833,7 +830,6 @@ GEM
 
 PLATFORMS
   aarch64-linux
-  arm64-darwin-25
   x86_64-linux
 
 DEPENDENCIES
@@ -981,4 +977,4 @@ DEPENDENCIES
   yaml_db
 
 BUNDLED WITH
-   2.4.0
+   2.4.22
