@@ -49,4 +49,17 @@ describe Entities::ReactionProcessEditor::Constants::Ontologies do
       expect(described_class.action_ontology_workup('UNKNOWN')).to eq({})
     end
   end
+
+  describe '.action_ontology_workup' do
+    it 'returns configured action ontology workup' do
+      expect(described_class.action_ontology_workup('CHROMATOGRAPHY')).to eq(
+        'class' => 'CHMO:0001000',
+        'action' => 'CHMO:0002231',
+      )
+    end
+
+    it 'returns an empty hash for unknown actions' do
+      expect(described_class.action_ontology_workup('UNKNOWN')).to eq({})
+    end
+  end
 end
