@@ -4,13 +4,14 @@ require 'rails_helper'
 
 RSpec.describe 'Clap vessel exporters' do
   describe Clap::Exporter::Vessels::ReactionProcessVesselableExporter do
+    let(:vessel_template) { create(:vessel_template, vessel_type: 'VIAL', material_type: 'glass') }
+    let(:vessel) { create(:vessel, vessel_template: vessel_template, name: 'R1') }
+    let(:reaction_process_vessel) do
+      create(:reaction_process_vessel, vesselable: vessel, preparations: ['OVEN_DRIED'])
+    end
+    let(:template) { described_class.new(reaction_process_vessel).to_clap }
+
     it 'exports a vessel-backed template' do
-      vessel_template = create(:vessel_template, vessel_type: 'VIAL', material_type: 'glass')
-      vessel = create(:vessel, vessel_template: vessel_template, name: 'R1')
-      reaction_process_vessel = create(:reaction_process_vessel, vesselable: vessel, preparations: ['OVEN_DRIED'])
-
-      template = described_class.new(reaction_process_vessel).to_clap
-
       expect(template.to_h).to include(
         id: vessel_template.id,
         name: vessel_template.name,
@@ -33,9 +34,9 @@ RSpec.describe 'Clap vessel exporters' do
   end
 
   describe Clap::Exporter::Vessels::VesselCleanupExporter do
-    it 'exports cleanup type' do
-      cleanup = described_class.new(build(:reaction_process_vessel, cleanup: 'WASTE')).to_clap
+    let(:cleanup) { described_class.new(build(:reaction_process_vessel, cleanup: 'WASTE')).to_clap }
 
+    it 'exports cleanup type' do
       expect(cleanup.type).to eq(:WASTE)
     end
   end

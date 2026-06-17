@@ -4,11 +4,10 @@ require 'rails_helper'
 
 RSpec.describe 'Clap reaction exporters' do
   describe Clap::Exporter::Reactions::ReactionProvenanceExporter do
+    let(:provenance) { create(:provenance, starts_at: '2026-06-17 08:00:00 UTC') }
+    let(:clap) { described_class.new(provenance).to_clap }
+
     it 'exports provenance fields' do
-      provenance = create(:provenance, starts_at: '2026-06-17 08:00:00 UTC')
-
-      clap = described_class.new(provenance).to_clap
-
       expect(clap.to_h).to include(
         city: 'Karlsruhe',
         doi: '10.1109/5.771073',
@@ -25,14 +24,17 @@ RSpec.describe 'Clap reaction exporters' do
   end
 
   describe Clap::Exporter::Reactions::SampleSetupExporter do
+    let(:sample_process) { create(:sample_process) }
+    let(:reaction_process_vessel) do
+      create(:reaction_process_vessel, reaction_process: sample_process)
+    end
+    let(:setup) { described_class.new(sample_process).to_clap }
+
+    before do
+      sample_process.update!(reaction_process_vessel: reaction_process_vessel)
+    end
+
     it 'exports sample setup for a sample process' do
-      sample_process = create(:sample_process)
-      sample_process.update!(
-        reaction_process_vessel: create(:reaction_process_vessel, reaction_process: sample_process),
-      )
-
-      setup = described_class.new(sample_process).to_clap
-
       expect(setup.vessel_template.id).to eq(sample_process.reaction_process_vessel.vesselable.vessel_template.id)
     end
 

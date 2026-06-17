@@ -12,26 +12,31 @@ RSpec.describe 'Clap condition exporters' do
   end
 
   describe Clap::Exporter::Conditions::ReactionConditionsExporter do
-    it 'exports populated condition controls' do
-      conditions = described_class.new(
-        {
-          'TEMPERATURE' => { 'value' => '21', 'unit' => 'CELSIUS', 'additional_information' => 'AMBIENT' },
-          'PRESSURE' => { 'value' => '1013', 'unit' => 'MBAR' },
-          'PH' => { 'value' => '7', 'additional_information' => 'PH_ELECTRODE' },
-          'MOTION' => { 'motion_type' => 'STIR_BAR', 'speed' => { 'value' => '350' }, 'motion_mode' => 'NCIT:C70669' },
-          'IRRADIATION' => {
-            'value' => '365',
-            'unit' => 'NM',
-            'additional_information' => 'LED',
-            'power' => { 'value' => '10', 'unit' => 'WATT' },
-            'power_is_ramp' => true,
-            'power_end' => { 'value' => '20', 'unit' => 'WATT' },
-          },
-          'WAVELENGTHS' => { 'is_range' => true, 'peaks' => [{ 'value' => '365', 'unit' => 'NM' }] },
-          'MS_PARAMETER' => 'scan range',
+    let(:conditions) { described_class.new(workup).to_clap }
+    let(:workup) do
+      {
+        'TEMPERATURE' => { 'value' => '21', 'unit' => 'CELSIUS', 'additional_information' => 'AMBIENT' },
+        'PRESSURE' => { 'value' => '1013', 'unit' => 'MBAR' },
+        'PH' => { 'value' => '7', 'additional_information' => 'PH_ELECTRODE' },
+        'MOTION' => {
+          'motion_type' => 'STIR_BAR',
+          'speed' => { 'value' => '350' },
+          'motion_mode' => 'NCIT:C70669',
         },
-      ).to_clap
+        'IRRADIATION' => {
+          'value' => '365',
+          'unit' => 'NM',
+          'additional_information' => 'LED',
+          'power' => { 'value' => '10', 'unit' => 'WATT' },
+          'power_is_ramp' => true,
+          'power_end' => { 'value' => '20', 'unit' => 'WATT' },
+        },
+        'WAVELENGTHS' => { 'is_range' => true, 'peaks' => [{ 'value' => '365', 'unit' => 'NM' }] },
+        'MS_PARAMETER' => 'scan range',
+      }
+    end
 
+    it 'exports populated condition controls' do
       expect(conditions.to_h).to include(
         temperature_control: { temperature: { value: 21.0, unit: :CELSIUS }, temperature_control_type: :AMBIENT },
         pressure_control: { pressure: { value: 1013.0, unit: :MBAR } },
@@ -65,22 +70,25 @@ RSpec.describe 'Clap condition exporters' do
   end
 
   describe Clap::Exporter::Conditions::TemperatureControlExporter do
-    it 'falls back for unknown temperature control types' do
-      control = described_class.new({ 'value' => '21', 'unit' => 'CELSIUS', 'additional_information' => 'bad' }).to_clap
+    let(:control) do
+      described_class.new({ 'value' => '21', 'unit' => 'CELSIUS', 'additional_information' => 'bad' }).to_clap
+    end
 
+    it 'falls back for unknown temperature control types' do
       expect(control.temperature_control_type).to eq(:UNSPECIFIED)
     end
   end
 
   describe Clap::Exporter::Conditions::ReactionConditionLimitsExporter do
-    it 'exports duration and nested conditions' do
-      limits = described_class.new(
-        {
-          'duration' => 30_000,
-          'TEMPERATURE' => { 'value' => '40', 'unit' => 'CELSIUS', 'additional_information' => 'OIL_BATH' },
-        },
-      ).to_clap
+    let(:limits) { described_class.new(workup).to_clap }
+    let(:workup) do
+      {
+        'duration' => 30_000,
+        'TEMPERATURE' => { 'value' => '40', 'unit' => 'CELSIUS', 'additional_information' => 'OIL_BATH' },
+      }
+    end
 
+    it 'exports duration and nested conditions' do
       expect(limits.to_h).to eq(
         duration: { value: 30.0, unit: :SECOND },
         conditions: {
