@@ -3,7 +3,7 @@
 module Clap
   module Exporter
     class ReactionProcessExporter < Base
-      CURRENT_CLAP_VERSION = '1.0.2'
+      CURRENT_CLAP_VERSION = '1.0.3'
 
       def to_clap
         ::Clap::Reaction.new(
@@ -20,8 +20,8 @@ module Clap
 
       def reaction_id
         # Our CLAP relevant data is stored in the ReactionProcess <-1:1-> Reaction
-        # So to identify the reaction we actually use the reaction_process.id (which is a UUID)
-        # (instead of reaction.id which is a sequential Integer which we do not want to publish).
+        # To identify the reaction we actually use the reaction_process.id (which is a UUID)
+        # not the reaction.id which is a sequential Integer.
         # cbuggle, 2022-02-11.
         model.id
       end

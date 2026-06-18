@@ -243,7 +243,7 @@ class Material extends Component {
 
   materialStep(material) {
     return (
-      <OverlayTrigger placement="top" overlay={<Tooltip id="reactionStep">Reaction Step</Tooltip>}>
+      <OverlayTrigger placement="top" overlay={<Tooltip id="reactionStep">Reaction Process Step</Tooltip>}>
         <td>
           <NumeralInputWithUnitsCompo
             disabled
@@ -1471,9 +1471,6 @@ class Material extends Component {
       dropRef,
     } = this.props;
 
-    // const mw = material.decoupled ?
-    //   (material.molecular_mass) : (material.molecule && material.molecule.molecular_weight);
-    // const drySolvTooltip = <Tooltip>Dry Solvent</Tooltip>;
     const massBsStyle = material.amount_unit === 'g' ? 'primary' : 'default';
     const metricPrefixes = ['m', 'n', 'u'];
     const metric = (material.metrics && material.metrics.length > 2 && metricPrefixes.indexOf(material.metrics[0]) > -1) ? material.metrics[0] : 'm';
@@ -1483,39 +1480,39 @@ class Material extends Component {
       <div ref={dropRef} className={this.rowClassNames()}>
         {this.dragHandle()}
         {this.materialNameWithIupac(material)}
-        <div className="d-flex gap-2 py-1 align-items-start">
-          <div className="reaction-material__reaction-step-input">
-            {this.materialStep(material)}
-          </div>
-          <div className="reaction-material__intermediate-type-input">
-            {this.materialIntermediateType(material)}
+        <div className="d-flex flex-column gap-2 py-1">
+          <div className="d-flex gap-2 align-items-start">
+            <div className="reaction-material__reaction-step-data">
+              {this.materialStep(material)}
+            </div>
+            <div className="reaction-material__intermediate-type-data">
+              {this.materialIntermediateType(material)}
+            </div>
 
-          </div>
-
-          <div className="reaction-material__amount-input">
-            {console.log(material)}
-            {this.massField(material, metricPrefixes, reaction, massBsStyle, metric)}
-            {this.materialVolume(material, 'reaction-material__volume-input')}
-            <NumeralInputWithUnitsCompo
-              value={material.amount_mol}
-              className="reaction-material__molarity-input"
-              unit="mol"
-              metricPrefix={metricMol}
-              metricPrefixes={metricPrefixes}
-              precision={4}
-              disabled={!permitOn(reaction)
+            <div className="reaction-material__amount-data">
+              {this.massField(material, metricPrefixes, reaction, massBsStyle, metric)}
+              {this.materialVolume(material, 'reaction-material__volume-data')}
+              <NumeralInputWithUnitsCompo
+                value={material.amount_mol}
+                className="reaction-material__molarity-data"
+                unit="mol"
+                metricPrefix={metricMol}
+                metricPrefixes={metricPrefixes}
+                precision={4}
+                disabled={!permitOn(reaction)
                   || (!material.reference && this.props.lockEquivColumn)
-                || !material}
-              onChange={e => this.handleAmountUnitChange(e, material.amount_mol)}
-              onMetricsChange={this.handleMetricsChange}
-              variant={material.amount_unit === 'mol' ? 'primary' : 'light'}
-              size="sm"
+                  || !material}
+                onChange={e => this.handleAmountUnitChange(e, material.amount_mol)}
+                onMetricsChange={this.handleMetricsChange}
+                variant={material.amount_unit === 'mol' ? 'primary' : 'light'}
+                size="sm"
+              />
+            </div>
+            <DeleteButton
+              disabled={!permitOn(reaction)}
+              onClick={() => deleteMaterial(material)}
             />
           </div>
-          <DeleteButton
-            disabled={!permitOn(reaction)}
-            onClick={() => deleteMaterial(material)}
-          />
         </div>
       </div>
     );

@@ -25,7 +25,6 @@ module Clap
       }.stringify_keys
 
       def to_clap(starts_at:)
-        # TODO: What to do with unknown activity_names?
         return unless ACTION_EXPORTER[model.activity_name]
 
         ACTION_EXPORTER[model.activity_name].new(model).to_clap(starts_at: starts_at)

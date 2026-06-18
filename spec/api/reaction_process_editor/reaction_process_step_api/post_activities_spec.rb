@@ -72,4 +72,15 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.post /activities' do
       expect(created_action.reaction_process_step_id).to eq target_step.id
     end
   end
+
+  context 'with invalid data' do
+    it 'responds with unprocessable entity' do
+      allow(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendActivity).to receive(:execute!)
+        .and_return(instance_double(ReactionProcessEditor::ReactionProcessActivity, valid?: false, errors: {}))
+
+      post_action_request
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+  end
 end

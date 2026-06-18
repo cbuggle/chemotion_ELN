@@ -112,15 +112,15 @@ module Usecases
                 sample.position = idx if sample.position.nil?
                 sample.reference = false if material_group == 'solvent' && sample.reference == true
                 if sample.is_new
-                  if sample.parent_id && material_group != 'product'
-                    modified_sample = create_sub_sample(
-                      sample,
-                      fixed_label,
-                      weight_percentage_ref_record_target_amount,
-                    )
-                  else
-                    modified_sample = create_new_sample(sample, fixed_label, weight_percentage_ref_record_target_amount)
-                  end
+                  modified_sample = if sample.parent_id && material_group != 'product'
+                                      create_sub_sample(
+                                        sample,
+                                        fixed_label,
+                                        weight_percentage_ref_record_target_amount,
+                                      )
+                                    else
+                                      create_new_sample(sample, fixed_label, weight_percentage_ref_record_target_amount)
+                                    end
                 else
                   modified_sample = update_existing_sample(
                     sample,

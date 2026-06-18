@@ -20,8 +20,8 @@
 
 module ReactionProcessEditor
   class OntologyDeviceMethod < ApplicationRecord
-    belongs_to :ontology, class_name: '::ReactionProcessEditor::Ontology', optional: true
+    belongs_to :ontology, class_name: '::ReactionProcessEditor::Ontology'
 
-    validates :label, presence: true, uniqueness: { scope: [:ontology] }
+    validates :label, presence: true, uniqueness: { scope: [:ontology_id] }
   end
 end

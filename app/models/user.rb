@@ -75,7 +75,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable,
          :lockable, :omniauthable,
-         :jwt_authenticatable, 
+         :jwt_authenticatable,
          :two_factor_authenticatable,
          jwt_revocation_strategy: self,
          authentication_keys: [:login],
@@ -209,6 +209,7 @@ class User < ApplicationRecord
   def check_otp(otp_attempt)
     validate_and_consume_otp!(otp_attempt)
   end
+
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if (login = conditions.delete(:login))

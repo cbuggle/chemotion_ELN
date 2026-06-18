@@ -22,26 +22,24 @@ module Entities
         # rubocop:disable Metrics/AbcSize
         def forms_options(reaction_process)
           {
-            ADD: SelectOptions::Forms::Add.new.select_options,
-            ANALYSIS_CHROMATOGRAPHY: SelectOptions::Forms::Analysis::Chromatography.new.select_options,
-            ANALYSIS_SPECTROSCOPY: SelectOptions::Forms::Analysis::Spectroscopy.new.select_options,
+            ADD: Forms::Add.new.select_options,
+            ANALYSIS_CHROMATOGRAPHY: Forms::Analysis::Chromatography.new.select_options,
+            ANALYSIS_SPECTROSCOPY: Forms::Analysis::Spectroscopy.new.select_options,
 
-            CONDITION: SelectOptions::Forms::Condition.new.select_options,
-            EVAPORATION: SelectOptions::Forms::Evaporation.new.select_options,
-            MOTION: SelectOptions::Forms::Motion.new.select_options,
-            CENTRIFUGATION: SelectOptions::Forms::Purification::Centrifugation.new.select_options,
-            CHROMATOGRAPHY: SelectOptions::Forms::Purification::Chromatography.new.select_options,
-            CRYSTALLIZATION: SelectOptions::Forms::Purification::Crystallization.new.select_options,
-            EXTRACTION: SelectOptions::Forms::Purification::Extraction
-              .new.select_options_for(reaction_process: reaction_process),
-            FILTRATION: SelectOptions::Forms::Purification::Filtration
-              .new.select_options_for(reaction_process: reaction_process),
+            CONDITION: Forms::Condition.new.select_options,
+            EVAPORATION: Forms::Evaporation.new.select_options,
+            MOTION: Forms::Motion.new.select_options,
+            CENTRIFUGATION: Forms::Purification::Centrifugation.new.select_options,
+            CHROMATOGRAPHY: Forms::Purification::Chromatography.new.select_options,
+            CRYSTALLIZATION: Forms::Purification::Crystallization.new.select_options,
+            EXTRACTION: Forms::Purification::Extraction.new.select_options_for(reaction_process: reaction_process),
+            FILTRATION: Forms::Purification::Filtration.new.select_options_for(reaction_process: reaction_process),
 
-            REMOVE: SelectOptions::Forms::Remove.new.select_options,
-            SAVE: SelectOptions::Forms::SaveSample.new.select_options,
-            TRANSFER: SelectOptions::Forms::Transfer.new.select_options_for(reaction_process: reaction_process),
-            WAIT: SelectOptions::Forms::Wait.new.select_options,
-            POOLING_GROUP: SelectOptions::Forms::PoolingGroups.new.select_options,
+            REMOVE: Forms::Remove.new.select_options,
+            SAVE: Forms::SaveSample.new.select_options,
+            TRANSFER: Forms::Transfer.new.select_options_for(reaction_process: reaction_process),
+            WAIT: Forms::Wait.new.select_options,
+            POOLING_GROUP: Forms::PoolingGroups.new.select_options,
           }
         end
         # rubocop:enable Metrics/AbcSize

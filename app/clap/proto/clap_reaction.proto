@@ -9,8 +9,8 @@
 // to store reaction process data describing the automatable process of a
 // chemical reaction tailored to the actual (configurable) laboratory setup.
 //
-// v1.0.2
-// (13.03.2026)
+// v1.0.3
+// (18.06.2026)
 //
 // This format has been inspired by and contains a few concepts of
 // the Open Reaction Database (ORD) schema. We gratefully pay tribute to the ORD
@@ -207,7 +207,7 @@ message ReactionProcessAction {
       ReactionConditions starter_conditions = 1;
       repeated ReactionConditionLimits limits = 2;
     }
-    message FromFraction { repeated PoolingFraction fraction = 1; }
+    message FromFraction { PoolingFraction consumed_fraction = 1; }
 
     oneof origin {
       FromReaction from_reaction = 1;
@@ -215,8 +215,9 @@ message ReactionProcessAction {
       FromReaction from_sample = 3;
       FromMethod from_method = 4;
       FromMethod stepwise = 5;
-      FromFraction from_fraction = 6;
+      FromFraction solvent_from_fraction = 6;
       FromDiverseSolvents diverse_solvents = 7;
+      
     }
   }
 

@@ -1,4 +1,3 @@
-
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/BlockLength
@@ -20,7 +19,9 @@ Rails.application.routes.draw do
       put 'users' => 'devise/registrations#update', :as => 'user_registration'
     end
   else
-    devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: 'users/omniauth', sessions: 'users/sessions' }
+    devise_for :users,
+               controllers: { registrations: 'users/registrations', omniauth_callbacks: 'users/omniauth',
+                              sessions: 'users/sessions' }
 
     devise_scope :user do
       defaults format: :json do

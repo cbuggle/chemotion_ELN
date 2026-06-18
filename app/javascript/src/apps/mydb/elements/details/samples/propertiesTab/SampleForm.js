@@ -839,7 +839,7 @@ export default class SampleForm extends React.Component {
     const weightPercentageSample = sample.weight_percentage > 0;
     const overlayMessage = weightPercentageSample
       ? 'Amount field is disabled for samples that belong to reactions with weight percentage. '
-        + 'To change the amount, please edit the material sample amount field using weight percentage field in the reaction scheme tab and save the reaction.'
+      + 'To change the amount, please edit the material sample amount field using weight percentage field in the reaction scheme tab and save the reaction.'
       : null;
     let metric;
     if (unit === 'l') {
@@ -1173,24 +1173,21 @@ export default class SampleForm extends React.Component {
   intermediateTypeInput() {
     const { sample } = this.props;
     const { selectedIntermediateType } = this.state;
-    console.log("intermediateTypeInput")
-    console.log(sample)
-    console.log(sample.intermediate_type)
 
     return (
-      selectedIntermediateType ?
-        <Form.Group>
-          <Form.Label>Intermediate type</Form.Label>
-          <Select
-            name="sampleType"
-            clearable={false}
-            disabled={!sample.can_update}
-            value={selectedIntermediateType}
-            onChange={(value) => this.handleIntermediateTypeChanged(value)}
-            options={IntermediateTypeOptions}
-          />
-        </Form.Group>
-        : <>No IntermediateType</>
+      <Form.Group>
+        <Form.Label>Intermediate type</Form.Label>
+        <Select
+          name="sampleType"
+          clearable={false}
+          disabled={!sample.can_update}
+          value={selectedIntermediateType}
+          onChange={(value) => this.handleIntermediateTypeChanged(value)}
+          options={IntermediateTypeOptions}
+          isDisabled={!selectedIntermediateType}
+          placeholder={'No IntermediateType'}
+        />
+      </Form.Group>
     );
   }
 
@@ -1419,6 +1416,6 @@ SampleForm.propTypes = {
 SampleForm.defaultProps = {
   enableSampleDecoupled: false,
   onDecoupleChanged: null,
-  setComponentDeletionLoading: () => {},
-  setMoleculeLoading: () => {},
+  setComponentDeletionLoading: () => { },
+  setMoleculeLoading: () => { },
 };

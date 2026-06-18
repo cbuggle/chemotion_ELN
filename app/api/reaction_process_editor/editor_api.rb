@@ -17,7 +17,7 @@ module ReactionProcessEditor
     desc 'get default_conditions.'
     get :default_conditions do
       { default_conditions: {
-        global: SELECT_OPTIONS::Forms::Condition::GLOBAL_DEFAULTS,
+        global: ::Entities::ReactionProcessEditor::Constants::Conditions::GLOBAL_DEFAULTS,
         user: current_user.reaction_process_defaults&.default_conditions.to_h,
         select_options: {
           FORMS: { CONDITION: SELECT_OPTIONS::Forms::Condition.new.select_options },

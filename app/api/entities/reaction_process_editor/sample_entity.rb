@@ -14,7 +14,6 @@ module Entities
 
       expose :target_amount
       expose :amounts
-      expose :svg_file
 
       expose :intermediate_type
 

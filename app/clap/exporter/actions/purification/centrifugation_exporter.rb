@@ -11,9 +11,12 @@ module Clap
             {
               centrifugation:
               ReactionProcessAction::ActionCentrifugation.new({
-                                                                pressure: Metrics::PressureExporter.new(workup['PRESSURE']).to_clap,
-                                                                temperature: Metrics::TemperatureExporter.new(workup['TEMPERATURE']).to_clap,
-                                                                speed: Metrics::MotionExporter.new(workup['SPEED']).to_clap,
+                                                                pressure: Metrics::PressureExporter
+                                                                .new(workup['PRESSURE']).to_clap,
+                                                                temperature: Metrics::TemperatureExporter
+                                                                .new(workup['TEMPERATURE']).to_clap,
+                                                                speed: Metrics::MotionExporter
+                                                                  .new(workup['SPEED']).to_clap,
                                                               }),
             }
           end

@@ -23,8 +23,6 @@ module Medium
     # be used in the process editor.
     # We alias them in Medium as well because we do not want to distinguish models all the time.
 
-
-    # TODO: Align attribute "name" to "label" as in Ontolgies?
     alias_attribute :preferred_label, :name
     alias_attribute :short_label, :name
     alias_attribute :external_label, :name

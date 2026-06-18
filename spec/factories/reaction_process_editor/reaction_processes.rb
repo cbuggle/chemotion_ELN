@@ -25,7 +25,9 @@ FactoryBot.define do
     reaction { association :valid_reaction }
     user
   end
+
   factory :sample_process, class: 'ReactionProcessEditor::ReactionProcess' do
+    reaction { nil }
     sample
     user
   end

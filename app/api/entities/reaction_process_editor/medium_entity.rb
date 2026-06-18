@@ -11,7 +11,7 @@ module Entities
         object.name
       end
       # :label, :short_label for compatibitility with SampleEntity.
-      # We would need probably only one of them.
+      # We would need probably only 'label'.
     end
   end
 end

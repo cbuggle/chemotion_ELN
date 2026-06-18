@@ -35,12 +35,6 @@ module Clap
           Clap::ReactionRole::ReactionRoleType::UNSPECIFIED
         end
 
-        def reaction_role_type
-          return workup['acts_as'] if action.adds_substance?
-
-          ReactionsSample.find_by(reaction: reaction, sample: sample)&.intermediate_type if action.saves_sample?
-        end
-
         def label
           if action.sample
             action.sample.preferred_label || action.sample.short_label
@@ -97,20 +91,3 @@ module Clap
     end
   end
 end
-
-# ReactionRole.ReactionRoleType reaction_role = 1;
-# string label = 2;
-# string name = 3;
-# // Samples may be defined through an Ontology which we reference here.
-# Ontology ontology = 4;
-
-# // The preparations for this Sample before the actual Reaction process.
-# repeated SamplePreparation preparations = 5;
-# Amount amount = 6;
-# optional Percentage percentage = 7;
-# Percentage purity = 8;
-# // Optional flag when adding solvents.
-# optional bool is_waterfree_solvent = 9;
-
-# // The location where the Sample is stored in the laboratory.
-# string location = 10;

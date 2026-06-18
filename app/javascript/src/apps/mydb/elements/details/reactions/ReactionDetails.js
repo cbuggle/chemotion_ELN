@@ -54,7 +54,6 @@ import ReactionSchemeGraphic from 'src/apps/mydb/elements/details/reactions/Reac
 import WeightPercentageReactionActions from 'src/stores/alt/actions/WeightPercentageReactionActions';
 import isEqual from 'lodash/isEqual';
 import DocumentationButton from 'src/components/common/DocumentationButton';
-import ReactionEditorLink from './reactionProcessEditor/ReactionEditorLink';
 
 const productLink = (product, active) => (
   <span>

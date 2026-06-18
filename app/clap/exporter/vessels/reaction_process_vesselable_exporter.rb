@@ -37,7 +37,7 @@ module Clap
         def vessel_instance(vessel)
           return unless vessel
 
-          Clap::Vessel.new(
+          Clap::VesselTemplate::Vessel.new(
             id: vessel.id,
             label: vessel.short_label,
             description: vessel.description,

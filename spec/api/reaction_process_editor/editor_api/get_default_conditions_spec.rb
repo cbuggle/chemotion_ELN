@@ -14,7 +14,7 @@ describe ReactionProcessEditor::EditorAPI, '.get /default_conditions' do
 
   let(:expected_default_conditions) do
     { default_conditions: {
-      global: select_options::Forms::Condition::GLOBAL_DEFAULTS,
+      global: Entities::ReactionProcessEditor::Constants::Conditions::GLOBAL_DEFAULTS,
       user: {},
       select_options: { FORMS: { CONDITION: select_options::Forms::Condition.new.select_options },
                         samples: Array },

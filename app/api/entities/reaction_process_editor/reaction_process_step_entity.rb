@@ -27,7 +27,7 @@ module Entities
       end
 
       def activities
-        object.reaction_process_activities.order('position')
+        object.reaction_process_activities.order(:position)
       end
 
       def reaction_id

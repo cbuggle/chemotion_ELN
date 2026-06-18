@@ -42,7 +42,8 @@ RSpec.describe ReactionProcessEditor::ReactionProcess do
       { 'EQUIPMENT' => {}, 'IRRADIATION' => {}, 'MOTION' => {},
         'PH' => { 'unit' => 'PH', 'value' => 7 },
         'PRESSURE' => { 'unit' => 'MBAR', 'value' => '1013' },
-        'TEMPERATURE' => { 'unit' => 'CELSIUS', 'value' => '21' }.deep_stringify_keys }
+        'TEMPERATURE' => { 'unit' => 'CELSIUS', 'value' => '21' },
+        'automation_mode' => 'NCIT:C70669' }
     end
 
     describe '#user_default_conditions' do
@@ -86,13 +87,63 @@ RSpec.describe ReactionProcessEditor::ReactionProcess do
   end
 
   describe '#saved_sample_ids' do
-    it 'includes actions sample_ids' do
+    let(:activities) { create_list(:reaction_process_activity_save, 3) }
+
+    before do
       reaction_process
       create_default(:reaction_process_step)
-      activities = create_list(:reaction_process_activity_save, 3)
+      activities
+    end
+
+    it 'includes actions sample_ids' do
       expect(reaction_process.saved_sample_ids).to include(
         activities[0].sample.id, activities[1].sample.id, activities[2].sample.id
       )
+    end
+  end
+
+  describe '#next_automation_ordinal' do
+    it 'increments and persists automation_ordinal' do
+      expect { reaction_process.next_automation_ordinal }.to(
+        change { reaction_process.reload.automation_ordinal }.from(0).to(1),
+      )
+    end
+
+    it 'returns the next automation ordinal' do
+      expect(reaction_process.next_automation_ordinal).to eq(1)
+    end
+  end
+
+  describe '#sample_reaction' do
+    let(:sample_process) { create(:sample_process, sample: create(:valid_sample)) }
+    let(:reaction) { create(:reaction) }
+
+    before do
+      allow(sample_process.sample).to receive(:reactions).and_return([reaction])
+    end
+
+    it 'returns the reaction associated with the sample' do
+      expect(sample_process.sample_reaction).to eq(reaction)
+    end
+  end
+
+  describe '#clap_filename' do
+    let(:sample_process) { create(:reaction_process, sample: create(:valid_sample), reaction: nil) }
+
+    it 'builds a filename from the reaction when present' do
+      travel_to Time.zone.local(2026, 6, 16) do
+        expect(reaction_process.clap_filename).to eq(
+          "2026-06-16-Reaction-#{reaction_process.reaction.id}-#{reaction_process.reaction.short_label}.clap",
+        )
+      end
+    end
+
+    it 'builds a filename from the sample when no reaction is present' do
+      travel_to Time.zone.local(2026, 6, 16) do
+        expect(sample_process.clap_filename).to eq(
+          "2026-06-16-Sample-#{sample_process.sample.id}-#{sample_process.sample.short_label}.clap",
+        )
+      end
     end
   end
 end

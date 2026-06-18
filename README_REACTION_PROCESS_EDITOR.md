@@ -25,33 +25,33 @@ For the proper functioning of the Frontend Editor
 * The RPE Frontend Hostname needs to be set as ENV['REACTION_PROCESS_EDITOR_HOSTNAME'] which needs to be defined in `.env`
 * (`export REACTION_PROCESS_EDITOR_HOSTNAME="http://localhost:4000"` in your shell will also work).
 
-#### SFTP Sync
+#### Ontologies Editor & Import
 
-The devices and their characteristics that can be selected in certain actions (e.g. Purify/Chromatography) are defined in CSV files lying in a designated directory.
-We may either place these files manually (see below) or have them synced from a designated SFTP server.
+The RPE makes heavy use of so called Ontologies. 
 
-The delayed job SynchronizeAutomationDevicesFilesJob will take care of syncing the actual equipment in the automation lab via SFTP. This jobs needs to be configured in `datacollector.yml` as such:
+An Ontology can be an entity of any kind (e.g. Device, Vessel, Substance, Process, AutomationMode, etc.) and is a globally defined concept with lots of Ontologies defined in a globally unique database. 
 
-```json
-development:
-  :services:
-    - :name: 'syncautomationdevicesfiles'
-      :every: 1
-```
+See https://www.ebi.ac.uk/ols4/ontologies/chmo for an introduction.
 
-It is fully implemented and will become active as soon as it these relevant `.env` settings are provided.
+The Ontology AR-model stores the ontology_id and specifies what roles an Ontology can serve along with (optional) dependencies of other selected Ontologies. 
 
-```env
-REACTION_PROCESS_EDITOR_DEVICES_SFTP_HOSTNAME='sftp-server-hostname'
-REACTION_PROCESS_EDITOR_DEVICES_SFTP_USERNAME=’sftp-user'
-REACTION_PROCESS_EDITOR_DEVICES_SFTP_PASSWORD=’sftp-password'
-REACTION_PROCESS_EDITOR_DEVICES_SFTP_DIR='./reaction-process-editor/‘  // remote directory, optional
-```
+This directly translates to in which forms and in which select-fields an Ontology is provided and which interdependencies are (dynamically) reflected.  I.E. certain Equipment (e.g. "Cannula") depends on type of an Action (e.g. "Liquid Transfer"). Certain Detectors are only available for certain actions (e.g. "BID", "EI-MS", "FID" only for "Gas Chromatography") and so on. 
+
+These dependencies are stored in a sophisticated and rather complicated historically grown format. 
+
+Recently we have introduced an OntologyEditor in the RPE so the Ontologies can now easily be managed on th web page.
+
+
+### Manual Ontology Import (Legacy / mostly obsolete)
+
+Historically we placed CSV files containing those complicated Ontology definitions in a dedicated directory and imported them manually. An SFTP sync with cron job import had been implemented but never been used and now removed. 
+
+The Importer is still present `Import::ReactionProcessEditor::ImportOntologies` and is now only used for seeding (with very reasonable data checked in) or very rarely for manual interventions. 
 
 Additionally there are the required settings:
 
 ```env
-REACTION_PROCESS_EDITOR_DATA_DIR='tmp/reaction-process-editor'
+REACTION_PROCESS_EDITOR_DATA_DIR='data/reaction-process-editor'
 REACTION_PROCESS_EDITOR_DEVICES_FILENAME="ChemASAP-Devices.csv"
 REACTION_PROCESS_EDITOR_DEVICENAME_PREFIX="ChemASAP_"
 REACTION_PROCESS_EDITOR_DEVICE_METHODS_SUFFIX='.lcm'
@@ -59,16 +59,14 @@ REACTION_PROCESS_EDITOR_DEVICE_METHODS_SUFFIX='.lcm'
 
 which are tailored to parsing the CSV files and should not be altered (except for maybe the DATA_DIR which was chosen to match the existing datacollector directories consistently).
 
-Explanations:
-`REACTION_PROCESS_EDITOR_DEVICES_SFTP_DIR` is the remote directory on the SFTP server where the files are located (root dir if not set).
-
-`REACTION_PROCESS_EDITOR_DATA_DIR` is the local directory where the files are stored. If / as long as the SFTP sync is not activated, we will need to place the CSV manually in the respective directory (else the select options in the UI will remain empty).
+`REACTION_PROCESS_EDITOR_DATA_DIR` is the local directory where the CSV files need to be placed manually.
 
 The data needs to be structured as follows.
 `Devices.csv` carrying the index of the devices and their characteristics.
 A subdirectory `./devices` with the files of the individual devices defining their individual methods.
+
 This data is created externally by the automation lab team and we do not have to cope with it here.
-For details contact Patrick Hodapp <patrick.hodapp@kit.edu>.
+The whole process is now basically obsoleted. If you still need to know details, contact Patrick Hodapp <patrick.hodapp@kit.edu>.
 
 ### Frontend
 

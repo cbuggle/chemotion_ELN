@@ -57,13 +57,6 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  #  TurboSprockets.configure do |config|
-  #    config.precompiler.enabled = false
-  #    config.preloader.enabled = false
-  #    config.preloader.worker_count = 3
-  #    config.precompiler.worker_count = 3
-  #  end
-
   config.after_initialize do
     Bullet.enable = true
     Bullet.alert = true

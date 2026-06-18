@@ -1,0 +1,18 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+RSpec.describe Clap::Exporter::Actions::DiscardActionExporter do
+  subject(:discard) { described_class.new(action).to_clap(starts_at: 0).discard }
+
+  let(:action) { create(:reaction_process_activity, activity_name: 'DISCARD') }
+  let(:fraction) { create(:fraction, consuming_action: action) }
+
+  before do
+    fraction
+  end
+
+  it 'exports the consumed fraction' do
+    expect(discard.fraction.parent_action_id).to eq(fraction.parent_action_id)
+  end
+end

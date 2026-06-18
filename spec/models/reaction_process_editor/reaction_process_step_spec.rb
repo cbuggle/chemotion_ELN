@@ -21,6 +21,8 @@ require 'rails_helper'
 RSpec.describe ReactionProcessEditor::ReactionProcessStep do
   subject(:process_step) { create_default(:reaction_process_step) }
 
+  let(:siblings) { create_list(:reaction_process_step, 5) }
+
   it_behaves_like 'acts_as_paranoid soft-deletable model', :reaction_process_step
 
   it { is_expected.to belong_to(:reaction_process) }
@@ -32,8 +34,7 @@ RSpec.describe ReactionProcessEditor::ReactionProcessStep do
 
   it '#siblings' do
     create_default(:reaction_process)
-    siblings = create_list(:reaction_process_step, 5)
-    expect(process_step.siblings).to eq(siblings.push(process_step))
+    expect(process_step.siblings).to eq([process_step, *siblings])
   end
 
   it '#duration' do
@@ -46,12 +47,13 @@ RSpec.describe ReactionProcessEditor::ReactionProcessStep do
   end
 
   describe '#label' do
+    let(:other_step) { create(:reaction_process_step, name: 'Next Step') }
+
     it 'has numbering' do
       expect(process_step.label).to eq('1/1 Example Step')
     end
 
     it 'has name' do
-      other_step = create(:reaction_process_step, name: 'Next Step')
       expect(other_step.label).to eq('1/1 Next Step')
     end
   end
@@ -66,20 +68,19 @@ RSpec.describe ReactionProcessEditor::ReactionProcessStep do
       { 'EQUIPMENT' => {}, 'IRRADIATION' => {}, 'MOTION' => {},
         'PH' => { 'unit' => 'PH', 'value' => 7 },
         'PRESSURE' => { 'unit' => 'MBAR', 'value' => '1013' },
-        'TEMPERATURE' => { 'unit' => 'CELSIUS', 'value' => '21' }.deep_stringify_keys }
+        'TEMPERATURE' => { 'unit' => 'CELSIUS', 'value' => '21' },
+        'automation_mode' => 'NCIT:C70669' }
     end
 
     let(:expected_final_conditions) do
       { TEMPERATURE: { value: '200', unit: 'KELVIN' },
         PH: { value: '5', unit: 'PH' },
         PRESSURE: { value: '1013', unit: 'MBAR' },
+        'automation_mode' => 'NCIT:C70669',
         'EQUIPMENT' => {}, 'IRRADIATION' => {}, 'MOTION' => {} }.deep_stringify_keys
     end
-    let(:expected_activity_preconditions) do
-      [{ TEMPERATURE: { value: '1000', unit: 'CELSIUS' },
-         PH: { value: '5', unit: 'PH' },
-         PRESSURE: { value: '1013', unit: 'MBAR' }.deep_stringify_keys }]
-    end
+
+    let(:activity_preconditions) { process_step.activity_preconditions }
 
     before do
       process_step
@@ -88,16 +89,27 @@ RSpec.describe ReactionProcessEditor::ReactionProcessStep do
       create(:reaction_process_activity_condition, workup: { PH: { value: '5', unit: 'PH' } })
     end
 
-    it '#activity_preconditions' do
-      expect(
-        process_step.activity_preconditions,
-      ).to match([
-                   global_defaults,
-                   hash_including({ TEMPERATURE: { value: '100', unit: 'CELSIUS' } }.deep_stringify_keys),
-                   hash_including({ TEMPERATURE: { value: '200', unit: 'KELVIN' } }.deep_stringify_keys),
-                   hash_including({ PH: { value: '5', unit: 'PH' },
-                                    TEMPERATURE: { value: '200', unit: 'KELVIN' } }.deep_stringify_keys),
-                 ])
+    it 'inits activity_preconditions with global defaults' do
+      expect(activity_preconditions.first).to eq(global_defaults)
+    end
+
+    it 'reflects the first temperature condition in activity_preconditions' do
+      expect(activity_preconditions.second).to include(
+        { TEMPERATURE: { value: '100', unit: 'CELSIUS' } }.deep_stringify_keys,
+      )
+    end
+
+    it 'reflects the second temperature condition in activity_preconditions' do
+      expect(activity_preconditions.third).to include(
+        { TEMPERATURE: { value: '200', unit: 'KELVIN' } }.deep_stringify_keys,
+      )
+    end
+
+    it 'retains the latest temperature into later activity_preconditions' do
+      expect(activity_preconditions.fourth).to include(
+        { PH: { value: '5', unit: 'PH' },
+          TEMPERATURE: { value: '200', unit: 'KELVIN' } }.deep_stringify_keys,
+      )
     end
 
     it '#final_conditions' do
@@ -112,6 +124,8 @@ RSpec.describe ReactionProcessEditor::ReactionProcessStep do
     let!(:additives) { create_list(:reaction_process_activity_add_additive, 2).map(&:medium) }
     let!(:diverse_solvents) { create_list(:reaction_process_activity_add_diverse_solvent, 2).map(&:medium) }
     let!(:media) { create_list(:reaction_process_activity_add_medium, 2).map(&:medium) }
+
+    let(:modifiers) { create_list(:modifier, 2) }
 
     it 'Solvents' do
       expect(process_step.added_materials('SOLVENT')).to match_array solvents
@@ -129,8 +143,49 @@ RSpec.describe ReactionProcessEditor::ReactionProcessStep do
       expect(process_step.added_materials('MEDIUM')).to match_array media
     end
 
+    it 'Modifiers' do
+      modifiers.each do |modifier|
+        create(:reaction_process_activity_add_modifier, reaction_process_step: process_step, medium: modifier)
+      end
+
+      expect(process_step.added_materials('MODIFIER')).to match_array modifiers
+    end
+
     it '[] on nonexisting key' do
       expect(process_step.added_materials('NONEXISTING')).to eq []
+    end
+  end
+
+  describe '#predecessors' do
+    let(:reaction_process) { create(:reaction_process) }
+    let(:first_step) { create(:reaction_process_step, reaction_process: reaction_process, position: 0) }
+    let(:second_step) { create(:reaction_process_step, reaction_process: reaction_process, position: 1) }
+    let(:third_step) { create(:reaction_process_step, reaction_process: reaction_process, position: 2) }
+
+    before do
+      first_step
+      second_step
+      third_step
+    end
+
+    it 'returns earlier siblings' do
+      expect(third_step.predecessors).to eq([first_step, second_step])
+    end
+  end
+
+  describe '#mounted_equipment' do
+    it 'uses EQUIPMENT values from condition activities' do
+      create(:reaction_process_activity_condition, reaction_process_step: process_step,
+                                                   workup: { EQUIPMENT: { value: 'REACTOR' } })
+
+      expect(process_step.mounted_equipment).to eq(['REACTOR'])
+    end
+
+    it 'uses equipment values from non-condition activities' do
+      create(:reaction_process_activity, reaction_process_step: process_step,
+                                         workup: { equipment: ['PUMP'] })
+
+      expect(process_step.mounted_equipment).to eq(['PUMP'])
     end
   end
 end

@@ -32,4 +32,15 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put /automation_re
       .to have_received(:execute!)
       .with(activity: activity, response_json: an_instance_of(Tempfile))
   end
+
+  context 'when automation response handling fails' do
+    it 'responds with unprocessable entity' do
+      allow(Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationResponse)
+        .to receive(:execute!).and_raise(StandardError)
+
+      put_activity_request
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+  end
 end

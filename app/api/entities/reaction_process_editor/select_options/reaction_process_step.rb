@@ -4,8 +4,7 @@ module Entities
   module ReactionProcessEditor
     module SelectOptions
       class ReactionProcessStep < Base
-        PURIFICATION_ACTION_NAMES = %w[PURIFICATION EXTRACTION CHROMATOGRAPHY
-                                       CRYSTALLIZATION FILTRATION CENTRIFUGATION].freeze
+        PURIFICATION_ACTION_NAMES = %w[CENTRIFUGATION CHROMATOGRAPHY CRYSTALLIZATION EXTRACTION FILTRATION].freeze
 
         def select_options_for(reaction_process_step:)
           {

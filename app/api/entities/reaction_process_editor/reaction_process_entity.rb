@@ -3,9 +3,7 @@
 module Entities
   module ReactionProcessEditor
     class ReactionProcessEntity < Grape::Entity
-      SELECT_OPTIONS = SelectOptions::Models::Custom
-
-      expose :id, :short_label, :sample_setup
+      expose :id, :short_label, :sample_setup, :initial_conditions
 
       expose :reaction_process_steps, using: 'Entities::ReactionProcessEditor::ReactionProcessStepEntity'
       expose :samples_preparations, using: 'Entities::ReactionProcessEditor::SamplePreparationEntity'
@@ -29,7 +27,7 @@ module Entities
       def reaction_process_steps
         @reaction_process_steps ||= object.reaction_process_steps
                                           .includes(%i[reaction_process_activities reaction_process_vessel])
-                                          .order('position')
+                                          .order(:position)
       end
 
       def initial_sample_transfers
@@ -43,7 +41,7 @@ module Entities
       end
 
       def samples_preparations
-        object.samples_preparations.includes([sample: %i[residues]]).order('created_at')
+        object.samples_preparations.includes([{ sample: %i[residues] }]).order(:created_at)
       end
 
       def provenance
@@ -58,7 +56,7 @@ module Entities
       end
 
       def user_reaction_default_conditions
-        SelectOptions::Forms::Condition::GLOBAL_DEFAULTS
+        ::Entities::ReactionProcessEditor::Constants::Conditions::GLOBAL_DEFAULTS
           .merge(object.user_default_conditions)
       end
 

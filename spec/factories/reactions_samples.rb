@@ -23,7 +23,7 @@ FactoryBot.define do
     factory :reactions_product_sample, class: 'ReactionsProductSample'
 
     factory :reactions_intermediate_sample, class: 'ReactionsIntermediateSample' do
-      intermediate_type {'Intermediate'}
+      intermediate_type { 'Intermediate' }
     end
   end
 end

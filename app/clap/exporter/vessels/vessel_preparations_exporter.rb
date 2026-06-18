@@ -19,7 +19,7 @@ module Clap
         def preparation_type(preparation)
           Clap::VesselPreparation::VesselPreparationType.const_get(preparation)
         rescue StandardError
-          Clap::VesselPreparation::VesselPreparationType.UNSPECIFIED
+          Clap::VesselPreparation::VesselPreparationType::UNSPECIFIED
         end
       end
     end

@@ -1,37 +1,37 @@
 module UnitConvertable
   extend ActiveSupport::Concern
 
-  def convert_to_unit amount_g, unit, m = false
-    val = if self.contains_residues
-      case unit
-      when 'g'
-        amount_g
-      when 'mol'
-        (self.loading * amount_g) / 1000.0 # loading is always in mmol/g
-      else
-        amount_g
-      end
-    else
-      case unit
-      when 'g'
-        amount_g
-      when 'l'
-        if has_molarity
-          mol_weight = (decoupled? ? molecular_mass : molecule&.molecular_weight) || 0
-          secure_purity = purity || 1.0
-          mol_weight.zero? ? 0 : (amount_g * secure_purity) / (molarity_value * mol_weight)
-        elsif has_density
-          amount_g / (density * 1000)
-        else
-          0
-        end
-      when 'mol'
-        mol_weight = (decoupled? ? molecular_mass : molecule&.molecular_weight) || 0
-        mol_weight.zero? ? 0 : amount_g * (purity || 1.0) / mol_weight
-      else
-        amount_g
-      end
-    end
+  def convert_to_unit(amount_g, unit, m = false)
+    val = if contains_residues
+            case unit
+            when 'g'
+              amount_g
+            when 'mol'
+              (loading * amount_g) / 1000.0 # loading is always in mmol/g
+            else
+              amount_g
+            end
+          else
+            case unit
+            when 'g'
+              amount_g
+            when 'l'
+              if has_molarity
+                mol_weight = (decoupled? ? molecular_mass : molecule&.molecular_weight) || 0
+                secure_purity = purity || 1.0
+                mol_weight.zero? ? 0 : (amount_g * secure_purity) / (molarity_value * mol_weight)
+              elsif has_density
+                amount_g / (density * 1000)
+              else
+                0
+              end
+            when 'mol'
+              mol_weight = (decoupled? ? molecular_mass : molecule&.molecular_weight) || 0
+              mol_weight.zero? ? 0 : amount_g * (purity || 1.0) / mol_weight
+            else
+              amount_g
+            end
+          end
 
     if m
       (val || 0) * 1000
@@ -115,34 +115,31 @@ module UnitConvertable
 
   def amount_mmol(type = 'target', gas_type = nil)
     value = self["#{type}_amount_value"] || 0.0
-    unit = self["#{type}_amount_unit"] || 'mmol'
+    unit = self["#{type}_amount_unit"]
     return value * 1000 if unit == 'mol'
-    return value if unit == 'mmol'
-    return value / 1000 if unit == 'mcmol'
-    return value / (1000 * 1000) if unit == 'nmol'
 
     if gas_type == 'feedstock' && %w[l g].include?(unit)
       calculate_feedstock_mmol(value, unit)
     else
-      val_g = self.convert_to_gram(value, unit)
-      self.convert_to_unit(val_g, 'mol', true)
+      val_g = convert_to_gram(value, unit)
+      convert_to_unit(val_g, 'mol', true)
     end
   end
 
   def amount_mg(type = 'target')
     value = self["#{type}_amount_value"] || 0.0
     unit = self["#{type}_amount_unit"]
-    val_g = convert_to_gram(value, unit) * 1000.0
+    convert_to_gram(value, unit) * 1000.0
   end
 
   def amount_g(type = 'target')
     value = self["#{type}_amount_value"] || 0.0
     unit = self["#{type}_amount_unit"]
-    val_g = convert_to_gram(value, unit)
+    convert_to_gram(value, unit)
   end
 
   def amount_ml(type = 'target')
-    return if self.molecule&.is_partial
+    return if molecule&.is_partial
 
     value = self["#{type}_amount_value"] || 0.0
     unit = self["#{type}_amount_unit"]

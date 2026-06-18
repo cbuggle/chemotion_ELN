@@ -31,8 +31,6 @@ gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 gem 'ed25519'
 
-gem 'execjs'
-
 gem 'faker', require: false
 gem 'faraday'
 gem 'faraday-follow_redirects'
@@ -41,7 +39,7 @@ gem 'font-awesome-rails'
 gem 'fugit'
 gem 'fx'
 
-# Google protocol buffers for use in ORD.
+# Google protocol buffers for CLAP data format and export.
 gem 'google-protobuf'
 
 gem 'grape'

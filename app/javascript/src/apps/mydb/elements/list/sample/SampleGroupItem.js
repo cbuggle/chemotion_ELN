@@ -101,7 +101,6 @@ function SampleGroupItem({ sample, showDetails }) {
         </div>
         {showDecoupledIcon(sample)}
         <TopSecretIcon element={sample} />
-
       </div>
     </div>
   );

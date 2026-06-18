@@ -8,15 +8,17 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.put' do
   subject(:api_call) do
     put("/api/v1/reaction_process_editor/reaction_process_steps/#{reaction_process_step.id}",
         params: { reaction_process_step: {
-          name: 'New Step Name', locked: true,
+          name: step_name_param, locked: true,
           reaction_process_vessel: reaction_process_vessel_params
         } }.to_json,
         headers: authorization_header)
   end
 
+  let(:step_name_param) { 'New Step Name' }
+
   let!(:vessel) { create(:vessel) }
   let!(:reaction_process) { create_default(:reaction_process) }
-  let!(:reaction_process_step) { create(:reaction_process_step) }
+  let!(:reaction_process_step) { create(:reaction_process_step, reaction_process: reaction_process) }
   let!(:reaction_process_vessel_params) do
     { vesselable_id: vessel.id, vesselable_type: 'Vessel', preparations: ['DRIED'] }
   end
@@ -89,6 +91,14 @@ describe ReactionProcessEditor::ReactionProcessStepAPI, '.put' do
       expect(
         ReactionProcessEditor::ReactionProcessVessel.find_by(reaction_process: reaction_process),
       ).to be_present
+    end
+  end
+
+  context 'with blank name param' do
+    let(:step_name_param) { '' }
+
+    it 'sets a default step name' do
+      expect { api_call }.to change { reaction_process_step.reload.name }.to 'Step 1'
     end
   end
 end

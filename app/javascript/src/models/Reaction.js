@@ -205,7 +205,7 @@ export default class Reaction extends Element {
       materials: {
         starting_materials: this.starting_materials.map((s) => s.serializeMaterial()),
         reactants: this.reactants.map((s) => s.serializeMaterial()),
-          intermediate_samples: this.intermediate_samples.map(s => s.serializeMaterial()),
+        intermediate_samples: this.intermediate_samples.map(s => s.serializeMaterial()),
         solvents: this.solvents.map((s) => s.serializeMaterial()),
         purification_solvents: this.purification_solvents.map((s) => s.serializeMaterial()),
         products: this.products.map((s) => s.serializeMaterial()),

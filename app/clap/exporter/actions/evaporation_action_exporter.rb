@@ -78,9 +78,8 @@ module Clap
 
         def solvent_from_fraction_fields
           {
-            solvent_from_fraction_fields: {
-              sample: solvents_with_ratio(workup['samples']&.first),
-              solvents_amount: amount_to_clap(workup['amount']),
+            solvent_from_fraction: {
+              consumed_fraction: pooling_fraction_to_clap,
             },
           }
         end
@@ -107,6 +106,10 @@ module Clap
 
         def amount_to_clap(amount)
           Clap::Exporter::Metrics::AmountExporter.new(amount).to_clap
+        end
+
+        def pooling_fraction_to_clap
+          Clap::Exporter::Samples::FractionExporter.new(action.consumed_fraction).to_clap
         end
       end
     end

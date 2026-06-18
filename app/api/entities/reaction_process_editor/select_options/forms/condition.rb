@@ -5,15 +5,6 @@ module Entities
     module SelectOptions
       module Forms
         class Condition < Base
-          GLOBAL_DEFAULTS = {
-            TEMPERATURE: { value: '21', unit: 'CELSIUS' },
-            PRESSURE: { value: '1013', unit: 'MBAR' },
-            PH: { value: 7, unit: 'PH' },
-            IRRADIATION: {},
-            MOTION: {},
-            EQUIPMENT: {},
-          }.deep_stringify_keys
-
           def select_options
             {
               additional_information: additional_information,

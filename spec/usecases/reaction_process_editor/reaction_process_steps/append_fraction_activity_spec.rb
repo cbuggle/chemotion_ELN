@@ -64,4 +64,22 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFrac
         .with(activity: instance_of(ReactionProcessEditor::ReactionProcessActivity), workup: {})
     end
   end
+
+  context 'when consuming_action is REMOVE' do
+    let(:fraction_params) do
+      { consuming_action_name: 'REMOVE',
+        vessel: vessel_params,
+        vials: %w[1 2 3] }.deep_stringify_keys
+    end
+
+    it 'assigns remove workup from the fraction' do
+      append_activity
+
+      expect(created_action.workup).to include(
+        'samples' => [hash_including('value' => created_action.consumed_fraction.id)],
+        'origin_type' => 'SOLVENT_FROM_FRACTION',
+        'automation_mode' => 'AUTOMATED',
+      )
+    end
+  end
 end

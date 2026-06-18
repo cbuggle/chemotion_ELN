@@ -275,10 +275,8 @@ function GeneralMaterialGroup({
 
   if (materialGroup === 'intermediate_samples') {
     groupHeaders.group = 'Intermediates';
-    groupHeaders.ref = null;
-    groupHeaders.concn = null;
-    groupHeaders.eq = null;
-    groupHeaders.tr = null;
+    groupHeaders.intermediate_type = 'Type';
+    groupHeaders.step = 'Step';
   }
 
   const specialRefTHead = reaction.weight_percentage ? (
@@ -400,10 +398,9 @@ function GeneralMaterialGroup({
                 {"Intermediates"}
               </div>
             </div>
-            <div className="reaction-material__reaction-step-header">Step</div>
-
-            <div className="reaction-material__intermediate-type-header">Type</div>
-            <div className="reaction-material__amount-header">Amount</div>
+            <div className="reaction-material__reaction-step-header">{groupHeaders.step}</div>
+            <div className="reaction-material__intermediate-type-header">{groupHeaders.intermediate_type}</div>
+            <div className="reaction-material__amount-header">{groupHeaders.amount}</div>
             <div className="reaction-material__delete-header" />
           </div>
           {contents}

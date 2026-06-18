@@ -19,7 +19,7 @@ module Usecases
           target_amount = ::ReactionProcessEditor::SampleAmountsConverter.to_eln(workup)
 
           sample.target_amount_value = target_amount[:value]
-          sample.target_amount_unit =  target_amount[:unit]
+          sample.target_amount_unit = target_amount[:unit]
           sample.metrics = target_amount[:metrics]
 
           sample.purity = workup.dig('purity', 'value').to_f

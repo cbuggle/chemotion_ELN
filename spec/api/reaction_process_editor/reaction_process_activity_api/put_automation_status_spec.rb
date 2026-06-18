@@ -27,4 +27,15 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put /automation_st
       .to have_received(:execute!)
       .with(activity: activity, automation_status: 'the_automation_status')
   end
+
+  context 'when automation status handling fails' do
+    it 'responds with unprocessable entity' do
+      allow(Usecases::ReactionProcessEditor::ReactionProcessActivities::HandleAutomationStatus)
+        .to receive(:execute!).and_raise(StandardError)
+
+      put_activity_request
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+  end
 end

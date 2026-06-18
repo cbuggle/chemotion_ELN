@@ -45,6 +45,7 @@ module ReactionProcessEditor
     end
 
     def sample_reaction
+      # The ELN implements sample has_many :reactions, but a Sample can be assigned actually only to a single reaction.
       sample&.reactions&.first
     end
 
@@ -57,7 +58,7 @@ module ReactionProcessEditor
     end
 
     def initial_conditions
-      Entities::ReactionProcessEditor::SelectOptions::Forms::Condition::GLOBAL_DEFAULTS
+      ::Entities::ReactionProcessEditor::Constants::Conditions::GLOBAL_DEFAULTS
         .merge(user_default_conditions)
         .merge(reaction_default_conditions)
     end

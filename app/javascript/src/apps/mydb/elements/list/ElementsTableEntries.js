@@ -16,8 +16,7 @@ import ReactionRole from 'src/apps/mydb/elements/list/reaction/ReactionRole';
 import ReactionVariations from 'src/apps/mydb/elements/list/reaction/ReactionVariations';
 import ReactionStatus from 'src/apps/mydb/elements/list/reaction/ReactionStatus';
 import ImageModal from 'src/components/common/ImageModal';
-
-import ReactionEditorLink from '../details/reactions/reactionProcessEditor/ReactionEditorLink';
+import ReactionEditorLink from 'src/apps/mydb/elements/details/reactions/reactionProcessEditor/ReactionEditorLink';
 
 export default class ElementsTableEntries extends Component {
   constructor(props) {
@@ -116,7 +115,7 @@ export default class ElementsTableEntries extends Component {
             <ReactionVariations element={element} />
           </div>
           <div className="d-flex gap-1 align-items-center">
-            <ReactionEditorLink reaction={element} />
+            <ReactionEditorLink reaction={element} size="xxsm"/>
             <CommentIcon commentCount={element.comment_count} />
             <ElementCollectionLabels element={element} key={element.id} />
           </div>

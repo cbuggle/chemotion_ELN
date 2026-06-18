@@ -2,8 +2,6 @@
 
 module RequestSpecHelper
   def jwt_authorization_header(user)
-    # Param `scp` is not in production requests. However warden-jwt_auth seems to not set the env.scope in test env
-    # and raises `undefined method `to_sym' for nil:NilClass`. Don't know how to fix this otherwise.
     jwt = JWT.encode({ sub: user.id, jti: user.jti, scp: :user }, Rails.application.secrets.secret_key_base)
 
     { 'Authorization' => "Bearer #{jwt}" }

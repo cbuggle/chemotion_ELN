@@ -39,7 +39,6 @@ module Clap
           Array(samples_preparation&.equipment).map do |equip|
             Clap::Equipment.new(
               type: Clap::Equipment::EquipmentType.const_get(equip),
-              details: nil,
             )
           end
         end

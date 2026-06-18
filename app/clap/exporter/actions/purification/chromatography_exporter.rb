@@ -39,22 +39,11 @@ module Clap
             end
           end
 
-          def automation_mode_ontology
-            ReactionProcessEditor::Ontology.find_by(ontology_id: action.reaction_process_step.automation_mode)
-          end
-
-          def automation_mode_manual?
-            # TODO: Guess we need some "OntologyConstants" or something. cbuggle, 30.12.2025.
-            ['NCIT:C63513'].include?(automation_mode_ontology&.ontology_id)
-          end
-
-          def automation_mode_automated?
-            ['NCIT:C172484', 'NCIT:C70669'].include?(automation_mode_ontology&.ontology_id)
-          end
-
           def automation_specific_fields
-            return automation_manual_fields if automation_mode_manual?
-            return automation_automated_fields if automation_mode_automated?
+            return automation_manual_fields if
+              Entities::ReactionProcessEditor::Constants::Ontologies.automation_mode_manual?(action.automation_mode)
+            return automation_automated_fields if
+              Entities::ReactionProcessEditor::Constants::Ontologies.automation_mode_automated?(action.automation_mode)
 
             {}
           end

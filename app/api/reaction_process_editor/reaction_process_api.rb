@@ -11,8 +11,8 @@ module ReactionProcessEditor
         before do
           @reaction_process = ::ReactionProcessEditor::ReactionProcess.includes([:reaction_process_vessels,
                                                                                  { reaction_process_steps:
-                                                                                 [reaction_process_activities:
-                                                                                  [:reaction_process_vessel]] }])
+                                                                                 [{ reaction_process_activities:
+                                                                                  [:reaction_process_vessel] }] }])
                                                                       .find(params[:id])
           error!('404 Not Found', 404) unless @reaction_process&.creator == current_user
         end
@@ -24,7 +24,7 @@ module ReactionProcessEditor
                   root: :reaction_process
         end
 
-        desc 'Update the Initial Sample Info of the ReactionProcess.'
+        desc 'Update the ReactionProcess with the ReactionProcessVessel.'
         put do
           @reaction_process.update(reaction_process_vessel:
             Usecases::ReactionProcessEditor::ReactionProcessVessels::CreateOrUpdate.execute!(
