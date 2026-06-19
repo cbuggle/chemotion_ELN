@@ -5,14 +5,10 @@ require 'rails_helper'
 RSpec.describe Clap::Exporter::ReactionProcessExporter do
   subject(:clap_export) { described_class.new(reaction_process).to_clap }
 
-  let(:reaction_process) do
-    create_default(
-      :reaction_process,
-      default_conditions: { TEMPERATURE: { value: '21', unit: 'CELSIUS' } },
-    )
-  end
-  let(:first_step) { create(:reaction_process_step, position: 0) }
-  let(:second_step) { create(:reaction_process_step, position: 1) }
+  let(:reaction_process) { create_default(:reaction_process) }
+
+  let(:first_step) { create(:reaction_process_step, reaction_process: reaction_process, position: 0) }
+  let(:second_step) { create(:reaction_process_step, reaction_process: reaction_process, position: 1) }
   let(:first_activity) do
     create(
       :reaction_process_activity,

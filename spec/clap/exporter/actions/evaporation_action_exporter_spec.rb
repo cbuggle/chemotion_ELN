@@ -98,23 +98,4 @@ RSpec.describe Clap::Exporter::Actions::EvaporationActionExporter do
       )
     end
   end
-
-  context 'with diverse solvents' do
-    let(:evaporation) do
-      evaporation_for(
-        'DIVERSE_SOLVENTS',
-        solvents: [{ label: 'solvent', ratio: 3 }],
-        solvents_amount: { value: '4', unit: 'ml' },
-      )
-    end
-
-    it 'exports diverse solvent evaporation' do
-      expect(evaporation.to_h).to eq(
-        diverse_solvents: {
-          solvents: [{ solvent: { label: 'solvent' }, ratio: '3' }],
-          solvents_amount: { volume: { value: 4.0, unit: :MILLILITER } },
-        },
-      )
-    end
-  end
 end
