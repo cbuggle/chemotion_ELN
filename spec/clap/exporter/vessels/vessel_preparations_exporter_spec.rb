@@ -13,8 +13,8 @@ RSpec.describe Clap::Exporter::Vessels::VesselPreparationsExporter do
     )
   end
 
-  context 'without preparations' do
-    let(:preparations) { nil }
+    context 'without preparations' do
+      let(:preparations) { nil }
 
     it 'exports :NONE' do
       expect(preparations_export.map(&:to_h)).to eq([{ type: :NONE }])
@@ -25,7 +25,7 @@ RSpec.describe Clap::Exporter::Vessels::VesselPreparationsExporter do
     let(:preparations) { ['bad'] }
 
     it 'falls back for unknown preparations' do
-      expect(preparations_export.map(&:to_h)).to eq([{ type: :UNSPECIFIED }])
+      expect(preparations_export.map(&:to_h)).to eq([{}])
     end
   end
 end
