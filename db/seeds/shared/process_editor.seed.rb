@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# A set of substances required by the KIT/IOCS as discussed with NJung and PHodapp. Currently we have not other means to 
+# edit this list other than changeing the seed here or manually in the rails console. 
+
 Medium::MediumSample.find_or_create_by(name: 'Oxygen', molecule_name: 'Molecular Oxygen', sum_formula: 'O2')
 Medium::MediumSample.find_or_create_by(name: 'Nitrogen', molecule_name: 'Molecular Nitrogen', sum_formula: 'N2')
 Medium::MediumSample.find_or_create_by(name: 'Hydrogen', molecule_name: '', sum_formula: 'H2')

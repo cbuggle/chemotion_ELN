@@ -3,6 +3,8 @@
 module Import
   module ReactionProcessEditor
     class ImportDeviceMethods
+      # File format constants as discussed and defined with PHodapp, NJung, cbuggle, 18.11.2024
+
       DATA_DIR = ENV.fetch('REACTION_PROCESS_EDITOR_DATA_DIR', 'tmp/reaction_process_editor')
       DEVICES_FILES = 'devices/*.csv'
       DEVICENAME_PREFIX = ENV.fetch('REACTION_PROCESS_EDITOR_DEVICENAME_PREFIX', '')
@@ -12,9 +14,6 @@ module Import
                          'PDA/DAD': ['CHMO:0001728', 'WAVELENGTHRANGE', 'WAVELENGTHS', 'NM', 'Wavelengths (nm)'],
                          ELSD: %w[CHMO:0002866 METRIC TEMPERATURE CELSIUS Temperature],
                          MS: %w[CHMO:0002337 TEXT MS_PARAMETER V Parameter] }.stringify_keys
-      #  ,
-      #  FID: %w[CHMO:0001719 METRIC WEIGTH g Weight],
-      #  BID: %w[CHMO:0001724 METRIC WEIGTH g Weight] }.stringify_keys
 
       REGEX_NAMES_AND_BRACKET_VALUES = /(.*?) \((.*?)\),?/.freeze
 
