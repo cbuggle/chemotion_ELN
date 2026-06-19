@@ -7,7 +7,6 @@ module Clap
         def to_clap
           Temperature.new(
             value: @value.to_f,
-            precision: nil, # hardcoded empty
             unit: temperature_unit,
           )
         end

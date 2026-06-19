@@ -36,7 +36,7 @@ class ReactionsSample < ApplicationRecord
   has_logidze
   acts_as_paranoid
   belongs_to :reaction, optional: true
-  belongs_to :sample, -> { includes %i[molecule residues] }, optional: true
+  belongs_to :sample, optional: true
 
   before_validation :set_default
 
@@ -85,15 +85,4 @@ class ReactionsProductSample < ReactionsSample
     eq = equivalent
     eq && !eq.nan? ? "#{(eq * 100).round} %" : '0 %'
   end
-end
-
-class ReactionsIntermediateSample < ReactionsSample
-  scope :visible, -> { joins(:sample).merge(Sample.visible) }
-
-  belongs_to :reaction_process_activity, class_name: 'ReactionProcessEditor::ReactionProcessActivity', optional: true
-
-  delegate :reaction_process_step, to: :reaction_process_activity, allow_nil: true
-
-  include Reactable
-  include Tagging
 end

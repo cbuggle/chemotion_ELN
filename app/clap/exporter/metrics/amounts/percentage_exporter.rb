@@ -8,7 +8,6 @@ module Clap
           def to_clap
             Percentage.new(
               value: @value,
-              precision: nil, # TODO: precision states the number of valid digits. 3 or something.
             )
           end
         end

@@ -17,13 +17,13 @@ module Clap
             Volume.new(
               value: @value.to_f,
               precision: nil,
-              unit: unit,
+              unit: clap_unit,
             )
           end
 
           private
 
-          def unit
+          def clap_unit
             Volume::VolumeUnit.const_get CLAP_UNIT_MAPPING[@unit].to_s
           rescue NameError
             Volume::VolumeUnit::UNSPECIFIED

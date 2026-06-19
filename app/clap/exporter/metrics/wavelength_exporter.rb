@@ -14,13 +14,13 @@ module Clap
           Wavelength.new(
             value: @value.to_f,
             precision: nil,
-            unit: unit,
+            unit: clap_unit,
           )
         end
 
         private
 
-        def unit
+        def clap_unit
           Wavelength::WavelengthUnit.const_get CLAP_UNIT_MAPPING[@unit].to_s
         rescue NameError
           Wavelength::WavelengthUnit::UNSPECIFIED

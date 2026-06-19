@@ -8,13 +8,13 @@ module Clap
           Power.new(
             value: @value.to_f,
             precision: nil,
-            unit: unit,
+            unit: clap_unit,
           )
         end
 
         private
 
-        def unit
+        def clap_unit
           Power::PowerUnit.const_get @unit.to_s
         rescue NameError
           Power::PowerUnit::UNSPECIFIED

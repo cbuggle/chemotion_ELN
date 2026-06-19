@@ -33,6 +33,12 @@
 #
 
 class ReactionsIntermediateSample < ReactionsSample
-  # STI: this file is required for rails model autoloading.
-  # place all code in app/models/reactions_sample.rb.
+  scope :visible, -> { joins(:sample).merge(Sample.visible) }
+
+  belongs_to :reaction_process_activity, class_name: 'ReactionProcessEditor::ReactionProcessActivity', optional: true
+
+  delegate :reaction_process_step, to: :reaction_process_activity, allow_nil: true
+
+  include Reactable
+  include Tagging
 end
