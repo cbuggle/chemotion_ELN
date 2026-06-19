@@ -34,5 +34,12 @@ RSpec.describe Clap::Exporter::Actions::Purification::ExtractionExporter do
         steps: [hash_including(duration: { value: 30.0, unit: :SECOND })],
       )
     end
+
+    it 'exports extraction step amount and flow rate' do
+      expect(extraction_export.steps.first.to_h).to include(
+        amount: { volume: { value: 1.0, unit: :MILLILITER } },
+        flow_rate: { value: 2.0, unit: :MILLILITER_PER_MINUTE },
+      )
+    end
   end
 end

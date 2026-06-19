@@ -34,6 +34,17 @@ RSpec.describe Clap::Exporter::Actions::AddActionExporter do
       )
     end
 
+    it 'exports the added sample amount' do
+      expect(addition_export.sample.to_h).to include(
+        reaction_role: :SAMPLE,
+        amount: { mass: { value: 10.0, unit: :MILLIGRAM } },
+      )
+    end
+
+    it 'exports the default sample purity' do
+      expect(addition_export.sample.purity.to_h).to eq(value: 100.0)
+    end
+
     context 'with bad addition_speed_type' do
       let(:workup) { { acts_as: 'SAMPLE', addition_speed_type: 'bad' } }
 

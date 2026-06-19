@@ -56,5 +56,11 @@ RSpec.describe Clap::Exporter::Actions::Purification::CrystallizationExporter do
         crystallization_mode: :COLD,
       )
     end
+
+    it 'exports crystallization solvents' do
+      expect(crystallization_export.solvents.map(&:to_h)).to eq(
+        [{ solvent: { label: 'solvent' }, ratio: '1' }],
+      )
+    end
   end
 end

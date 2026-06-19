@@ -4,6 +4,7 @@ require 'rails_helper'
 
 describe ReactionProcessEditor::ReactionProcessAPI, '.get' do
   include RequestSpecHelper
+  
   subject(:api_call) do
     get("/api/v1/reaction_process_editor/reaction_processes/#{reaction_process.id}",
         headers: authorization_header)

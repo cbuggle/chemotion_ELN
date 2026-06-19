@@ -22,4 +22,13 @@ RSpec.describe Clap::Exporter::Actions::ConditionsActionExporter do
       conditions: hash_including(:temperature_control),
     )
   end
+
+  it 'exports condition temperature control details' do
+    expect(clap_export.conditions.to_h).to include(
+      temperature_control: {
+        temperature: { value: 25.0, unit: :CELSIUS },
+        temperature_control_type: :AMBIENT,
+      },
+    )
+  end
 end

@@ -35,5 +35,16 @@ RSpec.describe Clap::Exporter::Actions::Purification::FiltrationExporter do
         steps: [hash_including(repetitions: 2)],
       )
     end
+
+    it 'exports filtration step amount and duration' do
+      expect(filtration_export.steps.first.to_h).to include(
+        amount: { volume: { value: 1.0, unit: :MILLILITER } },
+        duration: { value: 30.0, unit: :SECOND },
+      )
+    end
+
+    it 'exports vessel rinsing for the filtration step' do
+      expect(filtration_export.steps.first.rinse_vessel).to be true
+    end
   end
 end

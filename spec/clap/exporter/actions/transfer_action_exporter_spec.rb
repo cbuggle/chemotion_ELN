@@ -25,4 +25,11 @@ RSpec.describe Clap::Exporter::Actions::TransferActionExporter do
       percentage: { value: 25.0 },
     )
   end
+
+  it 'exports transferred sample details' do
+    expect(transfer_export.sample.to_h).to include(
+      reaction_role: :SAMPLE,
+      amount: { volume: { value: 1.0, unit: :MILLILITER } },
+    )
+  end
 end
