@@ -14,7 +14,9 @@ describe ReactionProcessEditor::ReactionProcessAPI, '.get /clap' do
   let(:authorization_header) { authorized_header(reaction_process.creator) }
 
   it 'exports clap JSON' do
-    allow_any_instance_of(Clap::Exporter::ReactionProcessExporter).to receive(:to_clap).and_return({ id: 1 })
+    allow(Clap::Exporter::ReactionProcessExporter).to receive(:new).and_return(
+      instance_double(Clap::Exporter::ReactionProcessExporter, to_clap: { id: 1 }),
+    )
 
     api_call
 
@@ -22,7 +24,9 @@ describe ReactionProcessEditor::ReactionProcessAPI, '.get /clap' do
   end
 
   it 'exports clap errors as text' do
-    allow_any_instance_of(Clap::Exporter::ReactionProcessExporter).to receive(:to_clap).and_raise('boom')
+    exporter = instance_double(Clap::Exporter::ReactionProcessExporter)
+    allow(exporter).to receive(:to_clap).and_raise('boom')
+    allow(Clap::Exporter::ReactionProcessExporter).to receive(:new).and_return(exporter)
 
     api_call
 
