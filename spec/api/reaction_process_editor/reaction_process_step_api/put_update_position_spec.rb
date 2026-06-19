@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe ReactionProcessEditor::ReactionProcessStepAPI, '.put /update_position' do
   include RequestSpecHelper
-  
+
   subject(:put_reaction_process_request) do
     put("/api/v1/reaction_process_editor/reaction_process_steps/#{reaction_process_step.id}/update_position",
         params: { position: position }.to_json,
