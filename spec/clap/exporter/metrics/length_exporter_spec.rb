@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Metrics::LengthExporter do
-  subject(:length) { described_class.new({ 'value' => 6, 'unit' => 'CM' }).to_clap }
+  subject(:length_export) { described_class.new({ 'value' => 6, 'unit' => 'CM' }).to_clap }
 
   it 'exports mapped length units' do
-    expect(length.to_h).to eq(value: 6.0, unit: :CENTIMETER)
+    expect(length_export.to_h).to eq(value: 6.0, unit: :CENTIMETER)
   end
 end

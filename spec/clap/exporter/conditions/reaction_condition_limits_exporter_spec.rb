@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Conditions::ReactionConditionLimitsExporter do
-  subject(:limits) { described_class.new(workup).to_clap }
+  subject(:limits_export) { described_class.new(workup).to_clap }
 
   let(:workup) do
     {
@@ -13,7 +13,7 @@ RSpec.describe Clap::Exporter::Conditions::ReactionConditionLimitsExporter do
   end
 
   it 'exports duration and nested conditions' do
-    expect(limits.to_h).to eq(
+    expect(limits_export.to_h).to eq(
       duration: { value: 30.0, unit: :SECOND },
       conditions: {
         temperature_control: {

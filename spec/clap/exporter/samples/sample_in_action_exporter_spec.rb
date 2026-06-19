@@ -3,13 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Samples::SampleInActionExporter do
-  subject(:sample) { described_class.new(action).to_clap }
+  subject(:sample_export) { described_class.new(action).to_clap }
 
   context 'with a medium action' do
     let(:action) { create(:reaction_process_activity_add_medium, workup: { acts_as: 'MEDIUM' }) }
 
     it 'exports medium actions' do
-      expect(sample.to_h).to include(
+      expect(sample_export.to_h).to include(
         reaction_role: :MEDIUM,
         label: action.medium.label,
         name: action.medium.name,
@@ -34,7 +34,7 @@ RSpec.describe Clap::Exporter::Samples::SampleInActionExporter do
     end
 
     it 'exports ontology actions' do
-      expect(sample.to_h).to include(
+      expect(sample_export.to_h).to include(
         label: 'Ontology Label',
         name: 'Ontology Name',
         ontology: { id: 'ONT:sample', label: 'Ontology Label', name: 'Ontology Name' },
@@ -46,7 +46,7 @@ RSpec.describe Clap::Exporter::Samples::SampleInActionExporter do
     let(:action) { create(:reaction_process_activity_add_sample, workup: { acts_as: 'bad' }) }
 
     it 'falls back for unknown reaction roles' do
-      expect(sample.reaction_role).to eq(:UNSPECIFIED)
+      expect(sample_export.reaction_role).to eq(:UNSPECIFIED)
     end
   end
 
@@ -72,7 +72,7 @@ RSpec.describe Clap::Exporter::Samples::SampleInActionExporter do
     end
 
     it 'exports the action sample' do
-      expect(sample.to_h).to include(
+      expect(sample_export.to_h).to include(
         reaction_role: :SAMPLE,
         label: action.sample.preferred_label,
         amount: { mass: { value: 12.0, unit: :MILLIGRAM } },

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::ReactionProcessExporter do
-  subject(:clap) { described_class.new(reaction_process).to_clap }
+  subject(:clap_export) { described_class.new(reaction_process).to_clap }
 
   let(:reaction_process) do
     create_default(
@@ -36,18 +36,18 @@ RSpec.describe Clap::Exporter::ReactionProcessExporter do
   end
 
   it 'exports the current CLAP version' do
-    expect(clap.clap_version).to eq('1.0.3')
+    expect(clap_export.clap_version).to eq('1.0.3')
   end
 
   it 'exports the reaction process id as reaction id' do
-    expect(clap.reaction_id).to eq(reaction_process.id)
+    expect(clap_export.reaction_id).to eq(reaction_process.id)
   end
 
   it 'exports reaction steps in position order' do
-    expect(clap.reaction_steps.map(&:reaction_step_id)).to eq([first_step.id, second_step.id])
+    expect(clap_export.reaction_steps.map(&:reaction_step_id)).to eq([first_step.id, second_step.id])
   end
 
   it 'uses accumulated preceding step durations as start times' do
-    expect(clap.reaction_steps[1].start_time.to_h).to eq(value: 10.0, unit: :SECOND)
+    expect(clap_export.reaction_steps[1].start_time.to_h).to eq(value: 10.0, unit: :SECOND)
   end
 end

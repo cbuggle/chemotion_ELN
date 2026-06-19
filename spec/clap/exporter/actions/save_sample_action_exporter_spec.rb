@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Actions::SaveSampleActionExporter do
-  subject(:save_sample) { described_class.new(action).to_clap(starts_at: 0).save_sample }
+  subject(:save_sample_export) { described_class.new(action).to_clap(starts_at: 0).save_sample }
 
   let(:action) do
     create(
@@ -18,7 +18,7 @@ RSpec.describe Clap::Exporter::Actions::SaveSampleActionExporter do
   end
 
   it 'exports saved sample' do
-    expect(save_sample.to_h).to include(
+    expect(save_sample_export.to_h).to include(
       sample_origin_type: :SPLIT,
       molecular_entities: [{ label: 'entity' }],
     )
@@ -30,7 +30,7 @@ RSpec.describe Clap::Exporter::Actions::SaveSampleActionExporter do
     end
 
     it 'falls back for unknown sample origin types' do
-      expect(save_sample.sample_origin_type).to eq(:UNSPECIFIED)
+      expect(save_sample_export.sample_origin_type).to eq(:UNSPECIFIED)
     end
   end
 end

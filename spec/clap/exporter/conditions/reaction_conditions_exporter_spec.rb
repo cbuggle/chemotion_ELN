@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Conditions::ReactionConditionsExporter do
-  subject(:conditions) { described_class.new(workup).to_clap }
+  subject(:conditions_export) { described_class.new(workup).to_clap }
 
   let(:workup) do
     {
@@ -33,7 +33,7 @@ RSpec.describe Clap::Exporter::Conditions::ReactionConditionsExporter do
   end
 
   it 'exports populated condition controls' do
-    expect(conditions.to_h).to include(
+    expect(conditions_export.to_h).to include(
       temperature_control: { temperature: { value: 21.0, unit: :CELSIUS }, temperature_control_type: :AMBIENT },
       pressure_control: { pressure: { value: 1013.0, unit: :MBAR } },
       ph_control: { ph: 7.0, measurement_type: :PH_ELECTRODE },
@@ -58,7 +58,7 @@ RSpec.describe Clap::Exporter::Conditions::ReactionConditionsExporter do
     let(:workup) { nil }
 
     it 'returns nil' do
-      expect(conditions).to be_nil
+      expect(conditions_export).to be_nil
     end
   end
 end

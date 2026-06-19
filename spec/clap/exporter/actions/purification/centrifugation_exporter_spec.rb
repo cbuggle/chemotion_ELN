@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Actions::Purification::CentrifugationExporter do
-  subject(:centrifugation) { described_class.new(action).to_clap(starts_at: 0).centrifugation }
+  subject(:centrifugation_export) { described_class.new(action).to_clap(starts_at: 0).centrifugation }
 
   let(:action) do
     create(
@@ -18,7 +18,7 @@ RSpec.describe Clap::Exporter::Actions::Purification::CentrifugationExporter do
   end
 
   it 'exports centrifugation conditions' do
-    expect(centrifugation.to_h).to include(
+    expect(centrifugation_export.to_h).to include(
       pressure: { value: 2.0, unit: :BAR },
       temperature: { value: 4.0, unit: :CELSIUS },
       speed: { value: 1000.0, unit: :RPM },

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Actions::ConditionsActionExporter do
-  subject(:clap) { described_class.new(action).to_clap(starts_at: 0) }
+  subject(:clap_export) { described_class.new(action).to_clap(starts_at: 0) }
 
   let(:action) do
     create(
@@ -17,6 +17,9 @@ RSpec.describe Clap::Exporter::Actions::ConditionsActionExporter do
   end
 
   it 'exports condition action attributes' do
-    expect(clap.to_h).to include(equipment: [{ type: :STIRRER }], conditions: hash_including(:temperature_control))
+    expect(clap_export.to_h).to include(
+      equipment: [{ type: :STIRRER }],
+      conditions: hash_including(:temperature_control),
+    )
   end
 end

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Actions::SaveSample::PurificationOriginExporter do
-  subject(:origin) { described_class.new(action).to_clap }
+  subject(:origin_export) { described_class.new(action).to_clap }
 
   let(:action) do
     create(
@@ -17,7 +17,7 @@ RSpec.describe Clap::Exporter::Actions::SaveSample::PurificationOriginExporter d
   end
 
   it 'exports purification origin' do
-    expect(origin).to include(
+    expect(origin_export).to include(
       origin_action_id: 'action-1',
       origin_purification_step_position: 2,
       amount: have_attributes(volume: have_attributes(value: 1.0, unit: :MILLILITER)),

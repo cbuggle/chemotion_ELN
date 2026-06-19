@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Actions::AddActionExporter do
-  subject(:addition) { described_class.new(action).to_clap(starts_at: 0).addition }
+  subject(:addition_export) { described_class.new(action).to_clap(starts_at: 0).addition }
 
   let(:action) do
     create(:reaction_process_activity_add_sample, workup: workup)
@@ -22,7 +22,7 @@ RSpec.describe Clap::Exporter::Actions::AddActionExporter do
     end
 
     it 'exports add action attributes' do
-      expect(addition.to_h).to include(
+      expect(addition_export.to_h).to include(
         addition_speed_type: :FLOW_RATE,
         flow_rate: { value: 2.0, unit: :MILLILITER_PER_MINUTE },
         addition_conditions: {
@@ -38,7 +38,7 @@ RSpec.describe Clap::Exporter::Actions::AddActionExporter do
       let(:workup) { { acts_as: 'SAMPLE', addition_speed_type: 'bad' } }
 
       it 'falls back for unknown addition speed types' do
-        expect(addition.addition_speed_type).to eq(:UNSPECIFIED)
+        expect(addition_export.addition_speed_type).to eq(:UNSPECIFIED)
       end
     end
   end

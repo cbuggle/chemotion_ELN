@@ -3,13 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Vessels::ReactionProcessVesselableExporter do
-  subject(:template) { described_class.new(reaction_process_vessel).to_clap }
+  subject(:template_export) { described_class.new(reaction_process_vessel).to_clap }
 
   let(:vessel_template) { create(:vessel_template, vessel_type: 'VIAL', material_type: 'glass') }
   let(:reaction_process_vessel) { create(:reaction_process_vessel, vesselable: vessel_template) }
 
   it 'exports a vessel-template-backed template' do
-    expect(template.vessel).to be_nil
+    expect(template_export.vessel).to be_nil
   end
 
   context 'with a vessel-backed template' do
@@ -19,7 +19,7 @@ RSpec.describe Clap::Exporter::Vessels::ReactionProcessVesselableExporter do
     end
 
     it 'exports the vessel-backed template' do
-      expect(template.to_h).to include(
+      expect(template_export.to_h).to include(
         id: vessel_template.id,
         name: vessel_template.name,
         type: :VIAL,
@@ -34,7 +34,7 @@ RSpec.describe Clap::Exporter::Vessels::ReactionProcessVesselableExporter do
     let(:reaction_process_vessel) { nil }
 
     it 'returns nil' do
-      expect(template).to be_nil
+      expect(template_export).to be_nil
     end
   end
 end

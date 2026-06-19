@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Actions::Analysis::SpectroscopyExporter do
-  subject(:analysis) { described_class.new(action).to_clap(starts_at: 0).analysis_spectroscopy }
+  subject(:analysis_export) { described_class.new(action).to_clap(starts_at: 0).analysis_spectroscopy }
 
   let(:action) do
     create(
@@ -18,7 +18,7 @@ RSpec.describe Clap::Exporter::Actions::Analysis::SpectroscopyExporter do
   end
 
   it 'exports samples, entities, and solvents' do
-    expect(analysis.to_h).to eq(
+    expect(analysis_export.to_h).to eq(
       samples: [{ label: 'sample' }],
       molecular_entities: [{ label: 'entity' }],
       solvents: [{ solvent: { label: 'solvent' }, ratio: '1' }],

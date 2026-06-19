@@ -39,7 +39,7 @@ RSpec.describe Clap::Exporter::ReactionProcessStepExporter do
 
   it 'exports process activities' do
     expect(step_export.to_h).to include(
-      actions: [hash_including(activity_name: 'WAIT')],
+      actions: [hash_including(wait: { duration: { value: 20.0, unit: :SECOND } })],
     )
   end
 end

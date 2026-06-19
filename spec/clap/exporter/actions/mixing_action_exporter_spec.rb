@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Actions::MixingActionExporter do
-  subject(:mixing) { described_class.new(action).to_clap(starts_at: 0).mixing }
+  subject(:mixing_export) { described_class.new(action).to_clap(starts_at: 0).mixing }
 
   let(:action) do
     create(
@@ -14,6 +14,6 @@ RSpec.describe Clap::Exporter::Actions::MixingActionExporter do
   end
 
   it 'exports mixing speed' do
-    expect(mixing.speed.to_h).to eq(value: 600.0, unit: :RPM)
+    expect(mixing_export.speed.to_h).to eq(value: 600.0, unit: :RPM)
   end
 end

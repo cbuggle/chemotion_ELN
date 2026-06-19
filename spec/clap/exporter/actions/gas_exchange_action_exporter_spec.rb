@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Actions::GasExchangeActionExporter do
-  subject(:gas_exchange) { described_class.new(action).to_clap(starts_at: 0).gas_exchange }
+  subject(:gas_exchange_export) { described_class.new(action).to_clap(starts_at: 0).gas_exchange }
 
   let(:action) do
     create(
@@ -18,7 +18,7 @@ RSpec.describe Clap::Exporter::Actions::GasExchangeActionExporter do
   end
 
   it 'exports gas type ratios' do
-    expect(gas_exchange.to_h).to eq(
+    expect(gas_exchange_export.to_h).to eq(
       gas_type: [
         {
           solvent: { label: 'Nitrogen', ontology: { id: 'GAS:1', label: 'Nitrogen', name: 'Nitrogen' } },

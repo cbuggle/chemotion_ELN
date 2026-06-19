@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Actions::TransferActionExporter do
-  subject(:transfer) { described_class.new(action).to_clap(starts_at: 0).transfer }
+  subject(:transfer_export) { described_class.new(action).to_clap(starts_at: 0).transfer }
 
   let(:action) do
     create(
@@ -18,7 +18,7 @@ RSpec.describe Clap::Exporter::Actions::TransferActionExporter do
   end
 
   it 'exports transfer source and target' do
-    expect(transfer.to_h).to include(
+    expect(transfer_export.to_h).to include(
       source_reaction_step_id: 'source-step',
       target_reaction_step_id: 'target-step',
       amount: { volume: { value: 1.0, unit: :MILLILITER } },

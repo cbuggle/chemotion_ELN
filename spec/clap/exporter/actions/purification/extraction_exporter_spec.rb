@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Actions::Purification::ExtractionExporter do
-  subject(:extraction) { described_class.new(action).to_clap(starts_at: 0).extraction }
+  subject(:extraction_export) { described_class.new(action).to_clap(starts_at: 0).extraction }
 
   let(:action) { create(:reaction_process_activity, activity_name: 'EXTRACTION', workup: { phase: 'bad' }) }
 
   it 'falls back for unknown extraction phases' do
-    expect(extraction.phase).to eq(:UNSPECIFIED)
+    expect(extraction_export.phase).to eq(:UNSPECIFIED)
   end
 
   context 'with extraction steps' do
@@ -29,7 +29,7 @@ RSpec.describe Clap::Exporter::Actions::Purification::ExtractionExporter do
     end
 
     it 'exports extraction steps' do
-      expect(extraction.to_h).to include(
+      expect(extraction_export.to_h).to include(
         phase: :ORGANIC,
         steps: [hash_including(duration: { value: 30.0, unit: :SECOND })],
       )

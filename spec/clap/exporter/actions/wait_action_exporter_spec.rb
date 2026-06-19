@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Actions::WaitActionExporter do
-  subject(:wait) { described_class.new(action).to_clap(starts_at: 0) }
+  subject(:wait_export) { described_class.new(action).to_clap(starts_at: 0) }
 
   let(:action) do
     create(
@@ -14,6 +14,6 @@ RSpec.describe Clap::Exporter::Actions::WaitActionExporter do
   end
 
   it 'exports equipment and falls back for unknown equipment' do
-    expect(wait.equipment.map(&:type)).to eq(%i[STIRRER UNSPECIFIED])
+    expect(wait_export.equipment.map(&:type)).to eq(%i[STIRRER UNSPECIFIED])
   end
 end

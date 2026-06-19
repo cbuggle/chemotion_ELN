@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Metrics::WavelengthRangeExporter do
-  subject(:range) do
+  subject(:range_export) do
     described_class.new(
       {
         'is_range' => true,
@@ -13,6 +13,6 @@ RSpec.describe Clap::Exporter::Metrics::WavelengthRangeExporter do
   end
 
   it 'exports wavelength peaks' do
-    expect(range.to_h).to eq(is_range: true, peaks: [{ value: 365.0, unit: :NANOMETER }])
+    expect(range_export.to_h).to eq(is_range: true, peaks: [{ value: 365.0, unit: :NANOMETER }])
   end
 end
