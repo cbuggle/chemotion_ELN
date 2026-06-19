@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/BlockLength
-#
+
 Rails.application.routes.draw do
   post '/graphql', to: 'graphql#execute' unless Rails.env.production?
   post '/csp-violation-report', to: 'csp_reports#create'

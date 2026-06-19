@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe ReactionProcessEditor::ReactionProcessAPI, '.post /reaction_process_steps' do
   include RequestSpecHelper
-  
+
   subject(:api_call) do
     post("/api/v1/reaction_process_editor/reaction_processes/#{reaction_process.id}/reaction_process_steps",
          headers: authorization_header,
