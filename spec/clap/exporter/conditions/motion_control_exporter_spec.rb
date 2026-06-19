@@ -3,7 +3,27 @@
 require 'rails_helper'
 
 RSpec.describe Clap::Exporter::Conditions::MotionControlExporter do
-  it 'falls back for unknown motion control types' do
-    expect(described_class.new({ 'motion_type' => 'bad' }).to_clap.type).to eq(:UNSPECIFIED)
+  subject(:motion_control_export) { described_class.new(workup).to_clap }
+
+  let(:workup) { { motion_type: 'STIR_BAR', speed: { value: 10 } }.deep_stringify_keys }
+
+  it 'exports motion type' do
+    expect(motion_control_export.to_h).to include({ type: :STIR_BAR })
+  end
+
+  it 'exports speed' do
+    expect(motion_control_export.to_h).to include({ speed: { value: 10.0, unit: :RPM } })
+  end
+
+  context 'with incomplete motion data' do
+    let(:workup) { { motion_type: 'unknown', speed: nil }.deep_stringify_keys }
+
+    it 'exports motion type :UNSPECIFIED' do
+      expect(motion_control_export.type).to eq(:UNSPECIFIED)
+    end
+
+    it 'exports speed 0' do
+      expect(motion_control_export.to_h).to include({ speed: { value: 0.0, unit: :RPM } })
+    end
   end
 end

@@ -14,7 +14,7 @@ RSpec.describe Clap::Exporter::ReactionProcessActivityExporter do
     )
   end
 
-  it 'exports scoped to activity names' do
+  it 'exports to key from activity name' do
     expect(clap_export.wait.duration.to_h).to eq(value: 15.0, unit: :SECOND)
   end
 

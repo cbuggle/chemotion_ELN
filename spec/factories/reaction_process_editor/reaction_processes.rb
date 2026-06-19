@@ -30,5 +30,9 @@ FactoryBot.define do
     reaction { nil }
     sample
     user
+
+    trait :with_vessel do
+      reaction_process_vessel
+    end
   end
 end

@@ -16,7 +16,7 @@ module Clap
         private
 
         def sample
-          Clap::Sample.new(label: model&.sample&.external_label)
+          Clap::Sample.new(label: model.sample.external_label.presence || model.sample.short_label)
         end
       end
     end
