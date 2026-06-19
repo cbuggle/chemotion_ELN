@@ -15,7 +15,10 @@ RSpec.describe Clap::Exporter::Reactions::SampleSetupExporter do
 
     it 'exports vessel' do
       expect(setup_export.to_h)
-        .to include(vessel_template: hash_including({ id: reaction_process.reaction_process_vessel.vesselable.vessel_template_id }))
+        .to include(
+          vessel_template:
+          hash_including({ id: reaction_process.reaction_process_vessel.vesselable.vessel_template_id }),
+        )
     end
 
     context 'when process is a reaction process (not a sample process)' do

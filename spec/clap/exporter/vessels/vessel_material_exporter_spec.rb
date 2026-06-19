@@ -7,7 +7,7 @@ RSpec.describe Clap::Exporter::Vessels::VesselMaterialExporter do
 
   let(:material_type) { 'glass' }
 
-  it 'exports material ' do
+  it 'exports material' do
     expect(material_export).to eq('GLASS')
   end
 

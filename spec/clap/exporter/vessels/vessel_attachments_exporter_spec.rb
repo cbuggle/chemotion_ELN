@@ -7,6 +7,6 @@ RSpec.describe Clap::Exporter::Vessels::VesselAttachmentsExporter do
 
   it 'exports no attachments until vessel attachments are implemented' do
     pending 'Vessel Attachments Not yet implemented. Depends on upcoming enhancements in ELN Vessel code.'
-    expect(attachments_export).to eq({reaction_process_vessel: anything})
+    expect(attachments_export).to eq({ reaction_process_vessel: anything })
   end
 end
