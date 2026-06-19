@@ -59,11 +59,6 @@ RSpec.describe ReactionProcessEditor::ReactionProcessStep do
   end
 
   describe 'conditions' do
-    let(:user_defaults) do
-      create(:reaction_process_defaults, user: process_step.reaction_process.creator).default_conditions
-    end
-    let(:reaction_defaults) { { TEMPERATURE: { value: '10', unit: 'CELSIUS' } }.deep_stringify_keys }
-
     let(:global_defaults) do
       { 'EQUIPMENT' => {}, 'IRRADIATION' => {}, 'MOTION' => {},
         'PH' => { 'unit' => 'PH', 'value' => 7 },

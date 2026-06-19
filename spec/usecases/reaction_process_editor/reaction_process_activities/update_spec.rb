@@ -17,7 +17,6 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessActivities::Updat
 
   context 'when SAVE' do
     let(:activity) { build(:reaction_process_activity, activity_name: 'SAVE') }
-    let(:created_sample) { Sample.order(:updated_at).last }
 
     it 'creates Sample' do
       expect { update_activity }.to change(Sample, :count).by(1)

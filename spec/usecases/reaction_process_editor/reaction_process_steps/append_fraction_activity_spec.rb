@@ -11,8 +11,6 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFrac
 
   let!(:existing_actions) { create_list(:reaction_process_activity, 3) }
 
-  let(:insert_before) { 2 }
-
   let(:vessel) { create(:vessel) }
   let(:vessel_params) { { vesselable_id: vessel.id, vesselable_type: vessel.class.to_s } }
 

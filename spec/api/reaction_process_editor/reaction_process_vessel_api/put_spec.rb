@@ -18,14 +18,6 @@ describe ReactionProcessEditor::ReactionProcessVesselAPI, '.put' do
       { preparations: new_preparations } }
   end
 
-  let(:expected_response_hash) do
-    { 'reaction_process_vessel' => hash_including(
-      {
-        preparations: new_preparations,
-      }.deep_stringify_keys,
-    ) }
-  end
-
   let(:authorization_header) { authorized_header(reaction_process_vessel.creator) }
 
   it_behaves_like 'authorization restricted API call'

@@ -15,8 +15,6 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendActi
     { activity_name: 'WAIT', workup: { SOME: 'WORKUP' } }.deep_stringify_keys
   end
 
-  let(:created_action) { ReactionProcessEditor::ReactionProcess.order(:crated_at).last }
-
   it 'adds action' do
     expect { append_activity }.to change(process_step.reaction_process_activities, :length).by(1)
   end
