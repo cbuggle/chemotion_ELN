@@ -13,8 +13,8 @@ RSpec.describe Clap::Exporter::Vessels::VesselPreparationsExporter do
     )
   end
 
-    context 'without preparations' do
-      let(:preparations) { nil }
+  context 'without preparations' do
+    let(:preparations) { nil }
 
     it 'exports :NONE' do
       expect(preparations_export.map(&:to_h)).to eq([{ type: :NONE }])

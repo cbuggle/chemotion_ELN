@@ -24,15 +24,12 @@ module ReactionProcessEditor
   class Provenance < ApplicationRecord
     belongs_to :reaction_process
 
-    def initialize(*args)
-      super
-      set_rounded_starts_at
-    end
+    after_initialize :set_rounded_starts_at
 
     def starts_at=(time)
       super(DateTime.parse(time))
     rescue TypeError, Date::Error
-      super(Time.zone.now)
+      set_rounded_starts_at
     end
 
     private
@@ -40,8 +37,7 @@ module ReactionProcessEditor
     def set_rounded_starts_at
       return if starts_at.present?
 
-      round_to = 60.to_f # seconds, i.e. 1 minutes.
-      self[:starts_at] = Time.zone.at((Time.zone.now.to_i / round_to).floor * round_to).to_s
+      self[:starts_at] = Time.zone.now.beginning_of_minute
     end
   end
 end
