@@ -43,7 +43,7 @@ RSpec.describe Clap::Exporter::ReactionProcessExporter do
     expect(clap_export.reaction_steps.map(&:reaction_step_id)).to eq([first_step.id, second_step.id])
   end
 
-  it 'uses accumulated preceding step durations as start times' do
+  it 'exposes accumulated preceding step durations as start times' do
     expect(clap_export.reaction_steps[1].start_time.to_h).to eq(value: 10.0, unit: :SECOND)
   end
 end

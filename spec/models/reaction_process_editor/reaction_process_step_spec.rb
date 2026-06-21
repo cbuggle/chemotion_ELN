@@ -169,14 +169,14 @@ RSpec.describe ReactionProcessEditor::ReactionProcessStep do
   end
 
   describe '#mounted_equipment' do
-    it 'uses EQUIPMENT values from condition activities' do
+    it 'exposes EQUIPMENT values from condition activities' do
       create(:reaction_process_activity_condition, reaction_process_step: process_step,
                                                    workup: { EQUIPMENT: { value: 'REACTOR' } })
 
       expect(process_step.mounted_equipment).to eq(['REACTOR'])
     end
 
-    it 'uses equipment values from non-condition activities' do
+    it 'exposes equipment values from non-condition activities' do
       create(:reaction_process_activity, reaction_process_step: process_step,
                                          workup: { equipment: ['PUMP'] })
 

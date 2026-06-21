@@ -7,7 +7,7 @@ describe Entities::ReactionProcessEditor::MediumEntity do
 
   let(:medium) { create(:medium_sample, name: 'TheMedium') }
 
-  it 'uses medium name as label' do
+  it 'exposes medium name as label' do
     expect(represented_medium).to include(label: 'TheMedium')
   end
 end

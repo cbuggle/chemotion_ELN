@@ -9,7 +9,7 @@ describe Entities::ReactionProcessEditor::FractionEntity do
     let(:action) { create(:reaction_process_activity, activity_name: 'ADD') }
     let(:fraction) { create(:fraction, consuming_action: action) }
 
-    it 'uses the consuming action name' do
+    it 'exposes the consuming action name' do
       expect(represented_fraction).to include(consuming_action_name: 'ADD')
     end
   end

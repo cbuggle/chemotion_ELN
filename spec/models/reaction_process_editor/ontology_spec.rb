@@ -12,11 +12,11 @@ RSpec.describe ReactionProcessEditor::Ontology do
 
   it { is_expected.to have_many(:device_methods).dependent(:nullify) }
 
-  it 'uses label as short_label' do
+  it 'exposes label as short_label' do
     expect(ontology.short_label).to eq('Ontology label')
   end
 
-  it 'uses label as external_label' do
+  it 'exposes label as external_label' do
     expect(ontology.external_label).to eq('Ontology label')
   end
 
