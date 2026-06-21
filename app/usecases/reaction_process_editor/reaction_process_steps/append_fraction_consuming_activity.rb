@@ -4,7 +4,7 @@
 module Usecases
   module ReactionProcessEditor
     module ReactionProcessSteps
-      class AppendFractionActivity
+      class AppendFractionConsumingActivity
         # rubocop:disable  Metrics/BlockLength
         def self.execute!(parent_action:, index:, fraction_params:)
           ActiveRecord::Base.transaction do

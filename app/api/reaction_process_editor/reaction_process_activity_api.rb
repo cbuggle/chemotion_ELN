@@ -31,13 +31,14 @@ module ReactionProcessEditor
           status 204
         end
 
-        desc 'Create and append an action for the fractions of a chromatography automation result.'
-        put :create_fraction_activities do
+        desc 'Create and append consuming actions for the fractions' \
+             'manually grouped from a chromatography automation result.'
+        put :create_fraction_consuming_activities do
           fractions_params = params[:fractions]
           @activity.fractions.destroy_all
 
           fractions_params.each_with_index do |fraction_params, index|
-            ::Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionActivity
+            ::Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionConsumingActivity
               .execute!(parent_action: @activity, index: index, fraction_params: fraction_params)
           end
 

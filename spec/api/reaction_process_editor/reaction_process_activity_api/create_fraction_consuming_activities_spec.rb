@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-describe ReactionProcessEditor::ReactionProcessActivityAPI, '.create_fraction_activities' do
+describe ReactionProcessEditor::ReactionProcessActivityAPI, '.create_fraction_consuming_activities' do
   include RequestSpecHelper
 
   subject(:put_append_fraction_request) do
-    put("/api/v1/reaction_process_editor/reaction_process_activities/#{activity.id}/create_fraction_activities",
+    put("/api/v1/reaction_process_editor/reaction_process_activities/#{activity.id}/create_fraction_consuming_activities",
         params: pooling_group_params.to_json,
         headers: authorization_header)
   end
@@ -24,17 +24,17 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.create_fraction_ac
 
   it_behaves_like 'authorization restricted API call'
 
-  it 'Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionActivity' do
-    allow(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionActivity).to receive(:execute!)
+  it 'Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionConsumingActivity' do
+    allow(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionConsumingActivity).to receive(:execute!)
     put_append_fraction_request
 
-    expect(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionActivity)
+    expect(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionConsumingActivity)
       .to have_received(:execute!)
       .with({ parent_action: anything,
               fraction_params: { consuming_action_name: 'DISCARD', vials: %w[1 2] },
               index: 0 })
 
-    expect(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionActivity)
+    expect(Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionConsumingActivity)
       .to have_received(:execute!)
       .with({ parent_action: anything,
               fraction_params: { consuming_action_name: 'EVAPORATION', vials: %w[3] },

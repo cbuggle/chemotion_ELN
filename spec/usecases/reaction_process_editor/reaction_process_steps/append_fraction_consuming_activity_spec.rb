@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionActivity do
+RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendFractionConsumingActivity do
   subject(:append_activity) do
     described_class.execute!(parent_action: existing_actions.first,
                              fraction_params: fraction_params,
