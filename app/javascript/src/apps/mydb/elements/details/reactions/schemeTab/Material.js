@@ -275,21 +275,6 @@ class Material extends Component {
     );
   }
 
-  materialShowLabel(material) {
-    return (
-      <Button
-        className="p-1 ms-1"
-        onClick={e => this.handleShowLabelChange(e)}
-        variant="light"
-        active={material.show_label}
-        size="sm"
-        title={material.show_label ? 'Switch to structure' : 'Switch to label'}
-      >
-        {material.show_label ? 'l' : 's'}
-      </Button>
-    );
-  }
-
   // eslint-disable-next-line class-methods-use-this
   recalculateYieldForGasProduct(material, reaction) {
     const vesselVolume = GasPhaseReactionStore.getState().reactionVesselSizeValue;
@@ -1044,19 +1029,7 @@ class Material extends Component {
       this.props.onChange(event);
     }
   }
-
-  handleShowLabelChange(intermediateType) {
-    if (this.props.onChange) {
-      const event = {
-        intermediateType,
-        type: 'showLabelChange',
-        materialGroup: this.props.materialGroup,
-        sampleID: this.materialId()
-      };
-      this.props.onChange(event);
-    }
-  }
-
+  
   createParagraph(m) {
     const { materialGroup } = this.props;
     const isSbmm = isSbmmSample(m);
