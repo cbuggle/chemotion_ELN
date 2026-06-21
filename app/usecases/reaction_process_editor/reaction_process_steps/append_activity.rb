@@ -8,7 +8,7 @@ module Usecases
           ActiveRecord::Base.transaction do
             target_step = if activity_params['activity_name'] == 'TRANSFER'
                             reaction_process_step.reaction_process.reaction_process_steps
-                              .find(activity_params['workup']['target_step_id'])
+                                                 .find(activity_params['workup']['target_step_id'])
                           else
                             reaction_process_step
                           end
