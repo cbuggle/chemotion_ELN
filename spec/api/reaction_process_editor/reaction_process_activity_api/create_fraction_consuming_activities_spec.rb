@@ -6,12 +6,12 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.create_fraction_co
   include RequestSpecHelper
 
   subject(:put_append_fraction_request) do
-    put("/api/v1/reaction_process_editor/reaction_process_activities/#{activity.id}/create_fraction_consuming_activities",
+    put("/api/v1/reaction_process_editor/reaction_process_activities/#{action.id}/create_fraction_consuming_activities",
         params: pooling_group_params.to_json,
         headers: authorization_header)
   end
 
-  let!(:activity) { create(:reaction_process_activity_add_sample, position: 3) }
+  let!(:action) { create(:reaction_process_activity_add_sample, position: 3) }
 
   let(:pooling_group_params) do
     { fractions: [
@@ -20,7 +20,7 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.create_fraction_co
     ] }
   end
 
-  let(:authorization_header) { authorized_header(activity.creator) }
+  let(:authorization_header) { authorized_header(action.creator) }
 
   it_behaves_like 'authorization restricted API call'
 
@@ -43,7 +43,7 @@ describe ReactionProcessEditor::ReactionProcessActivityAPI, '.create_fraction_co
 
   it 'updates activity automation_control status' do
     expect { put_append_fraction_request }.to change {
-      activity.reload.workup.dig('automation_control', 'status')
+      action.reload.workup.dig('automation_control', 'status')
     }.to('HALT_RESOLVED_NEEDS_CONFIRMATION')
   end
 end
