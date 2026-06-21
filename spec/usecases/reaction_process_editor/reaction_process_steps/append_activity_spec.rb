@@ -66,6 +66,18 @@ RSpec.describe Usecases::ReactionProcessEditor::ReactionProcessSteps::AppendActi
       end
     end
 
+    context 'when target step belongs to another reaction process' do
+      let(:target_step) { create(:reaction_process_step) }
+
+      let(:activity_params) do
+        { activity_name: 'TRANSFER', workup: { target_step_id: target_step.id } }.deep_stringify_keys
+      end
+
+      it 'rejects the target step' do
+        expect { append_activity }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
     context 'when created from Target Step' do
       let(:activity_params) do
         { activity_name: 'TRANSFER', workup: { target_step_id: process_step.id } }.deep_stringify_keys

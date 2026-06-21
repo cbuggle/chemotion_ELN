@@ -6,9 +6,8 @@ module Usecases
       class AppendActivity
         def self.execute!(reaction_process_step:, activity_params:, position:)
           ActiveRecord::Base.transaction do
-            # TODO: assert the target step is in the same reaction?
             target_step = if activity_params['activity_name'] == 'TRANSFER'
-                            ::ReactionProcessEditor::ReactionProcessStep
+                            reaction_process_step.reaction_process.reaction_process_steps
                               .find(activity_params['workup']['target_step_id'])
                           else
                             reaction_process_step
