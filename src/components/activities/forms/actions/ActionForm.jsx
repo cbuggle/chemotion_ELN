@@ -57,6 +57,7 @@ const ActionForm = (
     'SAVE': SaveSampleForm,
     'TRANSFER': TransferForm,
     'EVAPORATION': EvaporationForm,
+    'MERGE_SAMPLES': MergeSamplesForm,
     'MIXING': MixingForm,
     'GAS_EXCHANGE': GasExchangeForm,
     'ANALYSIS_CHROMATOGRAPHY': AnalysisChromatographyForm,
