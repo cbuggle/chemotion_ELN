@@ -1,0 +1,72 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "http://localhost:3000/api/v1/reaction_process_editor/reactions",
+    "headers": {
+      "Authorization": "Bearer <fixture-token>",
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "statusText": "OK",
+    "ok": true,
+    "headers": {
+      "content-type": "application/json"
+    },
+    "json": {
+      "reactions": [
+        {
+          "id": 1,
+          "short_label": "CU1-R1",
+          "reaction_svg_file": "2d2977962e4a486b07d8e98ae1f9db0e438a1c970e50d2406bd812711d17ac27.svg",
+          "value": 1
+        },
+        {
+          "id": 2,
+          "short_label": "CU1-R2",
+          "reaction_svg_file": "469483d91d86d2ce2fdb5aa0bed7be58036bf58e3af0598872648b3496b345d942ddf25e8ab45d5611e18ebbfbb30adf1ad3668e6f4fea74a88189c0ba139a49.svg",
+          "value": 2
+        },
+        {
+          "id": 3,
+          "short_label": "CU1-R3",
+          "reaction_svg_file": "f65ce09ff748c009035bdd96a5cec11141af99b1103034d7a3937b5a77fe196bb9205cad6cd3c3f2364034b4aa448deb18a6589cabafb99b732dac9f7cedc21b.svg",
+          "value": 3
+        },
+        {
+          "id": 4,
+          "short_label": "CU1-R4",
+          "reaction_svg_file": "1880984ada884767f5e4c148c4a25b1195a1796f0c966a65ca060e352e57bc31959acbe85c564bd23e4d03d012ba300ec529870dff71ef8245d3600bacd406d8.svg",
+          "value": 4
+        },
+        {
+          "id": 5,
+          "short_label": "CU1-R5",
+          "reaction_svg_file": "24ab031a0b1772f8513b8f97cbdf3b993e75398d77b0008d69a57d4b178e5f40d83f89ddcfa5a434b6b54946b39c36ffe104b1b365dd18d2ff4b9f6a02e14b83.svg",
+          "value": 5
+        },
+        {
+          "id": 6,
+          "short_label": "CU1-R6",
+          "reaction_svg_file": "e6fede0905fd4693cfa1a0748febaa740cb35500819cf9df138bd373ef1151965a0b3071b64c4f602612dde31a13926683bab2bc18dc42dea7e2694363d2cf78.svg",
+          "value": 6
+        },
+        {
+          "id": 7,
+          "short_label": "CU1-R7",
+          "reaction_svg_file": "8d7252f08c3f016cc3f2fe4a6829d37c2c8c3e7ad1388daa840ec0aae2b24217badb2afa0079743574e990d503837cbd361d1ca6ab4b21bbecf0ad40fa804bf8.svg",
+          "value": 7
+        },
+        {
+          "id": 8,
+          "short_label": "CU1-R8",
+          "reaction_svg_file": "a9887f7e2f7cc410ab72fba03aac8281568f676476653722fc3a17bef73be42d5cc0c526a16d2cbb13f0ce4d36ba813640d13d398f182a64534996d49d299a3e.svg",
+          "value": 8
+        }
+      ]
+    },
+    "body": "{\"reactions\":[{\"id\":1,\"short_label\":\"CU1-R1\",\"reaction_svg_file\":\"2d2977962e4a486b07d8e98ae1f9db0e438a1c970e50d2406bd812711d17ac27.svg\",\"value\":1},{\"id\":2,\"short_label\":\"CU1-R2\",\"reaction_svg_file\":\"469483d91d86d2ce2fdb5aa0bed7be58036bf58e3af0598872648b3496b345d942ddf25e8ab45d5611e18ebbfbb30adf1ad3668e6f4fea74a88189c0ba139a49.svg\",\"value\":2},{\"id\":3,\"short_label\":\"CU1-R3\",\"reaction_svg_file\":\"f65ce09ff748c009035bdd96a5cec11141af99b1103034d7a3937b5a77fe196bb9205cad6cd3c3f2364034b4aa448deb18a6589cabafb99b732dac9f7cedc21b.svg\",\"value\":3},{\"id\":4,\"short_label\":\"CU1-R4\",\"reaction_svg_file\":\"1880984ada884767f5e4c148c4a25b1195a1796f0c966a65ca060e352e57bc31959acbe85c564bd23e4d03d012ba300ec529870dff71ef8245d3600bacd406d8.svg\",\"value\":4},{\"id\":5,\"short_label\":\"CU1-R5\",\"reaction_svg_file\":\"24ab031a0b1772f8513b8f97cbdf3b993e75398d77b0008d69a57d4b178e5f40d83f89ddcfa5a434b6b54946b39c36ffe104b1b365dd18d2ff4b9f6a02e14b83.svg\",\"value\":5},{\"id\":6,\"short_label\":\"CU1-R6\",\"reaction_svg_file\":\"e6fede0905fd4693cfa1a0748febaa740cb35500819cf9df138bd373ef1151965a0b3071b64c4f602612dde31a13926683bab2bc18dc42dea7e2694363d2cf78.svg\",\"value\":6},{\"id\":7,\"short_label\":\"CU1-R7\",\"reaction_svg_file\":\"8d7252f08c3f016cc3f2fe4a6829d37c2c8c3e7ad1388daa840ec0aae2b24217badb2afa0079743574e990d503837cbd361d1ca6ab4b21bbecf0ad40fa804bf8.svg\",\"value\":7},{\"id\":8,\"short_label\":\"CU1-R8\",\"reaction_svg_file\":\"a9887f7e2f7cc410ab72fba03aac8281568f676476653722fc3a17bef73be42d5cc0c526a16d2cbb13f0ce4d36ba813640d13d398f182a64534996d49d299a3e.svg\",\"value\":8}]}"
+  }
+}

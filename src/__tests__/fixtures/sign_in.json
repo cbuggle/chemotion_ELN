@@ -1,0 +1,25 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "http://localhost:3000/api/v1/reaction_process_editor/sign_in",
+    "body": {
+      "user": {
+        "login": "random.user@example.test",
+        "password": "random-password-123"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "statusText": "OK",
+    "ok": true,
+    "headers": {
+      "authorization": "Bearer fixture-token",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "json": {
+      "message": "You are logged in."
+    },
+    "body": "{\"message\":\"You are logged in.\"}"
+  }
+}
