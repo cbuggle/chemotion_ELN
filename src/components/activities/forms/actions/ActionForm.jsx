@@ -18,6 +18,7 @@ import TransferForm from "./TransferForm";
 import DefineFractionForm from './DefineFractionForm';
 import DiscardForm from './DiscardForm';
 import EvaporationForm from './EvaporationForm';
+import MergeSamplesForm from './MergeSamplesForm';
 import MixingForm from './MixingForm';
 import GasExchangeForm from './GasExchangeForm';
 import WaitForm from './WaitForm';

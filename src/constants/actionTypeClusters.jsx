@@ -48,6 +48,11 @@ export const actionTypeClusters = [[
         id: 'mixing',
         createLabel: 'Mixing',
         activity: { activity_name: 'MIXING' }
+      },
+      {
+        id: 'merge_samples',
+        createLabel: 'Merge Samples',
+        activity: { activity_name: 'MERGE_SAMPLES' }
       }
     ]
   },
