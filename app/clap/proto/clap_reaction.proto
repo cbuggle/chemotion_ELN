@@ -9,8 +9,8 @@
 // to store reaction process data describing the automatable process of a
 // chemical reaction tailored to the actual (configurable) laboratory setup.
 //
-// v1.0.3
-// (18.06.2026)
+// v1.0.4
+// (06.07.2026)
 //
 // This format has been inspired by and contains a few concepts of
 // the Open Reaction Database (ORD) schema. We gratefully pay tribute to the ORD
@@ -161,6 +161,7 @@ message ReactionProcessAction {
     ActionDiscard discard = 115;
     ActionDefineFraction define_fraction = 116;
     ActionMixing mixing = 117;
+    ActionMergeSamples merge_samples = 118;
   }
 
   message ActionAdd {
@@ -181,6 +182,12 @@ message ReactionProcessAction {
   }
 
   message ActionGasExchange { repeated SolventWithRatio gas_type = 1; }
+
+  message ActionMergeSamples { 
+    Sample source_sample = 1;
+    Sample target_sample = 2;
+    Amount amount = 3;
+   }
 
   message ActionMixing { Motion speed = 1; }
 

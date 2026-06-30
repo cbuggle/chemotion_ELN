@@ -8,6 +8,7 @@ module Entities
           CHROMATOGRAPHY: { action: 'CHMO:0002231', class: 'CHMO:0001000' },
           ANALYSIS_CHROMATOGRAPHY: { action: 'OBI:0000070', class: 'CHMO:0001000' },
           ANALYSIS_SPECTROSCOPY: { action: 'OBI:0000070', class: 'CHMO:0000228' },
+          MERGE_SAMPLES: { class: 'OBI:0000652' },
         }.deep_stringify_keys.freeze
 
         AUTOMATION_MANUAL_MODES = ['NCIT:C63513'].freeze
