@@ -14,7 +14,7 @@ module Entities
 
             return [reaction_process.sample] unless reaction
 
-            samples_options_for_reaction(reaction)
+            samples_options_for_reaction(reaction.reload)
           end
 
           def sample_options_for_user(user:)
@@ -27,6 +27,7 @@ module Entities
 
           def samples_options_for_reaction(reaction)
             samples = reaction.starting_materials + reaction.reactants + reaction.products
+            samples = samples_with_merged_samples(reaction, samples)
             solvents = (reaction.solvents + reaction.purification_solvents).uniq
             diverse_solvents = Medium::DiverseSolvent.all
 
@@ -43,6 +44,19 @@ module Entities
                                             'SOLVENT') + samples_info_options(diverse_solvents,
                                                                               'DIVERSE_SOLVENT'),
             }
+          end
+
+          def samples_with_merged_samples(reaction, samples)
+            sample_ids = samples.map(&:id).compact
+            return samples if sample_ids.empty?
+
+            merged_sample_ids = reaction.sample_merges
+                                        .where('source_sample_id IN (?) OR target_sample_id IN (?)',
+                                               sample_ids, sample_ids)
+                                        .pluck(:source_sample_id, :target_sample_id)
+                                        .flatten
+
+            (samples + Sample.where(id: merged_sample_ids).to_a).uniq
           end
         end
       end

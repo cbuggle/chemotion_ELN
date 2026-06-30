@@ -22,7 +22,15 @@ class SampleMergeService
     reaction = Reaction.find(reaction_id)
 
     validate_merge!(source, target, reaction)
-    ActiveRecord::Base.transaction { apply_merge!(source, target, reaction) }
+    ActiveRecord::Base.transaction do
+      apply_merge!(source, target, reaction)
+      Usecases::ReactionProcessEditor::Samples::CreateMergeSamplesActivity.execute!(
+        current_user: @user,
+        reaction: reaction,
+        source_sample: source,
+        target_sample: target,
+      )
+    end
     target.reload
   end
 
