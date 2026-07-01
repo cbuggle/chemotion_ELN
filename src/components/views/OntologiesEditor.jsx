@@ -7,6 +7,8 @@ import OntologyFormModal from '../ontologies/OntologyFormModal';
 
 import { useReactionsFetcher } from "../../fetchers/ReactionsFetcher";
 
+import { OntologyConstants } from '../../constants/OntologyConstants';
+
 import { SelectOptions } from '../../contexts/SelectOptions';
 
 import Select from 'react-select';
@@ -22,7 +24,7 @@ const OntologiesEditor = () => {
   const [filter, setFilter] = useState(
     {
       "active": ["true", "false"],
-      "ontology_type": ["TERMINOLOGY", "CUSTOM_TERMINOLOGY", "DEVICE_TYPE", "DEVICE_CONFIG"]
+      "ontology_type": OntologyConstants.ontologyTypes
     }
   )
 
@@ -31,9 +33,9 @@ const OntologiesEditor = () => {
     || ont.label?.toLowerCase().match(downcasedQuery)
     || ont.name?.toLowerCase().match(downcasedQuery)
 
-  const ontologyMatchesFilter = (ont) =>
+  const ontologyMatchesFilter = (ontology) =>
     Object.entries(filter).every(([filterKey, requiredValues]) =>
-      requiredValues.includes(ont[filterKey].toString()))
+      !OntologyConstants.ontologyTypes.includes(ontology[filterKey]) || requiredValues.includes(ontology[filterKey].toString()))
 
   const filteredOntologies = ontologies.filter((ont) => ontologyMatchesQuery(ont) && ontologyMatchesFilter(ont))
 

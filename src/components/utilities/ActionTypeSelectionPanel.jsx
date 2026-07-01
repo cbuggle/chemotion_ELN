@@ -26,6 +26,18 @@ const ActionTypeSelectionPanel = ({ onSelect }) => {
       {columns.map((column, cIndex) => (
         <Col key={" " + column.id + cIndex} className='type-selection-panel__cluster col-6'>
           {column.map((cluster) => renderActionCluster(cluster))}
+          {(cIndex > 0) &&
+            <div className="type-selection-panel__action">
+              <h5>{"Merge Samples"}</h5>
+              < Button
+                key={'merge-samples'}
+                className='col-12 btn-action'
+                disabled
+              >
+                {"Merging Samples only possible in ELN"}
+              </Button>
+            </div>
+          }
         </Col>
       ))}
     </Row>

@@ -45,6 +45,7 @@ const OntologySelectFormGroup = (
       key={"form-group-" + roleName + "-" + value + Math.random(10000)}
       label={label}
       tooltip={tooltip}
+      tooltipColor={"danger"}
     >
 
       <Select

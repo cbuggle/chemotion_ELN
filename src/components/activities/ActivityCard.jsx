@@ -118,27 +118,34 @@ const ActivityCard = ({
     }));
   };
 
-  const renderAutomationModeTooltip = () => {
+  const renderIconWarning = (tooltipName) => {
     return (
       <>
-        <div id={"activity_automation_mode_" + activity?.id}>
+        <div id={"activity_automation_mode_" + activity?.id + tooltipName}>
           <IconButton
             size={"sm"}
             positive={true}
             icon={"circle-info"}
             color={"danger"} />
         </div>
-        <UncontrolledTooltip target={"activity_automation_mode_" + activity?.id}>
-          {tooltips['action_unmet_automation_mode']}
+        <UncontrolledTooltip target={"activity_automation_mode_" + activity?.id + tooltipName}>
+          {tooltips[tooltipName]}
         </UncontrolledTooltip>
       </>
     )
   }
 
+
+  console.log("activity")
+  console.log(activity)
+  const isMergeSamplesForm = ['MERGE_SAMPLES'].includes(activity?.activity_name)
+  const samplesTypeUnspecified = !activity?.workup?.type
+
   const renderTitleBar = (title) => {
     return (
       <div className="d-md-flex gap-2">
-        {automationModeMismatch && formDependsOnAutomationMode && renderAutomationModeTooltip()}
+        {automationModeMismatch && formDependsOnAutomationMode && renderIconWarning('action_unmet_automation_mode')}
+        {isMergeSamplesForm && samplesTypeUnspecified && renderIconWarning('merge_sample_type_unspecified')}
         <div id={"activity_automation_status_" + activity?.id}>
           <IconButton
             disabled

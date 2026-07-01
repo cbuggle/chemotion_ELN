@@ -37,7 +37,7 @@ const DeviceMethodFormSet = ({
 	}
 	const currentDeviceOption = OptionsDecorator.inclusiveOptionForValue(workup.device, ontologies)
 
-	const requiresTypeSubtypeForm = ['ADD', 'TRANSFER', 'MIXING'].includes(activity.activity_name)
+	const requiresTypeSubtypeForm = ['ADD', 'TRANSFER', 'MERGE_SAMPLES', 'MIXING'].includes(activity.activity_name)
 
 	return (
 		<>

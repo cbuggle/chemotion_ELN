@@ -7,6 +7,8 @@ import AnalysisSpectroscopyInfo from "./forms/actions/info/AnalysisSpectroscopyI
 
 import ConditionInfo from "./forms/actions/info/ConditionInfo";
 import DiscardInfo from "./forms/actions/info/DiscardInfo";
+import GasExchangeInfo from "./forms/actions/info/GasExchangeInfo";
+import MergeSamplesInfo from "./forms/actions/info/MergeSamplesInfo";
 import PurificationInfo from "./forms/actions/info/PurificationInfo";
 import RemoveInfo from "./forms/actions/info/RemoveInfo";
 import SaveInfo from "./forms/actions/info/SaveInfo";
@@ -37,6 +39,8 @@ const ActivityInfo = (props) => {
       'FILTRATION': PurificationInfo,
       'EXTRACTION': PurificationInfo,
       'EVAPORATION': RemoveInfo,
+      'GAS_EXCHANGE': GasExchangeInfo,
+      'MERGE_SAMPLES': MergeSamplesInfo,
       'SAVE': SaveInfo,
       'TRANSFER': TransferInfo,
       'DEFINE_FRACTION': DiscardInfo,
