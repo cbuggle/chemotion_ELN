@@ -2,13 +2,16 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins(['localhost:4000', 'http://cb-frontend-reaction-process-editor.deploy.chemdev.scc.kit.edu']
+
+    chemdev_editor = ENV.fetch(REACT_APP_CHEMOTION_ELN_HOSTNAME, ''
+
+    origins(['localhost:4000', '']
     ).split(',').map(&:strip))
 
     resource '/api/v1/public/*', headers: :any, methods: %i[get post options]
 
     resource '/api/v1/reaction_process_editor/*', headers: :any, methods: %i[get post patch put delete options],
-                                                  expose: %w[Authorization  Content-Disposition Content-Filename],
+                                                  expose: %w[Authorization Access-Control-Allow-Origin Content-Disposition Content-Filename],
                                                   credentials: false
   end
 
