@@ -24,6 +24,9 @@ RUN cp .version /bk.version
 
 RUN git fetch
 
+RUN echo .current_hash
+RUN echo ".current_hash"
+
 RUN --mount=type=bind,source=.git/shallow,target=/.current_hash,readonly \
     git remote add origin ${REMOTE} && \
     git fetch && \
