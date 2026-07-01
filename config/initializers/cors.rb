@@ -9,8 +9,13 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
 
     origins(*reaction_process_editor_origins)
 
-    Rails.logger.info("INIT CORS FOR:")
-    Rails.logger.info(reaction_process_editor_origins)
+    Rails.logger.error("INIT CORS FOR:")
+    Rails.logger.error("INIT CORS FOR:")
+    Rails.logger.error("INIT CORS FOR:")
+    Rails.logger.error("INIT CORS FOR:")
+    Rails.logger.error("INIT CORS FOR:")
+    Rails.logger.error("INIT CORS FOR:")
+    Rails.logger.error(reaction_process_editor_origins)
 
     resource '/api/v1/public/*', headers: :any, methods: %i[get post options]
 
