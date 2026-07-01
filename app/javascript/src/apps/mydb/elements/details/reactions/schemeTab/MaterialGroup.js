@@ -185,6 +185,7 @@ function GeneralMaterialGroup({
   const isInteractionReaction = reaction.isInteractionReaction();
   const isInteractionProducts = isInteractionReaction && materialGroup === 'products';
   const groupHeaders = { ...headers };
+  const isIntermediate = materialGroup === 'intermediate_samples';
 
   let reagentDd = null;
   if (isReactants) {
@@ -280,6 +281,12 @@ function GeneralMaterialGroup({
     }
   }
 
+  if (materialGroup === 'intermediate_samples') {
+    groupHeaders.group = 'Intermediates';
+    groupHeaders.intermediate_type = 'Type';
+    groupHeaders.step = 'Step';
+  }
+
   const specialRefTHead = reaction.weight_percentage ? (
     <OverlayTrigger
       placement="top"
@@ -294,6 +301,7 @@ function GeneralMaterialGroup({
   ) : null;
 
   const refTHead = materialGroup !== 'products' ? groupHeaders.ref : specialRefTHead;
+
   /**
    * Add a (not yet persisted) sample to a material group
    * of the given reaction
@@ -306,7 +314,7 @@ function GeneralMaterialGroup({
     />
   );
 
-  return (
+  const materialsTable = (
     <ReorderableMaterialContainer
       materials={materials}
       materialGroup={materialGroup}
@@ -368,7 +376,56 @@ function GeneralMaterialGroup({
           {contents}
         </div>
       )}
-    </ReorderableMaterialContainer>
+    </ReorderableMaterialContainer >
+  );
+
+  const intermediatesTable = (
+    <ReorderableMaterialContainer
+      materials={materials}
+      materialGroup={materialGroup}
+      onDrop={onDrop}
+      onReorder={onReorder}
+      renderMaterial={({ index, ...props }) => getMaterialComponent({
+        ...props,
+        index: headIndex + index
+      })}
+    >
+      {({
+        contents, dropRef, isOver, canDrop
+      }) => (
+        <div
+          ref={dropRef}
+          className={materialGroupClassNames({
+            isEmpty: materials.length === 0,
+            isOver,
+            canDrop
+          })}
+        >
+          <div className="pseudo-table__row pseudo-table__row-header">
+            <div className="pseudo-table__cell pseudo-table__cell-title">
+              <div className="material-group__header-title">
+                {addSampleButton}
+                {"Intermediates"}
+              </div>
+            </div>
+            <div className="reaction-material__reaction-step-header">{groupHeaders.step}</div>
+            <div className="reaction-material__intermediate-type-header">{groupHeaders.intermediate_type}</div>
+            <div className="reaction-material__amount-header">{groupHeaders.amount}</div>
+            <div className="reaction-material__delete-header" />
+          </div>
+          {contents}
+        </div>
+      )
+      }
+    </ReorderableMaterialContainer >
+  );
+
+  return (
+    <div>
+      {
+        isIntermediate ? intermediatesTable : materialsTable
+      }
+    </div>
   );
 }
 
