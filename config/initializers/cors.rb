@@ -3,10 +3,9 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
 
-    chemdev_editor = ENV.fetch(REACT_APP_CHEMOTION_ELN_HOSTNAME, ''
+    chemdev_editor = ENV.fetch(REACT_APP_CHEMOTION_ELN_HOSTNAME, '')
 
-    origins(['localhost:4000', '']
-    ).split(',').map(&:strip))
+    origins(['localhost:4000', chemdev_editor])
 
     resource '/api/v1/public/*', headers: :any, methods: %i[get post options]
 
