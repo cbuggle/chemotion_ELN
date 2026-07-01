@@ -6,6 +6,13 @@ GIT
     inchi-gem (1.07.5)
 
 GIT
+  remote: https://github.com/ComPlat/openbabel-gem.git
+  revision: ecbc65d6643b8bb96d92b745da5a61a2640bfe25
+  tag: v3.2.0.1
+  specs:
+    openbabel (3.2.0.1)
+
+GIT
   remote: https://github.com/ComPlat/rinchi-gem.git
   revision: 94402dfd7ddb33bf3b46d533bd8ee0484a4e0e6d
   branch: main
@@ -34,13 +41,6 @@ GIT
   revision: 4935ef8836d097f22c7b6402978a93956fa5ed64
   specs:
     thumbnailer (0.2.0)
-
-GIT
-  remote: https://github.com/ComPlat/openbabel-gem.git
-  revision: ecbc65d6643b8bb96d92b745da5a61a2640bfe25
-  tag: v3.2.0.1
-  specs:
-    openbabel (3.2.0.1)
 
 GIT
   remote: https://github.com/toretore/semacode.git
