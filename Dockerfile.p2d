@@ -1,6 +1,8 @@
 FROM ptrxyz/chemotion:eln-3.1.2
 
 ARG REMOTE=https://github.com/ComPlat/chemotion_ELN.git
+ARG CHEMOTION_REF=v3.1.2
+ARG APT_MIRROR=https://archive.ubuntu.com/ubuntu
 ARG BUNDLER_VERSION=2.4.22
 ARG CUSTOM_KETCHER_BRANCH=v3.12.0
 # The last version of bundler to support current Ruby & RubyGems was 2.4.22.
@@ -9,7 +11,9 @@ SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c", "--"]
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked,id=apt-cache \
     --mount=type=cache,target=/var/lib/apt,sharing=locked,id=apt-lib \
-    apt-get update -y && \
+    sed -i -E "s|https?://([a-z]{2}\.)?archive.ubuntu.com/ubuntu|${APT_MIRROR}|g; s|https?://security.ubuntu.com/ubuntu|${APT_MIRROR}|g" \
+        /etc/apt/sources.list /etc/apt/sources.list.d/*.list /etc/apt/sources.list.d/*.sources 2>/dev/null || true && \
+    apt-get update -y -o Acquire::Retries=5 && \
     apt-get install -y --no-install-recommends --autoremove --fix-missing \
     git ca-certificates curl unzip nano \
     build-essential \
@@ -22,12 +26,10 @@ WORKDIR /chemotion/app
 
 RUN cp .version /bk.version
 
-RUN git fetch
-
-RUN --mount=type=bind,source=.git/shallow,target=/.current_hash,readonly \
+RUN git remote remove origin 2>/dev/null || true && \
     git remote add origin ${REMOTE} && \
-    git fetch && \
-    git checkout $(cat /.current_hash)
+    git fetch --depth=1 --tags origin ${CHEMOTION_REF} && \
+    git checkout --detach FETCH_HEAD
 
 RUN mv /bk.version .version
 
@@ -98,4 +100,3 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=300s --retries=3 \
     CMD /embed/health.sh || exit 1
 
 VOLUME [ "/chemotion/app", "/chemotion/data" ]
-
