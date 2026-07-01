@@ -2,13 +2,15 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-
     reaction_process_editor_origins = ENV.fetch(
       'REACTION_PROCESS_EDITOR_HOSTNAME',
-      ''
+      'http://localhost:4000,http://127.0.0.1:4000,http://localhost:3001,http://127.0.0.1:3001,http://localhost:3000,http://127.0.0.1:3000'
     ).split(',').map(&:strip)
 
     origins(*reaction_process_editor_origins)
+
+    Rails.logger.info("INIT CORS FOR:")
+    Rails.logger.info(reaction_process_editor_origins)
 
     resource '/api/v1/public/*', headers: :any, methods: %i[get post options]
 
