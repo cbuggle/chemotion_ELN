@@ -1,24 +1,55 @@
 {
     "sqltools.connections": [
         {
-          "previewLimit": 50,
-          "server": "postgres",
-          "port": 5432,
-          "driver": "PostgreSQL",
-          "name": "development",
-          "database": "chemotion_dev",
-          "username": "postgres",
-          "password": ""
+            "previewLimit": 50,
+            "server": "postgres",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "development",
+            "database": "chemotion_dev",
+            "username": "postgres",
+            "password": ""
         },
         {
-          "previewLimit": 50,
-          "server": "postgres",
-          "port": 5432,
-          "driver": "PostgreSQL",
-          "name": "test",
-          "database": "chemotion_test",
-          "username": "postgres",
-          "password": ""
+            "previewLimit": 50,
+            "server": "postgres",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "test",
+            "database": "chemotion_test",
+            "username": "postgres",
+            "password": ""
         }
-      ]
+    ],
+    "solargraph.commandPath": "/Users/buggle/.local/bin/solargraph-ruby-2.7.7",
+    "solargraph.useBundler": false,
+    "solargraph.transport": "socket",
+    "solargraph.logLevel": "debug",
+    "solargraph.completion": true,
+    "solargraph.hover": true,
+    "solargraph.definitions": true,
+    "solargraph.references": true,
+    "solargraph.symbols": true,
+    "rubyLsp.enabledFeatures": {
+        "codeActions": false,
+        "diagnostics": false,
+        "documentHighlights": false,
+        "documentLink": false,
+        "documentSymbols": false,
+        "foldingRanges": false,
+        "formatting": false,
+        "hover": false,
+        "inlayHint": false,
+        "onTypeFormatting": false,
+        "selectionRanges": false,
+        "semanticHighlighting": false,
+        "completion": false,
+        "codeLens": false,
+        "definition": false,
+        "workspaceSymbol": false,
+        "signatureHelp": false,
+        "typeHierarchy": false
+    },
+    "rubyLsp.formatter": "none",
+    "rubyLsp.linters": []
 }
