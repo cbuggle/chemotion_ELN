@@ -1,7 +1,6 @@
 FROM ptrxyz/chemotion:eln-3.1.2
 
 ARG REMOTE=https://github.com/ComPlat/chemotion_ELN.git
-ARG CHEMOTION_REF=v3.1.2
 ARG BUNDLER_VERSION=2.4.22
 ARG CUSTOM_KETCHER_BRANCH=v3.12.0
 # The last version of bundler to support current Ruby & RubyGems was 2.4.22.
@@ -27,8 +26,8 @@ RUN git fetch
 
 RUN --mount=type=bind,source=.git/shallow,target=/.current_hash,readonly \
     git remote add origin ${REMOTE} && \
-    git fetch --depth=1 --tags origin ${CHEMOTION_REF} && \
-    git checkout --detach FETCH_HEAD
+    git fetch && \
+    git checkout $(cat /.current_hash)
 
 RUN mv /bk.version .version
 
@@ -99,3 +98,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=300s --retries=3 \
     CMD /embed/health.sh || exit 1
 
 VOLUME [ "/chemotion/app", "/chemotion/data" ]
+
