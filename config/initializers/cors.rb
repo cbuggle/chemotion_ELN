@@ -4,7 +4,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     reaction_process_editor_origins = ENV.fetch(
       'REACTION_PROCESS_EDITOR_HOSTNAME',
-      'http://localhost:4000,http://127.0.0.1:4000,http://localhost:3001,http://127.0.0.1:3001,http://localhost:3000,http://127.0.0.1:3000'
+      'http://localhost:4000,http://127.0.0.1:4000,http://localhost:3001,http://127.0.0.1:3001,http://localhost:3000,http://127.0.0.1:3000,https://cb-frontend-reaction-process-editor.deploy.chemdev.scc.kit.edu'
     ).split(',').map(&:strip)
 
     origins(*reaction_process_editor_origins)
