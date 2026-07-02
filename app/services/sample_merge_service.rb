@@ -169,6 +169,7 @@ class SampleMergeService
     return if no_molecule?(source) || no_molecule?(target)
     return if source.molecule_inchikey == target.molecule_inchikey
 
+    return
     raise MergeError, 'source and target have different structures'
   end
 
