@@ -22,7 +22,7 @@ WORKDIR /chemotion/app
 
 RUN cp .version /bk.version
 
-RUN git fetch
+RUN git fetch --tags --prune --prune-tags
 
 RUN --mount=type=bind,source=.git/shallow,target=/.current_hash,readonly \
     git remote add origin ${REMOTE} && \
