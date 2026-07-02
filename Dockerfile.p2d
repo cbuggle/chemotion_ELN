@@ -1,6 +1,5 @@
 FROM ptrxyz/chemotion:eln-3.1.2
 
-ARG REMOTE=https://github.com/ComPlat/chemotion_ELN.git
 ARG BUNDLER_VERSION=2.4.22
 ARG CUSTOM_KETCHER_BRANCH=v3.12.0
 # The last version of bundler to support current Ruby & RubyGems was 2.4.22.
@@ -23,7 +22,6 @@ WORKDIR /chemotion/app
 RUN cp .version /bk.version
 
 RUN --mount=type=bind,source=.git/shallow,target=/.current_hash,readonly \
-    git remote add origin ${REMOTE} && \
     git fetch && \
     git checkout $(cat /.current_hash)
 
