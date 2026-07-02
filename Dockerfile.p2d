@@ -24,7 +24,7 @@ RUN cp .version /bk.version
 
 RUN --mount=type=bind,source=.git/shallow,target=/.current_hash,readonly \
     git remote add origin ${REMOTE} && \
-    git fetch --tags --prune --prune-tags && \
+    git fetch && \
     git checkout $(cat /.current_hash)
 
 RUN mv /bk.version .version
