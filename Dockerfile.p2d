@@ -22,11 +22,9 @@ WORKDIR /chemotion/app
 
 RUN cp .version /bk.version
 
-RUN git fetch --tags --prune --prune-tags
-
 RUN --mount=type=bind,source=.git/shallow,target=/.current_hash,readonly \
     git remote add origin ${REMOTE} && \
-    git fetch && \
+    git fetch --tags --prune --prune-tags && \
     git checkout $(cat /.current_hash)
 
 RUN mv /bk.version .version
