@@ -85,20 +85,10 @@ module Usecases
 
         def amount
           if target_sample.density.to_f.positive?
-            { value: amount_value(:amount_ml), unit: 'ml' }
+            { value: target_sample.amount_ml(:real) || target_sample.amount_ml(:target), unit: 'ml' }
           else
-            { value: amount_value(:amount_mg), unit: 'mg' }
+            { value: target_sample.amount_mg(:real) || target_sample.amount_mg(:target), unit: 'mg' }
           end
-        end
-
-        def amount_value(conversion)
-          return target_sample.public_send(conversion, :real) if real_amount_present?
-
-          target_sample.public_send(conversion, :target)
-        end
-
-        def real_amount_present?
-          target_sample.real_amount_value.present? && target_sample.real_amount_unit.present?
         end
       end
     end
