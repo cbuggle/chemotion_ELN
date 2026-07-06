@@ -84,7 +84,7 @@ RSpec.describe Usecases::ReactionProcessEditor::Samples::CreateMergeSamplesActiv
     target_sample.update!(density: 2.0, real_amount_value: 3.0, real_amount_unit: 'ml')
 
     expect(usecase.reaction_process_activities.first.workup.dig('amount', 'value')).to eq(
-      target_sample.real_amount_ml,
+      target_sample.amount_ml(:real),
     )
   end
 
@@ -98,7 +98,7 @@ RSpec.describe Usecases::ReactionProcessEditor::Samples::CreateMergeSamplesActiv
     target_sample.update!(density: 0.0, real_amount_value: 3.0, real_amount_unit: 'g')
 
     expect(usecase.reaction_process_activities.first.workup.dig('amount', 'value')).to eq(
-      target_sample.real_amount_g,
+      target_sample.amount_g(:real),
     )
   end
 

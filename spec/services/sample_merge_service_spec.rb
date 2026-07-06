@@ -94,7 +94,7 @@ describe SampleMergeService do
         service.merge!(source_id: source.id, target_id: target.id, reaction_id: reaction.id)
 
         expect(ReactionProcessEditor::ReactionProcessActivity.last.workup.dig('amount', 'value')).to eq(
-          target.reload.real_amount_g,
+          target.reload.amount_g(:real),
         )
       end
     end
@@ -113,7 +113,13 @@ describe SampleMergeService do
 
     context 'when the products have different structures' do
       let(:source) { build_product(real_value: 1.0, real_unit: 'mol', molecule: create(:molecule)) }
-      let(:target) { build_product(real_value: 1.0, real_unit: 'mol', molecule: create(:molecule)) }
+      let(:target) do
+        build_product(
+          real_value: 1.0,
+          real_unit: 'mol',
+          molecule: create(:molecule, inchikey: 'DIFFERENT-INCHIKEY'),
+        )
+      end
 
       it 'raises a MergeError' do
         expect do

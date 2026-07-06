@@ -85,9 +85,9 @@ module Usecases
 
         def amount
           if target_sample.density.to_f.positive?
-            { value: target_sample.real_amount_ml, unit: 'ml' }
+            { value: target_sample.amount_ml(:real), unit: 'ml' }
           else
-            { value: target_sample.real_amount_g, unit: 'g' }
+            { value: target_sample.amount_g(:real), unit: 'g' }
           end
         end
       end
