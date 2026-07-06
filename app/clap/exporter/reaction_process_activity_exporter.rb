@@ -21,6 +21,7 @@ module Clap
         WAIT: Clap::Exporter::Actions::WaitActionExporter,
         SAVE: Clap::Exporter::Actions::SaveSampleActionExporter,
         MIXING: Clap::Exporter::Actions::MixingActionExporter,
+        MERGE_SAMPLES: Clap::Exporter::Actions::MergeSampleActionExporter,
         GAS_EXCHANGE: Clap::Exporter::Actions::GasExchangeActionExporter,
       }.stringify_keys
 

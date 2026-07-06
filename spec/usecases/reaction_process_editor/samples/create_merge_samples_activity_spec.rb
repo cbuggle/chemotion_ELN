@@ -68,37 +68,37 @@ RSpec.describe Usecases::ReactionProcessEditor::Samples::CreateMergeSamplesActiv
     expect(usecase.reaction_process_activities.first.workup['target_sample_id']).to eq(target_sample.id)
   end
 
-  it 'stores both merged samples in the activity workup' do
-    expect(usecase.reaction_process_activities.first.workup['sample_ids']).to eq(
-      [source_sample.id, target_sample.id],
+  it 'stores the default automation mode on the created step' do
+    expect(usecase.automation_mode).to eq(
+      Entities::ReactionProcessEditor::Constants::Ontologies::DEFAULT_AUTOMATION_MODE,
     )
   end
 
-  it 'stores the target amount unit as g when the target sample has a positive density' do
-    target_sample.update!(density: 2.0, target_amount_value: 3.0, target_amount_unit: 'ml')
+  it 'stores the amount unit as ml when the target sample has a positive density' do
+    target_sample.update!(density: 2.0, real_amount_value: 3.0, real_amount_unit: 'ml')
 
-    expect(usecase.reaction_process_activities.first.workup.dig('target_amount', 'unit')).to eq('g')
+    expect(usecase.reaction_process_activities.first.workup.dig('amount', 'unit')).to eq('ml')
   end
 
-  it 'stores the target amount value as mass when the target sample has a positive density' do
-    target_sample.update!(density: 2.0, target_amount_value: 3.0, target_amount_unit: 'ml')
+  it 'stores the amount value as real volume when the target sample has a positive density' do
+    target_sample.update!(density: 2.0, real_amount_value: 3.0, real_amount_unit: 'ml')
 
-    expect(usecase.reaction_process_activities.first.workup.dig('target_amount', 'value')).to eq(
-      target_sample.amount_g,
+    expect(usecase.reaction_process_activities.first.workup.dig('amount', 'value')).to eq(
+      target_sample.real_amount_ml,
     )
   end
 
-  it 'stores the target amount unit as ml when the target sample has no positive density' do
-    target_sample.update!(density: 0.0, target_amount_value: 3.0, target_amount_unit: 'ml')
+  it 'stores the amount unit as g when the target sample has no positive density' do
+    target_sample.update!(density: 0.0, real_amount_value: 3.0, real_amount_unit: 'g')
 
-    expect(usecase.reaction_process_activities.first.workup.dig('target_amount', 'unit')).to eq('ml')
+    expect(usecase.reaction_process_activities.first.workup.dig('amount', 'unit')).to eq('g')
   end
 
-  it 'stores the target amount value as volume when the target sample has no positive density' do
-    target_sample.update!(density: 0.0, target_amount_value: 3.0, target_amount_unit: 'ml')
+  it 'stores the amount value as real mass when the target sample has no positive density' do
+    target_sample.update!(density: 0.0, real_amount_value: 3.0, real_amount_unit: 'g')
 
-    expect(usecase.reaction_process_activities.first.workup.dig('target_amount', 'value')).to eq(
-      target_sample.amount_ml,
+    expect(usecase.reaction_process_activities.first.workup.dig('amount', 'value')).to eq(
+      target_sample.real_amount_g,
     )
   end
 

@@ -34,6 +34,7 @@ module Usecases
             process_step = reaction_process.reaction_process_steps.create!(
               name: STEP_NAME,
               position: reaction_process.reaction_process_steps.count,
+              automation_mode: Entities::ReactionProcessEditor::Constants::Ontologies::DEFAULT_AUTOMATION_MODE,
             )
 
             process_step.reaction_process_activities.create!(
@@ -78,16 +79,15 @@ module Usecases
           {
             source_sample_id: source_sample.id,
             target_sample_id: target_sample.id,
-            sample_ids: [source_sample.id, target_sample.id],
-            target_amount: target_amount,
+            amount: amount,
           }.deep_stringify_keys
         end
 
-        def target_amount
+        def amount
           if target_sample.density.to_f.positive?
-            { value: target_sample.amount_ml, unit: 'ml' }
-        else
-            { value: target_sample.amount_g, unit: 'g' }
+            { value: target_sample.real_amount_ml, unit: 'ml' }
+          else
+            { value: target_sample.real_amount_g, unit: 'g' }
           end
         end
       end
