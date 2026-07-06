@@ -18,6 +18,26 @@ RSpec.describe Clap::Exporter::ReactionProcessActivityExporter do
     expect(clap_export.wait.duration.to_h).to eq(value: 15.0, unit: :SECOND)
   end
 
+  context 'with a merge samples activity' do
+    let(:source_sample) { create(:sample) }
+    let(:target_sample) { create(:sample) }
+    let(:action) do
+      create(
+        :reaction_process_activity,
+        activity_name: 'MERGE_SAMPLES',
+        workup: {
+          source_sample_id: source_sample.id,
+          target_sample_id: target_sample.id,
+          amount: { value: '2', unit: 'g' },
+        }.deep_stringify_keys,
+      )
+    end
+
+    it 'exports to the merge samples key from activity name' do
+      expect(clap_export.merge_samples.amount.to_h).to eq(mass: { value: 2.0, unit: :GRAM })
+    end
+  end
+
   context 'with an unknown activity name' do
     let(:action) { create(:reaction_process_activity, activity_name: 'UNKNOWN') }
 

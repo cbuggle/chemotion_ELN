@@ -62,6 +62,50 @@ describe SampleMergeService do
         expect(merge.source_amount_mol).to eq(2.0)
         expect(merge.target_real_amount_value_before).to eq(3.0)
       end
+
+      it 'creates a reaction process editor step for the merge' do
+        expect do
+          service.merge!(source_id: source.id, target_id: target.id, reaction_id: reaction.id)
+        end.to change(ReactionProcessEditor::ReactionProcessStep, :count).by(1)
+      end
+
+      it 'creates a reaction process editor activity for the merge' do
+        expect do
+          service.merge!(source_id: source.id, target_id: target.id, reaction_id: reaction.id)
+        end.to change(ReactionProcessEditor::ReactionProcessActivity, :count).by(1)
+      end
+
+      it 'sets the reaction process editor activity name' do
+        service.merge!(source_id: source.id, target_id: target.id, reaction_id: reaction.id)
+
+        expect(ReactionProcessEditor::ReactionProcessActivity.last.activity_name).to eq('MERGE_SAMPLES')
+      end
+
+      it 'stores the source sample in the reaction process editor activity workup' do
+        service.merge!(source_id: source.id, target_id: target.id, reaction_id: reaction.id)
+
+        expect(ReactionProcessEditor::ReactionProcessActivity.last.workup['source_sample_id']).to eq(source.id)
+      end
+
+      it 'stores the target sample in the reaction process editor activity workup' do
+        service.merge!(source_id: source.id, target_id: target.id, reaction_id: reaction.id)
+
+        expect(ReactionProcessEditor::ReactionProcessActivity.last.workup['target_sample_id']).to eq(target.id)
+      end
+
+      it 'stores the amount unit in the reaction process editor activity workup' do
+        service.merge!(source_id: source.id, target_id: target.id, reaction_id: reaction.id)
+
+        expect(ReactionProcessEditor::ReactionProcessActivity.last.workup.dig('amount', 'unit')).to eq('mg')
+      end
+
+      it 'stores the amount value in the reaction process editor activity workup' do
+        service.merge!(source_id: source.id, target_id: target.id, reaction_id: reaction.id)
+
+        expect(ReactionProcessEditor::ReactionProcessActivity.last.workup.dig('amount', 'value')).to eq(
+          target.reload.amount_mg(:real),
+        )
+      end
     end
 
     context 'when amounts are in grams' do
@@ -78,7 +122,13 @@ describe SampleMergeService do
 
     context 'when the products have different structures' do
       let(:source) { build_product(real_value: 1.0, real_unit: 'mol', molecule: create(:molecule)) }
-      let(:target) { build_product(real_value: 1.0, real_unit: 'mol', molecule: create(:molecule)) }
+      let(:target) do
+        build_product(
+          real_value: 1.0,
+          real_unit: 'mol',
+          molecule: create(:molecule, inchikey: 'DIFFERENT-INCHIKEY'),
+        )
+      end
 
       it 'raises a MergeError' do
         expect do
