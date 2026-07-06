@@ -238,3 +238,5 @@ public/sprite.png
 storybook-static
 public/units_system/units_system.json
 CLAUDE.md
+/.ruby-lsp
+/.solargraph.yml
