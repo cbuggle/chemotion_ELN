@@ -87,14 +87,14 @@ describe SampleMergeService do
       it 'stores the amount unit in the reaction process editor activity workup' do
         service.merge!(source_id: source.id, target_id: target.id, reaction_id: reaction.id)
 
-        expect(ReactionProcessEditor::ReactionProcessActivity.last.workup.dig('amount', 'unit')).to eq('g')
+        expect(ReactionProcessEditor::ReactionProcessActivity.last.workup.dig('amount', 'unit')).to eq('mg')
       end
 
       it 'stores the amount value in the reaction process editor activity workup' do
         service.merge!(source_id: source.id, target_id: target.id, reaction_id: reaction.id)
 
         expect(ReactionProcessEditor::ReactionProcessActivity.last.workup.dig('amount', 'value')).to eq(
-          target.reload.amount_g(:real),
+          target.reload.amount_mg(:real),
         )
       end
     end

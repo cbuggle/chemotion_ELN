@@ -88,17 +88,45 @@ RSpec.describe Usecases::ReactionProcessEditor::Samples::CreateMergeSamplesActiv
     )
   end
 
-  it 'stores the amount unit as g when the target sample has no positive density' do
+  it 'stores the amount unit as mg when the target sample has no positive density' do
     target_sample.update!(density: 0.0, real_amount_value: 3.0, real_amount_unit: 'g')
 
-    expect(usecase.reaction_process_activities.first.workup.dig('amount', 'unit')).to eq('g')
+    expect(usecase.reaction_process_activities.first.workup.dig('amount', 'unit')).to eq('mg')
   end
 
-  it 'stores the amount value as real mass when the target sample has no positive density' do
+  it 'stores the amount value as real mass in mg when the target sample has no positive density' do
     target_sample.update!(density: 0.0, real_amount_value: 3.0, real_amount_unit: 'g')
 
     expect(usecase.reaction_process_activities.first.workup.dig('amount', 'value')).to eq(
-      target_sample.amount_g(:real),
+      target_sample.amount_mg(:real),
+    )
+  end
+
+  it 'falls back to target volume when real volume is unavailable' do
+    target_sample.update!(
+      density: 2.0,
+      real_amount_value: nil,
+      real_amount_unit: nil,
+      target_amount_value: 4.0,
+      target_amount_unit: 'ml',
+    )
+
+    expect(usecase.reaction_process_activities.first.workup.dig('amount', 'value')).to eq(
+      target_sample.amount_ml(:target),
+    )
+  end
+
+  it 'falls back to target mass in mg when real mass is unavailable' do
+    target_sample.update!(
+      density: 0.0,
+      real_amount_value: nil,
+      real_amount_unit: nil,
+      target_amount_value: 4.0,
+      target_amount_unit: 'g',
+    )
+
+    expect(usecase.reaction_process_activities.first.workup.dig('amount', 'value')).to eq(
+      target_sample.amount_mg(:target),
     )
   end
 
