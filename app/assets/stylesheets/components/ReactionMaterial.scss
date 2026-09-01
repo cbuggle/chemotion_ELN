@@ -314,3 +314,11 @@ $rm-columns: (
     }
   }
 }
+
+.merged-source-link {
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
