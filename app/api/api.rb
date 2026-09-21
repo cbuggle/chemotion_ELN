@@ -264,6 +264,8 @@ class API < Grape::API
     mount ::ReactionProcessEditor::ReactionProcessVesselAPI
     mount ::ReactionProcessEditor::SampleAPI
     mount ::ReactionProcessEditor::VesselAPI
+    mount ::ReactionProcessEditor::Automation::OntologiesAPI
+    mount ::ReactionProcessEditor::Automation::ReactionProcessActivityAPI
   end
 
   add_swagger_documentation(info: { title: 'Chemotion ELN', version: '1.0' }) if Rails.env.development?
