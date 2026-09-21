@@ -10,7 +10,7 @@ module ReactionProcessEditor
     get :ontologies do
       ontologies = ReactionProcessEditor::Ontology.includes(:device_methods).order(:ontology_id)
 
-      { ontologies: ontologies.as_json }
+      { ontologies: ontologies.as_json(include: :device_methods) }
     end
 
     params do
