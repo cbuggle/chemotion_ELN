@@ -20,6 +20,7 @@
 #  imported_readout    :string
 #  impurities          :string           default("")
 #  inventory_sample    :boolean          default(FALSE)
+#  is_legacy           :boolean          default(FALSE), not null
 #  is_top_secret       :boolean          default(FALSE)
 #  location            :string           default("")
 #  melting_point       :numrange
@@ -56,6 +57,7 @@
 #  index_samples_on_deleted_at        (deleted_at)
 #  index_samples_on_identifier        (identifier)
 #  index_samples_on_inventory_sample  (inventory_sample)
+#  index_samples_on_is_legacy         (is_legacy) WHERE (is_legacy = true)
 #  index_samples_on_molecule_name_id  (molecule_name_id)
 #  index_samples_on_sample_id         (molecule_id)
 #  index_samples_on_short_label       (short_label)
