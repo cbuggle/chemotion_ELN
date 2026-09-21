@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe ReactionProcessEditor::ReactionProcessActivityAPI, '.put /automation_status' do
+describe ReactionProcessEditor::Automation::ReactionProcessActivityAPI, '.put /automation_status' do
   include RequestSpecHelper
 
   subject(:put_activity_request) do
