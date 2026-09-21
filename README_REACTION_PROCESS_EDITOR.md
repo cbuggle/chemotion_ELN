@@ -190,7 +190,7 @@ There are currently 4 API endpoints serving for automation lab feedback. To acce
 * `PUT /api/v1/reaction_process_editor/ontologies/{id}/ontology_device_methods`
   * Sets the `ontology_device_methods` for the Ontology identified by the Ontology record UUID `{id}`.
   * The request body must contain an `ontology_device_methods` array. The submitted array replaces the Ontology's current methods.
-  * Existing methods can be updated by passing their `id`; omitted existing methods remain associated with the Ontology and are set to `active: false`. Passing an empty array deactivates all methods of the Ontology.
+  * Existing methods can be updated by passing their `id`. Omitted existing methods remain associated with the Ontology and are set to `active: false`. Passing an empty array deactivates all methods of the Ontology.
   * Each method requires a `label` and can optionally include `detectors`, `mobile_phase`, `stationary_phase`, `default_inject_volume`, `description`, `steps`, and `active`.
   * Example requests in Postman collection format are available in `docs/reaction-process-editor/automation/ontology_device_methods.json`.
 
