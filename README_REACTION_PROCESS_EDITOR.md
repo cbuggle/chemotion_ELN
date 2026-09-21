@@ -107,18 +107,18 @@ Technically both are treated equally in defining the "Activities" within a proce
 
 An ReactionProcessActivity carries these relevant attributes:
 
-* `action_name`: defines the type of the Activity, which can basically be any arbitrary string value describing the Activity. A set of are implemented and used for the required funcionalities: "ADD", "REMOVE", "MOTION", "PURIFICATION", "ANALYSIS", "SAVE", "TRANSFER", "WAIT", "DISCARD", "DEFINE_FRACTION", "CONDITION".
+* `action_name`: defines the type of the Activity, which can basically be any arbitrary string value describing the Activity. A set of are implemented and used for the required funcionalities: `ADD`, `REMOVE`, `MOTION`, `PURIFICATION`, `ANALYSIS`, `SAVE`, `TRANSFER`, `WAIT`, `DISCARD`, `DEFINE_FRACTION`, `CONDITION`.
 
 * `position`: The order of the action within the associated reaction_process_step.
 
 * `workup`: This is were the actual Activity data is stored. It is used as a key value store, i.e. a hash to store the parameters of the Activity  where (by convention) the stored data semantically "matches" the functionality provided by the respective Activity. Most of this has been thoroughly
 discussed with NJung and is subject to further enhancements. Basically we use self-defined arbitraty key-value pairs describing
 the parameters and details of the respective Activity, e.g.
-`action_name: "ADD", workup: { acts_as:'SOLVENT', sample_id:'1', amount: { value: '100', unit; 'ml'} }`
+`action_name`: `ADD`, `workup`: `{ acts_as:'SOLVENT', sample_id:'1', amount: { value: '100', unit; 'ml'} }`
 
 As they fulfill no external schema it is a bit hard to validate and keep track of them. In fact they are provided mostly
 by the the respective input fields in the frontend RPE which set them when filled out and sent as part of the request.
-The only actual validation (2023-12-11) is on `"ADD"` Activities validating that `workup[:sample_id]` is set.
+The only actual validation (2023-12-11) is on `ADD` Activities validating that `workup[:sample_id]` is set.
 
 On the other hand this makes it very easy to handle and store arbitrary data and later transform them into CLAP format for further processing.
 
@@ -153,7 +153,7 @@ The most important part of the Editor Frontend is `ActivityForm.jsx`
 
 It consists of two parts, the general and the action specific fields.
 The general part has field "description".
-The generic part is split up into (at time of writing) 9 sub-forms which are selected in ActionForm depending on the "action_name" of the action. => ActionForm.jsx is a good place to lookup which action_names are in use semantically (i.e.well-defined and have an existing form partial implemented), and each of the 9 sub_partial (actionForms/generic/*Form.jsx) is a good place to lookup which workup are used semantically.
+The generic part is split up into (at time of writing) 9 sub-forms which are selected in ActionForm depending on the `action_name` of the action. => ActionForm.jsx is a good place to lookup which action_names are in use semantically (i.e.well-defined and have an existing form partial implemented), and each of the 9 sub_partial (actionForms/generic/*Form.jsx) is a good place to lookup which workup are used semantically.
 
 The root frontend component of the Editor (i.e.. ReactionProcess data) is the ReactionProcessEditor.
 It is included from APP.js with "reaction" as the only prop.
@@ -170,24 +170,35 @@ We have some events where the Lab needs to feedback intermediate results to the 
 
 ### Automation API authorization
 
-To use the Automation API you will need the credentials of an ELN ReactionProcessEditor::ApiUser and sign_in via
+To use the Automation API you will need the credentials of an ELN `ReactionProcessEditor::ApiUser` and sign in via
 
-* POST /api/v1/reaction_process_editor/sign_in
-  * using basic_auth. The response will carry an authorization header with a Bearer Token. The token can then subsequently be used to access the other endpoints with the Bearer Token in the authorization header.
+* `POST /api/v1/reaction_process_editor/sign_in`
+  * using `basic_auth`. The response will carry an authorization header with a Bearer Token. The token can then subsequently be used to access the other endpoints with the Bearer Token in the authorization header.
   * The Bearer Token has a lifetime of 24h.
 
-* POST /api/v1/reaction_process_editor/sign_in
+* `POST /api/v1/reaction_process_editor/sign_out`
   * Can be used to sign out after a session.
 
 ### Automation API endpoints
 
-There are currently 2 API endpoints serving for automation lab feedback. To access these endpoint you need to send along an Authorization Header with the Bearer Token as described above.
+There are currently 4 API endpoints serving for automation lab feedback. To access these endpoint you need to send along an Authorization Header with the Bearer Token as described above.
 
-* PUT /api/v1/reaction_process_editor/reaction_process_activities/{id}/automation_response
+* `GET /api/v1/reaction_process_editor/ontologies`
+  * Returns all Ontologies ordered by `ontology_id`.
+  * Each Ontology includes its `device_methods` array, including all attributes of each device method.
+
+* `PUT /api/v1/reaction_process_editor/ontologies/{id}/ontology_device_methods`
+  * Sets the `ontology_device_methods` for the Ontology identified by the Ontology record UUID `{id}`.
+  * The request body must contain an `ontology_device_methods` array. The submitted array replaces the Ontology's current methods.
+  * Existing methods can be updated by passing their `id`; omitted existing methods are detached from the Ontology. Passing an empty array clears all methods from the Ontology.
+  * Each method requires a `label` and can optionally include `detectors`, `mobile_phase`, `stationary_phase`, `default_inject_volume`, `description`, `steps`, and `active`.
+  * Example requests in Postman collection format are available in `docs/reaction-process-editor/automation/ontology_device_methods.json`.
+
+* `PUT /api/v1/reaction_process_editor/reaction_process_activities/{id}/automation_response`
   * This endpoints serves to send automation feedback (which is currenty required in `Chromatography` Activities only). It accepts the parameter "response_json" with a json file containing the results of the automation in a specific JSON format, describing the vial-plates and vials as returned from the automation devices.
 
-* PUT /api/v1/reaction_process_editor/reaction_process_activities/{id}/automation_status
-  * This endpoint serves to update the automation status, particularly to report the completed run of a ReactionProcessActivity. It accepts the parameter "automation_status". As of this writing, "COMPLETED" is the only accepted value, all others will be silently discarded.
+* `PUT /api/v1/reaction_process_editor/reaction_process_activities/{id}/automation_status`
+  * This endpoint serves to update the automation status, particularly to report the completed run of a ReactionProcessActivity. It accepts the parameter "automation_status". As of this writing, `COMPLETED` is the only accepted value, all others will be silently discarded.
 
 ### AutomationControl & -status model
 
@@ -195,33 +206,33 @@ The automation status model handles the synchronization of the Editor with the a
 
 Each ReactionProcessActivity can be in one of the following states.
 
-* RUN
+* `RUN`
   * The activity can run unrestrictedly.
-* HALT
+* `HALT`
   * The process halts after running this activity and feedback will be provided by the automation lab.
-* AUTOMATION_RESPONDED
+* `AUTOMATION_RESPONDED`
   * The automation feedback has been received through the api (after a HALT) and user interaction is now required (most commonly applies in Chromatography activities).
-* HALT_RESOLVED_NEEDS_CONFIRMATION
+* `HALT_RESOLVED_NEEDS_CONFIRMATION`
   * The required User feedback has been provided (e.g. selecting vials for pooling groups) but not yet comnfirmed. The automation response has been processed manually but can still be changed. The user needs to manually confirm the resolved response. This is a separate state for better handling.
-* HALT_RESOLVED
+* `HALT_RESOLVED`
   * The automation response has been processed and confirmed manually. This Action can now run/continue.
-* DEPENDS_ON_ACTION
+* `DEPENDS_ON_ACTION`
   * This Action depends on the completion of a previous Action.
-* DEPENDS_ON_STEP
+* `DEPENDS_ON_STEP`
   * This Action depends on the completion of a preceding previous entire ReactionProcessStep.
-* COMPLETED
+* `COMPLETED`
   * This ReactionProcessActivity has completed successfully
 
 The ReactionProcessSteps subsequently manage their own status
 
-* STEP_CAN_RUN
+* `STEP_CAN_RUN`
   * The ReactionProcessStep can run unrestrictedly.
-* STEP_COMPLETED
+* `STEP_COMPLETED`
   * All of the ReactionProcessStep's ReactionProcessActivities have been completed and thus the ReactionProcessStep itself is complete.
-* STEP_DEPENDS_ON_PRECEDING
-  * There is a ReactionProcessActivity in some prior ReactionProcessStep that HALTS the automation process (i.e. in status "HALT", "AUTOMATION_RESPONDED", "HALT_RESOLVED_NEEDS_CONFIRMATION" ). This is required to stop ReactionProcessSteps from running while there might still be a dependency to an earlier ReactionProcessSteps.
-* STEP_MANUAL_PROCEED
-  * A STEP_HALT_BY_PRECEDING status has been overridden by the user to allow a ReactionProcessStep to run in parallel.
+* `STEP_DEPENDS_ON_PRECEDING`
+  * There is a ReactionProcessActivity in some prior ReactionProcessStep that HALTS the automation process (i.e. in status `HALT`, `AUTOMATION_RESPONDED`, `HALT_RESOLVED_NEEDS_CONFIRMATION`). This is required to stop ReactionProcessSteps from running while there might still be a dependency to an earlier ReactionProcessSteps.
+* `STEP_MANUAL_PROCEED`
+  * A `STEP_HALT_BY_PRECEDING` status has been overridden by the user to allow a ReactionProcessStep to run in parallel.
 
-The ReactionProcessSteps status is determined mostly automatically; STEP_CAN_RUN, STEP_COMPLETED simply denote that a Step can run unrestrictedly or has been completed, respectively. ReactionProcessStep status evaluates to STEP_HALT_BY_PRECEDING when there is a ReactionProcessActivity in a prior ReactionProcessStep that (supposedly) requires halting the Automation.
-This can be overriden by the user to STEP_MANUAL_PROCEED when the user decides that a ReactionProcessStep can be performed in parallel without any actual/real dependencies to the ReactionProcess being halted. STEP_MANUAL_PROCEED will only apply when status evaluates to STEP_DEPENDS_ON_PRECEDING.
+The ReactionProcessSteps status is determined mostly automatically; `STEP_CAN_RUN`, `STEP_COMPLETED` simply denote that a Step can run unrestrictedly or has been completed, respectively. ReactionProcessStep status evaluates to `STEP_HALT_BY_PRECEDING` when there is a ReactionProcessActivity in a prior ReactionProcessStep that (supposedly) requires halting the Automation.
+This can be overriden by the user to `STEP_MANUAL_PROCEED` when the user decides that a ReactionProcessStep can be performed in parallel without any actual/real dependencies to the ReactionProcess being halted. `STEP_MANUAL_PROCEED` will only apply when status evaluates to `STEP_DEPENDS_ON_PRECEDING`.

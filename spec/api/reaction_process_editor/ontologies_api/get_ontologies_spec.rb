@@ -25,4 +25,38 @@ describe ReactionProcessEditor::OntologiesAPI, '.get /ontologies' do
 
     expect(parsed_json_response['ontologies'].pluck('id')).to eq([earlier_ontology.id, later_ontology.id])
   end
+
+  it 'returns an empty device methods array when the ontology has no methods' do
+    api_call
+
+    ontology_json = parsed_json_response['ontologies'].find { |item| item['id'] == earlier_ontology.id }
+    expect(ontology_json['device_methods']).to eq([])
+  end
+
+  context 'when the ontology has a device method' do
+    let!(:device_method) do
+      create(
+        :ontology_device_method,
+        ontology: later_ontology,
+        label: 'HPLC',
+        detectors: ['UV'],
+        active: false,
+      )
+    end
+
+    it 'returns the device method' do
+      api_call
+
+      ontology_json = parsed_json_response['ontologies'].find { |item| item['id'] == later_ontology.id }
+      expect(ontology_json['device_methods'].pluck('id')).to eq([device_method.id])
+    end
+
+    it 'returns the device method attributes' do
+      api_call
+
+      ontology_json = parsed_json_response['ontologies'].find { |item| item['id'] == later_ontology.id }
+      expect(ontology_json['device_methods'].first)
+        .to include('label' => 'HPLC', 'detectors' => ['UV'], 'active' => false)
+    end
+  end
 end

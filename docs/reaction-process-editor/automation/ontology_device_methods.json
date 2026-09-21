@@ -1,0 +1,80 @@
+{
+  "info": {
+    "name": "ReactionProcessEditor Ontology Device Methods",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:3000/api/v1" },
+    { "key": "bearer_token", "value": "" },
+    { "key": "ontology_id", "value": "" },
+    { "key": "ontology_device_method_id", "value": "" }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{bearer_token}}", "type": "string" }
+    ]
+  },
+  "item": [
+    {
+      "name": "Set ontology device methods",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "url": "{{base_url}}/reaction_process_editor/ontologies/{{ontology_id}}/ontology_device_methods",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ontology_device_methods\": [\n    {\n      \"label\": \"HPLC\",\n      \"detectors\": [\"UV\"],\n      \"mobile_phase\": [\"CHMO:0001 ()\"],\n      \"stationary_phase\": [\"silica\"],\n      \"default_inject_volume\": { \"value\": \"10\", \"unit\": \"MICROLITER\" },\n      \"description\": \"Default HPLC method\",\n      \"steps\": [],\n      \"active\": true\n    }\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "Set SFC ontology device method",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "url": "{{base_url}}/reaction_process_editor/ontologies/{{ontology_id}}/ontology_device_methods",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ontology_device_methods\": [\n    {\n      \"label\": \"CO2-iPrOH_Iso-10-30min\",\n      \"detectors\": [\n        {\n          \"label\": \"PDA\",\n          \"value\": \"CHMO:0001728\",\n          \"analysis_defaults\": [\n            {\n              \"label\": \"Wavelengths (nm)\",\n              \"values\": { \"peaks\": [{ \"unit\": \"NM\", \"value\": \"210\" }, { \"unit\": \"NM\", \"value\": \"230\" }, { \"unit\": \"NM\", \"value\": \"256\" }, { \"unit\": \"NM\", \"value\": \"280\" }, { \"unit\": \"NM\", \"value\": \"366\" }, { \"unit\": \"NM\", \"value\": \"400\" }, { \"unit\": \"NM\", \"value\": \"450\" }] },\n              \"data_type\": \"WAVELENGTHRANGE\",\n              \"metric_name\": \"WAVELENGTHS\"\n            }\n          ]\n        },\n        {\n          \"label\": \"ELSD\",\n          \"value\": \"CHMO:0002866\",\n          \"analysis_defaults\": [\n            { \"label\": \"Temperature\", \"values\": { \"unit\": \"CELSIUS\", \"value\": \"30\" }, \"data_type\": \"METRIC\", \"metric_name\": \"TEMPERATURE\" }\n          ]\n        },\n        {\n          \"label\": \"MS\",\n          \"value\": \"CHMO:0002337\",\n          \"analysis_defaults\": [\n            { \"label\": \"Parameter\", \"values\": \"1000,700 V\", \"data_type\": \"TEXT\", \"metric_name\": \"MS_PARAMETER\" }\n          ]\n        }\n      ],\n      \"mobile_phase\": [\"CHEBI:17824 ()\", \"CHEBI:38472 ()\", \"CHEBI:17790 (0,1% CHEBI:30751)\"],\n      \"stationary_phase\": [\"VDSpher 100 Diol, OH 10um 250x50mm\"],\n      \"default_inject_volume\": { \"unit\": \"ml\", \"value\": 20 },\n      \"description\": \"SFC with 10% iPrOH modifier, 30min Isocratic separ...\",\n      \"steps\": [],\n      \"active\": false\n    }\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "Update ontology device method",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "url": "{{base_url}}/reaction_process_editor/ontologies/{{ontology_id}}/ontology_device_methods",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ontology_device_methods\": [\n    {\n      \"id\": \"{{ontology_device_method_id}}\",\n      \"label\": \"Updated HPLC\",\n      \"detectors\": [\"UV\", \"DAD\"],\n      \"mobile_phase\": [\"CHMO:0001 ()\"],\n      \"stationary_phase\": [\"silica\"],\n      \"default_inject_volume\": { \"value\": \"5\", \"unit\": \"MICROLITER\" },\n      \"description\": \"Updated HPLC method\",\n      \"steps\": [],\n      \"active\": true\n    }\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "Clear ontology device methods",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "url": "{{base_url}}/reaction_process_editor/ontologies/{{ontology_id}}/ontology_device_methods",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ontology_device_methods\": []\n}"
+        }
+      }
+    }
+  ]
+}
