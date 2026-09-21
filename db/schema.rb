@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_07_09_140001) do
+ActiveRecord::Schema.define(version: 2026_08_25_120000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -215,8 +215,8 @@ ActiveRecord::Schema.define(version: 2026_07_09_140001) do
     t.integer "wellplate_detail_level", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["collection_id"], name: "index_collection_shares_on_collection_id"
     t.index ["collection_id", "shared_with_id"], name: "index_collection_shares_on_collection_id_and_shared_with_id", unique: true
+    t.index ["collection_id"], name: "index_collection_shares_on_collection_id"
     t.index ["shared_with_id"], name: "index_collection_shares_on_shared_with_id"
   end
 
@@ -640,8 +640,8 @@ ActiveRecord::Schema.define(version: 2026_07_09_140001) do
     t.jsonb "output_data", default: {}, null: false
     t.text "notes"
     t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["created_at"], name: "index_dose_resp_outputs_on_created_at"
     t.index ["deleted_at"], name: "index_dose_resp_outputs_on_deleted_at"
     t.index ["dose_resp_request_id"], name: "index_dose_resp_outputs_on_dose_resp_request_id"
@@ -727,8 +727,8 @@ ActiveRecord::Schema.define(version: 2026_07_09_140001) do
   create_table "element_variations", force: :cascade do |t|
     t.bigint "element_id", null: false
     t.jsonb "variations", default: {}, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.jsonb "layout", default: {}, null: false
     t.index ["element_id"], name: "index_element_variations_on_element_id", unique: true
     t.index ["variations"], name: "index_element_variations_on_variations", using: :gin
@@ -803,6 +803,17 @@ ActiveRecord::Schema.define(version: 2026_07_09_140001) do
     t.index ["sample_id"], name: "index_elements_samples_on_sample_id"
   end
 
+  create_table "elements_wellplates", force: :cascade do |t|
+    t.bigint "element_id", null: false
+    t.bigint "wellplate_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "deleted_at"
+    t.jsonb "log_data"
+    t.index ["element_id"], name: "index_elements_wellplates_on_element_id"
+    t.index ["wellplate_id"], name: "index_elements_wellplates_on_wellplate_id"
+  end
+
   create_table "experiments", id: :serial, force: :cascade do |t|
     t.string "type", limit: 20
     t.string "name"
@@ -818,17 +829,6 @@ ActiveRecord::Schema.define(version: 2026_07_09_140001) do
     t.integer "parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "elements_wellplates", force: :cascade do |t|
-    t.bigint "element_id", null: false
-    t.bigint "wellplate_id", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "deleted_at"
-    t.jsonb "log_data"
-    t.index ["element_id"], name: "index_elements_wellplates_on_element_id"
-    t.index ["wellplate_id"], name: "index_elements_wellplates_on_wellplate_id"
   end
 
   create_table "fingerprints", id: :serial, force: :cascade do |t|
@@ -1501,6 +1501,21 @@ ActiveRecord::Schema.define(version: 2026_07_09_140001) do
     t.index ["sample_id"], name: "index_residues_on_sample_id"
   end
 
+  create_table "sample_merges", force: :cascade do |t|
+    t.integer "source_sample_id", null: false
+    t.integer "target_sample_id", null: false
+    t.integer "reaction_id", null: false
+    t.float "source_amount_mol", null: false
+    t.float "target_real_amount_value_before"
+    t.string "target_real_amount_unit_before"
+    t.integer "target_molecule_id_before"
+    t.jsonb "source_reaction_product_attributes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["source_sample_id"], name: "index_sample_merges_on_source_sample_id", unique: true
+    t.index ["target_sample_id", "reaction_id"], name: "index_sample_merges_on_target_and_reaction"
+  end
+
   create_table "sample_tasks", force: :cascade do |t|
     t.float "result_value"
     t.string "result_unit", default: "g", null: false
@@ -1560,10 +1575,12 @@ ActiveRecord::Schema.define(version: 2026_07_09_140001) do
     t.jsonb "sample_details"
     t.jsonb "log_data"
     t.boolean "hide_in_eln"
+    t.boolean "is_legacy", default: false, null: false
     t.index ["ancestry"], name: "index_samples_on_ancestry", opclass: :varchar_pattern_ops, where: "(deleted_at IS NULL)"
     t.index ["deleted_at"], name: "index_samples_on_deleted_at"
     t.index ["identifier"], name: "index_samples_on_identifier"
     t.index ["inventory_sample"], name: "index_samples_on_inventory_sample"
+    t.index ["is_legacy"], name: "index_samples_on_is_legacy", where: "(is_legacy = true)"
     t.index ["molecule_id"], name: "index_samples_on_sample_id"
     t.index ["molecule_name_id"], name: "index_samples_on_molecule_name_id"
     t.index ["short_label"], name: "index_samples_on_short_label"
@@ -2011,13 +2028,16 @@ ActiveRecord::Schema.define(version: 2026_07_09_140001) do
   add_foreign_key "collections", "inventories"
   add_foreign_key "collections_sequence_based_macromolecule_samples", "collections"
   add_foreign_key "collections_sequence_based_macromolecule_samples", "sequence_based_macromolecule_samples"
-  add_foreign_key "dose_resp_outputs", "dose_resp_requests"
   add_foreign_key "components", "samples"
+  add_foreign_key "dose_resp_outputs", "dose_resp_requests"
   add_foreign_key "layer_tracks", "layers", column: "identifier", primary_key: "identifier"
   add_foreign_key "literals", "literatures"
   add_foreign_key "reactions_reactant_sbmm_samples", "reactions"
   add_foreign_key "reactions_reactant_sbmm_samples", "sequence_based_macromolecule_samples"
   add_foreign_key "report_templates", "attachments"
+  add_foreign_key "sample_merges", "reactions", name: "fk_sample_merges_reaction"
+  add_foreign_key "sample_merges", "samples", column: "source_sample_id", name: "fk_sample_merges_source"
+  add_foreign_key "sample_merges", "samples", column: "target_sample_id", name: "fk_sample_merges_target"
   add_foreign_key "sample_tasks", "samples"
   add_foreign_key "sample_tasks", "users", column: "creator_id"
   add_foreign_key "sequence_based_macromolecule_samples", "sequence_based_macromolecules"
@@ -2953,6 +2973,9 @@ ActiveRecord::Schema.define(version: 2026_07_09_140001) do
   SQL
   create_trigger :logidze_on_wells, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_wells BEFORE INSERT OR UPDATE ON public.wells FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_elements_wellplates, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_elements_wellplates BEFORE INSERT OR UPDATE ON public.elements_wellplates FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 
   create_view "literal_groups", sql_definition: <<-SQL

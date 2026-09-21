@@ -1,0 +1,120 @@
+{
+  "info": {
+    "name": "ReactionProcessEditor Ontology Device Methods",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000/api/v1"
+    },
+    {
+      "key": "bearer_token",
+      "value": ""
+    },
+    {
+      "key": "ontology_id",
+      "value": ""
+    },
+    {
+      "key": "ontology_device_method_id",
+      "value": ""
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearer_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Set ontology device methods",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/reaction_process_editor/ontologies/{{ontology_id}}/ontology_device_methods",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ontology_device_methods\": [\n    {\n      \"label\": \"HPLC\",\n      \"detectors\": [\n        \"UV\"\n      ],\n      \"mobile_phase\": [\n        \"CHMO:0001 ()\"\n      ],\n      \"stationary_phase\": [\n        \"silica\"\n      ],\n      \"default_inject_volume\": {\n        \"value\": \"10\",\n        \"unit\": \"MICROLITER\"\n      },\n      \"description\": \"Default HPLC method\",\n      \"steps\": [\n\n      ],\n      \"active\": true\n    }\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "Set SFC ontology device method",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/reaction_process_editor/ontologies/{{ontology_id}}/ontology_device_methods",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ontology_device_methods\": [\n    {\n      \"label\": \"CO2-iPrOH_Iso-10-30min\",\n      \"detectors\": [\n        {\n          \"label\": \"PDA\",\n          \"value\": \"CHMO:0001728\",\n          \"analysis_defaults\": [\n            {\n              \"values\": {\n                \"peaks\": [\n                  {\n                    \"unit\": \"NM\",\n                    \"value\": \"210\"\n                  },\n                  {\n                    \"unit\": \"NM\",\n                    \"value\": \"230\"\n                  },\n                  {\n                    \"unit\": \"NM\",\n                    \"value\": \"256\"\n                  },\n                  {\n                    \"unit\": \"NM\",\n                    \"value\": \"280\"\n                  },\n                  {\n                    \"unit\": \"NM\",\n                    \"value\": \"366\"\n                  },\n                  {\n                    \"unit\": \"NM\",\n                    \"value\": \"400\"\n                  },\n                  {\n                    \"unit\": \"NM\",\n                    \"value\": \"450\"\n                  }\n                ]\n              }\n            }\n          ]\n        },\n        {\n          \"label\": \"ELSD\",\n          \"value\": \"CHMO:0002866\",\n          \"analysis_defaults\": [\n            {\n              \"values\": {\n                \"unit\": \"CELSIUS\",\n                \"value\": \"30\"\n              }\n            }\n          ]\n        },\n        {\n          \"label\": \"MS\",\n          \"value\": \"CHMO:0002337\",\n          \"analysis_defaults\": [\n            {\n              \"values\": \"1000,700 V\"\n            }\n          ]\n        }\n      ],\n      \"mobile_phase\": [\n        \"CHEBI:17824 ()\",\n        \"CHEBI:38472 ()\",\n        \"CHEBI:17790 (0,1% CHEBI:30751)\"\n      ],\n      \"stationary_phase\": [\n        \"VDSpher 100 Diol, OH 10um 250x50mm\"\n      ],\n      \"default_inject_volume\": {\n        \"unit\": \"ml\",\n        \"value\": 20\n      },\n      \"description\": \"SFC with 10% iPrOH modifier, 30min Isocratic separ...\",\n      \"steps\": [\n\n      ],\n      \"active\": false\n    }\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "Update ontology device method",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/reaction_process_editor/ontologies/{{ontology_id}}/ontology_device_methods",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ontology_device_methods\": [\n    {\n      \"id\": \"{{ontology_device_method_id}}\",\n      \"label\": \"Updated HPLC\",\n      \"detectors\": [\n        \"UV\",\n        \"DAD\"\n      ],\n      \"mobile_phase\": [\n        \"CHMO:0001 ()\"\n      ],\n      \"stationary_phase\": [\n        \"silica\"\n      ],\n      \"default_inject_volume\": {\n        \"value\": \"5\",\n        \"unit\": \"MICROLITER\"\n      },\n      \"description\": \"Updated HPLC method\",\n      \"steps\": [\n\n      ],\n      \"active\": true\n    }\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "Deactivate all ontology device methods",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/reaction_process_editor/ontologies/{{ontology_id}}/ontology_device_methods",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ontology_device_methods\": [\n\n  ]\n}"
+        }
+      }
+    }
+  ]
+}
