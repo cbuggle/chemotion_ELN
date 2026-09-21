@@ -28,8 +28,6 @@ module ReactionProcessEditor
 
     delegate :reaction, :creator, :initial_conditions, to: :reaction_process
 
-    validates :position, presence: true
-
     def siblings
       reaction_process.reaction_process_steps.order(:position)
     end
@@ -47,7 +45,7 @@ module ReactionProcessEditor
     end
 
     def step_number
-      (position || 0) + 1
+      position + 1
     end
 
     # We precalculate the Array of activity preconditions which the ReactionActionEntity then indexes by its position.

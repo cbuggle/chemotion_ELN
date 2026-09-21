@@ -3,7 +3,7 @@
 module Clap
   module Exporter
     class ReactionProcessExporter < Base
-      CURRENT_CLAP_VERSION = '1.0.4'
+      CURRENT_CLAP_VERSION = '1.0.3'
 
       def to_clap
         ::Clap::Reaction.new(
