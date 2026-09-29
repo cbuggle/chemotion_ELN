@@ -26,7 +26,7 @@ module Entities
           private
 
           def samples_options_for_reaction(reaction)
-            samples = reaction.starting_materials + reaction.reactants + reaction.products
+            samples = reaction_samples(reaction)
             solvents = (reaction.solvents + reaction.purification_solvents).uniq
             diverse_solvents = Medium::DiverseSolvent.all
 
@@ -43,6 +43,11 @@ module Entities
                                             'SOLVENT') + samples_info_options(diverse_solvents,
                                                                               'DIVERSE_SOLVENT'),
             }
+          end
+
+          def reaction_samples(reaction)
+            (reaction.starting_materials + reaction.reactants + reaction.products +
+              reaction.intermediate_samples).uniq
           end
         end
       end
