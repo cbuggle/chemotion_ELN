@@ -42,7 +42,7 @@ module Entities
           },
 
           'CHMO:0001719': {
-            value: 'CHMO:0002337',
+            value: 'CHMO:0001719',
             label: 'FID',
             analysis_defaults: [],
           },

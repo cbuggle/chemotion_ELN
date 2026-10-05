@@ -31,11 +31,12 @@ module Entities
             solvents&.map do |solvent|
               solvent_ontology_id = solvent.ontology_id
 
-              { active: ontology&.active && solvent&.active,
-                ontology_id: solvent_ontology_id,
+              ontology_option_for(
+                role: 'mobile_phase',
+                active: ontology&.active && solvent&.active,
                 value: solvent_ontology_id,
                 label: solvent&.label || solvent_ontology_id,
-                roles: { mobile_phase: [{}] } }
+              )
             end
           end
 
@@ -43,11 +44,7 @@ module Entities
             return [] unless ontology.stationary_phase
 
             ontology.stationary_phase.map do |stationary_phase|
-              # The stationary_phases (which only exist for device ontologies) will be treated like any Ontology in the
-              # Frontend (e.g. in Selects, OntologySelectForm, ...). => It needs to resemble an Ontology, i.e. be
-              # "active", have a proper ontology_id, and their "role" as "stationary_phase" (with empty dependencies).
-
-              pseudo_ontology_option_for(active: ontology.active, role: 'stationary_phase', value: stationary_phase)
+              ontology_option_for(role: 'stationary_phase', active: ontology.active, value: stationary_phase)
             end
           end
         end

@@ -10,14 +10,13 @@ module Entities
           def select_options_for(device_methods)
             device_methods.map do |method|
               method.attributes
-                    .slice(*%w[label device_name detectors description steps default_inject_volume
-                               active])
-                    .merge({ value: method.label,
+                    .slice(*%w[label device_name detectors description steps default_inject_volume])
+                    .merge({
                              stationary_phase: stationary_phase_options(method),
-                             mobile_phase: mobile_phase_options_for(method) })
-                    .merge(pseudo_ontology_option_for(active: method.ontology&.active,
-                                                      role: 'method',
-                                                      value: method.label))
+                             mobile_phase: mobile_phase_options_for(method),
+                           }).merge(ontology_option_for(role: 'method',
+                                                        active: method.active,
+                                                        value: method.label))
             end
           end
 
@@ -25,9 +24,9 @@ module Entities
 
           def stationary_phase_options(method)
             method.stationary_phase&.map do |stationary_phase|
-              pseudo_ontology_option_for(active: method.ontology&.active,
-                                         role: 'stationary_phase',
-                                         value: stationary_phase)
+              ontology_option_for(role: 'stationary_phase',
+                                  active: method.active,
+                                  value: stationary_phase)
             end
           end
 
@@ -49,11 +48,7 @@ module Entities
               label = ontology_label(ontology_id)
             end
 
-            # assemble pseudo_ontology
-            { label: label,
-              value: ontology_id,
-              ontology_id: ontology_id,
-              roles: { mobile_phase: [{}] } }
+            ontology_option_for(role: 'mobile_phase', active: true, value: ontology_id, label: label)
           end
 
           def ontology_label(ontology_id)

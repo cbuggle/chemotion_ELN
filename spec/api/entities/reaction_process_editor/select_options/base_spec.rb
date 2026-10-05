@@ -17,13 +17,20 @@ describe Entities::ReactionProcessEditor::SelectOptions::Base do
     end
   end
 
-  describe '#pseudo_ontology_option_for' do
+  describe '#ontology_option_for' do
     it 'adds ontology-shaped metadata' do
-      expect(select_options_base.pseudo_ontology_option_for(active: true, role: 'method', value: 'HPLC')).to include(
-        active: true,
-        ontology_id: 'HPLC',
-        roles: { method: [{}] },
-      )
+      expect(select_options_base.ontology_option_for(role: 'method', active: true, value: 'HPLC', label: 'HPLC method'))
+        .to include(
+          active: true,
+          label: 'HPLC method',
+          ontology_id: 'HPLC',
+          roles: { method: [{}] },
+        )
+    end
+
+    it 'uses the value when the label is missing' do
+      expect(select_options_base.ontology_option_for(role: 'method', active: true, value: 'HPLC'))
+        .to include(label: 'HPLC')
     end
   end
 

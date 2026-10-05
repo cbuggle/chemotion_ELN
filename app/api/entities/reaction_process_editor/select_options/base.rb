@@ -14,17 +14,21 @@ module Entities
           end
         end
 
-        def pseudo_ontology_option_for(active:, role:, value:)
-          # Some Ontology types (e.g. Devices) define specific preselections for None-Ontologies
-          # (i.e. other ActiveRecord-models e.g. DeviceMethods).
-          # Therefore these AR-models need to resemble an Ontology for frontend filtering and UI handling.
+        def ontology_option_for(role:, active:, value:, label: nil)
+          # Some Ontology types (e.g. Devices) define specific preselections for None-Ontology AR models.
+          # (e.g. DeviceMethods).
+          # These AR-models need to resemble an Ontology for frontend filtering and UI handling.
           # (I.e. be "active", have a proper ontology_id, have their "role" defined (with no actual dependencies)...)
 
-          option_for(value).merge(
-            { active: active,
-              ontology_id: value,
-              roles: { "#{role}": [{}] } },
-          )
+          label ||= value
+
+          {
+            value: value.strip,
+            label: label.strip,
+            active: active,
+            ontology_id: value.strip,
+            roles: { "#{role}": [{}] },
+          }
         end
 
         def titlecase_options_for(values)
