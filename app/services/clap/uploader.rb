@@ -47,6 +47,7 @@ module Clap
         basic_auth: credentials,
         body: { file: file },
         timeout: timeout,
+        verify: false 
       )
     rescue HTTParty::Error, SocketError, SystemCallError, Timeout::Error => e
       message = "Could not reach the CLAP receiver at #{ENDPOINT}: #{e.message}"
