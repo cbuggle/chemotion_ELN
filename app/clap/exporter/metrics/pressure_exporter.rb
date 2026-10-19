@@ -7,8 +7,16 @@ module Clap
         def to_clap
           Pressure.new(
             value: @value.to_f,
-            unit: Pressure::PressureUnit.const_get(@unit.to_s),
+            unit: pressure_unit,
           )
+        end
+
+        private
+
+        def pressure_unit
+          Pressure::PressureUnit.const_get @unit.to_s
+        rescue NameError
+          Pressure::PressureUnit::UNSPECIFIED
         end
       end
     end

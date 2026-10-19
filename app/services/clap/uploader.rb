@@ -4,7 +4,7 @@ require 'tempfile'
 
 module Clap
   class Uploader
-    ENDPOINT =  ENV.fetch('CLAP_UPLOAD_ENDPOINT') 
+    ENDPOINT = ENV.fetch('CLAP_UPLOAD_ENDPOINT')
     DEFAULT_TIMEOUT = 15
 
     class ConfigurationError < StandardError; end
@@ -12,9 +12,9 @@ module Clap
     class RequestError < StandardError
       attr_reader :status
 
-      def initialize(status)
+      def initialize(status = nil, message: nil)
         @status = status
-        super("CLAP receiver responded with HTTP #{status}")
+        super(message || "CLAP receiver responded with HTTP #{status}")
       end
     end
 
@@ -30,12 +30,7 @@ module Clap
         file.write(clap_json)
         file.rewind
 
-        response = http_client.post(
-          ENDPOINT,
-          basic_auth: credentials,
-          body: { file: file },
-          timeout: timeout,
-        )
+        response = upload(file)
         raise RequestError, response.code unless response.success?
 
         response
@@ -45,6 +40,18 @@ module Clap
     private
 
     attr_reader :http_client, :reaction_process
+
+    def upload(file)
+      http_client.post(
+        ENDPOINT,
+        basic_auth: credentials,
+        body: { file: file },
+        timeout: timeout,
+      )
+    rescue HTTParty::Error, SocketError, SystemCallError, Timeout::Error => e
+      message = "Could not reach the CLAP receiver at #{ENDPOINT}: #{e.message}"
+      raise RequestError.new(message: message), cause: e
+    end
 
     def clap_json
       clap = Clap::Exporter::ReactionProcessExporter.new(reaction_process).to_clap

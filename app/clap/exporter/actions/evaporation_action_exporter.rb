@@ -101,6 +101,8 @@ module Clap
         def solvents_to_clap(solvents)
           Array(solvents).map do |solvent|
             Clap::Sample.new(label: solvent['label'])
+          rescue StandardError
+            Clap::Sample.new(label: solvent.to_s)
           end
         end
 

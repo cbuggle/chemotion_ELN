@@ -29,4 +29,24 @@ RSpec.describe ReactionProcessEditor::Automation::ClapUploadAPI do
     expect(response).to have_http_status(:forbidden)
     expect(uploader).not_to have_received(:call)
   end
+
+  it 'returns bad gateway when the CLAP receiver cannot be reached' do
+    allow(uploader).to receive(:call).and_raise(
+      Clap::Uploader::RequestError.new(message: 'Could not reach the CLAP receiver: Connection refused'),
+    )
+
+    post "/api/v1/reaction_process_editor/reaction_processes/#{reaction_process.id}/clap/upload"
+
+    expect(response).to have_http_status(:bad_gateway)
+  end
+
+  it 'explains why the CLAP upload failed' do
+    allow(uploader).to receive(:call).and_raise(
+      Clap::Uploader::RequestError.new(message: 'Could not reach the CLAP receiver: Connection refused'),
+    )
+
+    post "/api/v1/reaction_process_editor/reaction_processes/#{reaction_process.id}/clap/upload"
+
+    expect(parsed_json_response).to eq('message' => 'Could not reach the CLAP receiver: Connection refused')
+  end
 end
