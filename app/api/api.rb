@@ -53,7 +53,7 @@ class API < Grape::API
 
       token.user
     end
-    
+
     def detect_current_user_from_jti_token
       token = Warden::JWTAuth::HeaderParser.from_env(env)
       decoded_token = JWT.decode(token, Rails.application.secrets.secret_key_base)
@@ -266,6 +266,7 @@ class API < Grape::API
     mount ::ReactionProcessEditor::VesselAPI
     mount ::ReactionProcessEditor::Automation::OntologiesAPI
     mount ::ReactionProcessEditor::Automation::ReactionProcessActivityAPI
+    mount ::ReactionProcessEditor::Automation::ClapUploadAPI
   end
 
   add_swagger_documentation(info: { title: 'Chemotion ELN', version: '1.0' }) if Rails.env.development?

@@ -67,7 +67,6 @@ message ReactionProvenance {
   string patent = 5;
   string publication_url = 6;
   RecordEvent record_created = 7;
-  repeated RecordEvent record_modified = 8;
 }
 
 /**

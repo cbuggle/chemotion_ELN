@@ -15,7 +15,6 @@ module Clap
             patent: model.patent,
             publication_url: model.publication_url,
             record_created: record_event(model.created_at),
-            record_modified: nil, # ELN has no concept for recording modifications to reactions.
           )
         end
 
