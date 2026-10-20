@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'tempfile'
+require 'digest'
 
 module Clap
   class Uploader
@@ -85,7 +86,7 @@ module Clap
     def credentials
       {
         username: ENV.fetch('CLAP_UPLOAD_USERNAME'),
-        password: ENV.fetch('CLAP_UPLOAD_PASSWORD'),
+        password: Digest::SHA256.hexdigest(ENV.fetch('CLAP_UPLOAD_PASSWORD')),
       }
     end
 
