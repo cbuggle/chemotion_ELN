@@ -31,7 +31,10 @@ module Clap
         file.rewind
 
         response = upload(file)
-        raise RequestError, response.code unless response.success?
+        unless response.success?
+          log_failed_response(response)
+          raise RequestError, response.code
+        end
 
         response
       end
@@ -47,11 +50,31 @@ module Clap
         basic_auth: credentials,
         body: { file: file },
         timeout: timeout,
-        verify: false 
+        verify: false,
       )
     rescue HTTParty::Error, SocketError, SystemCallError, Timeout::Error => e
+      log_failed_request(e)
       message = "Could not reach the CLAP receiver at #{ENDPOINT}: #{e.message}"
       raise RequestError.new(message: message), cause: e
+    end
+
+    def log_failed_response(response)
+      Rails.logger.info(
+        "CLAP upload failed: #{request_log_context}, status=#{response.code.inspect}, " \
+        "response_body=#{response.body.to_s.truncate(2_000).inspect}",
+      )
+    end
+
+    def log_failed_request(exception)
+      Rails.logger.info(
+        "CLAP upload failed: #{request_log_context}, exception=#{exception.class}, " \
+        "message=#{exception.message.inspect}",
+      )
+    end
+
+    def request_log_context
+      "endpoint=#{ENDPOINT.inspect}, reaction_process_id=#{reaction_process.id.inspect}, " \
+        "filename=#{safe_filename.inspect}, timeout=#{timeout}"
     end
 
     def clap_json
