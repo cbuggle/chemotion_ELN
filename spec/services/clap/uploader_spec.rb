@@ -67,6 +67,15 @@ RSpec.describe Clap::Uploader do
     expect(uploaded_clap).to include('reactionId' => reaction_process.id)
   end
 
+  it 'uploads the reaction with normal priority' do
+    upload
+
+    expect(http_client).to have_received(:post).with(
+      anything,
+      hash_including(body: hash_including(priority: 'normal')),
+    )
+  end
+
   it 'raises a request error for a failed upstream response' do
     failed_response = instance_double(HTTParty::Response, body: 'Unauthorized', code: 401, success?: false)
     allow(http_client).to receive(:post).and_return(failed_response)

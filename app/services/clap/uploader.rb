@@ -49,7 +49,7 @@ module Clap
       http_client.post(
         ENDPOINT,
         basic_auth: credentials,
-        body: { reactionFile: file },
+        body: { reactionFile: file, priority: 'normal' },
         timeout: timeout,
         verify: false,
       )
