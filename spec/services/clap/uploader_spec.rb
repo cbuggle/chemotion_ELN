@@ -23,6 +23,7 @@ RSpec.describe Clap::Uploader do
       instance_double(Clap::Exporter::ReactionProcessExporter, to_clap: clap),
     )
     allow(http_client).to receive(:post).and_return(response)
+    allow(Rails.logger).to receive(:info)
   end
 
   it 'returns the receiver response' do
@@ -40,7 +41,12 @@ RSpec.describe Clap::Uploader do
 
     expect(http_client).to have_received(:post).with(
       anything,
-      hash_including(basic_auth: { username: 'example-user', password: 'example-password' }),
+      hash_including(
+        basic_auth: {
+          username: 'example-user',
+          password: 'a4b7fbda9179055ba005b83fe1d9d558c85e5f6afc2ce4071439ecdab864b98e',
+        },
+      ),
     )
   end
 
@@ -53,7 +59,7 @@ RSpec.describe Clap::Uploader do
   it 'uploads the encoded CLAP JSON as a multipart file' do
     uploaded_clap = nil
     allow(http_client).to receive(:post) do |_url, options|
-      uploaded_clap = JSON.parse(options.dig(:body, :file).read)
+      uploaded_clap = JSON.parse(options.dig(:body, :reactionFile).read)
       response
     end
     upload
@@ -62,10 +68,20 @@ RSpec.describe Clap::Uploader do
   end
 
   it 'raises a request error for a failed upstream response' do
-    failed_response = instance_double(HTTParty::Response, code: 401, success?: false)
+    failed_response = instance_double(HTTParty::Response, body: 'Unauthorized', code: 401, success?: false)
     allow(http_client).to receive(:post).and_return(failed_response)
 
     expect { upload }.to raise_error(Clap::Uploader::RequestError, /HTTP 401/)
+  end
+
+  it 'logs details of a failed upstream response' do
+    failed_response = instance_double(HTTParty::Response, body: 'Unauthorized', code: 401, success?: false)
+    allow(http_client).to receive(:post).and_return(failed_response)
+    upload
+  rescue Clap::Uploader::RequestError
+    expect(Rails.logger).to have_received(:info).with(
+      /CLAP upload failed:.*reaction_process_id=.*status=401, response_body="Unauthorized"/,
+    )
   end
 
   it 'raises a request error when the receiver refuses the connection' do
@@ -74,6 +90,15 @@ RSpec.describe Clap::Uploader do
     expect { upload }.to raise_error(
       Clap::Uploader::RequestError,
       %r{Could not reach the CLAP receiver at https://localhost:5000/api/v1/clap/files},
+    )
+  end
+
+  it 'logs details of a failed connection' do
+    allow(http_client).to receive(:post).and_raise(Errno::ECONNREFUSED)
+    upload
+  rescue Clap::Uploader::RequestError
+    expect(Rails.logger).to have_received(:info).with(
+      /CLAP upload failed:.*endpoint=.*exception=Errno::ECONNREFUSED, message="Connection refused"/,
     )
   end
 
